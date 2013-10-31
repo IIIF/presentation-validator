@@ -5,6 +5,7 @@ Metadata Factory
 Initialization
 --------------
 
+```python
 	from factory import ManifestFactory
 
 	fac = ManifestFactory()
@@ -15,7 +16,7 @@ Initialization
 
 	fac.set_iiif_image_conformance(1.1, 2) # Version, ComplianceLevel
 	fac.set_debug("error") # warn will warn for recommendations, by default
-
+```
 
 
 
