@@ -58,4 +58,28 @@ for p in pages:
     cvs.width = img.width
 ```
 
+Serialization
+-------------
+
+You can serialize directly to the file (with the base_metadata_dir set).  If you set compact, it will reduce the filesize by leaving out spaces, new lines and other unnecessary whitespace.  It is entirely unreadable by humans, however.
+
+```python
+manifest.toFile(compact=False)
+```
+
+You can also serialize to a string and write it out by hand:
+
+```python
+data = manifest.toString(compact=False)
+fh = file('manifest.json')
+fh.write(data)
+fh.close()
+```
+
+Or if you really want to get into the JSON directly, you can get the full dict:
+```python
+mfst = manifest.toJSON(top=True)
+```
+
+The serialization will attempt to add in any properties from the object that are set, even if they're not part of the model.  Implementations will ignore them, but be careful for typos!
 
