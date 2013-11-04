@@ -26,6 +26,11 @@ class ConfigurationError(Exception):
 class MetadataError(Exception):
 	pass
 
+
+VIEWINGHINTS = ['individuals', 'paged', 'continuous']
+VIEWINGDIRS = ['left-to-right', 'right-to-left', 'top-to-bottom', 'bottom-to-top']
+
+
 class ManifestFactory(object):
 	metadata_base = ""
 	image_base = ""
@@ -45,7 +50,7 @@ class ManifestFactory(object):
 		if mddir:
 			self.set_base_metadata_dir(mddir)
 		self.default_lang = lang
-		if self.default_lang:
+		if self.default_lang != "en":
 			self.add_lang = True
 		else:
 			self.add_lang = False
@@ -112,6 +117,13 @@ class ManifestFactory(object):
 		else:
 			self.iiif_profile_uri += ("compliance.html#level%s" % lvl)			
 	
+
+	def collection(self, ident="", label="", mdhash={}):
+		if not ident:
+			ident = "collection"
+		self.assert_base_metadata_uri()
+		return Collection(self, ident, label, mdhash)
+
 	def manifest(self, ident="", label="", mdhash={}):
 		if not ident:
 			ident = "manifest"
@@ -228,6 +240,13 @@ class BaseMetadataObject(object):
 					print "WARNING: Resource type '%s' should have '%s' set" % (self._type, e)
 		if top:
 			d['@context'] = self._factory.context_uri
+
+		# validate enumerations
+		if d.has_key('viewingHint') and not d['viewingHint'] in VIEWINGHINTS:
+			raise MetadataError("ViewingHint must be one of: individuals, paged, continuous")
+		if d.has_key('viewingDirection') and not d['viewingDirection'] in VIEWINGDIRS:
+			raise MetadataError("ViewingDirection must be one of: left-to-right, right-to-left, top-to-bottom, bottom-to-top")
+
 		return d
 
 	def toString(self, compact=True):
@@ -265,6 +284,51 @@ class BaseMetadataObject(object):
 		else:
 			json.dump(js, fh, sort_keys=True, indent=2)
 		fh.close()
+
+
+class Collection(BaseMetadataObject):
+	_type = "sc:Collection"
+	_uri_segment = ""
+	_required = ["@id", 'label']
+	collections = []
+	manifests = []
+
+	def __init__(self, *args, **kw):
+		self.collections = []
+		self.manifests = []
+		return super(Collection, self).__init__(*args, **kw)
+
+	def add_collection(self, coll):
+		self.collections.append(coll)
+
+	def add_manifest(self, manifest):
+		self.manifests.append(manifest)
+
+	def collection(self, *args, **kw):
+		coll = self._factory.collection(*args, **kw)
+		self.add_collection(coll)
+		return coll
+
+	def manifest(self, *args, **kw):
+		mn = self._factory.manifest(*args, **kw)
+		self.add_manifest(mn)
+		return mn
+
+	def toJSON(self, top=True):
+		json = super(Collection, self).toJSON(top)
+		newcolls = []
+		newmans = []
+		if json.has_key('collections'):
+			# Add in only @id, @type, label
+			for c in json['collections']:
+				newcolls.append({"@id": c.id, '@type': 'sc:Collection', 'label': c.label})
+			json['collections'] = newcolls
+		if json.has_key('manifests'):
+			# Add in only @id, @type, label
+			for c in json['manifests']:
+				newmans.append({"@id": c.id, '@type': 'sc:Manifest', 'label': c.label})
+			json['manifests'] = newmans
+		return json
 
 
 class Manifest(BaseMetadataObject):
@@ -309,7 +373,8 @@ class Manifest(BaseMetadataObject):
 	def toJSON(self, top=True):
 		json = super(Manifest, self).toJSON(top)
 		newseqs = []
-		for s in json['sequences']:
+
+		for s in json['sequences']:			
 			newseqs.append(s.toJSON(False))
 		json['sequences'] = newseqs
 		if json.has_key('structures'):
