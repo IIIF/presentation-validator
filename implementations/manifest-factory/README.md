@@ -13,7 +13,7 @@ from factory import ManifestFactory
 
 fac = ManifestFactory()
 fac.set_base_metadata_uri("http://www.example.org/path/to/object/")
-fac.set_base_metdata_dir("/home/iiif/web/path/to/object/")
+fac.set_base_metadata_dir("/home/iiif/web/path/to/object/")
 
 fac.set_base_image_uri("http://www.example.org/path/to/image/api/")
 
