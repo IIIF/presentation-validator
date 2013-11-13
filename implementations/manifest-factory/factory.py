@@ -176,7 +176,9 @@ class BaseMetadataObject(object):
 	def __init__(self, factory, ident="", label="", mdhash={}, **kw):
 		self._factory = factory
 		if ident:
-			self.id = factory.metadata_base + self.__class__._uri_segment + ident + '.json'
+			self.id = factory.metadata_base + self.__class__._uri_segment + ident
+			if not self.id.endswith('.json'):
+				self.id += '.json'
 		else:
 			self.id = ""
 		self.type = self.__class__._type
@@ -375,7 +377,12 @@ class Manifest(BaseMetadataObject):
 		newseqs = []
 
 		for s in json['sequences']:			
-			newseqs.append(s.toJSON(False))
+			if isinstance(s, Sequence):
+				newseqs.append(s.toJSON(False))
+			elif type(s) == dict and dict['@type'] == 'sc:Sequence':
+				newseqs.append(s)
+			else:
+				raise MetadataError("Non-Sequence in Manifest['sequences']")
 		json['sequences'] = newseqs
 		if json.has_key('structures'):
 			newstructs = []
@@ -412,7 +419,13 @@ class Sequence(BaseMetadataObject):
 		json = super(Sequence, self).toJSON(top)
 		newcvs = []
 		for c in json['canvases']:
-			newcvs.append(c.toJSON(False))
+			if isinstance(c, Canvas):
+				newcvs.append(c.toJSON(False))
+			elif type(c) == dict and c['@type'] == 'sc:Canvas':
+				newcvs.append(c)
+			else:
+				# break
+				raise MetadataError("Non Canvas as part of Sequence")
 		json['canvases'] = newcvs
 		return json
 
