@@ -33,7 +33,7 @@ Object Creation
 First create a manifest and give it a label (which is required by the model).
 
 ```python
-manifest = factory.manifest(label="Example Manifest")
+manifest = fac.manifest(label="Example Manifest")
 ```
 
 You can then add metadata and other fields to it:
