@@ -3,6 +3,12 @@ Metadata Factory
 
 A quick code walk through for how to build manifests using the factory.
 
+Requirements
+------------
+
+In order to automatically determine the dimensions of local image files, you will need to have either ImageMagick or the Python Image Library installed.  ImageMagick attempts to use a command line rather than module approach, which may not work under Windows (untested).  Neither will work with JPG 2000 files out of the box.  If neither are present, or the file referenced ends in ".jp2", then the system will attempt to retrieve the info.json metadata file from the IIIF image service.   
+
+
 Initialization
 --------------
 
@@ -53,7 +59,11 @@ for p in pages:
 
 	# Set image height and width, and canvas to same dimensions
 	imagefile = "/path/to/images/p%s.jpg" % p
-    img.set_hw_from_file(imagefile)  
+    img.set_hw_from_file(imagefile) 
+
+    # OR if you have a IIIF service:
+    img.set_hw_from_iiif()
+
     cvs.height = img.height
     cvs.width = img.width
 ```

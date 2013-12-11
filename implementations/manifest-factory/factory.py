@@ -1,6 +1,7 @@
 
 import os, sys
 import commands
+import urllib
 
 sys.path.append(os.getcwd())
 try:
@@ -16,8 +17,10 @@ except:
 		import Image as pil_image
 	except:
 		pil_image = None
-# ImageMagick
-# VIPS
+
+# TODO: New Python image library
+# TODO: ImageMagick module
+# TODO: VIPS
 
 
 class ConfigurationError(Exception):
@@ -595,6 +598,7 @@ class Image(BaseMetadataObject):
 		self.format = ""
 		self.height = 0
 		self.width = 0
+		self._identifier = ""
 		if label:
 			self.set_label(label)
 
@@ -602,6 +606,7 @@ class Image(BaseMetadataObject):
 			# add IIIF service
 			# ident is identifier
 			self.id = factory.image_base + ident + '/full/full/0/native.jpg'
+			self._identifier = ident
 			self.format = "image/jpeg"
 			self.service = {
 				"@id": factory.image_base + ident,
@@ -620,6 +625,23 @@ class Image(BaseMetadataObject):
 	def set_hw(self, h,w):
 		self.height = h
 		self.width = w
+
+	def set_hw_from_iiif(self):
+		if not self._identifier:
+			raise ConfigurationError("Image is not configured with IIIF support")
+
+		requrl = self._factory.image_base + self._identifier + '/info.json';
+		try:
+			fh = urllib.urlopen(requrl)
+			data = fh.read()
+			fh.close()
+		except:
+			raise ConfigurationError("Could not get IIIF Info from %s" % requrl)
+
+		js = json.loads(data)
+		self.height = int(js['height'])
+		self.width = int(js['width'])
+
 
 	def set_hw_from_file(self, fn):
 		# Try to do it automagically
@@ -652,6 +674,7 @@ class Image(BaseMetadataObject):
 				return
 			except:
 				pass
+
 		raise ConfigurationError("No identify from ImageMagick and no PIL, you have to set manually")
 
 class Choice(BaseMetadataObject):
