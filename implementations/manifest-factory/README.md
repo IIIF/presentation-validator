@@ -6,7 +6,7 @@ A quick code walk through for how to build manifests using the factory.
 Requirements
 ------------
 
-In order to automatically determine the dimensions of local image files, you will need to have either ImageMagick or the Python Image Library installed.  ImageMagick attempts to use a command line rather than module approach, which may not work under Windows (untested).  Neither will work with JPG 2000 files out of the box.  If neither are present, or the file referenced ends in ".jp2", then the system will attempt to retrieve the info.json metadata file from the IIIF image service.   
+In order to automatically determine the dimensions of local image files, you will need to have either ImageMagick or the Python Image Library installed.  ImageMagick attempts to use a command line rather than module approach, which may not work under Windows (untested).  Neither will work with JPG 2000 files out of the box.  If neither are present, or the file referenced ends in ".jp2", then the system will attempt to retrieve the info.json metadata file from the IIIF image service.   The library does not work with Python 3.X, but has been tested in various environments with 2.6+
 
 
 Initialization
@@ -94,3 +94,41 @@ mfst = manifest.toJSON(top=True)
 
 The serialization will attempt to add in any properties from the object that are set, even if they're not part of the model.  Implementations will ignore them, but be careful for typos!
 
+
+Further Objects
+---------------
+
+The factory, and objects in the hierarchy, also support the following object types:
+
+* annotationList(identity, label, metadataHash)
+```python
+annol = cvs.annotationList("text-1")
+anno = annol.annotation()
+# ...
+annol.toFile(compact=False)
+```
+
+* choice(default, restList)
+```python
+img1 = fac.image("f1r.c", label="Color", iiif=True)
+img1.set_hw_from_file("/path/to/f1r.c.jpg")
+img2 = fac.image("f1r", label="Black and White", iiif=True)
+img2.set_hw_from_file("/path/to/f1r.bw.jpg")
+anno.choice(img1, [img2])
+```
+
+* text(content, language, mediaType)
+```python
+anno = annol.annotation()
+anno.text("Ci commence li prologue", language="fr")
+```
+
+* range(identity, label, metadataHash)
+* layer(identity, label, metadataHash)
+```python
+rng = manifest.range("range-1", label="Introduction")
+rng.add_canvas(cvs)
+
+layer = annol.layer("transcription-1", label="2003 Transcription")
+annol2.within = layer
+```

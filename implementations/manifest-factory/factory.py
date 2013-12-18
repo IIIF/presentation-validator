@@ -638,9 +638,12 @@ class Image(BaseMetadataObject):
 		except:
 			raise ConfigurationError("Could not get IIIF Info from %s" % requrl)
 
-		js = json.loads(data)
-		self.height = int(js['height'])
-		self.width = int(js['width'])
+		try:
+			js = json.loads(data)
+			self.height = int(js['height'])
+			self.width = int(js['width'])
+		except:
+			raise ConfigurationError("Response from IIIF server did not have mandatory height/width")
 
 
 	def set_hw_from_file(self, fn):
