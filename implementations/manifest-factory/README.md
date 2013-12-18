@@ -123,8 +123,7 @@ anno = annol.annotation()
 anno.text("Ci commence li prologue", language="fr")
 ```
 
-* range(identity, label, metadataHash)
-* layer(identity, label, metadataHash)
+* range(identity, label, metadataHash) and layer(identity, label, metadataHash)
 ```python
 rng = manifest.range("range-1", label="Introduction")
 rng.add_canvas(cvs)
