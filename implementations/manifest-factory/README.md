@@ -127,7 +127,6 @@ anno.text("Ci commence li prologue", language="fr")
 ```python
 rng = manifest.range("range-1", label="Introduction")
 rng.add_canvas(cvs)
-
 layer = annol.layer("transcription-1", label="2003 Transcription")
 annol2.within = layer
 ```
