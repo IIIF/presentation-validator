@@ -165,7 +165,7 @@ class ManifestFactory(object):
 	def choice(self, default, rest):
 		return Choice(self, default, rest)
 
-	def text(self, txt, language, format):
+	def text(self, txt, language="", format=""):
 		return Text(self, txt, language, format)
 
 	def range(self, ident="", label="", mdhash={}):
@@ -295,6 +295,7 @@ class Collection(BaseMetadataObject):
 	_type = "sc:Collection"
 	_uri_segment = ""
 	_required = ["@id", 'label']
+	_warn = []
 	collections = []
 	manifests = []
 
