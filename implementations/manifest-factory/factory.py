@@ -121,17 +121,9 @@ class ManifestFactory(object):
 			self.iiif_profile_uri += ("compliance.html#level%s" % lvl)			
 	
 
-	def collection(self, ident="", label="", mdhash={}):
-		if not ident:
-			ident = "collection"
+	def collection(self, ident="collection", label="", mdhash={}):
 		self.assert_base_metadata_uri()
 		return Collection(self, ident, label, mdhash)
-
-	def manifest(self, ident="", label="", mdhash={}):
-		if not ident:
-			ident = "manifest"
-		self.assert_base_metadata_uri()
-		return Manifest(self, ident, label, mdhash)
 
 	def manifest(self, ident="manifest", label="", mdhash={}):
 		self.assert_base_metadata_uri()
@@ -147,7 +139,7 @@ class ManifestFactory(object):
 			self.assert_base_metadata_uri()
 		return Canvas(self, ident, label, mdhash)
 
-	def annotation(self, ident="", label=""):
+	def annotation(self, ident="", label="", mdhash={}):
 		if ident:
 			self.assert_base_metadata_uri()
 		return Annotation(self, ident, label=label)
@@ -295,6 +287,25 @@ class BaseMetadataObject(object):
 			json.dump(js, fh, sort_keys=True, indent=2)
 		fh.close()
 
+class ContentResource(BaseMetadataObject):
+
+	def make_selection(self, selector, summarize=False):
+		if summarize:
+			full = {"@id":self.id, "@type": self.type}
+			if self.label:
+				full['label'] = self.label
+		else:
+			full = self
+
+		sr = SpecificResource(self._factory, full)
+		if type(selector) == str:
+			selector = {"@type": "oa:FragmentSelector", "value": selector}
+		sr.selector = selector
+		return sr
+
+	def make_fragment(self, fragment):
+		return self.id + "#" + fragment
+
 
 class Collection(BaseMetadataObject):
 	_type = "sc:Collection"
@@ -438,7 +449,7 @@ class Sequence(BaseMetadataObject):
 		json['canvases'] = newcvs
 		return json
 
-class Canvas(BaseMetadataObject):
+class Canvas(ContentResource):
 	_type = "sc:Canvas"
 	_uri_segment = "canvas/"	
 	_required = ["@id", "label", "height", "width"]
@@ -525,6 +536,7 @@ class Annotation(BaseMetadataObject):
 		return chc
 
 	def stylesheet(self, css, cls):
+		# This has to go here, as need to modify both Annotation and Resource
 		ss = { "@type": ["oa:CssStyle", "cnt:ContentAsText"], "format": "text/css", "chars" : css}
 		self.stylesheet = ss
 		if not self.resource:
@@ -532,14 +544,15 @@ class Annotation(BaseMetadataObject):
 		if isinstance(self.resource, SpecificResource):
 			self.resource.style = cls
 		else:
-			sr = SpecificResource(self._factory)
-			sr.full = self.resource
+			sr = SpecificResource(self._factory, self.resource)
 			sr.style = cls
 			self.resource = sr
 
 	def toJSON(self, top=True):
 		json = super(Annotation, self).toJSON(top)
 		json['resource'] = json['resource'].toJSON(top=False)
+		if isinstance(json['on'], BaseMetadataObject):
+			json['on'] = json['on'].toJSON(top=False)
 		return json
 
 
@@ -549,17 +562,22 @@ class SpecificResource(BaseMetadataObject):
 	_warn = []
 	style = ""
 	selector = ""
+	full = None
 
-	def __init__(self, factory):
+	def __init__(self, factory, full):
 		self._factory = factory
 		self.type = self.__class__._type
+		self.full=full
 
 	def toJSON(self, top=False):
 		json = super(SpecificResource, self).toJSON(top)
-		json['full'] = json['full'].toJSON()
+		if isinstance(json['full'], BaseMetadataObject):
+			json['full'] = json['full'].toJSON()
 		return json
 
-class ExternalText(BaseMetadataObject):
+
+
+class ExternalText(ContentResource):
 	_type = "dcterms:Text"
 	_required = []
 	_factory = None
@@ -580,7 +598,7 @@ class ExternalText(BaseMetadataObject):
 			self.id = self.id = factory.metadata_base + self.__class__._uri_segment + ident
 
 
-class Text(BaseMetadataObject):
+class Text(ContentResource):
 	_type = "cnt:ContentAsText"
 	_required = ["chars"]
 	_warn = ["format"]
@@ -596,24 +614,13 @@ class Text(BaseMetadataObject):
 		if language:
 			self.language = language
 
-class Audio(BaseMetadataObject):
+class Audio(ContentResource):
 	_type = "dctypes:Sound"
 	_required = ["@id"]
 	_warn = ["format"]
 	_uri_segment = "res"
 
-class XMLPtr(BaseMetadataObject):
-	_type = "dctypes:Text"
-	_required = ["@id"]
-	_warn = []
-	_uri_segment = "res"
-
-	def __init__(self, factory, ident, label="", mdhash={}):
-		super(XMLPtr, self).__init__(factory, ident, label, mdhash)
-		self.format = "text/xml"
-
-
-class Image(BaseMetadataObject):
+class Image(ContentResource):
 	_type = "dctypes:Image"
 	_required = ["@id"]
 	_warn = ["format", "height", "width"]
