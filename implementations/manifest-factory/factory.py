@@ -165,8 +165,13 @@ class ManifestFactory(object):
 	def choice(self, default, rest):
 		return Choice(self, default, rest)
 
-	def text(self, txt, language="", format=""):
-		return Text(self, txt, language, format)
+	def text(self, txt="", ident="", language="", format=""):
+		if not ident and not txt:
+			raise ConfigurationError("Text must have either a URI or embedded text")
+		elif txt:
+			return Text(self, txt, language, format)
+		else:
+			return ExternalText(self, ident, language, format)
 
 	def range(self, ident="", label="", mdhash={}):
 		return Range(self, ident, label, mdhash)
@@ -266,7 +271,7 @@ class BaseMetadataObject(object):
 		if not mdd:
 			raise ConfigurationError("Metadata Directory on Factory must be set to write to file")
 
-		js = self.toJSON(compact)
+		js = self.toJSON(top=True)
 		# Now calculate file path based on URI of top object
 		# ... which is self for those of you following at home
 		myid = js['@id']
@@ -553,6 +558,27 @@ class SpecificResource(BaseMetadataObject):
 		json = super(SpecificResource, self).toJSON(top)
 		json['full'] = json['full'].toJSON()
 		return json
+
+class ExternalText(BaseMetadataObject):
+	_type = "dcterms:Text"
+	_required = []
+	_factory = None
+	_warn = ["format"]
+	_uri_segment = "resources"
+
+	format = ""
+	language = ""
+
+	def __init__(self, factory, ident, language="", format=""):
+		self._factory = factory
+		self.format = format
+		self.language = language
+		self.type = self.__class__._type
+		if ident.startswith('http'):
+			self.id = ident
+		else:
+			self.id = self.id = factory.metadata_base + self.__class__._uri_segment + ident
+
 
 class Text(BaseMetadataObject):
 	_type = "cnt:ContentAsText"
