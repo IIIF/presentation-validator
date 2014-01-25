@@ -155,7 +155,10 @@ class MongoRest(object):
         """Creates/Updates whole document."""
 
         coll = self._collection(rtype)
-        js = request.json
+        try:
+            js = request.json
+        except:
+            abort(400, message="JSON is not well formed")
 
         if js.has_key('_id'):
             del js['_id']
@@ -187,9 +190,13 @@ class MongoRest(object):
     def post_multiple(self, identifier, rtype):
         """Creates new SINGLE document with server assigned identifier in collection"""
         coll = self._collection(rtype)
-        js = request.json
+
+        try:    
+            js = request.json
+        except:
+            abort(400, "JSON is not well formed")
         if js.has_key('@id') or js.has_key('_id'):
-            abort(400)
+            abort(400, "Cannot assign to an @id with POST")
 
         myname = "a%s" % uuid.uuid4()
         myid = self._make_id(identifier, rtype, myname)
@@ -327,7 +334,8 @@ def main():
                       help="MongoDB port")
     parser.add_option("-d", "--database", dest="database",
                       help="MongoDB database name")
-
+    parser.add_option('-p', '--prefix', dest="url_prefix", 
+                      help="URL Prefix in API pattern", default="")
     parser.add_option('-s', '--sort-keys', dest="sort_keys", default=True,
                        help="Should json output have sorted keys?")
     parser.add_option('--compact-json', dest="compact_json", default=False,
@@ -350,7 +358,7 @@ def main():
     compact_json = options.compact_json in ['True', True, '1']
     indent = options.indent_json
     jsonld = options.json_ld in ['True', True, '1']
-
+    url_prefix = options.url_prefix
 
     mr = MongoRest(
         host=options.mongodb_host,
@@ -361,7 +369,7 @@ def main():
         compact_json=compact_json,
         indent_json=indent,
         json_ld=jsonld,
-        url_prefix="iiif"
+        url_prefix=url_prefix
     )
 
     run(host=host, port=port, app=mr.get_bottle_app())
