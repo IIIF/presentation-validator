@@ -249,15 +249,9 @@ class MongoRest(object):
         return self._jsonify(resp, uri)
 
 
-    def debug(self):
-        return repr(self.app.routes)
-
-
     def dispatch_views(self):
 
         methods = ["get", "post", "put", "patch", "delete", "options"]
-
-        self.app.route('/debugRoutes', ['get'], self.debug)
 
         for m in methods:
             self.app.route('/%s<identifier>/<rtype>/<name>.json' % self.prefix,
