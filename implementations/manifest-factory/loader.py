@@ -1,0 +1,246 @@
+from factory import ManifestFactory
+from factory import PresentationError, MetadataError, ConfigurationError, StructuralError, RequirementError, DataError
+import StringIO
+import json
+
+class SerializationError(PresentationError):
+	pass
+
+class ManifestReader(object):
+
+	# Note: sc context could also mean 0.9 :(
+ 	contexts = {
+		'http://www.shared-canvas.org/ns/context.json' : '1.0',
+		'http://iiif.io/api/presentation/2/context.json' : '2.0'
+	}
+
+	def __init__(self, data, version=None):
+		# accept either string or parsed data
+		self.data = data
+		self.debug_stream = None
+		self.require_version = version
+
+	def buildFactory(self, version):
+		if self.require_version:
+			fac = ManifestFactory(version=self.require_version, convert_renamed=False)
+		else:
+			fac = ManifestFactory(version=version)
+		self.debug_stream = StringIO.StringIO()
+		fac.set_debug("warn")
+		fac.set_debug_stream(self.debug_stream)
+		return fac
+
+	def getVersion(self, js):
+		if not js.has_key('@context'):
+			raise SerializationError('Top level resource MUST have @context', js)
+		ctx = js['@context']
+		try:
+			version = self.contexts[ctx]
+		except:
+			raise SerializationError('Top level @context is not known', js)
+		if self.require_version and self.require_version != version:
+			raise SerializationError('Expected version %s context, got version %s' % (self.require_version, version))
+
+		return version
+
+	def get_warnings(self):
+		if self.debug_stream:
+			self.debug_stream.seek(0)
+			return self.debug_stream.readlines()	
+		else:
+			return []
+
+	def read(self):
+		data = self.data
+		if type(data) == dict:
+			js = data
+		else:
+			try:
+				js = json.loads(data)
+			except:
+				raise SerializationError("Data is not valid JSON", data)
+		version = self.getVersion(js)
+		factory = self.buildFactory(version)
+		self.factory = factory
+		return self.readObject(js)
+
+	def jsonld_to_langhash(self, js):
+		# convert from @language/@value[/@type]
+		# to {lang[ type]: value}
+		if type(js) in [str, unicode]:
+			return js
+		elif not js.has_key('@value'):
+			raise DataError("Missing @value for string", js)
+		else:
+			if js.get("@type", '') == "rdf:XMLLiteral":
+				l = js.get('@language', '')
+				if l:
+					l += " html"
+				else:
+					l = "html"
+				lh = {l : js['@value']}
+			elif js.has_key('@language'):
+				lh = {js['@language']:js['@value']}				
+			else:
+				# really? :P
+				lh = js['@value']
+			return lh
+
+	def readObject(self, js, parent=None, parentProperty=None):
+		# Recursively find top level object type, and build it in Factory
+		if not parent:
+			parent = self.factory
+
+		ident = js.get('@id', '')
+		try:
+			typ = js['@type']
+		except:
+			raise RequirementError('Every resource must have @type', parent)
+
+		# Black magic: 'sc:AnnotationList' --> parent.annotationList()
+		cidx = typ.find(':')
+		if cidx > -1:
+			fn = typ[cidx+1].lower() + typ[cidx+2:]
+		else:
+			raise StructuralError("Unknown resource class " + typ, parent)
+
+		if hasattr(parent, fn):
+			func = getattr(parent, fn)
+			try:
+				what = func(ident=ident)
+			except TypeError:
+				if fn == "choice":
+					# Have to construct default and items first
+					deflt = self.readObject(js['default'], parent, 'default')
+					itm = js['item']
+					itms = []
+					if type(itm) == list:
+						for i in itm:
+							if type(i) == dict:
+								itms.append(self.readObject(i, parent, 'item'))
+							else:
+								itms.append(i)
+					else:
+						if type(itm) == dict:
+							itms.append(self.readObject(itm, parent, 'item'))
+						else:
+							itms = [itm]
+					what = func(deflt, itms)
+					# We're done
+					return what
+				else:
+					what = func()
+		elif fn == "specificResource":
+			fullo = self.readObject(js['full'], parent)
+			try:
+				what = fullo.make_selection(js['selector'])
+				if js.has_key('style'):
+					what.style = js['style']
+			except:
+				# no selector, so just style ... already past the annotation...
+				what = self.factory.specificResource(fullo)
+				what.style = js['style']
+			# need to explicitly set @id because we didn't call with a func(ident=)
+			if js.has_key("@id"):
+				what.id = js['@id']
+			setattr(parent, parentProperty, what)
+			return what
+		else:
+			raise StructuralError("Unknown resource class " + typ + " from parent: " + parent._type, parent)
+
+		# Up front check for required properties in the INCOMING data
+		for req in what._required:
+			if not js.has_key(req):
+				if what._structure_properties.has_key(req):
+					# If we're minimal in our parent, then allow missing structure
+					if parentProperty and parent._structure_properties.get(parentProperty, {}).get('minimal', False):
+						continue 
+					raise StructuralError("%s['%s'] not present and required" % (what._type, req), what)
+				else:
+					raise RequirementError("%s['%s'] not present and required" % (what._type, req), what)
+
+		# Configure the object from JSON
+		for (k,v) in js.items():
+
+			# Maybe convert up to latest
+			if not self.require_version and what._renamed_properties.has_key(k):
+				k = what._renamed_properties[k]
+			elif self.require_version == '1.0':
+				# check we're not a NEW name
+				for newname in what._renamed_properties.values():
+					if k == newname:
+						raise DataError("Saw new 2.0 property name in 1.0 manifest: %s" % k, what)
+
+			# Recurse
+			if what._structure_properties.has_key(k):
+				if type(v) == list:
+					for sub in v:
+						if type(sub) == dict:
+							subo = self.readObject(sub, what, k)
+						elif type(sub) in [str, unicode] and sub.startswith('http'):
+							# pointer to a resource (eg canvas in structures)
+							# need to just add it to the list							
+							getattr(what, k).append(sub)	
+						else:
+							raise StructuralError("Can't create object for: %r" % sub, what)
+				elif what._structure_properties[k].get('list', False):
+					raise StructuralError("%s['%s'] must be a list, got: %s" % (what._type, k, v), what)
+				elif type(v) == dict:
+					subo = self.readObject(v, what, k)
+				elif type(v) in [str, unicode] and (v.startswith('http') or v.startswith('urn:') or v.startswith('_:')):
+					setattr(what, k, v)
+				else:
+					raise StructuralError("%s['%s'] has broken value: %r" % (what._type, k, v), what )
+
+			# Skip past magic keys we've already processed
+			elif k in ['@id', '@type', '@context']:
+				continue
+			# Process metadata pairs
+			elif k  == 'metadata':
+				if type(v) == list:
+					for item in v:
+						iv = item['value']
+						if type(iv) == dict:
+							iv = self.jsonld_to_langhash(iv)
+						il = item['label']
+						if type(il) == dict:
+							il = self.jsonld_to_langhash(il)
+						lh = {il: iv}
+
+						what.set_metadata(lh)
+				else:
+					# Actually this is an error
+					raise DataError("Metadata must be a list", what)
+			# Process descriptive fields
+			elif k in ['label', 'attribution', 'description']:
+				# need to reverse the language magic
+				kfn = getattr(what, "set_%s" % k)
+				if type(v) == list:
+					nlist = []
+					for item in v:
+						# {@value:bla, @language:en}
+						lh = self.jsonld_to_langhash(item)
+						nlist.append(lh)
+					kfn(nlist)
+				elif type(v) in [str, unicode]:
+					kfn(v)
+				elif type(v) == dict:
+					kfn(self.jsonld_to_langhash(v))
+				else:
+					raise DataError("Unknown type for %s" % k, what)
+
+			elif k == 'start_canvas':
+				what.set_start_canvas(v)
+			elif k in ['agent', 'date', 'location']:
+				# Magically upgrade 0.9?
+				if self.require_version and self.require_version != "0.9":
+					raise RequirementError("Old property from 0.9 seen: %s expected version %s" % (k, self.require_version))
+				pass
+			elif k == "resources":
+				# XXX Used in full annotation list response
+				pass
+
+			else:
+				setattr(what, k, v)
+
+		return what
