@@ -364,7 +364,7 @@ class BaseMetadataObject(object):
 		# --> [{"@value": "something in french", "@language": "fr"}, ...]
 		l = []
 		for (k,v) in lh.items():
-			if 'html' in k:
+			if 'html' in k or (v[0] == '<' and v[-1] == '>'):
 				k = k.replace("html", '').strip()
 				if not html:
 					raise DataError("Cannot have HTML in '%s', only plain text" % v, self)
@@ -395,10 +395,10 @@ class BaseMetadataObject(object):
 							if not elm.tag in GOOD_HTML_TAGS:
 								self.maybe_warn("Risky HTML tag '%s' in '%s'" % (elm.tag, v))
 						# Cannot keep CDATA sections separate from text when parsing in LXML :(
-
-				h = OrderedDict([("@type","rdf:XMLLiteral"), ("@value",v)])
 				if k:
-					h['@language'] = k
+					h = OrderedDict([("@value",v), ("@language",k)])
+				else:
+					h = v
 				l.append(h)				
 			else:
 				l.append(OrderedDict([("@value",v), ("@language",k)]))
