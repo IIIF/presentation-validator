@@ -115,6 +115,7 @@ def test_fixtures():
 		fh = file(fn)
 		data = fh.read()
 		fh.close()
+		print "Manifest: %s" % mfid 
 		reader = ManifestReader(data)
 		nman = reader.read()
 		data2 = nman.toString(compact=False)
@@ -151,7 +152,6 @@ def test_errors():
 		try:
 			passes += do_test(data, manifest.label, errorMap[mfid])
 		except TestError, e:
-			# print "   => %s: %s" % (e.__class__.__name__, e)
 			print "Failed for: %s" % manifest.label
 		except:
 			raise	

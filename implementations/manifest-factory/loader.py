@@ -3,6 +3,11 @@ from factory import PresentationError, MetadataError, ConfigurationError, Struct
 import StringIO
 import json
 
+try:
+	from pyld import jsonld
+except:
+	jsonld = None
+
 class SerializationError(PresentationError):
 	pass
 
@@ -58,11 +63,21 @@ class ManifestReader(object):
 			try:
 				js = json.loads(data)
 			except:
-				raise SerializationError("Data is not valid JSON", data)
+				raise SerializationError("Data is not valid JSON", data)				
+
+		# Try to see if we're valid JSON-LD before further testing
+
 		version = self.getVersion(js)
 		factory = self.buildFactory(version)
 		self.factory = factory
-		return self.readObject(js)
+		top = self.readObject(js)
+		if jsonld:
+			try:
+				jsonld.expand(js)
+			except Exception, e:
+				raise SerializationError("Data is not valid JSON-LD: %r" % e, data)
+		return top
+
 
 	def jsonld_to_langhash(self, js):
 		# convert from @language/@value[/@type]
@@ -72,17 +87,9 @@ class ManifestReader(object):
 		elif not js.has_key('@value'):
 			raise DataError("Missing @value for string", js)
 		else:
-			if js.get("@type", '') == "rdf:XMLLiteral":
-				l = js.get('@language', '')
-				if l:
-					l += " html"
-				else:
-					l = "html"
-				lh = {l : js['@value']}
-			elif js.has_key('@language'):
+			if js.has_key('@language'):
 				lh = {js['@language']:js['@value']}				
 			else:
-				# really? :P
 				lh = js['@value']
 			return lh
 
