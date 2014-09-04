@@ -69,22 +69,18 @@ CVS_VIEWINGHINTS = ['non-paged']
 RNG_VIEWINGHINTS = ['top', 'individuals', 'paged', 'continuous']
 VIEWINGDIRS = ['left-to-right', 'right-to-left', 'top-to-bottom', 'bottom-to-top']
 
-# Also
-#   Canvas.otherContent --> other_content
-#   Canvas.resources --> images 
-# lives in Canvas.__setattr__, as AnnotationList has a resources list
-
 BAD_HTML_TAGS = ['script', 'style', 'object', 'form', 'input']
 GOOD_HTML_TAGS = ['a', 'b', 'br', 'i', 'img', 'p', 'span']
 
 KEY_ORDER = ["@context", "@id", "@type", "@value", "@language", "label", "value",
              "metadata", "description", "thumbnail", "attribution", "license", "logo",
-             "format", "height", "width", "scale_factors", "tile_width", "tile_height",
-             "formats", "qualities", "viewingDirection", "viewing_direction", "viewingHint", 
-             "viewing_hint", "profile", "see_also", "search",
-             "seeAlso", "within", "motivation", "stylesheet", "resource", 
+             "format", "height", "width", "startCanvas",
+             "viewingDirection", "viewingHint", 
+             "profile", "seeAlso", "search", "formats", "qualities",
+			 "scale_factors", "scaleFactors", "tile_width", "tile_height", "tiles", "sizes",
+             "within", "motivation", "stylesheet", "resource", 
              "on", "default", "item", "style", "full", "selector", "chars", "language", 
-             "sequences", "structures", "canvases", "resources", "images", "other_content", "otherContent" ] 
+             "sequences", "structures", "canvases", "resources", "images", "otherContent" ] 
 
 KEY_ORDER_HASH = dict([(KEY_ORDER[x],x) for x in range(len(KEY_ORDER))])
 
@@ -94,9 +90,8 @@ class ManifestFactory(object):
 	image_base = ""
 	metadata_dir = ""
 	add_lang = False
-	convert_renamed = True
 
-	def __init__(self, version="2.0", mdbase="", imgbase="", mddir="", lang="en", convert_renamed=True):
+	def __init__(self, version="2.0", mdbase="", imgbase="", mddir="", lang="en"):
 		""" mdbase: (string) URI to which identities will be appended for metadata
 		imgbase: (string) URI to which image identities will be appended for IIIF Image API
 		mddir: (string) Directory where metadata files will be written
@@ -123,8 +118,6 @@ class ManifestFactory(object):
 			self.context_uri = "http://www.shared-canvas.org/ns/context.json"
 		else:
 			raise ConfigurationError("Unknown Presentation API Version: " + version )
-
-		self.convert_renamed = convert_renamed
 
 		# Default Image API info
 		self.default_image_api_version = -1
@@ -302,9 +295,6 @@ class BaseMetadataObject(object):
 	_extra_properties = []
 	_integer_properties = []
 	_structure_properties = {}
-	_renamed_properties = {'viewingHint':'viewing_hint', 
-				 'viewingDirection':'viewing_direction', 
-				 'seeAlso':'see_also'}
 
 	def __init__(self, factory, ident="", label="", mdhash={}, **kw):
 		self._factory = factory
@@ -338,8 +328,6 @@ class BaseMetadataObject(object):
 		self.related = ""
 
 	def __setattr__(self, which, value):
-		if self._renamed_properties.has_key(which) and self._factory.convert_renamed:
-			which = self._renamed_properties[which]
 		if which[0] != "_" and not which in self._properties and not which in self._extra_properties and not which in self._structure_properties.keys():
 			self.maybe_warn("Setting non-standard field '%s' on resource of type '%s'" % (which, self._type))
 		elif which[0] != '_' and not type(value) in [str, unicode, list, dict] and not which in self._integer_properties and not isinstance(value, BaseMetadataObject) and not isinstance(value, OrderedDict):
@@ -448,7 +436,7 @@ class BaseMetadataObject(object):
 		if type(value) in [str, unicode]:
 			if self._factory.add_lang:
 				value = self.langhash_to_jsonld({self._factory.default_lang : value}, html)
-			elif value[0] == '<' and value[-1] == '>':
+			elif value and value[0] == '<' and value[-1] == '>':
 				self.test_html(value)
 		elif type(value) == dict:
 			# {"en:"Something",fr":"Quelque Chose"}
@@ -460,7 +448,7 @@ class BaseMetadataObject(object):
 				if type(i) in [str, unicode]:
 					if self._factory.add_lang:
 						nl.extend(self.langhash_to_jsonld({self._factory.default_lang : i}, html))
-					elif value[0] == '<' and value[-1] == '>':
+					elif value and value[0] == '<' and value[-1] == '>':
 						self.test_html(i)
 						nl.append(i)
 				elif type(i) == dict:
@@ -783,20 +771,15 @@ class Canvas(ContentResource):
 	_viewing_hints = CVS_VIEWINGHINTS
 	_extra_properties = ['height', 'width']
 	_integer_properties = ['height', 'width']
-	_renamed_properties = {'viewingHint':'viewing_hint', 
-						   'viewingDirection':'viewing_direction', 
-						   'seeAlso':'see_also',
-					 	   'otherContent':'other_content',
-					 	   'resources':'images'}
 	height = 0
 	width = 0
 	images = []
-	other_content = []
+	otherContent = []
 
 	def __init__(self, *args, **kw):
 		super(Canvas, self).__init__(*args, **kw)
 		self.images = []
-		self.other_content = []
+		self.otherContent = []
 		self.height = 0
 		self.width = 0
 
@@ -807,7 +790,7 @@ class Canvas(ContentResource):
 	def add_annotation(self, imgAnno):
 		self.images.append(imgAnno)
 	def add_annotationList(self, annoList):
-		self.other_content.append(annoList)
+		self.otherContent.append(annoList)
 
 	def annotation(self, *args, **kw):
 		anno = self._factory.annotation(*args, **kw)
@@ -830,11 +813,6 @@ class Canvas(ContentResource):
 				raise StructuralError("Annotations in Canvas['images'] must have Images for their resources, got: %r" % res, self)
 
 		d = super(Canvas, self).toJSON(top)
-
-		# other_content WAS otherContent in 1.0
-		if self._factory.presentation_api_version[0] == '1' and d.has_key('other_content'):
-			d['otherContent'] = d['other_content']
-			del d['other_content']
 		return d
 
 
@@ -902,7 +880,7 @@ class SpecificResource(BaseMetadataObject):
 
 
 class ExternalText(ContentResource):
-	_type = "dcterms:Text"
+	_type = "dctypes:Text"
 	_required = []
 	_factory = None
 	_warn = ["format"]
@@ -1161,8 +1139,7 @@ Collection._structure_properties = {'collections' : {'subclass': Collection, 'mi
 Manifest._structure_properties = {'sequences': {'subclass': Sequence, 'list':True}, 
 								  'structures': {'subclass': Range, 'list':True}}
 Sequence._structure_properties = {'canvases': {'subclass':Canvas, 'list':True}}
-Canvas._structure_properties = {'images': {'subclass': Annotation, 'list':True},
-								'other_content': {'subclass': AnnotationList, 'minimal':True, 'list':True}, 
+Canvas._structure_properties = {'images': {'subclass': Annotation, 'list':True}, 
 								'otherContent':  {'subclass': AnnotationList, 'minimal':True, 'list':True}}
 AnnotationList._structure_properties = {'resources': {'subclass': Annotation, 'list':True}}
 Range._structure_properties = {'canvases': {'subclass':Canvas, 'list':True, 'minimal':True}, # Could be canvas.json#xywh= ...

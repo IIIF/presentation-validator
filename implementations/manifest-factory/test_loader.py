@@ -83,8 +83,6 @@ def test_remote():
 	 #"http://sr-svx-93.unifr.ch/metadata/iiif/bbb-0218/manifest.json"
 	 # "http://www.shared-canvas.org/impl/demo1d/res/manifest.json"
 	]
-
-
 	for u in urls:
 		fh = urllib.urlopen(u)
 		data = fh.read()
@@ -97,7 +95,6 @@ def test_remote():
 			js = nmfst.toJSON()
 		except Exception, e:
 			print "   => %s: %s" % (e.__class__.__name__, e)
-
 
 def test_fixtures():
 	top = '/%s/azaroth/Dropbox/Rob/Development/iiif/iiif.io/source/api/presentation/2.0/example/fixtures/collection.json' % HOMENAME

@@ -27,7 +27,7 @@ class ManifestReader(object):
 
 	def buildFactory(self, version):
 		if self.require_version:
-			fac = ManifestFactory(version=self.require_version, convert_renamed=False)
+			fac = ManifestFactory(version=self.require_version)
 		else:
 			fac = ManifestFactory(version=version)
 		self.debug_stream = StringIO.StringIO()
@@ -168,16 +168,6 @@ class ManifestReader(object):
 
 		# Configure the object from JSON
 		for (k,v) in js.items():
-
-			# Maybe convert up to latest
-			if not self.require_version and what._renamed_properties.has_key(k):
-				k = what._renamed_properties[k]
-			elif self.require_version == '1.0':
-				# check we're not a NEW name
-				for newname in what._renamed_properties.values():
-					if k == newname:
-						raise DataError("Saw new 2.0 property name in 1.0 manifest: %s" % k, what)
-
 			# Recurse
 			if what._structure_properties.has_key(k):
 				if type(v) == list:
