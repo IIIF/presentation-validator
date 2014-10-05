@@ -10,7 +10,7 @@ except:
 	import simplejson as json
 
 try:
-	# Only available in 2.7+
+	# Only available in 2.7
 	# This makes the code a bit messy, but eliminates the need
 	# ... for the locally hacked ordered json encoder
 	from collections import OrderedDict
@@ -87,9 +87,7 @@ KEY_ORDER_HASH = dict([(KEY_ORDER[x],x) for x in range(len(KEY_ORDER))])
 
 class ManifestFactory(object):
 	metadata_base = ""
-	image_base = ""
 	metadata_dir = ""
-	add_lang = False
 
 	def __init__(self, version="2.0", mdbase="", imgbase="", mddir="", lang="en"):
 		""" mdbase: (string) URI to which identities will be appended for metadata
@@ -120,7 +118,7 @@ class ManifestFactory(object):
 			raise ConfigurationError("Unknown Presentation API Version: " + version )
 
 		# Default Image API info
-		self.default_image_api_version = -1
+		self.default_image_api_version = "0"
 		self.default_image_api_level = -1
 		self.default_image_api_context = ""
 		self.default_image_api_profile = ""
@@ -164,7 +162,7 @@ class ManifestFactory(object):
 			raise ConfigurationError("Metadata API Base URI is not set")
 
 	def assert_base_image_uri(self):
-		if not self.image_base:
+		if not self.default_image_base_uri:
 			raise ConfigurationError("IIIF Image API Base URI is not set")
 
 	def set_base_metadata_dir(self, dir):
@@ -787,6 +785,20 @@ class Canvas(ContentResource):
 		self.height = h
 		self.width = w
 
+	def add_image_annotation(self, imgid, iiif):
+		# Make simple image annotation
+		anno = self.annotation()
+		image = anno.image(ident=imgid, iiif=iiif)
+		if iiif:
+			image.set_hw_from_iiif()
+		else:
+			if imgid.startswith('http'):
+				# take only last segment
+				imgid = os.path.split(imgid)[1]
+			self.set_hw_from_file(imgid)
+		self.set_hw(image.height, image.width)
+		return anno
+
 	def add_annotation(self, imgAnno):
 		self.images.append(imgAnno)
 	def add_annotationList(self, annoList):
@@ -966,7 +978,7 @@ class Image(ContentResource):
 				self.id = ident
 			else:
 				factory.assert_base_image_uri()
-				self.id = factory.image_base + ident
+				self.id = factory.default_base_image_uri + ident
 
 	def set_hw(self, h,w):
 		self.height = h
@@ -976,7 +988,7 @@ class Image(ContentResource):
 		if not self._identifier:
 			raise ConfigurationError("Image is not configured with IIIF support")
 
-		requrl = self._factory.image_base + self._identifier + '/info.json';
+		requrl = self._factory.default_base_image_uri + "/" + self._identifier + '/info.json';
 		try:
 			fh = urllib.urlopen(requrl)
 			data = fh.read()
@@ -994,9 +1006,15 @@ class Image(ContentResource):
 
 
 	def set_hw_from_file(self, fn):
+
 		# Try to do it automagically
 		if not os.path.exists(fn):
-			raise ValueError("Could not find image file: %s" % fn)
+			# Add base image dir
+			fn2 = self._factory.default_base_image_dir + '/' + fn
+			if not os.path.exists(fn2):
+				raise ValueError("Could not find image file: %s" % fn)
+			else:
+				fn = fn2
 
 		cmd = self._factory.whichid
 		if cmd:
