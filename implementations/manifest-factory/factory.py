@@ -151,7 +151,10 @@ class ManifestFactory(object):
 	def maybe_warn(self, msg):
 		if self.debug_level == "warn":
 			self.log_stream.write(msg + "\n")
-			self.log_stream.flush()
+			try:	
+				self.log_stream.flush()
+			except:
+				pass
 		elif self.debug_level == "error_on_warning":
 			# We don't know the type, just raise a MetadataError
 			raise MetadataError(msg)		
@@ -641,7 +644,7 @@ class Collection(BaseMetadataObject):
 	_type = "sc:Collection"
 	_uri_segment = ""
 	_required = ["@id", 'label']
-	_warn = []
+	_warn = ["description"]
 	collections = []
 	manifests = []
 
