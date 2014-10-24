@@ -97,7 +97,7 @@ def test_remote():
 			print "   => %s: %s" % (e.__class__.__name__, e)
 
 def test_fixtures():
-	top = '/%s/azaroth/Dropbox/Rob/Development/iiif/iiif.io/source/api/presentation/2.0/example/fixtures/collection.json' % HOMENAME
+	top = '/%s/azaroth/Development/IIIF/sites/iiif.io/source/api/presentation/2.0/example/fixtures/collection.json' % HOMENAME
 	fh = file(top)
 	data = fh.read()
 	fh.close()
@@ -108,7 +108,7 @@ def test_fixtures():
 	mfsts = []
 	for manifest in ncoll.manifests:
 		mfid = manifest.id
-		fn = mfid.replace('http://iiif.io/', '/%s/azaroth/Dropbox/Rob/Development/iiif/iiif.io/source/' % HOMENAME)
+		fn = mfid.replace('http://iiif.io/', '/%s/azaroth/Development/IIIF/sites/iiif.io/source/' % HOMENAME)
 		fh = file(fn)
 		data = fh.read()
 		fh.close()
@@ -128,7 +128,7 @@ def test_fixtures():
 
 
 def test_errors():
-	top = '/%s/azaroth/Dropbox/Rob/Development/iiif/iiif.io/source/api/presentation/2.0/example/errors/collection.json' % HOMENAME
+	top = '/%s/azaroth/Development/IIIF/sites/iiif.io/source/api/presentation/2.0/example/errors/collection.json' % HOMENAME
 	fh = file(top)
 	data = fh.read()
 	fh.close()
@@ -141,8 +141,9 @@ def test_errors():
 	passes = 0
 
 	for manifest in ncoll.manifests:
+		print "manifest: %s" % manifest.id
 		mfid = manifest.id
-		fn = mfid.replace('http://iiif.io/', '/%s/azaroth/Dropbox/Rob/Development/iiif/iiif.io/source/' % HOMENAME)
+		fn = mfid.replace('http://iiif.io/', '/%s/azaroth/Development/IIIF/sites/iiif.io/source/' % HOMENAME)
 		fh = file(fn)
 		data = fh.read()
 		fh.close()

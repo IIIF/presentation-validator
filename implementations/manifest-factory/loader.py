@@ -11,6 +11,25 @@ except:
 class SerializationError(PresentationError):
 	pass
 
+def load_document_local(url):
+    doc = {
+        'contextUrl': None,
+        'documentUrl': None,
+        'document': ''
+    }
+    if url == "http://iiif.io/api/presentation/2/context.json":
+    	fn = "contexts/context_20.json"
+    else:
+    	fn = "contexts/context_10.json"
+    fh = file(fn)
+    data = fh.read()
+    fh.close()
+    doc['document'] = data;
+    return doc
+       	
+if jsonld:
+	jsonld.set_document_loader(load_document_local)
+
 class ManifestReader(object):
 
 	# Note: sc context could also mean 0.9 :(
@@ -226,10 +245,10 @@ class ManifestReader(object):
 				else:
 					raise DataError("Unknown type for %s" % k, what)
 
-			elif k == 'start_canvas':
+			elif k == 'startCanvas':
 				what.set_start_canvas(v)
 			elif k in ['agent', 'date', 'location']:
-				# Magically upgrade 0.9?
+				# XXX Magically upgrade 0.9?
 				if self.require_version and self.require_version != "0.9":
 					raise RequirementError("Old property from 0.9 seen: %s expected version %s" % (k, self.require_version))
 				pass

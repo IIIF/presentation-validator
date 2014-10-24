@@ -123,7 +123,10 @@ class ManifestFactory(object):
 		self.default_image_api_context = ""
 		self.default_image_api_profile = ""
 		self.default_image_api_uri = ""
-		self.default_image_api_dir = ""		
+		self.default_image_api_dir = ""
+
+		self.default_base_image_uri = ""
+		self.default_base_image_dir = ""
 
 		self.debug_level = "warn"
 		self.log_stream = sys.stdout
@@ -159,13 +162,12 @@ class ManifestFactory(object):
 			# We don't know the type, just raise a MetadataError
 			raise MetadataError(msg)		
 
-
 	def assert_base_metadata_uri(self):
 		if not self.metadata_base:
 			raise ConfigurationError("Metadata API Base URI is not set")
 
 	def assert_base_image_uri(self):
-		if not self.default_image_base_uri:
+		if not self.default_base_image_uri:
 			raise ConfigurationError("IIIF Image API Base URI is not set")
 
 	def set_base_metadata_dir(self, dir):
@@ -291,8 +293,8 @@ class ManifestFactory(object):
 class BaseMetadataObject(object):
 
 	_properties = ['id', 'type', 'label', 'metadata', 'description', 'thumbnail',
-		'attribution', 'license', 'logo', 'service', 'see_also', 'within', 'related',
-		'viewing_hint', 'viewing_direction']
+		'attribution', 'license', 'logo', 'service', 'seeAlso', 'within', 'related',
+		'viewingHint', 'viewingDirection']
 	_extra_properties = []
 	_integer_properties = []
 	_structure_properties = {}
@@ -324,7 +326,7 @@ class BaseMetadataObject(object):
 		self.logo = ""
 
 		self.service = ""
-		self.see_also = ""
+		self.seeAlso = ""
 		self.within = ""
 		self.related = ""
 
@@ -492,33 +494,23 @@ class BaseMetadataObject(object):
 		if top:
 			d['@context'] = self._factory.context_uri
 
-		if d.has_key('viewing_hint'):
+		if d.has_key('viewingHint'):
 			if hasattr(self, '_viewing_hints'):
-				if not d['viewing_hint'] in self._viewing_hints:
-					msg = "'%s' not a known viewing hint for type '%s': %s" % (d['viewing_hint'], self._type, ' '.join(self._viewing_hints))
+				if not d['viewingHint'] in self._viewing_hints:
+					msg = "'%s' not a known viewing hint for type '%s': %s" % (d['viewingHint'], self._type, ' '.join(self._viewing_hints))
 					self.maybe_warn(msg)
 			else:
-				msg = "Resource type '%s' does not have any known viewing_hints; '%s' given" % (self._type, d['viewing_hint'])
+				msg = "Resource type '%s' does not have any known viewingHints; '%s' given" % (self._type, d['viewingHint'])
 				self.maybe_warn(msg)
-			if self._factory.presentation_api_version[0] == '1':
-				d['viewingHint'] = d['viewing_hint']
-				del d['viewing_hint']
 
-		if d.has_key('viewing_direction'):
+		if d.has_key('viewingDirection'):
 			if hasattr(self, '_viewing_directions'):
-				if not d['viewing_direction'] in self._viewing_directions:
-					msg = "'%s' not a known viewing direction for type '%s': %s" % (d['viewing_direction'], self._type, ' '.join(self._viewing_directions))
+				if not d['viewingDirection'] in self._viewing_directions:
+					msg = "'%s' not a known viewing direction for type '%s': %s" % (d['viewingDirection'], self._type, ' '.join(self._viewing_directions))
 					raise DataError(msg, self)
 			else:
-				msg = "Resource type '%s' does not have any known viewing_directions; '%s' given" % (self._type, d['viewing_direction'])
+				msg = "Resource type '%s' does not have any known viewingDirections; '%s' given" % (self._type, d['viewingDirection'])
 				self.maybe_warn(msg)
-			if self._factory.presentation_api_version[0] == '1':
-				d['viewingDirection'] = d['viewing_direction']
-				del d['viewing_direction']
-
-		if self._factory.presentation_api_version[0] == '1' and d.has_key('see_also'):
-			d['seeAlso'] = d['see_also']
-			del d['see_also']
 
 		# Recurse into structures, maybe minimally
 		for (p,sinfo) in self._structure_properties.items():
@@ -722,7 +714,7 @@ class Sequence(BaseMetadataObject):
 	_warn = ["@id", "label"]
 	_viewing_directions = VIEWINGDIRS
 	_viewing_hints = MAN_VIEWINGHINTS
-	_extra_properties = ["start_canvas"]
+	_extra_properties = ["startCanvas"]
 
 	canvases = []
 
@@ -760,9 +752,9 @@ class Sequence(BaseMetadataObject):
 				okay = 1
 				break
 		if okay:
-			self.start_canvas = cvsid
+			self.startCanvas = cvsid
 		else:
-			raise RequirementError("Cannot set the start_canvas of a Sequence to a Canvas that is not in the Sequence")
+			raise RequirementError("Cannot set the startCanvas of a Sequence to a Canvas that is not in the Sequence")
 
 class Canvas(ContentResource):
 	_type = "sc:Canvas"
@@ -1102,11 +1094,11 @@ class Range(BaseMetadataObject):
 	_uri_segment = "range/"	
 	_required = ["@id", "label"]
 	_warn = ['canvases']
-	_extra_properties = ['start_canvas']
+	_extra_properties = ['startCanvas']
 	_viewing_hints = RNG_VIEWINGHINTS
 	_viewing_directions = VIEWINGDIRS
 
-	start_canvas = ""
+	startCanvas = ""
 	canvases = []
 	ranges = []
 
@@ -1142,9 +1134,9 @@ class Range(BaseMetadataObject):
 			raise ValueError("Expected string, dict or Canvas, got %r" % cvs)
 
 		if cvsid in self.canvases:
-			self.start_canvas = cvsid
+			self.startCanvas = cvsid
 		else:
-			raise RequirementError("Cannot set the start_canvas of a Range to a Canvas that is not in the Range")
+			raise RequirementError("Cannot set the startCanvas of a Range to a Canvas that is not in the Range")
 
 
 class Layer(BaseMetadataObject):
