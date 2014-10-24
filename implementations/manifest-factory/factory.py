@@ -63,7 +63,6 @@ class RequirementError(MetadataError):
 class DataError(MetadataError):
 	pass
 
-
 MAN_VIEWINGHINTS = ['individuals', 'paged', 'continuous']
 CVS_VIEWINGHINTS = ['non-paged']
 RNG_VIEWINGHINTS = ['top', 'individuals', 'paged', 'continuous']
@@ -298,6 +297,7 @@ class BaseMetadataObject(object):
 	_extra_properties = []
 	_integer_properties = []
 	_structure_properties = {}
+	_object_properties = ['thumbnail', 'license', 'logo', 'service', 'seeAlso', 'within', 'related']
 
 	def __init__(self, factory, ident="", label="", mdhash={}, **kw):
 		self._factory = factory
@@ -339,6 +339,8 @@ class BaseMetadataObject(object):
 			raise DataError("%s['%s'] does not accept a %s" % (self._type, which, type(value).__name__), self)				
 		elif which in self._integer_properties and type(value) != int:
 			raise DataError("%s['%s'] does not accept a %s, only an integer" % (self._type, which, type(value).__name__), self)
+		elif value and which in self._object_properties and not self.test_object(value):
+			raise DataError("%s['%s'] must have a URI or resource, got %s" % (self._type, which, repr(value)))
 
 		if hasattr(self, which) and hasattr(self, 'set_%s' % which):
 			fn = getattr(self, 'set_%s' % which)
@@ -349,6 +351,26 @@ class BaseMetadataObject(object):
 	def maybe_warn(self, msg):
 		msg = "WARNING: " + msg
 		self._factory.maybe_warn(msg)
+
+	def test_object(self, data):
+		# "http://..."
+		# {"@id": "http://..."}
+		# or list of above
+		if type(data) in [str, unicode]:
+			return data.startswith('http')
+		elif type(data) == dict:
+			return '@id' in data
+		elif type(data) == list:
+			for d in data:
+				if type(d) in [str, unicode] and not data.startswith('http'):
+					return False
+				elif type(d) == dict and not '@id' in d:
+					return False
+			return True
+		else:
+			print "data: %r" % data
+			return True
+
 
 	def test_html(self, data):
 		if etree:
