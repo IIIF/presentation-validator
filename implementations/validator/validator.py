@@ -60,7 +60,6 @@ class Validator(object):
             return json.dumps(data)
 
     def do_test(self):
-
         url = request.query.get('url', '')
         typ = request.query.get('type', 'manifest')
         version = request.query.get('version', '2.0')
@@ -107,12 +106,10 @@ class Validator(object):
         # response["content_type"] = "application/json"
         methods = 'GET'
         headers = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
-
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = methods
         response.headers['Access-Control-Allow-Headers'] = headers
         response.headers['Allow'] = methods
-
 
     def not_implemented(self, *args, **kwargs):
         """Returns not implemented status."""
@@ -123,7 +120,6 @@ class Validator(object):
 
     options_list = empty_response
     options_detail = empty_response
-
 
     def error(self, error, message=None):
         """Returns the error response."""
@@ -137,7 +133,6 @@ class Validator(object):
         self.app.hook('after_request')(self.after_request)
         return self.app
 
-
 def apache():
     v = Validator();
     return v.get_bottle_app()
@@ -145,7 +140,6 @@ def apache():
 def main():
     v = Validator()
     run(host='localhost', port=8080, app=v.get_bottle_app())
-
 
 if __name__ == "__main__":
     main()

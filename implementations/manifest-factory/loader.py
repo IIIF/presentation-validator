@@ -157,7 +157,12 @@ class ManifestReader(object):
 				else:
 					what = func()
 		elif fn == "specificResource":
-			fullo = self.readObject(js['full'], parent)
+			try:
+				fullo = self.readObject(js['full'], parent)
+			except StructuralError:
+				# Use Case: Canvas with FragmentSelector
+				# XXX Figure this out
+				raise				
 			try:
 				what = fullo.make_selection(js['selector'])
 				if js.has_key('style'):
@@ -171,6 +176,15 @@ class ManifestReader(object):
 				what.id = js['@id']
 			setattr(parent, parentProperty, what)
 			return what
+		elif fn == "contentAsText":
+			fn = 'text'
+			func = getattr(parent, fn)
+			text = js.get('chars', '')
+			ident = js.get('@id', '')
+			language = js.get('language', '')
+			format = js.get('format', '')
+			what = func(text, ident, language, format)
+
 		else:
 			raise StructuralError("Unknown resource class " + typ + " from parent: " + parent._type, parent)
 

@@ -83,7 +83,6 @@ KEY_ORDER = ["@context", "@id", "@type", "@value", "@language", "label", "value"
 
 KEY_ORDER_HASH = dict([(KEY_ORDER[x],x) for x in range(len(KEY_ORDER))])
 
-
 class ManifestFactory(object):
 	metadata_base = ""
 	metadata_dir = ""
@@ -266,7 +265,6 @@ class ManifestFactory(object):
 		if not ident:
 			raise RequirementError("Audio must have a real identity (Audio['@id'] cannot be empty)")			
 		return Audio(self, ident, label)		
-
 
 	def choice(self, default, rest):
 		return Choice(self, default, rest)
@@ -863,8 +861,8 @@ class Annotation(BaseMetadataObject):
 		self.resource = img
 		return img
 
-	def text(self, text, language="", format="text/plain"):
-		txt = self._factory.text(text, language, format)
+	def text(self, text="", ident="", language="", format="text/plain"):
+		txt = self._factory.text(text, ident, language, format)
 		self.resource = txt
 		return txt
 
@@ -891,7 +889,6 @@ class Annotation(BaseMetadataObject):
 			sr = SpecificResource(self._factory, self.resource)
 			sr.style = cls
 			self.resource = sr
-
 
 class SpecificResource(BaseMetadataObject):
 	_type = "oa:SpecificResource"
