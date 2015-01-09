@@ -75,7 +75,7 @@ KEY_ORDER = ["@context", "@id", "@type", "@value", "@language", "label", "value"
              "metadata", "description", "thumbnail", "attribution", "license", "logo",
              "format", "height", "width", "startCanvas",
              "viewingDirection", "viewingHint", 
-             "profile", "seeAlso", "search", "formats", "qualities",
+             "profile", "seeAlso", "search", "formats", "qualities", "supports",
 			 "scale_factors", "scaleFactors", "tile_width", "tile_height", "tiles", "sizes",
              "within", "motivation", "stylesheet", "resource", 
              "on", "default", "item", "style", "full", "selector", "chars", "language", 
@@ -334,7 +334,9 @@ class BaseMetadataObject(object):
 		self.related = ""
 
 	def __setattr__(self, which, value):
-		if which[0] != "_" and not which in self._properties and not which in self._extra_properties and not which in self._structure_properties.keys():
+		if which == 'context':
+			raise DataError("Must not set context on non-Service, non-root objects")
+		elif which[0] != "_" and not which in self._properties and not which in self._extra_properties and not which in self._structure_properties.keys():
 			self.maybe_warn("Setting non-standard field '%s' on resource of type '%s'" % (which, self._type))
 		elif which[0] != '_' and not type(value) in [str, unicode, list, dict] and not which in self._integer_properties and \
 			not isinstance(value, BaseMetadataObject) and not isinstance(value, OrderedDict):
@@ -542,7 +544,7 @@ class BaseMetadataObject(object):
 		if top:
 			d['@context'] = self._factory.context_uri
 
-
+		# Enumerations
 		if d.has_key('viewingHint'):
 			if hasattr(self, '_viewing_hints'):
 				if not d['viewingHint'] in self._viewing_hints:
@@ -567,7 +569,8 @@ class BaseMetadataObject(object):
 				if type(d[p]) == list:
 					newl = []
 					for s in d[p]:
-						done = self._single_toJSON(s, sinfo, p)
+						minimalOveride = self._should_be_minimal(s)
+						done = self._single_toJSON(s, sinfo, p, minimalOveride)
 						newl.append(done)
 					d[p] = newl
 				else:
@@ -577,10 +580,15 @@ class BaseMetadataObject(object):
 
 		return OrderedDict(sorted(d.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000)))
 
-	def _single_toJSON(self, instance, sinfo, prop):
+	def _should_be_minimal(self, what):
+		return False
+
+	def _single_toJSON(self, instance, sinfo, prop, minimalOveride=False):
 		# duck typing. Bite me. 
 		typ = sinfo.get('subclass', None)
 		minimal = sinfo.get('minimal', False)
+		if minimalOveride:
+			minimal=True
 		if type(instance) in [str, unicode]:
 			# Just a URI
 			return instance
@@ -719,6 +727,11 @@ class Manifest(BaseMetadataObject):
 		super(Manifest, self).__init__(*args, **kw)
 		self.sequences = []
 		self.structures = []
+
+	def _should_be_minimal(self, what):
+		if isinstance(what, Sequence) and self.sequences.index(what) > 0:
+			return True
+		return False
 
 	def add_sequence(self, seq):
 		# verify identity doesn't conflict with existing sequences
@@ -1198,6 +1211,12 @@ class Service(BaseMetadataObject):
 		BaseMetadataObject.__init__(self, factory, ident, label)
 		self.context = context
 		self.profile = profile
+
+	def __setattr__(self, which, value):
+		if which == "context":	
+			object.__setattr__(self, which, value)			
+		else:
+			BaseMetadataObject.__setattr__(self, which, value)
 
 class ImageService(Service):
 	_type = ""

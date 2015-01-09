@@ -1,4 +1,4 @@
-from factory import ManifestFactory
+from factory import ManifestFactory, Service
 from factory import PresentationError, MetadataError, ConfigurationError, StructuralError, RequirementError, DataError
 import StringIO
 import json
@@ -206,7 +206,10 @@ class ManifestReader(object):
 				if what._structure_properties.has_key(req):
 					# If we're minimal in our parent, then allow missing structure
 					if parentProperty and parent._structure_properties.get(parentProperty, {}).get('minimal', False):
-						continue 
+						continue
+					if req == 'canvases' and len(parent.sequences) > 1:
+						# Allow second and future sequences to be minimal
+						continue
 					raise StructuralError("%s['%s'] not present and required" % (what._type, req), what)
 				else:
 					raise RequirementError("%s['%s'] not present and required" % (what._type, req), what)
@@ -246,7 +249,10 @@ class ManifestReader(object):
 			elif k in ['@id', '@type']:
 				continue
 			elif k == '@context':
-				setattr(what, 'context', v)
+				if isinstance(what, Service):
+					setattr(what, 'context', v)
+				else:
+					continue
 			# Process metadata pairs
 			elif k  == 'metadata':
 				if type(v) == list:

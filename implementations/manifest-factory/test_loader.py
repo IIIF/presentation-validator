@@ -113,11 +113,13 @@ def test_fixtures():
 		data = fh.read()
 		fh.close()
 		print "Manifest: %s" % mfid 
+		js = json.loads(data)
 		reader = ManifestReader(data)
 		nman = reader.read()
-		data2 = nman.toString(compact=False)
-		if len(data) != len(data2):
+		js2 = nman.toJSON(top=True)
+		if js != js2:
 			print mfid
+			data2 = nman.toString(compact=False)
 			print "in: %s  out: %s" % (len(data), len(data2))
 			print "- is in, + is out"
 			for x in difflib.unified_diff(data.split('\n'), data2.split('\n')):
@@ -154,3 +156,7 @@ def test_errors():
 		except:
 			raise	
 
+
+if __name__ == "__main__":
+	test_fixtures()
+	test_errors()
