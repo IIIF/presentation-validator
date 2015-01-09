@@ -289,6 +289,8 @@ class ManifestFactory(object):
 	def service(self, ident="", label="", context="", profile=""):
 		return Service(self, ident, label, context, profile)
 
+### Note, id, type and context are always @(prop) in the output
+### Cannot have type --> dc:type, for example 
 
 class BaseMetadataObject(object):
 
@@ -298,7 +300,7 @@ class BaseMetadataObject(object):
 	_extra_properties = []
 	_integer_properties = []
 	_structure_properties = {}
-	_object_properties = ['thumbnail', 'license', 'logo', 'service', 'seeAlso', 'within', 'related']
+	_object_properties = ['thumbnail', 'license', 'logo', 'seeAlso', 'within', 'related', 'service']
 
 	def __init__(self, factory, ident="", label="", mdhash={}, **kw):
 		self._factory = factory
@@ -334,7 +336,8 @@ class BaseMetadataObject(object):
 	def __setattr__(self, which, value):
 		if which[0] != "_" and not which in self._properties and not which in self._extra_properties and not which in self._structure_properties.keys():
 			self.maybe_warn("Setting non-standard field '%s' on resource of type '%s'" % (which, self._type))
-		elif which[0] != '_' and not type(value) in [str, unicode, list, dict] and not which in self._integer_properties and not isinstance(value, BaseMetadataObject) and not isinstance(value, OrderedDict):
+		elif which[0] != '_' and not type(value) in [str, unicode, list, dict] and not which in self._integer_properties and \
+			not isinstance(value, BaseMetadataObject) and not isinstance(value, OrderedDict):
 			# Raise Exception for standard prop set to non standard value
 			# not perfect but stops the worst cases.				
 			raise DataError("%s['%s'] does not accept a %s" % (self._type, which, type(value).__name__), self)				
@@ -346,6 +349,8 @@ class BaseMetadataObject(object):
 		if hasattr(self, which) and hasattr(self, 'set_%s' % which):
 			fn = getattr(self, 'set_%s' % which)
 			return fn(value)
+		elif value and which in self._object_properties:
+			self._set_magic_resource(which, value)
 		else:
 			object.__setattr__(self, which, value)
 
@@ -361,6 +366,8 @@ class BaseMetadataObject(object):
 			return data.startswith('http')
 		elif type(data) == dict:
 			return '@id' in data
+		elif isinstance(data, BaseMetadataObject):
+			return True
 		elif type(data) == list:
 			for d in data:
 				if type(d) in [str, unicode] and not data.startswith('http'):
@@ -369,7 +376,7 @@ class BaseMetadataObject(object):
 					return False
 			return True
 		else:
-			print "data: %r" % data
+			print "expecing a resource, got: %r" % data
 			return True
 
 
@@ -493,8 +500,11 @@ class BaseMetadataObject(object):
 		return self._set_magic('attribution', value)
 
 	def _set_magic_resource(self, which, value):
-		# allow: string or dict, and magically generate list thereof
-		current = getattr(self, which)
+		# allow: string/object/dict, and magically generate list thereof
+		try:
+			current = getattr(self, which)
+		except:
+			current = None
 		if not current:
 			object.__setattr__(self, which, value)
 		elif type(current) == list:
@@ -514,6 +524,9 @@ class BaseMetadataObject(object):
 		for (k, v) in d.items():
 			if not v or k[0] == "_":
 				del d[k]
+		if d.has_key('context'):
+			d['@context'] = d['context']
+			del d['context']
 		for e in self._required:
 			if not d.has_key(e):
 				if self._structure_properties.has_key(e):
@@ -528,9 +541,7 @@ class BaseMetadataObject(object):
 					self.maybe_warn(msg)
 		if top:
 			d['@context'] = self._factory.context_uri
-		elif d.has_key('context'):
-			d['@context'] = d['context']
-			del d['context']
+
 
 		if d.has_key('viewingHint'):
 			if hasattr(self, '_viewing_hints'):
@@ -563,20 +574,6 @@ class BaseMetadataObject(object):
 					if sinfo.get('list', False):
 						raise StructuralError("%s['%s] must be a list, got %r" % (self._type, p, d[p]), self)
 					d[p] = self._single_toJSON(d[p], sinfo, p)
-
-		# # might have raw dicts in: service
-		# if d.has_key('service'):
-		# 	serv = d['service']
-		# 	if type(serv) == list:
-		# 		nl = []
-		# 		for s in serv:
-		# 			if type(s) == dict:
-		# 				nl.append(OrderedDict(sorted(s.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000))))
-		# 			else:
-		# 				nl.append(s)
-		# 		d['service'] = nl
-		# 	elif type(serv) == dict:
-		# 		d['service'] = OrderedDict(sorted(serv.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000)))
 
 		return OrderedDict(sorted(d.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000)))
 
@@ -648,10 +645,9 @@ class BaseMetadataObject(object):
 		fh.write(out)
 		fh.close()
 
-	def service(self, ident, label="", context="", profile=""):
+	def add_service(self, ident, label="", context="", profile=""):
 		svc = self._factory.service(ident, label, context, profile)
-
-
+		self.service = svc
 		return svc
 
 
@@ -1192,12 +1188,14 @@ class Service(BaseMetadataObject):
 	_uri_segment = ""
 	_required = ["@id"]
 	_warn = ["@context", "profile"]
+	_extra_properties = ['context', 'profile']
 	context = ""
+
 
 	def __init__(self, factory, ident, label="", context="", profile=""):
 		if not ident.startswith('http'):
 			raise RequirementError("Services must have an http[s] URI")
-		super(Service, self).__init__(self, factory, ident, label)
+		BaseMetadataObject.__init__(self, factory, ident, label)
 		self.context = context
 		self.profile = profile
 
@@ -1213,7 +1211,7 @@ class ImageService(Service):
 			# prepend factory.base before passing up
 			ident = factory.default_base_image_uri + '/' + ident	
 
-		super(Service, self).__init__(self, factory, ident, label)
+		BaseMetadataObject.__init__(self, factory, ident, label)
 
 		if not context:
 			self.context = factory.default_image_api_context
@@ -1243,7 +1241,7 @@ SpecificResource._structure_properties = {'full':{}}
 Choice._structure_properties = {'default':{}, 'item':{}}
 
 # Add Service object to all classes as structure
-for c in [Collection, Manifest, Sequence, Canvas, Range, Layer, Image, AnnotationList, Annotation]:
+for c in [Collection, Manifest, Sequence, Canvas, Range, Layer, Image, AnnotationList, Annotation, Service]:
 	c._structure_properties['service'] = {'subclass': Service}
 
 if __name__ == "__main__":
@@ -1265,13 +1263,8 @@ if __name__ == "__main__":
 		cvs.set_hw(1000,1000)
 		anno = cvs.annotation() 
 		# al = cvs.annotationList("foo") 
-
 		img = factory.image("f1r.c", iiif=True)
-		img.set_hw_from_file("/Users/azaroth/Box Sync/SharedCanvasData/m804/images/f1r.c.jpg")
 		img2 = factory.image("f1r", iiif=True)
-		img2.set_hw_from_file("/Users/azaroth/Box Sync/SharedCanvasData/m804/images/f1r.jpg")
-
 		chc = anno.choice(img, [img2])
-
 
 	print mf.toString(compact=False)

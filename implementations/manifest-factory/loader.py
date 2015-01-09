@@ -128,12 +128,17 @@ class ManifestReader(object):
 		try:
 			typ = js['@type']
 		except:
-			raise RequirementError('Every resource must have @type', parent)
+			if parentProperty != 'service':
+				raise RequirementError('Every resource must have @type', parent)
+			else:
+				typ = ''
 
 		# Black magic: 'sc:AnnotationList' --> parent.annotationList()
 		cidx = typ.find(':')
 		if cidx > -1:
 			fn = typ[cidx+1].lower() + typ[cidx+2:]
+		elif parentProperty == 'service':
+			fn = 'add_service'
 		else:
 			raise StructuralError("Unknown resource class " + typ, parent)
 
@@ -229,9 +234,19 @@ class ManifestReader(object):
 				else:
 					raise StructuralError("%s['%s'] has broken value: %r" % (what._type, k, v), what )
 
+			# Object properties
+			elif k in what._object_properties:
+				if type(v) == list:
+					for sub in v:
+						setattr(what, k, sub)
+				else:
+					setattr(what, k, v)
+
 			# Skip past magic keys we've already processed
-			elif k in ['@id', '@type', '@context']:
+			elif k in ['@id', '@type']:
 				continue
+			elif k == '@context':
+				setattr(what, 'context', v)
 			# Process metadata pairs
 			elif k  == 'metadata':
 				if type(v) == list:
