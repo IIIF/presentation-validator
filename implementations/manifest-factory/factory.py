@@ -12,7 +12,7 @@ except:
 try:
 	# Only available in 2.7
 	# This makes the code a bit messy, but eliminates the need
-	# ... for the locally hacked ordered json encoder
+	# for the locally hacked ordered json encoder
 	from collections import OrderedDict
 except:
 	# Backported...
@@ -286,6 +286,9 @@ class ManifestFactory(object):
 	def layer(self, ident="", label="", mdhash={}):
 		return Layer(self, ident, label, mdhash)
 
+	def service(self, ident="", label="", context="", profile=""):
+		return Service(self, ident, label, context, profile)
+
 
 class BaseMetadataObject(object):
 
@@ -489,6 +492,18 @@ class BaseMetadataObject(object):
 	def set_attribution(self, value):
 		return self._set_magic('attribution', value)
 
+	def _set_magic_resource(self, which, value):
+		# allow: string or dict, and magically generate list thereof
+		current = getattr(self, which)
+		if not current:
+			object.__setattr__(self, which, value)
+		elif type(current) == list:
+			new = current.append(value)
+			object.__setattr__(self, which, new)
+		else:
+			new = [current, value]
+			object.__setattr__(self, which, new)
+
 	def toJSON(self, top=False):
 		d = self.__dict__.copy()
 		if d.has_key('id') and d['id']:
@@ -513,6 +528,9 @@ class BaseMetadataObject(object):
 					self.maybe_warn(msg)
 		if top:
 			d['@context'] = self._factory.context_uri
+		elif d.has_key('context'):
+			d['@context'] = d['context']
+			del d['context']
 
 		if d.has_key('viewingHint'):
 			if hasattr(self, '_viewing_hints'):
@@ -546,19 +564,19 @@ class BaseMetadataObject(object):
 						raise StructuralError("%s['%s] must be a list, got %r" % (self._type, p, d[p]), self)
 					d[p] = self._single_toJSON(d[p], sinfo, p)
 
-		# might have raw dicts in: service
-		if d.has_key('service'):
-			serv = d['service']
-			if type(serv) == list:
-				nl = []
-				for s in serv:
-					if type(s) == dict:
-						nl.append(OrderedDict(sorted(s.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000))))
-					else:
-						nl.append(s)
-				d['service'] = nl
-			elif type(serv) == dict:
-				d['service'] = OrderedDict(sorted(serv.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000)))
+		# # might have raw dicts in: service
+		# if d.has_key('service'):
+		# 	serv = d['service']
+		# 	if type(serv) == list:
+		# 		nl = []
+		# 		for s in serv:
+		# 			if type(s) == dict:
+		# 				nl.append(OrderedDict(sorted(s.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000))))
+		# 			else:
+		# 				nl.append(s)
+		# 		d['service'] = nl
+		# 	elif type(serv) == dict:
+		# 		d['service'] = OrderedDict(sorted(serv.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000)))
 
 		return OrderedDict(sorted(d.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000)))
 
@@ -629,6 +647,13 @@ class BaseMetadataObject(object):
 		out = self._buildString(js, compact)
 		fh.write(out)
 		fh.close()
+
+	def service(self, ident, label="", context="", profile=""):
+		svc = self._factory.service(ident, label, context, profile)
+
+
+		return svc
+
 
 class ContentResource(BaseMetadataObject):
 
@@ -775,6 +800,8 @@ class Sequence(BaseMetadataObject):
 			self.startCanvas = cvsid
 		else:
 			raise RequirementError("Cannot set the startCanvas of a Sequence to a Canvas that is not in the Sequence")
+
+### Canvas is a ContentResource as it can be segmented using oa:SpecificResource
 
 class Canvas(ContentResource):
 	_type = "sc:Canvas"
@@ -971,19 +998,14 @@ class Image(ContentResource):
 		if iiif:
 			# add IIIF service -- iiif is version or bool
 			# ident is identifier
-			self.service = {
-				"@id": factory.default_base_image_uri + '/' + ident,
-			}
+			self.service = ImageService(factory, ident)
+
 			if factory.default_image_api_version[0] == '1':
 				self.id = factory.default_base_image_uri + '/' + ident + '/full/full/0/native.jpg'				
 			else:
 				self.id = factory.default_base_image_uri + '/' + ident + '/full/full/0/default.jpg'
-				self.service["@context"] = factory.default_image_api_context
 			self._identifier = ident
 			self.format = "image/jpeg"
-
-			if factory.default_image_api_level != -1:
-				self.service['profile'] = factory.default_image_api_profile
 
 		else:
 			# Static image
@@ -1165,6 +1187,44 @@ class Layer(BaseMetadataObject):
 	_warn = []
 
 
+class Service(BaseMetadataObject):
+	_type = ""
+	_uri_segment = ""
+	_required = ["@id"]
+	_warn = ["@context", "profile"]
+	context = ""
+
+	def __init__(self, factory, ident, label="", context="", profile=""):
+		if not ident.startswith('http'):
+			raise RequirementError("Services must have an http[s] URI")
+		super(Service, self).__init__(self, factory, ident, label)
+		self.context = context
+		self.profile = profile
+
+class ImageService(Service):
+	_type = ""
+	_uri_segment = ""
+	_required = ["@id", "@context"]
+	_warn = ["profile"]
+	context = ""	
+
+	def __init__(self, factory, ident, label="", context="", profile=""):
+		if not ident.startswith('http'):
+			# prepend factory.base before passing up
+			ident = factory.default_base_image_uri + '/' + ident	
+
+		super(Service, self).__init__(self, factory, ident, label)
+
+		if not context:
+			self.context = factory.default_image_api_context
+		else:
+			self.context = context
+		if not profile and factory.default_image_api_level != -1:
+			self.profile = factory.default_image_api_profile
+		elif profile:
+			self.profile = profile
+
+
 # Need to set these at the end, after the classes have been defined
 Collection._structure_properties = {'collections' : {'subclass': Collection, 'minimal': True, 'list': True}, 
 									'manifests': {'subclass': Manifest, 'minimal': True, 'list': True}}
@@ -1181,6 +1241,10 @@ Range._structure_properties = {'canvases': {'subclass':Canvas, 'list':True, 'min
 Annotation._structure_properties = {'resource': {}, 'on':{'subclass': Canvas}}  
 SpecificResource._structure_properties = {'full':{}}
 Choice._structure_properties = {'default':{}, 'item':{}}
+
+# Add Service object to all classes as structure
+for c in [Collection, Manifest, Sequence, Canvas, Range, Layer, Image, AnnotationList, Annotation]:
+	c._structure_properties['service'] = {'subclass': Service}
 
 if __name__ == "__main__":
 	factory = ManifestFactory()	

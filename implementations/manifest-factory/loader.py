@@ -82,7 +82,14 @@ class ManifestReader(object):
 			try:
 				js = json.loads(data)
 			except:
-				raise SerializationError("Data is not valid JSON", data)				
+				# could be badly encoded utf-8 with BOM
+				data = data.decode('utf-8')
+				if data[0] == u'\ufeff':
+					data = data[1:].strip()
+				try:
+					js = json.loads(data)
+				except:
+					raise SerializationError("Data is not valid JSON", data)				
 
 		# Try to see if we're valid JSON-LD before further testing
 
