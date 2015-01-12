@@ -208,11 +208,13 @@ class ManifestReader(object):
 					if parentProperty and parent._structure_properties.get(parentProperty, {}).get('minimal', False):
 						continue
 					if req == 'canvases' and len(parent.sequences) > 1:
-						# Allow second and future sequences to be minimal
+						# Do not Allow second and future sequences if not minimal
 						continue
 					raise StructuralError("%s['%s'] not present and required" % (what._type, req), what)
 				else:
 					raise RequirementError("%s['%s'] not present and required" % (what._type, req), what)
+			elif req == "canvases" and len(parent.sequences) > 1:
+				raise StructuralError("Second Sequence must not list canvases", what)
 
 		# Configure the object from JSON
 		for (k,v) in js.items():
