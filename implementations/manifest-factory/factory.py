@@ -659,6 +659,17 @@ class BaseMetadataObject(object):
 		return svc
 
 
+class MetadataPair(BaseMetadataObject):
+	_properties = ['id', 'type', 'label', 'value']
+	_type = ""
+	_extra_properties = []
+	_integer_properties = []
+	_structure_properties = {}
+	_object_properties = []
+	_uri_segment = ""
+	_required = ['label', 'value']
+
+
 class ContentResource(BaseMetadataObject):
 
 	def make_selection(self, selector, summarize=False):

@@ -265,7 +265,11 @@ class ManifestReader(object):
 						il = item['label']
 						if type(il) == dict:
 							il = self.jsonld_to_langhash(il)
-						lh = {il: iv}
+						elif type(il) == list:
+							# oh man :(
+							lh = {'label':il, 'value':iv}
+						else:
+							lh = {il: iv}
 
 						what.set_metadata(lh)
 				else:
