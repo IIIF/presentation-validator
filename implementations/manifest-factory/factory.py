@@ -273,12 +273,10 @@ class ManifestFactory(object):
 		return SpecificResource(self, full)
 
 	def text(self, txt="", ident="", language="", format=""):
-		if not ident and not txt:
-			raise ValueError("Text must have either a URI or embedded text")
-		elif txt:
-			return Text(self, txt, language, format)
-		else:
+		if ident:
 			return ExternalText(self, ident, language, format)
+		else txt:
+			return Text(self, txt, language, format)
 
 	def range(self, ident="", label="", mdhash={}):
 		return Range(self, ident, label, mdhash)
