@@ -1,9 +1,6 @@
 
 
-try:
-    import ljson as json
-except:
-    import json
+import json
 
 from bottle import Bottle, route, run, request, response, abort, error
 
@@ -14,19 +11,18 @@ from lxml import etree
 import uuid
 import urllib, urllib2, urlparse
 
-
 from factory import ManifestFactory
 
 fac = ManifestFactory()
-fac.set_base_metadata_uri("http://www.shared-canvas.org/services/chronam2/")
-fac.set_base_image_uri("http://www.shared-canvas.org/services/chronam/")
-fac.set_base_metadata_dir("/home/azaroth/Dropbox/SharedCanvas/services/chronam/cache/")
-fac.set_iiif_image_conformance(1.1, 1)
+fac.set_base_image_uri("http://iiif-dev.localhost/services/chronam/")
+fac.set_iiif_image_info(version="2.0", lvl="1")
+fac.set_base_metadata_dir('/Users/azaroth/Dropbox/Rob/Web/iiif-dev/prezi/chronam/')
+fac.set_base_metadata_uri("http://localhost:8080/")
+# http://localhost:8080/list/lccn/sn99021999/1915-03-27/ed-1/seq-1.json
 fac.set_debug('error')
 
 PFX = ""
 INFO_CACHE = {}
-
 
 class ChronAmManifestShim(object):
 
@@ -89,8 +85,6 @@ class ChronAmManifestShim(object):
             # And add link for alto to anno converter
             annol = cvs.annotationList(ident=baseIdent)
 
-
-
         out = mfst.toString(compact=False)
         response['content_type'] = 'application/json'
         return out        
@@ -148,7 +142,6 @@ class ChronAmManifestShim(object):
             anno.text(txt)
             anno.on = fac.metadata_base + "canvas/" + baseIdent + (".json#xywh=%s,%s,%s,%s" % (x,y,w,h))
 
-
         out = annol.toString(compact=False)
         response['content_type'] = "application/json"
         return out
@@ -196,7 +189,6 @@ def apache():
 def main():
     mr = ChronAmManifestShim()
     run(host='localhost', port=8080, app=mr.get_bottle_app())
-
 
 if __name__ == "__main__":
     main()
