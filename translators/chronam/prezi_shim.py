@@ -23,23 +23,36 @@ fac.set_debug('error')
 
 PFX = ""
 INFO_CACHE = {}
+CACHEDIR = '/Users/azaroth/Dropbox/Rob/Web/iiif-dev/prezi/chronam/'
 
 class ChronAmManifestShim(object):
 
     def __init__(self):
         pass
+
+    def fetch(self, url, format="json"):
+
+        try:
+            fh = urllib.urlopen(url)
+            data = fh.read()
+            fh.close()
+            if format == "json":
+                info = json.loads(data)
+            elif format == "xml":
+                info = etree.XML(data)
+            else:
+                info = data
+        except:
+            raise
+        return info        
         
     def make_info(self, identifier, date, edition, sequence):
-
         try:
             (imageW, imageH) = INFO_CACHE[tgt]
         except:
             tgt = "http://chroniclingamerica.loc.gov/lccn/%s/%s/%s/%s.rdf" % (identifier, date, edition, sequence)
             try:
-                fh = urllib.urlopen(tgt)
-                data = fh.read()
-                fh.close()
-                dom = etree.XML(data)
+                dom = self.fetch(tgt, "xml")
                 imageW = int(dom.xpath('//exif:width/text()', namespaces={'exif':'http://www.w3.org/2003/12/exif/ns#'})[0])
                 imageH = int(dom.xpath('//exif:height/text()', namespaces={'exif':'http://www.w3.org/2003/12/exif/ns#'})[0])
                 INFO_CACHE[tgt] = (imageW, imageH)
@@ -49,21 +62,113 @@ class ChronAmManifestShim(object):
         info = {"width":imageW, "height":imageH}
         return info
 
+    def do_top_collection(self):
+
+        # create or serve cached top level collection
+        cached = os.path.join(CACHEDIR, "top.json")
+        if os.path.exists(cached):
+            fh = file(cached)
+            out = fh.read()
+            fh.close()
+        else:
+
+            url = "http://chroniclingamerica.loc.gov/newspapers.txt"
+            data = self.fetch(url, format="txt")
+            lines = data.split('\n')[1:]
+
+            perState = {}
+            for l in lines:
+                l = l.strip()
+                if l:
+                    bits = l.split(' | ')
+                    state = bits[1].strip()
+                    name = bits[2].strip()
+                    lccn = bits[3].strip()
+                    try:
+                        perState[state].append([name, lccn])
+                    except:
+                        perState[state] = [[name, lccn]]
+
+            top = fac.collection(ident="top", label="Newspapers by State")
+
+            states = perState.keys()
+            states.sort()
+
+            for state in states:
+                slug = state.lower().replace(" ", "_")
+                scoll = top.collection(ident=slug, label="Newspapers in %s" % state)
+                for np in perState[state]:
+                    scoll.collection(ident="lccn/%s" % np[1], label=np[0])
+
+                sout = scoll.toFile(compact=False)
+            out = top.toFile(compact=False)
+
+        response['content_type'] = 'application/json'
+        return out
+
+    def do_state_collection(self, identifier):
+        cached = os.path.join(CACHEDIR, "%s.json" % identifier)
+        if not os.path.exists(cached):
+            # 404
+            abort(404)
+        else:
+            fh = file(cached)
+            out = fh.read()
+            fh.close()
+            response['content_type'] = 'application/json'
+            return out            
+
+
     def do_collection(self, identifier):
         # http://chroniclingamerica.loc.gov/lccn/sn85066387.json
-        pass
+
+        url = "http://chroniclingamerica.loc.gov/lccn/" + identifier + ".json"
+        info = self.fetch(url)
+
+        name = info.get('name', 'Unnamed Publication')
+        coll = fac.collection(ident="lccn/%s/collection" % identifier, label=name)
+
+        mdhash = {}
+        try:
+            mdhash["Place of Publication"] = info['place_of_publication']
+        except:
+            pass
+        try:
+            mdhash['First Year'] = info['start_year']
+        except:
+            pass
+        try:
+            mdhash['Last Year'] = info['end_year']
+        except:
+            pass
+        try:
+            mdhash['Publisher'] = info['publisher']
+        except:
+            pass
+
+        try:
+            mdhash['Topic'] = info['subject']
+        except:
+            pass
+
+        coll.set_metadata(mdhash)
+
+        for iss in info['issues']:
+            jurl = iss['url']
+            issurl = jurl.replace('http://chroniclingamerica.loc.gov/', '')
+            issurl = issurl.replace('.json', '/manifest')
+            isslabel = "(%s) %s" % (iss['date_issued'], name)
+            mfst = coll.manifest(ident=issurl, label=isslabel)
+
+        out = coll.toString(compact=False)
+        response['content_type'] = 'application/json'
+        return out         
 
     def do_manifest(self, identifier, date, edition):
         # http://chroniclingamerica.loc.gov/lccn/sn85066387/1907-03-17/ed-1.json
 
         tgt = "http://chroniclingamerica.loc.gov/lccn/%s/%s/%s.json" % (identifier, date, edition)
-        try:
-            fh = urllib.urlopen(tgt)
-            data = fh.read()
-            fh.close()
-            info = json.loads(data)
-        except:
-            raise
+        info = self.fetch(tgt)
 
         name = info['title']['name']
         name += " (%s)" % info['date_issued']
@@ -151,6 +256,8 @@ class ChronAmManifestShim(object):
         self.app.route("/lccn/<identifier>.json", "GET", self.do_collection)
         self.app.route("/lccn/<identifier>/<date>/<edition>/manifest.json", "GET", self.do_manifest)
         self.app.route("/list/lccn/<identifier>/<date>/<edition>/<sequence>.json", "GET", self.do_annoList)
+        self.app.route("/top.json", "GET", self.do_top_collection)
+        self.app.route("/<identifier>.json", "GET", self.do_state_collection)
 
 
     def after_request(self):

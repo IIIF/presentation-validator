@@ -275,7 +275,8 @@ class ManifestFactory(object):
 	def text(self, txt="", ident="", language="", format=""):
 		if ident:
 			return ExternalText(self, ident, language, format)
-		else txt:
+		else:
+			# may be empty string
 			return Text(self, txt, language, format)
 
 	def range(self, ident="", label="", mdhash={}):
@@ -463,7 +464,7 @@ class BaseMetadataObject(object):
 					v = self.langhash_to_jsonld({self._factory.default_lang : v})
 				elif type(v) == dict:
 					v = self.langhash_to_jsonld(v)
-			md.append(OrderedDict([("label", k), ("value", v)]))
+				md.append(OrderedDict([("label", k), ("value", v)]))
 
 	def _set_magic(self, which, value, html=True):
 		if type(value) in [str, unicode]:
