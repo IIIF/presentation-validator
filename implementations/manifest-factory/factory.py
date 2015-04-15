@@ -651,6 +651,7 @@ class BaseMetadataObject(object):
 		out = self._buildString(js, compact)
 		fh.write(out)
 		fh.close()
+		return out
 
 	def add_service(self, ident, label="", context="", profile=""):
 		svc = self._factory.service(ident, label, context, profile)
