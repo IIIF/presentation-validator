@@ -113,7 +113,7 @@ And add_image_annotation will create the annotation, set the height and width of
 Other Methods
 -------------
 
-You can also add existing objects to their parents with `add_<i>className</i>`:
+You can also add existing objects to their parents with `add_className`:
 
 ```python
 manifest = factory.manifest(label="A Manifest")
