@@ -104,7 +104,7 @@ A shorthand method for the above, if there's a IIIF service available:
 
 for p in pages:
     cvs = seq.canvas(ident="page-%s" % p, label="Page %s" % p)
-    cvs.add_image_annotation(ident="p%s" % p, iiif=True)
+    cvs.set_image_annotation(ident="p%s" % p, iiif=True)
 ```
 
 And add_image_annotation will create the annotation, set the height and width of both image and canvas to the size retrieved from the info.json response.
