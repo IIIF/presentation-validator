@@ -8,6 +8,10 @@ Requirements
 
 In order to automatically determine the dimensions of local image files, you will need to have either ImageMagick or the Python Image Library installed.  ImageMagick attempts to use a command line rather than module approach, which may not work under Windows (untested).  Neither will work with JPG 2000 files out of the box.  Alternatively, if the image is served from a IIIF Image API service, the info.json response can be used.  The library does not work with Python 3.X, but has been tested in various environments with 2.6+
 
+For 2.6 and before, you must have the OrderedDict backport installed.  In Python 2.7 it is part of the base library.
+
+You should have lxml installed, which is used to sanity check HTML values.  If it is not present, then the checks will just not be done.
+
 
 Initialization
 --------------
@@ -60,7 +64,10 @@ manifest.viewingDirection = "left-to-right"
 To add metadata with languages, pass in a dictionary with `label` and `value` keys, and the language tagged content in the value like:
 
 ```python
-manifest.set_metadata({'label' : {'en':"Date", 'fr':'Date'}, 'value': {'en':'15th Century', 'fr': 'Quinzieme Siecle'}})
+manifest.set_metadata(
+	{'label' : {'en':"Date", 'fr':'Date'}, 
+	 'value': {'en':'15th Century', 'fr': 'Quinzieme Siecle'}
+	})
 ```
 
 Repeated calls to set_metadata will not add new fields, rather than overwriting.
@@ -104,6 +111,35 @@ for p in pages:
 
 And it will create the annotation, set the height and width of both image and canvas to the size retrieved from the info.json response.
 
+
+Other Methods
+-------------
+
+You can also add existing objects to their parents with `add_className`:
+
+```python
+manifest = factory.manifest(label="A Manifest")
+coll = factory.collection(ident='top', label="Topmost Collection")
+coll.add_manifest(manifest)
+```
+
+And the same for add_collection, add_annotation, and so forth.
+
+Note that Ranges do not allow the creation of Canvases, nor Layers the creation of AnnotationLists.  These are created from Sequences and the AnnotationLists, respectively.  Existing Canvases must then be added to a Range with add_canvas(), that takes an additional argument of `frag` with the fragment to add to the end of the canvas's identifier.
+
+```python
+r = manifest.range(ident="range1", "Chapter 1")
+c = sequence.canvas(ident="canvas1", label="Page 1")
+r.add_canvas(c, frag="xywh=100,100,640,480")
+```
+
+You can set the start canvas of a sequence or a range with the set_start_canvas() method:
+
+```python
+seq = manifest.sequence()
+canvas1 = seq.canvas(ident="page1", label="First Page")
+seq.set_start_canvas(canvas1)
+```
 
 Serialization
 -------------
@@ -178,4 +214,19 @@ layer = annol.layer("transcription-1", label="2003 Transcription")
 annol2.within = layer
 ```
 
+Parsing
+-------
 
+Parsing requires the loader library, which imports the factory.  It implements a (equally poorly named) ManifestReader class that parses the data provided to it and returns the object hierarchy as if you had built it by hand with the ManifestFactory.
+
+```python
+
+# Data is either a string or parsed JSON
+reader = ManifestReader(data)
+manifest = reader.read()
+```
+
+And that's all there is to it.
+
+
+Details
