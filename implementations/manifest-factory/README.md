@@ -70,16 +70,14 @@ manifest.set_metadata(
 	})
 ```
 
-Repeated calls to set_metadata will not add new fields, rather than overwriting.
+Repeated calls to set_metadata will add new entries and leave the existing ones untouched.
 
 The objects are then used to create subsequent objects underneath them.  To create a sequence within the manifest, and then 10 canvases, each with a single image:
 
 ```python
 seq = manifest.sequence()  # unlabeled, anonymous sequence
 
-pages = range(10)
-for p in pages:
-
+for p in range(10):
 	# Create a canvas with uri slug of page-1, and label of Page 1
 	cvs = seq.canvas(ident="page-%s" % p, label="Page %s" % p)
 
@@ -100,7 +98,7 @@ for p in pages:
     cvs.width = img.width
 ```
 
-A shorthand method:
+A shorthand method for the above, if there's a IIIF service available:
 
 ```python
 
@@ -109,13 +107,13 @@ for p in pages:
     cvs.add_image_annotation(ident="p%s" % p, iiif=True)
 ```
 
-And it will create the annotation, set the height and width of both image and canvas to the size retrieved from the info.json response.
+And add_image_annotation will create the annotation, set the height and width of both image and canvas to the size retrieved from the info.json response.
 
 
 Other Methods
 -------------
 
-You can also add existing objects to their parents with `add_className`:
+You can also add existing objects to their parents with `add_<i>className</i>`:
 
 ```python
 manifest = factory.manifest(label="A Manifest")
@@ -220,6 +218,7 @@ Parsing
 Parsing requires the loader library, which imports the factory.  It implements a (equally poorly named) ManifestReader class that parses the data provided to it and returns the object hierarchy as if you had built it by hand with the ManifestFactory.
 
 ```python
+from loader import ManifestReader
 
 # Data is either a string or parsed JSON
 reader = ManifestReader(data)
@@ -228,5 +227,3 @@ manifest = reader.read()
 
 And that's all there is to it.
 
-
-Details
