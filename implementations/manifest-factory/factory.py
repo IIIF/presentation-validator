@@ -515,6 +515,11 @@ class BaseMetadataObject(object):
 			new = [current, value]
 			object.__setattr__(self, which, new)
 
+	def add_service(self, ident, label="", context="", profile=""):
+		svc = self._factory.service(ident, label, context, profile)
+		self.service = svc
+		return svc
+
 	def toJSON(self, top=False):
 		d = self.__dict__.copy()
 		if d.has_key('id') and d['id']:
@@ -652,22 +657,6 @@ class BaseMetadataObject(object):
 		fh.write(out)
 		fh.close()
 		return out
-
-	def add_service(self, ident, label="", context="", profile=""):
-		svc = self._factory.service(ident, label, context, profile)
-		self.service = svc
-		return svc
-
-
-class MetadataPair(BaseMetadataObject):
-	_properties = ['id', 'type', 'label', 'value']
-	_type = ""
-	_extra_properties = []
-	_integer_properties = []
-	_structure_properties = {}
-	_object_properties = []
-	_uri_segment = ""
-	_required = ['label', 'value']
 
 
 class ContentResource(BaseMetadataObject):
