@@ -838,7 +838,7 @@ class Canvas(ContentResource):
 
 	def add_image_annotation(self, imgid, iiif=True):
 		self.maybe_warn("add_image_annotation is deprecated; use set_image_annotation() please")
-		self.add_image_annotation(imgid, iiif)
+		self.set_image_annotation(imgid, iiif)
 
 	def set_image_annotation(self, imgid, iiif=True):
 		# Make simple image annotation
