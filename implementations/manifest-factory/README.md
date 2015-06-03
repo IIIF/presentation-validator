@@ -189,6 +189,11 @@ anno = annol.annotation()
 annol.toFile(compact=False)
 ```
 
+* image(identity, label, iiif, size, region)
+```python
+manifest.thumbnail = fac.image('f1r', 'Folio 1 Recto Thumbnail', iiif=True, size='120,')
+```
+
 * choice(default, restList)
 ```python
 img1 = fac.image("f1r.c", label="Color", iiif=True)
@@ -211,6 +216,8 @@ rng.add_canvas(cvs)
 layer = annol.layer("transcription-1", label="2003 Transcription")
 annol2.within = layer
 ```
+
+
 
 Parsing
 -------

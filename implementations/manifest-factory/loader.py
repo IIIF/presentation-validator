@@ -8,6 +8,19 @@ try:
 except:
 	jsonld = None
 
+try:
+	# Only available in 2.7
+	# This makes the code a bit messy, but eliminates the need
+	# for the locally hacked ordered json encoder
+	from collections import OrderedDict
+except:
+	# Backported...
+	try:
+		from ordereddict import OrderedDict
+	except:
+		print "You must: easy_install ordereddict"
+		raise
+
 class SerializationError(PresentationError):
 	pass
 
@@ -76,7 +89,7 @@ class ManifestReader(object):
 
 	def read(self):
 		data = self.data
-		if type(data) == dict:
+		if type(data) in [dict, OrderedDict]:
 			js = data
 		else:
 			try:
@@ -196,7 +209,13 @@ class ManifestReader(object):
 			language = js.get('language', '')
 			format = js.get('format', '')
 			what = func(text, ident, language, format)
-
+		elif hasattr(self.factory, fn):
+			# dctypes:Image --> factory.image(ident)
+			# dctypes:Audio --> factory.audio(ident)
+			func = getattr(self.factory, fn)
+			what = func(ident)
+			# Normally done by hierarchy, but we're from the factory direct
+			setattr(parent, parentProperty, what)
 		else:
 			raise StructuralError("Unknown resource class " + typ + " from parent: " + parent._type, parent)
 
@@ -222,17 +241,17 @@ class ManifestReader(object):
 			if what._structure_properties.has_key(k):
 				if type(v) == list:
 					for sub in v:
-						if type(sub) == dict:
+						if type(sub) in [dict, OrderedDict]:
 							subo = self.readObject(sub, what, k)
 						elif type(sub) in [str, unicode] and sub.startswith('http'):
 							# pointer to a resource (eg canvas in structures)
-							# need to just add it to the list							
-							getattr(what, k).append(sub)	
+							# Use magic setter to ensure listiness
+							what._set_magic_resource(k, sub)
 						else:
 							raise StructuralError("Can't create object for: %r" % sub, what)
 				elif what._structure_properties[k].get('list', False):
 					raise StructuralError("%s['%s'] must be a list, got: %s" % (what._type, k, v), what)
-				elif type(v) == dict:
+				elif type(v) in [dict, OrderedDict]:
 					subo = self.readObject(v, what, k)
 				elif type(v) in [str, unicode] and (v.startswith('http') or v.startswith('urn:') or v.startswith('_:')):
 					setattr(what, k, v)
