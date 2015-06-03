@@ -1,7 +1,7 @@
 
 import os, sys
 import commands
-import urllib
+import urllib2
 
 try:
 	import json
@@ -122,6 +122,7 @@ class ManifestFactory(object):
 		self.default_image_api_profile = ""
 		self.default_image_api_uri = ""
 		self.default_image_api_dir = ""
+		self.image_auth_token = ""
 
 		self.default_base_image_uri = ""
 		self.default_base_image_dir = ""
@@ -185,11 +186,14 @@ class ManifestFactory(object):
 	def set_default_label_language(self, lang):
 		self.default_lang = lang
 
-
 	def set_base_image_dir(self, dr):
 		if not dr:
 			raise ValueError("Must provide a directory name to set the base directory to")			
 		self.default_base_image_dir = dr
+
+
+	def set_iiif_image_auth_token(self, token):
+		self.image_auth_token = token
 
 	def set_base_image_uri(self, uri):
 		# No trailing / as that's what the base URI really is
@@ -256,10 +260,10 @@ class ManifestFactory(object):
 			self.assert_base_metadata_uri()
 		return AnnotationList(self, ident, label, mdhash)
 
-	def image(self, ident, label="", iiif=False):
+	def image(self, ident, label="", iiif=False, region='full', size='full'):
 		if not ident:
 			raise RequirementError("Images must have a real identity (Image['@id'] cannot be empty)")			
-		return Image(self, ident, label, iiif)
+		return Image(self, ident, label, iiif, region, size)
 
 	def audio(self, ident, label=""):
 		if not ident:
@@ -288,7 +292,7 @@ class ManifestFactory(object):
 	def service(self, ident="", label="", context="", profile=""):
 		return Service(self, ident, label, context, profile)
 
-### Note, id, type and context are always @(prop) in the output
+### Note: id, type and context are always @(prop) in the output
 ### Cannot have type --> dc:type, for example 
 
 class BaseMetadataObject(object):
@@ -322,11 +326,9 @@ class BaseMetadataObject(object):
 
 		self.description = ""
 		self.thumbnail = ""
-
 		self.attribution = ""
 		self.license = ""
 		self.logo = ""
-
 		self.service = ""
 		self.seeAlso = ""
 		self.within = ""
@@ -520,6 +522,17 @@ class BaseMetadataObject(object):
 		self.service = svc
 		return svc
 
+	def get_thumbnail(self, width=0, height=0, square=False):
+		# Check self for thumbnail
+		if this.thumbnail:
+			# Check if we have a IIIF Service and want width/height/square
+			# XXX Finish Me
+			if type(this.thumbnail) == list:
+				pass
+			return this.thumbnail
+		else: 
+			return None
+
 	def toJSON(self, top=False):
 		d = self.__dict__.copy()
 		if d.has_key('id') and d['id']:
@@ -608,7 +621,6 @@ class BaseMetadataObject(object):
 				return instance
 		elif type(instance) == dict:
 			raise StructuralError("%s['%s'] objects must be of type %s, got %s" % (self._type, prop, typ._type, instance.get('@type', None)), self)
-
 		else:
 			raise StructuralError("Saw unknown object in %s['%s']: %r" % (self._type, prop, instance), self)
 
@@ -642,7 +654,6 @@ class BaseMetadataObject(object):
 		mdb = self._factory.metadata_base
 		if not myid.startswith(mdb):
 			raise ConfigurationError("The @id of that object is not the base URI in the Factory")
-
 		fp = myid[len(mdb):]	
 		bits = fp.split('/')
 		if len(bits) > 1:
@@ -651,7 +662,6 @@ class BaseMetadataObject(object):
 				os.makedirs(mydir)
 			except OSError, e:
 				pass
-
 		fh = file(os.path.join(mdd, fp), 'w')
 		out = self._buildString(js, compact)
 		fh.write(out)
@@ -758,7 +768,6 @@ class Manifest(BaseMetadataObject):
 		rng = self._factory.range(*args, **kw)
 		self.add_range(rng)
 		return rng
-
 
 
 class Sequence(BaseMetadataObject):
@@ -997,7 +1006,7 @@ class Image(ContentResource):
 	_extra_properties = ['format', 'height', 'width']
 	_integer_properties = ['height', 'width']
 
-	def __init__(self, factory, ident, label, iiif=False):
+	def __init__(self, factory, ident, label, iiif=False, region='full', size='full'):
 		self._factory = factory
 		self.type = self.__class__._type
 		self.label = ""
@@ -1014,9 +1023,9 @@ class Image(ContentResource):
 			self.service = ImageService(factory, ident)
 
 			if factory.default_image_api_version[0] == '1':
-				self.id = factory.default_base_image_uri + '/' + ident + '/full/full/0/native.jpg'				
+				self.id = factory.default_base_image_uri + '/' + ident + '/%s/%s/0/native.jpg' % (region, size)				
 			else:
-				self.id = factory.default_base_image_uri + '/' + ident + '/full/full/0/default.jpg'
+				self.id = factory.default_base_image_uri + '/' + ident + '/%s/%s/0/default.jpg' % (region, size)
 			self._identifier = ident
 			self.format = "image/jpeg"
 
@@ -1039,7 +1048,11 @@ class Image(ContentResource):
 
 		requrl = self._factory.default_base_image_uri + "/" + self._identifier + '/info.json';
 		try:
-			fh = urllib.urlopen(requrl)
+			if self._factory.image_auth_token:
+				req = urllib2.Request(requrl, headers={'Authorization': self._factory.image_auth_token})
+			else:
+				req = urllib2.Request(requrl)
+			fh = urllib2.urlopen(req)
 			data = fh.read()
 			fh.close()
 		except:
@@ -1245,7 +1258,6 @@ class ImageService(Service):
 		elif profile:
 			self.profile = profile
 
-
 # Need to set these at the end, after the classes have been defined
 Collection._structure_properties = {'collections' : {'subclass': Collection, 'minimal': True, 'list': True}, 
 									'manifests': {'subclass': Manifest, 'minimal': True, 'list': True}}
@@ -1266,26 +1278,22 @@ Choice._structure_properties = {'default':{}, 'item':{}}
 # Add Service object to all classes as structure
 for c in [Collection, Manifest, Sequence, Canvas, Range, Layer, Image, AnnotationList, Annotation, Service]:
 	c._structure_properties['service'] = {'subclass': Service}
+	c._structure_properties['thumbnail'] = {'thumbnail': {'subclass':Image}}
 
 if __name__ == "__main__":
 	factory = ManifestFactory()	
-	factory.set_base_metadata_uri("http://www.example.org/metadata/")
-
-	factory.set_base_image_uri("http://www.example.org/iiif/")
+	factory.set_base_metadata_uri("http://www.example.org/iiif/prezi/")
+	factory.set_base_image_uri("http://www.example.org/iiif/image/")
 	factory.set_iiif_image_info(version="2.0", lvl="2")
 
 	mf = factory.manifest(label="Manifest")
 	mf.viewingHint = "paged"
 
 	seq = mf.sequence() 
-	for x in range(2):
-		# Mostly identity will come from incrementing number (f1r, f1v,...)
-		# or the image's identity
-
+	for x in range(1):
 		cvs = seq.canvas(ident="c%s" % x, label="Canvas %s" % x)  
 		cvs.set_hw(1000,1000)
-		anno = cvs.annotation() 
-		# al = cvs.annotationList("foo") 
+		anno = cvs.annotation()  
 		img = factory.image("f1r.c", iiif=True)
 		img2 = factory.image("f1r", iiif=True)
 		chc = anno.choice(img, [img2])
