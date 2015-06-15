@@ -114,6 +114,7 @@ class ManifestReader(object):
 			try:
 				jsonld.expand(js)
 			except Exception, e:
+				raise
 				raise SerializationError("Data is not valid JSON-LD: %r" % e, data)
 		return top
 
@@ -236,7 +237,9 @@ class ManifestReader(object):
 				raise StructuralError("Second Sequence must not list canvases", what)
 
 		# Configure the object from JSON
-		for (k,v) in js.items():
+		kvs = js.items()
+		kvs.sort()
+		for (k,v) in kvs:
 			# Recurse
 			if what._structure_properties.has_key(k):
 				if type(v) == list:
@@ -246,7 +249,13 @@ class ManifestReader(object):
 						elif type(sub) in [str, unicode] and sub.startswith('http'):
 							# pointer to a resource (eg canvas in structures)
 							# Use magic setter to ensure listiness
-							what._set_magic_resource(k, sub)
+							if what._structure_properties.has_key(k):
+								# super meta black magic
+								kls = what._structure_properties[k]['subclass'].__name__.lower()
+								addfn = getattr(what, "add_%s" % kls)
+								addfn(sub)
+							else:
+								what._set_magic_resource(k, sub)
 						else:
 							raise StructuralError("Can't create object for: %r" % sub, what)
 				elif what._structure_properties[k].get('list', False):

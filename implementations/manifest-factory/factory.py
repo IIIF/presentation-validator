@@ -592,7 +592,7 @@ class BaseMetadataObject(object):
 					d[p] = newl
 				else:
 					if sinfo.get('list', False):
-						raise StructuralError("%s['%s] must be a list, got %r" % (self._type, p, d[p]), self)
+						raise StructuralError("%s['%s'] must be a list, got %r" % (self._type, p, d[p]), self)
 					d[p] = self._single_toJSON(d[p], sinfo, p)
 
 		return OrderedDict(sorted(d.items(), key=lambda x: KEY_ORDER_HASH.get(x[0], 1000)))
@@ -757,6 +757,7 @@ class Manifest(BaseMetadataObject):
 			for r in self.structures:
 				if r.id == rng.id:
 					raise DataError("Cannot have two Ranges with the same identity", self)
+		rng._parent = self
 		self.structures.append(rng)
 
 	def sequence(self, *args, **kw):
@@ -847,7 +848,7 @@ class Canvas(ContentResource):
 
 	def add_image_annotation(self, imgid, iiif=True):
 		self.maybe_warn("add_image_annotation is deprecated; use set_image_annotation() please")
-		self.set_image_annotation(imgid, iiif)
+		return self.set_image_annotation(imgid, iiif)
 
 	def set_image_annotation(self, imgid, iiif=True):
 		# Make simple image annotation
@@ -1164,6 +1165,7 @@ class Range(BaseMetadataObject):
 	_extra_properties = ['startCanvas']
 	_viewing_hints = RNG_VIEWINGHINTS
 	_viewing_directions = VIEWINGDIRS
+	_parent = None
 
 	startCanvas = ""
 	canvases = []
@@ -1175,7 +1177,24 @@ class Range(BaseMetadataObject):
 		self.ranges = []
 
 	def add_canvas(self, cvs, frag="", start=False):
-		cvsid = cvs.id
+		try:
+			cvsid = cvs.id
+		except:
+			cvsid = cvs
+			# Make sure we actually identify a canvas
+			mf = self._parent
+			okay = False
+			testcvsid = cvsid
+			hashidx = testcvsid.find('#')
+			if hashidx > -1:
+				testcvsid == testcvsid[:hashidx]
+			for c in mf.sequences[0].canvases:
+				if testcvsid == c.id:
+					okay = True
+					break
+			if not okay:
+				raise StructuralError("Can't add a canvas to a range that is not in the sequence: (%s)" % cvsid)
+
 		if frag:
 			cvsid += frag
 		self.canvases.append(cvsid)
@@ -1267,6 +1286,7 @@ Sequence._structure_properties = {'canvases': {'subclass':Canvas, 'list':True}}
 Canvas._structure_properties = {'images': {'subclass': Annotation, 'list':True}, 
 								'otherContent':  {'subclass': AnnotationList, 'minimal':True, 'list':True}}
 AnnotationList._structure_properties = {'resources': {'subclass': Annotation, 'list':True}}
+
 Range._structure_properties = {'canvases': {'subclass':Canvas, 'list':True, 'minimal':True}, # Could be canvas.json#xywh= ...
 							   'ranges': {'subclass': Range, 'list':True, 'minimal':True}}
 
