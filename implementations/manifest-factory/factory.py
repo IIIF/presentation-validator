@@ -749,6 +749,12 @@ class Manifest(BaseMetadataObject):
 			for s in self.sequences:
 				if s.id == seq.id:
 					raise DataError("Cannot have two Sequences with the same identity", self)
+
+		# Label is only required if there is more than one sequence
+		if self.sequences:
+			seq._required.append("label")
+			if len(self.sequences) == 1:
+				self.sequences[0]._required.append("label")
 		self.sequences.append(seq)
 
 	def add_range(self, rng):
@@ -775,7 +781,7 @@ class Sequence(BaseMetadataObject):
 	_type = "sc:Sequence"
 	_uri_segment = "sequence/"
 	_required = ["canvases"]
-	_warn = ["@id", "label"]
+	_warn = ["@id"]
 	_viewing_directions = VIEWINGDIRS
 	_viewing_hints = MAN_VIEWINGHINTS
 	_extra_properties = ["startCanvas"]
@@ -1175,6 +1181,18 @@ class Range(BaseMetadataObject):
 		super(Range, self).__init__(factory, ident, label, mdhash)
 		self.canvases = []	
 		self.ranges = []
+
+	def __setattr__(self, which, value):
+		if which == 'viewingHint': 
+			if value == 'top':
+				# unset canvases from _warn
+				try:
+					self._warn.remove('canvases')
+				except:
+					pass
+			elif not 'canvases' in self._warn:
+				self._warn.append('canvases')
+		super(Range, self).__setattr__(which, value)
 
 	def add_canvas(self, cvs, frag="", start=False):
 		try:
