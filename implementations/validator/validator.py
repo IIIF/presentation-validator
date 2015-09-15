@@ -1,6 +1,9 @@
+#!/usr/bin/env python
 
 import json, urllib2, sys, os
 from functools import partial
+from urlparse import urlparse
+
 from bottle import Bottle, route, run, request, response, abort, error
 
 egg_cache = "/path/to/web/egg_cache"
@@ -66,10 +69,15 @@ class Validator(object):
         fmt = request.query.get('format', 'html')
 
         url = url.strip()
+
+        parsed_url = urlparse(url)
+        if not parsed_url.scheme.startswith('http'):
+            return self.format_response({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url}, fmt)
+
         try:
             (data, webhandle) = self.fetch(url)
         except:
-            return self.format_response({'okay':0,'error':'Cannot fetch url', 'url':url}, fmt)
+            return self.format_response({'okay': 0, 'error': 'Cannot fetch url', 'url': url}, fmt)
 
         # First check HTTP level
         ct = webhandle.headers.get('content-type', '')
