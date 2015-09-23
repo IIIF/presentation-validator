@@ -83,12 +83,16 @@ class ManifestReader(object):
 	def get_warnings(self):
 		if self.debug_stream:
 			self.debug_stream.seek(0)
-			return self.debug_stream.readlines()	
+			return self.debug_stream.readlines()
 		else:
 			return []
 
 	def read(self):
 		data = self.data
+
+		if not data:
+			raise SerializationError('Data was empty', data)
+
 		if type(data) in [dict, OrderedDict]:
 			js = data
 		else:
