@@ -1,10 +1,15 @@
 #!/usr/bin/env python
+# encoding: utf-8
+"""IIIF Presentation Validation Service"""
 
-import json, urllib2, sys, os
-from functools import partial
+import argparse
+import json
+import os
+import sys
+import urllib2
 from urlparse import urlparse
 
-from bottle import Bottle, route, run, request, response, abort, error
+from bottle import Bottle, abort, request, response, run
 
 egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
@@ -14,6 +19,7 @@ sys.path.append(os.path.dirname(__file__))
 
 from loader import ManifestReader
 
+
 class Validator(object):
 
     def fetch(self, url):
@@ -21,7 +27,7 @@ class Validator(object):
         try:
             wh = urllib2.urlopen(url)
         except urllib2.HTTPError, wh:
-            pass                   
+            pass
         data = wh.read()
         wh.close()
         return (data, wh)
@@ -56,15 +62,14 @@ class Validator(object):
 
     def format_response(self, data, fmt):
         if fmt == "html":
-            response.content_type="text/html"
+            response.content_type = "text/html"
             return self.make_html(data)
         else:
-            response.content_type="application/json"
+            response.content_type = "application/json"
             return json.dumps(data)
 
     def do_test(self):
         url = request.query.get('url', '')
-        typ = request.query.get('type', 'manifest')
         version = request.query.get('version', '2.0')
         fmt = request.query.get('format', 'html')
 
@@ -88,14 +93,15 @@ class Validator(object):
             # not json
             warnings.append("URL does not have correct content-type header: got \"%s\", expected JSON" % ct)
         if cors != "*":
-            warnings.append("URL does not have correct access-control-allow-origin header: got \"%s\", expected *" % cors)
+            warnings.append("URL does not have correct access-control-allow-origin header:"
+                            " got \"%s\", expected *" % cors)
 
         # Now check data
         reader = ManifestReader(data, version=version)
         err = None
         try:
             mf = reader.read()
-            js = mf.toJSON()
+            mf.toJSON()
             # Passed!
             okay = 1
         except Exception, err:
@@ -103,7 +109,7 @@ class Validator(object):
             okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {'url':url,'okay':okay,'warnings':warnings,'error':str(err)}
+        infojson = {'url': url, 'okay': okay, 'warnings': warnings, 'error': str(err)}
         return self.format_response(infojson, fmt)
 
     def dispatch_views(self):
@@ -132,7 +138,7 @@ class Validator(object):
     def error(self, error, message=None):
         """Returns the error response."""
         return self._jsonify({"error": error.status_code,
-                        "message": error.body or message}, "")
+                              "message": error.body or message}, "")
 
     def get_bottle_app(self):
         """Returns bottle instance"""
@@ -141,13 +147,25 @@ class Validator(object):
         self.app.hook('after_request')(self.after_request)
         return self.app
 
+
 def apache():
-    v = Validator();
+    v = Validator()
     return v.get_bottle_app()
 
+
 def main():
+    parser = argparse.ArgumentParser(description=__doc__.strip(),
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument('--hostname', default='localhost',
+                        help='Hostname or IP address to bind to (use 0.0.0.0 for all)')
+    parser.add_argument('--port', default=8080, type=int,
+                        help='Server port to bind to. Values below 1024 require root privileges.')
+
+    args = parser.parse_args()
+
     v = Validator()
-    run(host='localhost', port=8080, app=v.get_bottle_app())
+    run(host=args.hostname, port=args.port, app=v.get_bottle_app())
 
 if __name__ == "__main__":
     main()
