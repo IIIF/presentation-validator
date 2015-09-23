@@ -18,6 +18,7 @@
 	        "license":     {"@type":"@id", "@id":"dcterms:license"},
 	        "service":     {"@type":"@id", "@id":"svcs:has_service"},
 	        "seeAlso":    {"@type":"@id", "@id":"foaf:page"},
+	        "related":    {"@type":"@id", "@id":"foaf:page"},
 	        "within":      {"@type":"@id", "@id":"dcterms:isPartOf"},
 	        "profile":     {"@type":"@id", "@id":"dcterms:conformsTo"},
 	        "related":     {"@type":"@id", "@id":"dcterms:relation"},

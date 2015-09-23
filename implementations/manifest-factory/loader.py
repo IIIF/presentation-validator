@@ -30,7 +30,10 @@ def load_document_local(url):
         'documentUrl': None,
         'document': ''
     }
-    if url == "http://iiif.io/api/presentation/2/context.json":
+
+    if url == "http://iiif.io/api/presentation/2.1/context.json":
+    	fn = "contexts/context_21.json"
+    elif url == "http://iiif.io/api/presentation/2/context.json":
     	fn = "contexts/context_20.json"
     else:
     	fn = "contexts/context_10.json"
@@ -47,8 +50,9 @@ class ManifestReader(object):
 
 	# Note: sc context could also mean 0.9 :(
  	contexts = {
-		'http://www.shared-canvas.org/ns/context.json' : '1.0',
-		'http://iiif.io/api/presentation/2/context.json' : '2.0'
+		'http://www.shared-canvas.org/ns/context.json': '1.0',
+		'http://iiif.io/api/presentation/2/context.json': '2.0',
+		'http://iiif.io/api/presentation/2.1/context.json': '2.1',
 	}
 
 	def __init__(self, data, version=None):
