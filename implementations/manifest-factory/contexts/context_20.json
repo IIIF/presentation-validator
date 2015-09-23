@@ -45,13 +45,13 @@
 
 	        "left-to-right": {"@id":"sc:leftToRightDirection", "@type":"sc:ViewingDirection"},
 	        "right-to-left": {"@id":"sc:rightToLeftDirection", "@type":"sc:ViewingDirection"},
-	        "top-to-bottom": {"@id":"sc:topToBottomDirection", "@type":"sc:ViewingDirection"},	        
+	        "top-to-bottom": {"@id":"sc:topToBottomDirection", "@type":"sc:ViewingDirection"},
 	        "bottom-to-top": {"@id":"sc:bottomToTopDirection", "@type":"sc:ViewingDirection"},
 
 	        "paged":         {"@id":"sc:pagedHint", "@type":"sc:ViewingHint"},
-	        "non-paged":     {"@id":"sc:nonPagedHint", "@type":"sc:ViewingHint"},   
+	        "non-paged":     {"@id":"sc:nonPagedHint", "@type":"sc:ViewingHint"},
 	        "continuous":    {"@id":"sc:continuousHint", "@type":"sc:ViewingHint"},
-	        "individuals":   {"@id":"sc:individualsHint", "@type":"sc:ViewingHint"}, 
+	        "individuals":   {"@id":"sc:individualsHint", "@type":"sc:ViewingHint"},
 	        "top":           {"@id":"sc:topHint", "@type":"sc:ViewingHint"},
 
 	        "motivation":  {"@type":"@id", "@id":"oa:motivatedBy"},
