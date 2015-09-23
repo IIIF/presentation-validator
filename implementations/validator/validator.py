@@ -1,6 +1,8 @@
 #!/usr/bin/env python
+# encoding: utf-8
+"""IIIF Presentation Validation Service"""
 
-import json, urllib2, sys, os
+import argparse, json, urllib2, sys, os
 from functools import partial
 from urlparse import urlparse
 
@@ -21,7 +23,7 @@ class Validator(object):
         try:
             wh = urllib2.urlopen(url)
         except urllib2.HTTPError, wh:
-            pass                   
+            pass
         data = wh.read()
         wh.close()
         return (data, wh)
@@ -146,8 +148,18 @@ def apache():
     return v.get_bottle_app()
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__.strip(),
+                                     formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+
+    parser.add_argument('--hostname', default='localhost',
+                        help='Hostname or IP address to bind to (use 0.0.0.0 for all)')
+    parser.add_argument('--port', default=8080, type=int,
+                        help='Server port to bind to. Values below 1024 require root privileges.')
+
+    args = parser.parse_args()
+
     v = Validator()
-    run(host='localhost', port=8080, app=v.get_bottle_app())
+    run(host=args.hostname, port=args.port, app=v.get_bottle_app())
 
 if __name__ == "__main__":
     main()
