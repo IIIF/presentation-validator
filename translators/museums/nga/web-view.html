@@ -1,0 +1,2315 @@
+<!DOCTYPE HTML>
+<html >
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta name="description" content="National Gallery of Art">
+        <meta http-equiv="X-UA-Compatible" content="IE=9,IE=10,IE=11" >
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+        
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" src="//use.typekit.net/usu7qya.js"></script>
+
+
+    <link rel="stylesheet" href="/etc/clientlibs/granite/jquery-ui.min.css" type="text/css">
+<link rel="stylesheet" href="/etc/clientlibs/foundation/jquery-ui/themes/default.min.css" type="text/css">
+<script type="text/javascript" src="/etc/clientlibs/granite/jquery.min.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/utils.min.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/jquery/granite.min.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/jquery.min.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/jquery-ui.min.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/jquery-ui.min.js"></script>
+
+    
+    
+
+
+<link rel="stylesheet" href="/etc/designs/ngaweb/clientlib/site.min.css" type="text/css">
+<script type="text/javascript" src="/etc/designs/ngaweb/clientlib/site.min.js"></script>
+
+
+<link rel="stylesheet" href="/etc/designs/ngaweb/clientlib/components/page.min.css" type="text/css">
+<script type="text/javascript" src="/etc/designs/ngaweb/clientlib/components/page.min.js"></script>
+
+<link rel="stylesheet" href="/etc/designs/ngaweb/clientlib/components/content.min.css" type="text/css">
+<script type="text/javascript" src="/etc/designs/ngaweb/clientlib/components/content.min.js"></script>
+
+
+<!-- Brightcove script for the video player -->
+
+<script type="text/javascript" src="http://media.nga.gov/js/BrightcoveExperiences.js"></script>
+
+<script type="text/javascript">
+    
+    // Enable Conditionizr:
+    // Specifying these browser specifics are necessary due to an issue with 
+    // the plug-in defaults. The upcoming version will fix this.
+    try
+    {
+        conditionizr({
+            chrome    : { scripts: false, styles: false, classes: true, customScript: false },
+            safari    : { scripts: false, styles: false, classes: true, customScript: false },
+            opera     : { scripts: false, styles: false, classes: true, customScript: false },
+            firefox   : { scripts: false, styles: false, classes: true, customScript: false },
+            ie10      : { scripts: false, styles: false, classes: true, customScript: false },
+            ie9       : { scripts: false, styles: false, classes: true, customScript: false },
+            ie8       : { scripts: false, styles: false, classes: true, customScript: false },
+            ie7       : { scripts: false, styles: false, classes: true, customScript: false },
+            ie6       : { scripts: false, styles: false, classes: true, customScript: false },
+            retina    : { scripts: false, styles: false, classes: true, customScript: false }
+        });
+    }
+    catch (e)
+    {
+        console.log("Conditionizr failed", e);
+    }
+
+    try
+    {
+        Typekit.load();
+    }
+    catch(e){}
+    
+    var switchTo5x=true;
+    
+
+    /*********
+    * stLight does not appear to be available in all environments so we're adding a try
+    * around attempts to use it.
+    **********/
+    try
+    {
+        stLight.options({publisher: "4827d72c-9eca-4f37-8d68-7da2f2abfc16"});
+    }    
+    catch(e) {}
+     
+    /*********************************************************************
+    *
+    * Initializing some of the nga namespace settings.
+    *
+    ***********************************************************************/
+    nga.user = {getCurrentUserId: function () {return "anonymous";}};
+    nga.favorites = nga.favorites || {}; 
+    nga.favorites.getFavUser = function () {return nga.utils.getCookie('NGAFavorites')};
+    nga.paths = (function () 
+               {
+                    var pathMap = {};
+                    
+                        pathMap["PURL_EXTERNAL_ARTOBJECT"] = "/collection/artobject";
+                    
+                        pathMap["PURL_EXTERNAL_CONSTITUENT"] = "/collection/constituent";
+                    
+                        pathMap["PURL_EXTERNAL_CATALOGUE"] = "/collection/catalogue";
+                    
+                        pathMap["PURL_ARTOBJECT"] = "/content/ngaweb/purl/collection/artobject";
+                    
+                        pathMap["PURL_CONSTITUENT"] = "/content/ngaweb/purl/collection/constituent";
+                    
+                        pathMap["PURL_CATALOGUE"] = "/content/ngaweb/purl/collection/catalogue";
+                    
+                        pathMap["PDF_VERSIONS_ARTOBJECT"] = "/content/dam/ngaweb/collection/artobject";
+                    
+                        pathMap["PDF_VERSIONS_CONSTITUENT"] = "/content/dam/ngaweb/collection/constituent";
+                    
+                        pathMap["PDF_VERSIONS_CATALOGUE"] = "/content/dam/ngaweb/collection/catalogue";
+                    
+                        pathMap["HOME"] = "/content/ngaweb";
+                    
+                        pathMap["USER"] = "/content/ngaweb/users";
+                    
+                        pathMap["USER_REGISTER"] = "/content/ngaweb/user/";
+                    
+                        pathMap["USER_FORGOT_PASSWORD"] = "/content/ngaweb/users/requestpasswordreset";
+                    
+                        pathMap["USER_RESET_PASSWORD"] = "/content/ngaweb/users/passwordreset";
+                    
+                        pathMap["USER_ACTIONS"] = "/content/ngaweb/users/landing";
+                    
+                        pathMap["USER_FAVORITES"] = "/content/ngaweb/users/favorites";
+                    
+                        pathMap["USER_FAVORITES_ACTION_LINKS"] = "/content/ngaweb/users/favactionlinks";
+                    
+                        pathMap["USER_SIGNIN"] = "/content/ngaweb/users/sign-in";
+                    
+                        pathMap["USER_SIGNOUT"] = "/content/ngaweb/users/signout";
+                    
+                        pathMap["COLLECTION"] = "/content/ngaweb/Collection";
+                    
+                        pathMap["ARTOBJECT"] = "/content/ngaweb/Collection/art-object-page";
+                    
+                        pathMap["ART_LOCATIONVIEW"] = "/content/ngaweb/Collection/locationview";
+                    
+                        pathMap["ARTIST"] = "/content/ngaweb/Collection/artist-info";
+                    
+                        pathMap["PROVENANCE"] = "/content/ngaweb/Collection/provenance-info";
+                    
+                        pathMap["CURRENT_DESIGN"] = "/etc/designs/ngaweb";
+                    
+                        pathMap["COLLECTION_SEARCH"] = "/content/ngaweb/collection-search-result";
+                    
+                        pathMap["ARTOBJECT_LOCATION_VIEW"] = "/content/ngaweb/Collection/locationview";
+                    
+                        pathMap["SERVICES"] = "/content/ngaweb/services";
+                    
+                        pathMap["EXHIBITIONS_PAST"] = "/content/ngaweb/exhibitions/past";
+                    
+                        pathMap["SOCIAL_EMAIL_SHARE"] = "/content/ngaweb/emailShare";
+                    
+                        pathMap["LOCATION_VIEW"] = "/content/ngaweb/Collection/locationview";
+                    
+                        pathMap["ARTIST_SEARCH"] = "/content/ngaweb/Collection/artists";
+                    
+                        pathMap["VISUAL_BROWSER_SEARCH"] = "/content/ngaweb/Collection/searchresults";
+                    
+                        pathMap["ONLINE_EDITIONS"] = "/content/ngaweb/research/online-editions";
+                    
+                        pathMap["ONLINE_EDITIONS_CONSTITUENTS"] = "/content/ngaweb/research/online-editions/artists";
+                    
+                        pathMap["ONLINE_EDITIONS_AUTHORS"] = "/content/ngaweb/research/online-editions/authors";
+                    
+                        pathMap["GLOBAL_SEARCH"] = "/content/ngaweb/global-site-search-page";
+                    
+                        pathMap["AV_CONSOLE"] = "/apps/ngaweb/components/page/media/avconsole";
+                    
+                        pathMap["ERRORS"] = "/content/ngaweb/error";
+                    
+                        pathMap["AUTHNET_CALLBACK_ERROR"] = "/content/ngaweb/error/authnet-transaction-failed";
+                    
+            
+                    this.getPathsMap = function () {return pathMap;};
+                    this.getPath = function (pathName) {return pathMap[pathName];};
+                    this.getExternalizedLoginURL = function(subPath, reqParamName) {
+                       var xLoginUrl = ["https://www.nga.gov/content/ngaweb/users/sign-in.html"];
+                       xLoginUrl.push("?" + reqParamName + "=");
+                       xLoginUrl.push(encodeURI(subPath));
+                       return xLoginUrl.join('');
+                   };
+                    return this;
+               }).call({});
+    nga.config.avPagesUseLightboxPaths = ["/audio-video/video/","/audio-video/audio/","/audio-video/press/","/audio-video/docent/"];
+    
+</script>
+
+
+
+
+
+
+
+
+
+    
+       
+        
+        <link rel="icon" type="image/vnd.microsoft.icon" href="/etc/designs/ngaweb/favicon.ico">
+        <link rel="shortcut icon" type="image/vnd.microsoft.icon" href="/etc/designs/ngaweb/favicon.ico">
+        
+        <title>Art Object Page</title>
+
+        
+                        <meta property="og:title" content="Cezanne Sketchbook">
+                        <meta property="og:description" content="Paul Cezanne">
+                        
+                            <meta property="og:image" content="http://media.nga.gov/public/objects/7/6/2/1/9/76219-primary-0-440x400.jpg">
+                        
+                        
+        
+    </head>
+
+
+
+
+
+
+
+    <body>
+    <!-- Qualaroo for nga.gov -->
+    <!-- Paste this code right after the <body> tag on every page of your site. -->
+    <script type="text/javascript">
+        var _kiq = _kiq || [];
+        (function(){
+            setTimeout(function(){
+                var d = document, f = d.getElementsByTagName('script')[0], s = d.createElement('script'); s.type = 'text/javascript';
+                s.async = true; s.src = '//s3.amazonaws.com/ki.js/57524/cMU.js'; f.parentNode.insertBefore(s, f);
+            }, 1);
+        })();
+    </script>
+       <!-- announcements, social share, client context -->
+       <div>
+            <div class="announcement parbase">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    var pathname = window.location.pathname;
+    var lastInd = pathname.lastIndexOf("/");
+    pathname = pathname.substring(0, lastInd); 
+
+    var httpRequest;
+    var baseURL = "/content/ngaweb/jcr:content/homepage/announcement";
+    var myurl = baseURL + '.text' + '.json';
+   
+    //console.log(encodeURI(myurl) + " <br> " + myurl);
+    myurl = encodeURI(myurl);
+    var htmlText;
+
+    
+        
+
+    jQuery(document).ready(function() {
+ 
+        jQuery.ajax({   
+            
+            url: myurl,    
+            type: "GET",     
+            dataType: "json",
+            cache: true,
+            success: function(data, status) {
+              
+                if (status == "success") {
+                    //console.log("data: " +  data);
+                    
+                    var objJSON = data;
+                 
+               
+                   
+                    var isHomePg =  false; 
+                    
+                    var tempAnnouncement  = objJSON.announcement;
+
+                   if ((tempAnnouncement != null) && (tempAnnouncement != "")) {
+                         
+                        if (tempAnnouncement.indexOf("##red##") >= 0) {
+                            tempAnnouncement = tempAnnouncement.replace("##red##", "");
+                            document.getElementById("announcementID").className = "anncmnt-notice closure warning";
+                        } else {
+                            document.getElementById("announcementID").className = "anncmnt-notice closure";
+                        }
+                        document.getElementById("announcementID").innerHTML = "<p> <b> Notice: </b>" + tempAnnouncement +"</p>";
+                   } else {
+                        if (isHomePg) {
+                            document.getElementById("announcementID").className = "anncmnt-placehold";
+                            document.getElementById("announcementID").innerHTML = ",,,"; 
+                        } else {
+                            document.getElementById("announcementID").className = "anncmnt-nonotice";
+                        }
+                   }
+                    
+                   
+                } else {
+                    console
+                            .log("ajax response failed in function mycallback");
+                }
+            
+            
+            }
+           
+            });
+        });
+</script>
+
+
+<div class="anncmnt-notice closure" id="announcementID"><!--  dynamic content -->
+</div></div>
+
+            <div class="ngaShareIt socialshare">
+
+
+
+
+
+
+
+
+
+<div id="shareItOptions" >
+    <div class="emailshare ngaEmailShare">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+jQuery(document).ready(
+    function () 
+    {
+        jQuery("#nga-share-content-ngaweb-Collection-art-object-page-jcr-content-socialshare-emailshare").on("click", "button", 
+            function () 
+            {
+                var url = "/content/ngaweb/emailShare.html?url=" + encodeURIComponent("/content/ngaweb/Collection/art-object-page.76219");
+                if (nga.favorites.sharedUrl)
+                {
+                    var parsedUrl = parseUrl(nga.favorites.sharedUrl);
+                    var shareUrl = parsedUrl.pathname.replace(/\.html$/,'');
+                    if (shareUrl.indexOf("/")!=0)
+                        shareUrl = "/"+shareUrl;
+                    
+                    url = "/content/ngaweb/emailShare.html?url=" + encodeURIComponent(shareUrl);
+                }
+                window.open(url, "ngaEmailShare", "status=0, toolbar=0, location=0, scrollbars=1, resizable=1, width=600, height=500" );
+            });
+        
+    });
+</script>
+<div id="nga-share-content-ngaweb-Collection-art-object-page-jcr-content-socialshare-emailshare" class="social-nga-widgets-div socailSharingOption">
+    <button>E-mail</button>
+</div></div>
+ 
+    <div class="parbase twittershare">
+
+<link rel="stylesheet" href="/etc/clientlibs/social/plugins/twitter.min.css" type="text/css">
+<script type="text/javascript" src="/etc/clientlibs/social/plugins/twitter.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+<div id="twitter-share-content-ngaweb-Collection-art-object-page-jcr-content-socialshare-twittershare" class="socailSharingOption"  data-url="http://www.nga.gov/content/ngaweb/Collection/art-object-page.76219.html"  data-text="Take a look at this page at the National Gallery of Art"  data-count="none" >
+    <a href="https://twitter.com/share" class="twitter-share-button"  data-url="http://www.nga.gov/content/ngaweb/Collection/art-object-page.76219.html"  data-text="Take a look at this page at the National Gallery of Art"  data-count="none" >Tweet</a>
+</div>
+<script>
+    nga.favorites.twitterShareButtonDivId = "twitter-share-content-ngaweb-Collection-art-object-page-jcr-content-socialshare-twittershare";
+</script>
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+
+</div>
+    
+    <div class="facebookshare">
+
+
+
+
+
+
+
+
+
+    
+        <link rel="stylesheet" href="/etc/clientlibs/social/plugins/facebook.min.css" type="text/css">
+<script type="text/javascript" src="/etc/clientlibs/social/plugins/facebook.min.js"></script>
+
+		<script type="text/javascript">
+            nga.favorites.facebookBaseUrl = "http://www.facebook.com/sharer/sharer.php?u=";
+            nga.favorites.facebookShareUrl = "http://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fwww.nga.gov%2Fcontent%2Fngaweb%2FCollection%2Fart-object-page.76219.html";
+			jQuery(document).ready(
+			    function () 
+			    {
+			        var sendBttn = jQuery("#facebook-share-link-content-ngaweb-Collection-art-object-page-jcr-content-socialshare-facebookshare");
+			        sendBttn.on("click",  
+			            function () 
+			            {
+			                window.open(
+                                   nga.favorites.facebookShareUrl, 
+			        		      'facebook_share_dialog', 
+			        		      'width=626,height=436');
+			            });
+			        
+			    });
+		</script>
+        <div class="social-nga-widgets-div socailSharingOption" >
+            <button id="facebook-share-link-content-ngaweb-Collection-art-object-page-jcr-content-socialshare-facebookshare" >
+			  Share
+			</button>
+        </div>
+    
+    
+</div>
+
+</div></div>
+
+            <div class="parbase clientcontext"><script type="text/javascript" src="/etc/clientlibs/foundation/shared.min.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/granite/underscore.min.js"></script>
+<script type="text/javascript" src="/etc/clientlibs/foundation/personalization/kernel.min.js"></script>
+<script type="text/javascript">
+    $CQ(function() {
+        CQ_Analytics.SegmentMgr.loadSegments("/etc/segmentation");
+        CQ_Analytics.ClientContextUtils.init("/etc/clientcontext/default","/content/ngaweb/Collection/art-object-page");
+
+        
+    });
+</script>
+</div>
+
+        </div>
+        
+        <!-- mobile nav container -->
+        <div id="mobile-nav"></div>
+          
+        <!-- wrapper -->
+        <div id="wrapper">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- header -->
+
+<div id="header-wrap">
+    <div id="header">
+        <h1>
+            <a href="/content/ngaweb.html">National Gallery of Art </a>
+        </h1>
+        <a id="menu-btn">&equiv;</a>
+        <ul id="mainnav">
+            <li>
+                <a href="/content/ngaweb/Collection.html">Collection</a>
+                <ul class="hover-nav">
+                    <li><a href="/content/ngaweb/Collection/highlights.html">Highlights</a></li>
+                    <li><a href="/content/ngaweb/Collection/collection-search.html">Search the Collection</a></li>
+                    <li><a href="/content/ngaweb/Collection/artists.html">Artists</a></li>
+                    <li class="last"><a href="/content/ngaweb/Collection/recent_acquisitions.html">Recent Acquisitions</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/content/ngaweb/exhibitions.html">Exhibitions</a>
+                <ul class="hover-nav">
+                    <li><a href="/content/ngaweb/exhibitions/current.html">Current</a></li>
+                    <li><a href="/content/ngaweb/exhibitions/upcoming.html">Upcoming</a></li>
+                    <li><a href="/content/ngaweb/exhibitions/ontour.html">On Tour</a></li>
+                    <li class="last"><a href="/content/ngaweb/exhibitions/past.html">Past</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/content/ngaweb/education.html">Education</a>
+                   <ul class="hover-nav">
+                       <li><a href="/content/ngaweb/education/teachers.html">Teachers</a></li>
+                       <li><a href="/content/ngaweb/education/families.html">Families</a></li>
+                       <li><a href="/content/ngaweb/education/kids.html">NGAkids</a></li>
+                       <li><a href="/content/ngaweb/education/teens.html">Teens</a></li>
+                       <li><a href="/content/ngaweb/education/adults.html">Adults</a></li>
+                       <li class="last"><a href="/content/ngaweb/education/interns-fellows.html">Interns and Fellows</a></li>
+                   </ul>
+            </li>
+            <li> 
+                <a href="/content/ngaweb/conservation.html">Conservation</a> 
+               <ul class="hover-nav"> 
+                   <li><a href="/content/ngaweb/conservation/projects.html">Projects</a></li> 
+                    <li><a href="/content/ngaweb/conservation/publications.html">Publications</a></li> 
+                   <li><a href="/content/ngaweb/conservation/resources.html">Resources</a></li> 
+                </ul> 
+            </li> 
+            <li>
+                <a href="/content/ngaweb/research.html">Research</a>
+                <ul class="hover-nav">
+                    <li><a href="/content/ngaweb/research/casva.html">CASVA</a></li>
+                    <li><a href="/content/ngaweb/research/publications.html">Publications</a></li>
+                    <li><a href="/content/ngaweb/research/make-an-appointment.html">Make an Appointment</a></li>
+                    <li><a href="/content/ngaweb/research/gallery-archives.html">Gallery Archives</a></li>
+                    <li><a href="/content/ngaweb/research/library.html">Library</a></li>
+                    <li class="last"><a href="/content/ngaweb/research/online-editions.html">NGA Online Editions</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/content/ngaweb/calendar.html">Calendar</a>
+                <ul class="hover-nav">
+                    <li><a href="/content/ngaweb/calendar/film-programs.html">Film Programs</a></li>
+                    <li><a href="/content/ngaweb/calendar/concerts.html">Concerts</a></li>
+                    <li><a href="/content/ngaweb/calendar/jazz.html">Jazz Programs</a></li>
+                    <li><a href="/content/ngaweb/calendar/gallery-talks.html">Gallery Talks</a></li>
+                    <li><a href="/content/ngaweb/calendar/lectures.html">Lectures</a></li>
+                    <li><a href="/content/ngaweb/calendar/guided-tours.html">Guided Tours</a></li>
+                    <li><a href="/content/ngaweb/calendar/family-activities.html">Family Activities</a></li>
+                    <li class="last"><a href="/content/ngaweb/calendar/films-for-children.html">Children and Teen Films</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/content/ngaweb/visit.html">Visit</a>
+                <ul class="hover-nav">
+                    <li><a href="/content/ngaweb/visit/maps-and-information.html">Maps &amp; Hours</a></li>
+                    <li><a href="/content/ngaweb/visit/tours-and-guides.html">Tours &amp; Guides</a></li>
+                    <li><a href="/content/ngaweb/visit/accessibility.html">Accessibility</a></li>
+                    <li><a href="/content/ngaweb/visit/cafe.html">Caf&#233;s</a></li>
+                    <li><a href="/content/ngaweb/visit/shops.html">Shops</a></li>
+                    <li><a href="/content/ngaweb/visit/museum-policies.html">Museum Policies</a></li>
+                    <li><a href="/content/ngaweb/visit/ice-rink.html">Ice Rink</a></li>
+                    <li class="last"><a href="/content/ngaweb/visit/copyist.html">Copyist Program</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="/content/ngaweb/support.html">Support</a>
+                <ul class="hover-nav">
+                    <li><a href="/content/ngaweb/support/vital-partnerships.html">Vital Partnerships</a></li>
+                    <li><a href="/content/ngaweb/support/membership.html">Membership</a></li>
+                    <li><a href="/content/ngaweb/support/major-giving.html">Major Giving</a></li>
+                    <li><a href="/content/ngaweb/support/planned-giving.html">Planned Giving</a></li>
+                    <li><a href="/content/ngaweb/support/corporate-giving.html">Corporate Giving</a></li>
+                    <li><a href="/content/ngaweb/support/gifts-of-art.html">Gifts of Art</a></li>
+                    <li class="last"><a href="/content/ngaweb/support/donate-now.html">Donate Now</a></li>
+                </ul>
+            </li>
+            <li>
+                <a href="http://shop.nga.gov/">Shop</a>
+                <ul class="hover-nav">
+                    <li><a href="https://shop.nga.gov/category/1000/exhibitions/1.html">Exhibitions</a></li>
+                    <li><a href="https://shop.nga.gov/category/2000/books-media/1.html">Books &amp; Media</a></li>
+                    <li><a href="https://shop.nga.gov/category/3000/stationery/1.html">Stationery</a></li>
+                    <li><a href="https://shop.nga.gov/category/4000/jewelry/1.html">Jewelry</a></li>
+                    <li><a href="https://shop.nga.gov/category/5000/prints/1.html">Prints</a></li>
+                    <li><a href="https://shop.nga.gov/category/6000/apparel/1.html">Apparel</a></li>
+                    <li><a href="https://shop.nga.gov/category/7000/for-the-home/1.html">For the Home</a></li>
+                    <li class="last"><a href="https://shop.nga.gov/category/10000/kids/1.html">Kids</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<div id="subheader-wrap">
+    <div id="subheader">
+        
+            <div class="breadcrumbs">
+            <a href="/content/ngaweb.76219.html">National Gallery of Art</a>&nbsp;::&nbsp;<a href="/content/ngaweb/Collection.76219.html">The Collection</a>&nbsp;::&nbsp;<a href="/content/ngaweb/Collection/art-object-page.76219.html">Cézanne Sketchbook</a>    
+            </div>
+        
+    <form name="myform" id="myform" autocomplete="off" action="/content/ngaweb/global-site-search-page.html">
+         <fieldset id="nga-site-search">
+            <legend>Enter your search terms</legend>
+            <input type="text" id="searchterm" name="searchterm" class="nga-search-field" placeholder="Search NGA.gov"/>
+            <input type="hidden" name="searchpath" value="/content/ngaweb/Collection/art-object-page" />
+            <input type="button" class="nga-search-btn" value="Go"/>
+        </fieldset> 
+     </form>   
+     <script type="text/javascript">
+		jQuery(function() {
+			$( "#searchterm" ).autocomplete({
+			  source: function( request, response ) {
+				$.ajax({
+				  url: "/content/ngaweb/global-site-search-page.json",
+				  dataType: "json",
+				  data: {
+					term: request.term.toLowerCase()
+				  },
+				  success: function( data ) {
+                      var result=[];
+                      	for(var key in data[1]){
+                        	result[key] = decodeURIComponent(data[1][key]);
+                      	}
+				   		response(result);
+				  }
+				});
+			  }
+			});
+
+            $( "#searchterm" ).click(function() {
+              	this.value = '';
+            });
+
+            $( ".nga-search-btn" ).click(function() {
+                $(this).closest("form").submit();
+            }); 
+		});
+
+     </script>
+        
+        <div id="nga-favorites">
+             <a title="Your favorites" id="nga-your-favorites-link" href="">
+             </a>&nbsp;
+             <a id="userSignOutLink" href="https://www.nga.gov/content/ngaweb/users/signout.html" title="Sign Out">Sign Out</a>
+        </div>
+    
+    </div>    
+</div>
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="container" class="object-page">
+    <div class="object1 artobjectinfo">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="image_compare imageCompare">
+
+
+
+
+
+
+
+
+
+
+<script>
+    jQuery(document).ready(function() {
+    	
+    	// If we are on desktop, setup comparable images
+    	if(jQuery(window).width() >= 1024) {
+    		
+	        var $=jQuery;
+	        var comparableImages = $('.imageComparer-comparableImg');
+	        if (comparableImages.length > 0)
+	        {
+	         comparableImages.css('cursor','pointer')
+	                 .click(function(){
+
+						 $('body')
+								 .append($('<div>', {'id':'img-comparator-cover'}))
+								 .append($('<div>', {'id':'img-comparator-viewer'})
+										 .append($('<img>',{'class':'close-icon', 'src':'http://media.nga.gov/etc/designs/ngaweb/images/close.png'}))
+										 .append($('<iframe>',{'src':'about:blank', 'frameborder':'0', 'scrolling':'0'})));
+
+						 $('#img-comparator-viewer .close-icon').click(function(){
+							 $('#img-comparator-cover').remove();
+							 $('#img-comparator-viewer').remove();
+						 });
+
+						 var self = $(this); 
+	                      var data = self.data();
+	                      data.sequence = self.attr('data-sequence'); //because .data() treats 1.0 as 1 !
+	                      if (data.objectid && data.viewtype && data.sequence)
+	                      {
+	                          var url = 'http://media.nga.gov/content/ngaweb/image-comparator.html?';
+	                          url += $.param( data );
+	                          $('#img-comparator-viewer').find('iframe').attr('src', url);
+	
+	                          if ($( window ).width()<1045)
+	                              $('#img-comparator-viewer').css({'top':0,right:0});
+	                      }
+	                 });
+                
+			}
+		}
+    });
+</script></div>
+
+
+
+
+
+
+
+
+
+
+
+
+<script type="text/javascript">
+    jQuery(document).ready(
+            function () {
+
+                document.title = "Cezanne Sketchbook";
+
+                //Prevent right click on the art object image
+                jQuery("img#object-image-img").bind("contextmenu",function(e) {
+                    e.preventDefault();
+                });
+
+                jQuery('.image-collage-section').imageCollage();
+
+                jQuery(".related-records").customScrollbar();
+            } );
+
+</script>
+
+
+
+<div id="notOSCIObject">
+    <div class="tombstone artobjecttombstone">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    jQuery(document).ready(
+        function () 
+        {
+            var favLink = jQuery("#userFavorite");
+            var globalFavLink = jQuery("#nga-your-favorites-link");
+
+            jQuery("#openMoreArtist").on("click", function (event) 
+                {
+                    event.preventDefault();
+                    jQuery("#moreArtistCont").slideDown();
+                    jQuery(this).hide();
+                });
+
+            jQuery("#closeMoreArtist").on("click", function (event) 
+                    {
+                        event.preventDefault();
+                        jQuery("#moreArtistCont").slideUp();
+                        jQuery("#openMoreArtist").show();
+                    });
+
+            if (window.location.protocol == "https:" || nga.utils.getCookie('NGAFavorites')) {
+                jQuery.ajax("/content/ngaweb/services.isInFavorites.json?object=76219",
+                {
+                    async: true,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data.result) {
+                            removeFromFavLink();
+                        }
+                        else {
+                             addToFavLink();
+                        }
+                    },
+                    error: function (xhr, status, err) {
+                        console.log("Fav count error: ", err);
+                    }
+                });
+            } else {
+                favLink.ngaLogin(
+                {
+                    eventTriggers: "click",
+                    redirectURL: "/content/ngaweb/users/landing.favorite.76219.html"
+                });
+                addToFavLink();
+            }
+
+            function removeFromFavLink()
+            {
+                favLink.empty().append("remove from favorites");
+                favLink.attr("href", "#remove");
+            }
+            function addToFavLink()
+            {
+                favLink.empty().append("add to favorites");
+                favLink.attr("href", "#add");
+            }
+            var rmvURL = "/content/ngaweb/services.removeFromFavorites.json?object=76219";
+            var addURL = "/content/ngaweb/services.addToFavorites.json?object=76219";
+            if (window.location.protocol == "https:" || nga.utils.getCookie('NGAFavorites')) {
+                favLink.on("click", function (event) 
+                {
+                    event.preventDefault();
+                    var action = this.href.substring(this.href.indexOf('#') + 1, this.href.length);
+                    var url;
+                    if (action == "remove") {
+                        url = rmvURL;
+                    } else {
+                        url = addURL;
+                    }
+                    jQuery.ajax(url, {
+                        async: true,
+                        type: "GET",
+                        dataType: "json",
+                        cache: false,
+                        success: function (data) {
+                            globalFavLink.trigger("update");
+                            if (action == "remove") {
+                                addToFavLink();
+                            }
+                            else {
+                                removeFromFavLink();
+                            }
+                        },
+                        error: function (xhr, status, err) {
+                            console.log("Fav count error: ", err);
+                        }
+                    });
+                });
+            }
+
+            var currentPageUrl = "";
+            if (typeof this.href === "undefined") {
+                currentPageUrl = window.location.href.toString().toLowerCase().split(window.location.host)[1];
+            } else {
+                currentPageUrl = this.href.toString().toLowerCase();
+            }
+
+            var highlightUrl = "/content/ngaweb/Collection/highlights/highlight76219.html";
+            if (highlightUrl != null) {
+                if (currentPageUrl === highlightUrl.toLowerCase()) {
+                    jQuery("#highlight").hide();
+                }
+            }
+           
+            jQuery("a.share").ngaShareIt(
+                {
+                    eventTriggers: "click",
+                    position: "top"
+                });
+
+
+          //Prevent right click on the art object image
+            jQuery("#mainimage-wrap img").bind("contextmenu",function(e) {
+                e.preventDefault();
+            });
+
+            //Enable Zoom Image functionality
+            ! function($) {
+                $('.mainImg:not([data-zoom=""]), .tool-img-zoom')
+                    .click(function () {
+                        if(window.innerWidth >= 1024) {
+                            $('body')
+                                    .append($('<div>', {'id': 'img-comparator-cover'}))
+                                    .append($('<div>', {'id': 'img-comparator-viewer'})
+                                            .append($('<img>', {
+                                                'class': 'close-icon',
+                                                'src': 'http://media.nga.gov/etc/designs/ngaweb/images/close.png'
+                                            }))
+                                            .append($('<iframe>', {
+                                                'src': 'about:blank',
+                                                'frameborder': '0',
+                                                'scrolling': '0'
+                                            })));
+
+
+                            $('#img-comparator-viewer .close-icon').click(function () {
+                                $('#img-comparator-cover').remove();
+                                $('#img-comparator-viewer').remove();
+                            });
+
+                            var zoomImagePath = jQuery.tombstoneCarousel.getCurrentZoomImagePath();
+                            if (zoomImagePath) {
+
+                                var url = "http://media.nga.gov/content/ngaweb/image-zoomer.html";
+                                url += "?path=" + zoomImagePath;
+                                $('#img-comparator-viewer').find('iframe').attr('src', url);
+
+                            }
+                        }
+                    });
+                
+                //hide zoom icon if there are no zoomable images
+                if ( $('.mainImg:not([data-zoom=""])').length==0 )
+                    $('.tool-img-zoom').hide();
+
+            }(jQuery);
+        });
+    
+    function focusZoomIframe() {
+        var iframe = document.getElementById('zoomIFrame');
+        if (iframe)
+            iframe.contentWindow.focus();
+    }
+
+    (function($){
+        var carousel = {
+            init: function(element){
+            	
+            	console.log('Initiating Art Object Carousel');
+                
+                this.element = element;
+                element.find("li:first").show();
+                this.activeIndex = 0;
+
+                this.count = element.find("li").length;
+                if (this.count>1) {
+                    element.find('.nav-arrow a').show();
+                    element.find('.nav-arrow a#left-arrow').click(function(){carousel.advance(-1)});
+                    element.find('.nav-arrow a#right-arrow').click(function(){carousel.advance(1)});
+                }
+            },
+            advance: function(step){
+                this.element.find("li:eq("+this.activeIndex+")").fadeOut(600);
+                this.activeIndex+=step;
+                if (this.activeIndex>=this.count) this.activeIndex=0;
+                if (this.activeIndex<0) this.activeIndex=this.count-1;
+                this.element.find("li:eq("+this.activeIndex+")").fadeIn(600);
+            },
+            getCurrentZoomImagePath: function() {
+                var activeImage = this.element.find("li:eq("+this.activeIndex+") img");
+                return activeImage.data("zoom");
+            }
+        };
+        
+        $.tombstoneCarousel = function(element){
+            carousel.init(element)
+        };
+
+        $.tombstoneCarousel.getCurrentZoomImagePath = function(){
+            return carousel.getCurrentZoomImagePath();
+        };
+    })(jQuery);
+
+    jQuery(document).ready(function(){
+        jQuery.tombstoneCarousel(jQuery("#art-object-carousel"));
+    });
+            
+</script>
+
+
+<div id="objectbanner" class="clearfix">
+   <div class="banner-left ht1">
+       <div id="mainimage-wrap">
+           <div id="art-object-carousel" class="carousel">
+               <span class="nav-arrow" id="nav-arrow-left">
+                    <a href="#" id="left-arrow"></a>
+               </span>
+
+               <ul>
+                   
+                   <li>
+                       <span class="carousel-image-helper"></span><img class="mainImg" src="http://media.nga.gov/public/objects/7/6/2/1/9/76219-primary-0-440x400.jpg" data-zoom="/public/objects/7/6/2/1/9/76219-primary-0-nativeres.ptif" alt="Cezanne Sketchbook"/>
+                   </li>
+                           
+                   
+               </ul>
+
+               <span class="nav-arrow" id="nav-arrow-right">
+                    <a href="#" id="right-arrow"></a>
+               </span>
+
+           </div>
+       </div>
+   </div> <!-- banner-left -->
+   
+   <div class="banner-right">
+       <!--cq:include path="object_pagination" resourceType="/apps/ngaweb/components/content/search/object_pagination" /> -->
+	   <div class="details">
+	       <dl class="artist-details">            
+	                
+	                
+	                
+	                
+	                
+	                    <!-- Don't show more than 3 by default -->
+	                    
+	                        
+	                        <dt class="artist">
+	                            <a href="/content/ngaweb/Collection/artist-info.1115.html">
+	                                Cézanne, Paul 
+	                                
+	                            </a>
+	                            
+	                                <dd class="nationality"> French, 1839 - 1906</dd>
+	                            
+	                        </dt>
+	                
+	                
+	           
+	       </dl>
+	       <dl class="artwork-details">
+	           <dt class="title">Cézanne Sketchbook</dt><dt class="created">c. 1877/1900</dt><dd class="medium">sketchbook with 71 drawings in graphite, pen and brown ink, and watercolor; the sketchbook contains 46 sheets, several which are blank; the end papers, the recto of the first page, and half the verso of the final page were used for notes, lists, and arithmetical figuring; a draft of a letter to the critic Octave Mirbeau is on page II (recto)</dd><dd class="dimensions">page size: 15.2 x 23.7 cm (6 x 9 5/16 in.)</dd><dd class="medium">Chappuis 1973, no. 1149, State and others</dd><dd class="credit"><a href="/content/ngaweb/collection-search-result.html?donorList=425&donorObj=76219">Collection of Mr. and Mrs. Paul Mellon, in Honor of the 50th Anniversary of the National Gallery of Art</a></dd><dd class="accession">1992.51.9</dd><dd class="onview">Not on View</dd>
+	       </dl>
+       </div>
+       <ul class="toolset object">
+           <li class="tool-img-zoom"><a href="#">zoom</a></li>
+           <!-- 
+                This won't be worked on until after the soft launch
+                <li class="tool-related"><a href="#">related works</a></li> 
+           -->
+           
+               <li class="tool-download">
+                    <a href="https://images.nga.gov/en/search/do_quick_search.html?q=%221992.51.9%22">download</a>
+               </li>
+            
+           <li class="tool-share">
+                <a href="#" class="share">share</a>
+           </li>
+           <li class="tool-favorites">
+               <a id="userFavorite" href="#">&nbsp;&nbsp;&nbsp;</a>
+           </li>
+       </ul>
+   </div> <!-- banner-right -->  
+</div> <!-- banner -->
+</div>
+
+
+    
+    <div id="content">
+        <div class="table clearfix">
+            <div class="side-nav" id="object-page-menu">
+                <!--<h3 class="drawer-subnav">Object Information</h3>-->
+                <div class="parleft">
+                    <div class="drawer">
+                        
+                        <div class="drawer-content drawer-open">
+                            <ul id="section-options">
+
+                                
+                                
+                                
+
+                                
+                                    <li class="section-link" name="inscription">Inscription</li>
+                                
+                                
+                                
+                                    <li class="section-link" name="provenance">Provenance</li>
+                                
+                                
+                                    <li class="section-link" name="history">Exhibition History</li>
+                                
+                                
+                                    <li class="section-link" name="bibliography">Bibliography</li>
+                                
+                                
+                                
+                                
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="content-main">
+                <div id="overview" class="page-section">
+                    <h5>Overview</h5>
+                    <p>
+                        
+                            
+                            
+                                No overview available.
+                            
+                        
+                    </p>
+                </div>
+
+                
+
+
+
+                <div id="inscription" class="page-section ">
+                    <h5>Inscription</h5>
+                    <p>various notations overall</p>
+                    
+                </div>
+
+                <!-- Start Marks and Labels -->
+                <div id="marks" class="page-section">
+                    <h5>Marks and Labels</h5>
+                    <p>null</p>
+                </div> <!-- marks -->
+
+                <div id="provenance" class="page-section ">
+                    <h5>Provenance</h5>
+                    <p>Paul Cézanne (the artist's son), Paris; Paul Guillaume, Paris; Adrien Chappuis, Tresserve, Switzerland, 1933;  Paul Mellon, Upperville, VA, 1967; gift to NGA, 1991</p><div class="section-footer"></div>
+                </div>
+
+                <div id="history" class="page-section ">
+                    <h5>Exhibition History</h5>
+                    <dl class="year-list"><dt>1991</dt><dd>NGA Anniversary 1991, 176.</dd></dl><dl class="year-list"><dt>1999</dt><dd>An Enduring Legacy: Masterpieces from the Collection of Mr. and Mrs. Paul Mellon, National Gallery of Art, Washington, 1999-2000.</dd></dl>
+
+                    
+
+                </div>
+
+                <div id="bibliography" class="page-section">
+                    <h5>Bibliography</h5>
+                    <dl class="year-list"><dt>1936</dt><dd>Venturi, Lionello. <em>Cézanne: son art, son oeuvre</em>. 2 vols. Paris, 1936.</dd></dl><dl class="year-list"><dt>1967</dt><dd>Chappuis, Adrien. <em>Album de Paul Cézanne</em> (sketchbook facsimile). Paris: Berggruen & Cie, 1967.</dd></dl><dl class="year-list"><dt>1973</dt><dd>Chappuis, Adrien. <em>The Drawings of Paul Cezanne</em>. 2 vols. Greenwich: New York Graphic Society, 1973.</dd></dl><dl class="year-list"><dt>1983</dt><dd>Rewald, John. <em>Paul Cézanne: The Watercolors</em>. Boston: Little, Brown & Company, 1983.</dd></dl>
+                </div>
+
+                <div id="consvNotes" class="page-section">
+                    <h5>Technical Summary</h5>
+                    <p></p>
+                </div>
+
+                
+
+                
+
+                
+
+
+                <div id="rel-works" class="page-section">
+                    <h5>Related Works</h5>
+                    <ul class="content-list">
+                        
+                        <li>
+                            <h6 class="category">Work of Art</h6>
+                            <dl class="return-art">
+                                <dt class="artist"><a href="#">Giovanni Bellini</a></dt>
+                                <dd class="nationality"><a href="#">Italian</a></dd>
+                                <dd class="lifespan">c. 1430/1435 &ndash; 1516</dd>
+
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.101.html">Mrs. Thomas Scott Jackson</a></dt>
+                                <dd class="created"><a href="LZHowToGenerateThisLink">c. 1770/1773</a></dd>
+                                <dd class="medium">oil on canvas</dd>
+
+                                <dd class="dimensions">overall: 74.8 x 356.2 cm (29 7/16 x 140 1/4 in.)</dd>
+                                <dd class="dimensions">framed: 104.1 x 385.1 x 10.5 cm (41 x 151 5/8 x 4 1/8 in.)</dd>
+
+                                <dd class="credit"><a href="/content/ngaweb/collection-search-result.html?donorList=Andrew W. Mellon Collection">Andrew W. Mellon Collection</a></dd>
+                                <dd class="accession">1937.1.94</dd>
+                                
+                                <dd class="onview">&bull; Not on View</dd>
+                                <dd><img class="thumbnail" alt="image:" src="#" /></dd>
+                            </dl>
+                        </li>
+                        
+                        <li>
+                            <h6 class="category">Work of Art</h6>
+                            <dl class="return-art">
+                                <dt class="artist"><a href="#">Giovanni Bellini</a></dt>
+                                <dd class="nationality"><a href="#">Italian</a></dd>
+                                <dd class="lifespan">c. 1430/1435 &ndash; 1516</dd>
+
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.102.html">Lady Elizabeth Delmé and Her Children</a></dt>
+                                <dd class="created"><a href="LZHowToGenerateThisLink">1777-1779</a></dd>
+                                <dd class="medium">oil on canvas</dd>
+
+                                <dd class="dimensions">overall: 74.8 x 356.2 cm (29 7/16 x 140 1/4 in.)</dd>
+                                <dd class="dimensions">framed: 104.1 x 385.1 x 10.5 cm (41 x 151 5/8 x 4 1/8 in.)</dd>
+
+                                <dd class="credit"><a href="/content/ngaweb/collection-search-result.html?donorList=Andrew W. Mellon Collection">Andrew W. Mellon Collection</a></dd>
+                                <dd class="accession">1937.1.95</dd>
+                                
+                                <dd class="onview">&bull; <a href="/content/ngaweb/Collection/locationview.102.html?room=M-059">On View</a></dd>
+                                <dd><img class="thumbnail" alt="image:" src="#" /></dd>
+                            </dl>
+                        </li>
+                        
+                    </ul>
+                </div>
+
+                <div id="rel-resources" class="page-section">
+                    <h5>Related Resources</h5>
+                    <ul class="content-list">
+                        <li>
+                            <h6 class="category">Event Type</h6>
+                            <dl class="return-event">
+                                <dt class="title"><a href="#">Event Name</a></dt>
+                                <dd class="dates span">March 1&ndash;June 1</dd>
+                                <dd class="dates weekdays">Mon, Tues, and Wed at 1:00</dd>
+                                <dd class="dates">March 5, 2012 at 2:00<br />
+                                    March 7, 2012 at 4:00 </dd>
+                                <dd class="location"><a href="#">East Building, Auditorium</a></dd>
+                                <dd class="leader">Name of docent</dd>
+                                <dd><img class="thumbnail" alt="image:" src="/content/dam/ngaweb/placeholder-90x90.jpg" /></dd>
+                                <dd class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</dd>
+                                <dd class="duration">60 minutes</dd>
+                                <dd class="registration">Registration for this event begins on April 1, 2012 at noon.</dd>
+                                <dd class="registration-link"><a href="#">Register for this event</a></dd>
+                                <dd class="program-notes"><a href="#">Download the program notes</a> (100k)</dd>
+                            </dl>
+                        </li>
+                        <li>
+                            <h6 class="category">Self-Guided Tour</h6>
+                            <dl class="return-tour">
+                                <dt class="title"><a href="#">Italian Collection</a></dt>
+                                <dd><img class="thumbnail" alt="image:" src="/content/dam/ngaweb/placeholder-90x90.jpg" /></dd>
+                                <dd class="description">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</dd>
+                            </dl>
+                        </li>
+
+                    </ul>
+                </div>
+            </div> <!-- column center -->
+
+            
+                <div id="related-records-container" class="aside">
+                    <div class="related-records">
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76220.html">The Plaster Mill (La Moulin à plâtre)</a></dt>
+                                <dd class="created">1889/1892</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76220.html"><img class="thumbnail" alt="The Plaster Mill (La Moulin à plâtre)" src="http://media.nga.gov/public/objects/7/6/2/2/0/76220-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76246.html">The Artist's Son Writing</a></dt>
+                                <dd class="created">c. 1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76246.html"><img class="thumbnail" alt="The Artist's Son Writing" src="http://media.nga.gov/public/objects/7/6/2/4/6/76246-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76272.html">A Man seen from Behind</a></dt>
+                                <dd class="created">1880/1883</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76272.html"><img class="thumbnail" alt="A Man seen from Behind" src="http://media.nga.gov/public/objects/7/6/2/7/2/76272-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76221.html">Study of Puget's "Milo of Crotona"</a></dt>
+                                <dd class="created">1895/1898</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76221.html"><img class="thumbnail" alt="Study of Puget's "Milo of Crotona"" src="http://media.nga.gov/public/objects/7/6/2/2/1/76221-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76247.html">The Artist's Son</a></dt>
+                                <dd class="created">c. 1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76247.html"><img class="thumbnail" alt="The Artist's Son" src="http://media.nga.gov/public/objects/7/6/2/4/7/76247-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76273.html">The Artist's Son Reading</a></dt>
+                                <dd class="created">c. 1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76273.html"><img class="thumbnail" alt="The Artist's Son Reading" src="http://media.nga.gov/public/objects/7/6/2/7/3/76273-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76222.html">The Artist's Son Leaning on his Elbow</a></dt>
+                                <dd class="created">c. 1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76222.html"><img class="thumbnail" alt="The Artist's Son Leaning on his Elbow" src="http://media.nga.gov/public/objects/7/6/2/2/2/76222-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76248.html">Head of a Boy</a></dt>
+                                <dd class="created">1887/1889</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76248.html"><img class="thumbnail" alt="Head of a Boy" src="http://media.nga.gov/public/objects/7/6/2/4/8/76248-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76274.html">House Surrounded by Vegetation</a></dt>
+                                <dd class="created">1889/1892</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76274.html"><img class="thumbnail" alt="House Surrounded by Vegetation" src="http://media.nga.gov/public/objects/7/6/2/7/4/76274-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76223.html">Landscape Near Aix-En-Provence</a></dt>
+                                <dd class="created">1877/1880</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76223.html"><img class="thumbnail" alt="Landscape Near Aix-En-Provence" src="http://media.nga.gov/public/objects/7/6/2/2/3/76223-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76249.html">Head of a Boy Seen from Behind</a></dt>
+                                <dd class="created">c. 1885</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76249.html"><img class="thumbnail" alt="Head of a Boy Seen from Behind" src="http://media.nga.gov/public/objects/7/6/2/4/9/76249-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76275.html">Figure Resting Head on Hand</a></dt>
+                                <dd class="created">c. 1889</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76275.html"><img class="thumbnail" alt="Figure Resting Head on Hand" src="http://media.nga.gov/public/objects/7/6/2/7/5/76275-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76224.html">Study of Houses</a></dt>
+                                <dd class="created">1879/1882</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76224.html"><img class="thumbnail" alt="Study of Houses" src="http://media.nga.gov/public/objects/7/6/2/2/4/76224-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76250.html">Carnival Scene</a></dt>
+                                <dd class="created">1885/1888</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76250.html"><img class="thumbnail" alt="Carnival Scene" src="http://media.nga.gov/public/objects/7/6/2/5/0/76250-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76276.html">Near the Pool at Jas de Bouffan</a></dt>
+                                <dd class="created">1883/1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76276.html"><img class="thumbnail" alt="Near the Pool at Jas de Bouffan" src="http://media.nga.gov/public/objects/7/6/2/7/6/76276-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76225.html">Landscape with Trees</a></dt>
+                                <dd class="created">1895/1898</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76225.html"><img class="thumbnail" alt="Landscape with Trees" src="http://media.nga.gov/public/objects/7/6/2/2/5/76225-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76251.html">Woman Leaning Forward</a></dt>
+                                <dd class="created">1888/1891</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76251.html"><img class="thumbnail" alt="Woman Leaning Forward" src="http://media.nga.gov/public/objects/7/6/2/5/1/76251-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76277.html">Man Bending Forward</a></dt>
+                                <dd class="created">1883/1886</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76277.html"><img class="thumbnail" alt="Man Bending Forward" src="http://media.nga.gov/public/objects/7/6/2/7/7/76277-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76226.html">Studies Including a Straw Hat</a></dt>
+                                <dd class="created">1895/1898</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76226.html"><img class="thumbnail" alt="Studies Including a Straw Hat" src="http://media.nga.gov/public/objects/7/6/2/2/6/76226-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76252.html">Head of the Artist's Son</a></dt>
+                                <dd class="created">1888/1889</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76252.html"><img class="thumbnail" alt="Head of the Artist's Son" src="http://media.nga.gov/public/objects/7/6/2/5/2/76252-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76278.html">Study of the Allegorical Figure of the Genius of Health from Rubens' "The Birth of Louis XIII at Fontainbleau"</a></dt>
+                                <dd class="created">1895/1898</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76278.html"><img class="thumbnail" alt="Study of the Allegorical Figure of the Genius of Health from Rubens' "The Birth of Louis XIII at Fontainbleau"" src="http://media.nga.gov/public/objects/7/6/2/7/8/76278-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76227.html">Madame Cézanne</a></dt>
+                                <dd class="created">1888/1891</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76227.html"><img class="thumbnail" alt="Madame Cézanne" src="http://media.nga.gov/public/objects/7/6/2/2/7/76227-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76253.html">Branch in Flower</a></dt>
+                                <dd class="created">1886/1889</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76253.html"><img class="thumbnail" alt="Branch in Flower" src="http://media.nga.gov/public/objects/7/6/2/5/3/76253-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76279.html">Study of Puget's "Milo of Crotona"</a></dt>
+                                <dd class="created">1880/1883</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76279.html"><img class="thumbnail" alt="Study of Puget's "Milo of Crotona"" src="http://media.nga.gov/public/objects/7/6/2/7/9/76279-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76228.html">A Head, a Cup, and a Bread Roll</a></dt>
+                                <dd class="created">1891/1894</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76228.html"><img class="thumbnail" alt="A Head, a Cup, and a Bread Roll" src="http://media.nga.gov/public/objects/7/6/2/2/8/76228-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76254.html">Pine Tree</a></dt>
+                                <dd class="created">1882/1885</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76254.html"><img class="thumbnail" alt="Pine Tree" src="http://media.nga.gov/public/objects/7/6/2/5/4/76254-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76280.html">Study of a Standing Male Figure after the Antique</a></dt>
+                                <dd class="created">c. 1895</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76280.html"><img class="thumbnail" alt="Study of a Standing Male Figure after the Antique" src="http://media.nga.gov/public/objects/7/6/2/8/0/76280-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76229.html">Kerosene Lamp</a></dt>
+                                <dd class="created">1878/1881</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76229.html"><img class="thumbnail" alt="Kerosene Lamp" src="http://media.nga.gov/public/objects/7/6/2/2/9/76229-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76255.html">Women Bathers and a Roll of Paper</a></dt>
+                                <dd class="created">1882/1885</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76255.html"><img class="thumbnail" alt="Women Bathers and a Roll of Paper" src="http://media.nga.gov/public/objects/7/6/2/5/5/76255-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76281.html">Study of Desiderio da Settignano's "Bust of a Child"</a></dt>
+                                <dd class="created">c. 1895</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76281.html"><img class="thumbnail" alt="Study of Desiderio da Settignano's "Bust of a Child"" src="http://media.nga.gov/public/objects/7/6/2/8/1/76281-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76230.html">Two Heads</a></dt>
+                                <dd class="created">1888</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76230.html"><img class="thumbnail" alt="Two Heads" src="http://media.nga.gov/public/objects/7/6/2/3/0/76230-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76256.html">Hand and Shoulder of a Boy</a></dt>
+                                <dd class="created">c. 1885</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76256.html"><img class="thumbnail" alt="Hand and Shoulder of a Boy" src="http://media.nga.gov/public/objects/7/6/2/5/6/76256-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76282.html">House in a Park</a></dt>
+                                <dd class="created">1883/1886</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76282.html"><img class="thumbnail" alt="House in a Park" src="http://media.nga.gov/public/objects/7/6/2/8/2/76282-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76231.html">Madame Cézanne</a></dt>
+                                <dd class="created">1886/1889</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76231.html"><img class="thumbnail" alt="Madame Cézanne" src="http://media.nga.gov/public/objects/7/6/2/3/1/76231-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76257.html">Two Heads</a></dt>
+                                <dd class="created">1890/1896</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76257.html"><img class="thumbnail" alt="Two Heads" src="http://media.nga.gov/public/objects/7/6/2/5/7/76257-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76283.html">Study of "The Roman Orator (Germanicus)"</a></dt>
+                                <dd class="created">1883/1886</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76283.html"><img class="thumbnail" alt="Study of "The Roman Orator (Germanicus)"" src="http://media.nga.gov/public/objects/7/6/2/8/3/76283-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76232.html">Self-Portrait</a></dt>
+                                <dd class="created">c. 1895</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76232.html"><img class="thumbnail" alt="Self-Portrait" src="http://media.nga.gov/public/objects/7/6/2/3/2/76232-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76258.html">Study of Puget's "Hercules Resting"</a></dt>
+                                <dd class="created">c. 1879</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76258.html"><img class="thumbnail" alt="Study of Puget's "Hercules Resting"" src="http://media.nga.gov/public/objects/7/6/2/5/8/76258-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76284.html">Study of the Allegorical Figure Bellona in Rubens' "The Apotheosis of Henri IV"</a></dt>
+                                <dd class="created">1883/1886</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76284.html"><img class="thumbnail" alt="Study of the Allegorical Figure Bellona in Rubens' "The Apotheosis of Henri IV"" src="http://media.nga.gov/public/objects/7/6/2/8/4/76284-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76233.html">Landscape Seen from the Inside of a Cave</a></dt>
+                                <dd class="created">1889/1892</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76233.html"><img class="thumbnail" alt="Landscape Seen from the Inside of a Cave" src="http://media.nga.gov/public/objects/7/6/2/3/3/76233-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76259.html">Study of the Allegorical Figure Bellona in Rubens' "The Apotheosis of Henri IV"</a></dt>
+                                <dd class="created">1879/1882</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76259.html"><img class="thumbnail" alt="Study of the Allegorical Figure Bellona in Rubens' "The Apotheosis of Henri IV"" src="http://media.nga.gov/public/objects/7/6/2/5/9/76259-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76285.html">Studies Including Madame Cézanne</a></dt>
+                                <dd class="created">1884/1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76285.html"><img class="thumbnail" alt="Studies Including Madame Cézanne" src="http://media.nga.gov/public/objects/7/6/2/8/5/76285-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76234.html">Head of a Young Woman</a></dt>
+                                <dd class="created">c. 1880</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76234.html"><img class="thumbnail" alt="Head of a Young Woman" src="http://media.nga.gov/public/objects/7/6/2/3/4/76234-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76260.html">Study of the Allegorical Figure France in Rubens' "The Exchange of the Two Princesses"</a></dt>
+                                <dd class="created">1882/1885</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76260.html"><img class="thumbnail" alt="Study of the Allegorical Figure France in Rubens' "The Exchange of the Two Princesses"" src="http://media.nga.gov/public/objects/7/6/2/6/0/76260-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76286.html">Chair and Dresser</a></dt>
+                                <dd class="created">1880/1883</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76286.html"><img class="thumbnail" alt="Chair and Dresser" src="http://media.nga.gov/public/objects/7/6/2/8/6/76286-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76235.html">Madame Cézanne</a></dt>
+                                <dd class="created">1882/1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76235.html"><img class="thumbnail" alt="Madame Cézanne" src="http://media.nga.gov/public/objects/7/6/2/3/5/76235-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76261.html">Study of an Angel in Rubens' "The Prophet Elijah"</a></dt>
+                                <dd class="created">1892/1895</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76261.html"><img class="thumbnail" alt="Study of an Angel in Rubens' "The Prophet Elijah"" src="http://media.nga.gov/public/objects/7/6/2/6/1/76261-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76287.html">Study of "Venus de Milo"</a></dt>
+                                <dd class="created">1881/1884</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76287.html"><img class="thumbnail" alt="Study of "Venus de Milo"" src="http://media.nga.gov/public/objects/7/6/2/8/7/76287-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76236.html">Study of a Decorative Ornament</a></dt>
+                                <dd class="created">1879/1882</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76236.html"><img class="thumbnail" alt="Study of a Decorative Ornament" src="http://media.nga.gov/public/objects/7/6/2/3/6/76236-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76262.html">The Mill</a></dt>
+                                <dd class="created">1889/1892</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76262.html"><img class="thumbnail" alt="The Mill" src="http://media.nga.gov/public/objects/7/6/2/6/2/76262-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76288.html">Basket</a></dt>
+                                <dd class="created">1877/1900</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76288.html"><img class="thumbnail" alt="Basket" src="http://media.nga.gov/public/objects/7/6/2/8/8/76288-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76237.html">Madame Cézanne</a></dt>
+                                <dd class="created">1897/1900</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76237.html"><img class="thumbnail" alt="Madame Cézanne" src="http://media.nga.gov/public/objects/7/6/2/3/7/76237-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76263.html">Two Studies for "The Judgement of Paris" or "The Amorous Shepherd"</a></dt>
+                                <dd class="created">1883/1886</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76263.html"><img class="thumbnail" alt="Two Studies for "The Judgement of Paris" or "The Amorous Shepherd"" src="http://media.nga.gov/public/objects/7/6/2/6/3/76263-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76289.html">Trees and Shrubs</a></dt>
+                                <dd class="created">1883/1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76289.html"><img class="thumbnail" alt="Trees and Shrubs" src="http://media.nga.gov/public/objects/7/6/2/8/9/76289-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76238.html">Study of the Allegorical Figure of Health in Rubens' "The Birth of Louis XIII"</a></dt>
+                                <dd class="created">1880/1883</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76238.html"><img class="thumbnail" alt="Study of the Allegorical Figure of Health in Rubens' "The Birth of Louis XIII"" src="http://media.nga.gov/public/objects/7/6/2/3/8/76238-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76264.html">Spanish Dancers</a></dt>
+                                <dd class="created">1883/1886</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76264.html"><img class="thumbnail" alt="Spanish Dancers" src="http://media.nga.gov/public/objects/7/6/2/6/4/76264-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76290.html">Two Bathers</a></dt>
+                                <dd class="created">1884/1887</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76290.html"><img class="thumbnail" alt="Two Bathers" src="http://media.nga.gov/public/objects/7/6/2/9/0/76290-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76239.html">Two Heads of Women</a></dt>
+                                <dd class="created">1890/1894</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76239.html"><img class="thumbnail" alt="Two Heads of Women" src="http://media.nga.gov/public/objects/7/6/2/3/9/76239-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76265.html">Study for "The Judgement of Paris" or "The Amorous Shepherd"</a></dt>
+                                <dd class="created">1883/1886</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76265.html"><img class="thumbnail" alt="Study for "The Judgement of Paris" or "The Amorous Shepherd"" src="http://media.nga.gov/public/objects/7/6/2/6/5/76265-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76240.html">Woman Leaning Forward</a></dt>
+                                <dd class="created">1890/1894</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76240.html"><img class="thumbnail" alt="Woman Leaning Forward" src="http://media.nga.gov/public/objects/7/6/2/4/0/76240-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76266.html">Victor Chocquet and an Angel for "The Apotheosis of Delacroix"</a></dt>
+                                <dd class="created">1878/1880</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76266.html"><img class="thumbnail" alt="Victor Chocquet and an Angel for "The Apotheosis of Delacroix"" src="http://media.nga.gov/public/objects/7/6/2/6/6/76266-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76241.html">Woman Leaning Forward</a></dt>
+                                <dd class="created">1890/1894</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76241.html"><img class="thumbnail" alt="Woman Leaning Forward" src="http://media.nga.gov/public/objects/7/6/2/4/1/76241-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76267.html">Peonies</a></dt>
+                                <dd class="created">1890/1893</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76267.html"><img class="thumbnail" alt="Peonies" src="http://media.nga.gov/public/objects/7/6/2/6/7/76267-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76242.html">Bellows in Front of a Fireplace</a></dt>
+                                <dd class="created">1887/1892</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76242.html"><img class="thumbnail" alt="Bellows in Front of a Fireplace" src="http://media.nga.gov/public/objects/7/6/2/4/2/76242-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76268.html">Pelicans</a></dt>
+                                <dd class="created">1877/1880</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76268.html"><img class="thumbnail" alt="Pelicans" src="http://media.nga.gov/public/objects/7/6/2/6/8/76268-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76243.html">Fireplace Tongs and Poker</a></dt>
+                                <dd class="created">1887/1892</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76243.html"><img class="thumbnail" alt="Fireplace Tongs and Poker" src="http://media.nga.gov/public/objects/7/6/2/4/3/76243-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76269.html">Thistle</a></dt>
+                                <dd class="created">1893/1896</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76269.html"><img class="thumbnail" alt="Thistle" src="http://media.nga.gov/public/objects/7/6/2/6/9/76269-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76244.html">Cushion of an Armchair</a></dt>
+                                <dd class="created">1886/1889</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76244.html"><img class="thumbnail" alt="Cushion of an Armchair" src="http://media.nga.gov/public/objects/7/6/2/4/4/76244-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76270.html">A Nude and Foliage</a></dt>
+                                <dd class="created">1879/1882</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76270.html"><img class="thumbnail" alt="A Nude and Foliage" src="http://media.nga.gov/public/objects/7/6/2/7/0/76270-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76245.html">Madame Cézanne with her Head Lowered</a></dt>
+                                <dd class="created">1893/1896</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76245.html"><img class="thumbnail" alt="Madame Cézanne with her Head Lowered" src="http://media.nga.gov/public/objects/7/6/2/4/5/76245-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                            
+                            
+                            
+                            
+                            <dl class="return-art">
+                                <dt class="title"><a href="/content/ngaweb/Collection/art-object-page.76271.html">Three Heads, One of Madame Cézanne</a></dt>
+                                <dd class="created">1882/1885</dd>
+                                
+                                    <dd><a href="/content/ngaweb/Collection/art-object-page.76271.html"><img class="thumbnail" alt="Three Heads, One of Madame Cézanne" src="http://media.nga.gov/public/objects/7/6/2/7/1/76271-primary-0-50x50.jpg"></a></dd>
+                                
+                            </dl>
+                        
+                    </div>
+                </div>
+            
+
+            
+        </div><!-- table -->
+    </div> <!-- content -->
+</div>
+</div>
+ 
+</div>
+
+
+
+
+
+
+
+
+            
+
+<div id="footer-wrap">
+    <div id="footer">
+        <ul class="footer-nav">
+            <li><a href="/content/ngaweb/about.html">About</a></li>
+            <li><a href="/content/ngaweb/opportunities.html">Opportunities</a></li>
+            <li><a href="/content/ngaweb/press.html">Press</a></li>
+            <li><a href="https://images.nga.gov/">NGA Images</a></li>
+            <li><a href="http://subscribe.nga.gov/subscription_form_ngart.cfm">Newsletters</a></li>
+            <li><a href="/content/ngaweb/notices.html">Notices</a></li>
+            <li><a href="/content/ngaweb/contact-us.html">Contact Us</a></li>
+            <li><a href="/content/ngaweb/audio-video.html">Audio/Video</a></li>
+        </ul>
+        <div class="quick-info">
+            <p class="open">
+
+
+
+
+
+
+
+
+
+
+
+Open today from 10:00 to 5:00</p>
+
+            <a class="directions" target="_blank" href="https://www.google.com/maps/place/Constitution+Ave+%26+6th+St/@38.892068,-77.019911,787m/data=!3m1!1e3!4m2!3m1!1s0x89b7b7851f5a1f1b:0x7efed8ff4940062b?hl=en">Directions</a>
+        </div>
+        <ul class="footer-social">
+            <li><a href="https://twitter.com/ngadc" class="twitter"><span>Twitter</span></a></li>
+            <li><a href="https://www.facebook.com/nationalgalleryofart" class="facebook"><span>Facebook</span></a></li>
+            
+            <li><a href="http://instagram.com/ngadc" class="instagram"><span>Instagram</span></a></li>
+            <li><a href="http://pinterest.com/ngadc" class="pinterest"><span>Pinterest</span></a></li>
+        </ul>
+        <div class="footer-extra">
+            <span class="copyright">&copy; 2015 National Gallery of Art</span>
+        </div>
+    </div>
+    
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-31577529-1', 'nga.gov');
+        ga('send', 'pageview');
+
+        // Track PDFs separately
+        jQuery('a[href$="pdf"]').each(function(index) {
+            pdfLabel = jQuery(this).attr('href');
+            jQuery(this).on("click", function() {
+                ga('send', 'event', 'PDF', 'Download', pdfLabel);
+            });
+        });
+    </script>
+</div>
+
+        </div>
+        
+        <!-- development -->
+        
+
+
+
+
+
+
+
+<!--
+More detailed timing info is available by uncommenting some code in the timing.jsp component
+Timing chart URL:
+http://chart.apis.google.com/chart?chtt=art-object-page.76219.html+%2862ms%29&cht=bhs&chxt=x&chco=c6d9fd,4d89f9&chbh=a&chds=0,62,0,62&chxr=0,0,62&chd=t:5,6,6,7,8,9,11,12,14,16,18,19,20,20,21,42,44,61,62|3,0,2,0,0,1,6,0,1,1,0,1,41,41,40,0,0,1,0&chly=head.jsp|preprocess.jsp|headlibs.jsp|init.jsp|custom_headlibs.jsp|announcement.jsp|ngaShareIt.jsp|ngaEmailShare.jsp|twittershare.jsp|facebookshare.jsp|clientcontext.jsp|header.jsp|content.jsp|layout.jsp|artobjectinfo.jsp|image_compare.jsp|artobjecttombstone.jsp|footer.jsp|gallery_open_hours.jsp&chs=600x500
+-->
+
+
+        <div class="servicecomponents cloudservices">
+</div>
+
+       
+        <script>
+            
+            jQuery(document).ready(function($) {
+                
+                // Site-wide static plugins
+                $('.side-nav').sidenav();
+                $('.drawer').drawer();
+                $('.infobox').infobox();
+                $('.banner').banner();
+                $('.section-link').pageSections();
+                
+                // Site-wide responsive plugins
+                $('#mainnav').nav();
+                $('#fullbg').fullbg();
+                $('#nga-carousel').homeCarousel();
+                $('.slideshowCarousel').slideshow();
+                
+                // All responsive plugins are ready. 
+                // Trigger a breakpoint event.
+                view.init();
+                
+            });
+            
+        </script>
+    </body>
+
+</html>
