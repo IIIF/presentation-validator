@@ -68,7 +68,30 @@ class Validator(object):
             response.content_type = "application/json"
             return json.dumps(data)
 
-    def do_test(self):
+    def do_POST_test(self):
+        data = request.json
+        version = '2.0'
+        fmt = 'json'
+        warnings = []
+
+        # Now check data
+        reader = ManifestReader(data, version=version)
+        err = None
+        try:
+            mf = reader.read()
+            mf.toJSON()
+            # Passed!
+            okay = 1
+        except Exception, err:
+            # Failed
+            okay = 0
+
+        warnings.extend(reader.get_warnings())
+        infojson = {'recieved': data, 'okay': okay, 'warnings': warnings, 'error': str(err)}
+        return self.format_response(infojson, fmt)
+
+
+    def do_GET_test(self):
         url = request.query.get('url', '')
         version = request.query.get('version', '2.0')
         fmt = request.query.get('format', 'html')
@@ -113,7 +136,8 @@ class Validator(object):
         return self.format_response(infojson, fmt)
 
     def dispatch_views(self):
-        self.app.route("/validate", "GET", self.do_test)
+        self.app.route("/validate", "GET", self.do_GET_test)
+        self.app.route("/postvalidate", "POST", self.do_POST_test)
 
     def after_request(self):
         """A bottle hook for json responses."""
