@@ -137,7 +137,7 @@ class Validator(object):
 
     def dispatch_views(self):
         self.app.route("/validate", "GET", self.do_GET_test)
-        self.app.route("/postvalidate", "POST", self.do_POST_test)
+        self.app.route("/validate", "POST", self.do_POST_test)
 
     def after_request(self):
         """A bottle hook for json responses."""
