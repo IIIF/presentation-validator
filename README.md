@@ -11,7 +11,7 @@ This is the codebase for the IIIF Presentation Validator, which can be seen at <
 
 **JSON Response**
 
-``JSON
+```JSON
   {
     "url": "<SUBMITTED URL>",
     "error": "<ERROR MESSAGE>",
