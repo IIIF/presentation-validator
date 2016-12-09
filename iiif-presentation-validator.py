@@ -13,15 +13,12 @@ try:
 except ImportError:
     # fall back to python2
     from urllib2 import urlopen, HTTPError
-    from urlparse import urlparse    
+    from urlparse import urlparse
 
 from bottle import Bottle, abort, request, response, run
 
 egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
-
-#os.chdir(os.path.dirname(__file__))
-#sys.path.append(os.path.dirname(__file__))
 
 from iiif_prezi.loader import ManifestReader
 
@@ -40,7 +37,7 @@ class Validator(object):
 
     def make_html(self, results):
         resp = []
-        fh = file('head.html')
+        fh = file(os.path.join(os.path.dirname(__file__),'head.html'))
         data = fh.read()
         fh.close()
         resp.append(data)
@@ -59,7 +56,7 @@ class Validator(object):
             resp.append('</ul></div>')
 
         resp.append('</div>')
-        fh = file('foot.html')
+        fh = file(os.path.join(os.path.dirname(__file__),'foot.html'))
         data = fh.read()
         fh.close()
         resp.append(data)
