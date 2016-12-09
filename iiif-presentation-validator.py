@@ -35,46 +35,13 @@ class Validator(object):
         wh.close()
         return (data, wh)
 
-    def make_html(self, results):
-        resp = []
-        fh = file(os.path.join(os.path.dirname(__file__),'head.html'))
-        data = fh.read()
-        fh.close()
-        resp.append(data)
-        resp.append('<div style="margin-left: 20px">')
-
-        resp.append("<div>URL Tested: %s</div><br/>" % results['url'])
-        if results['okay']:
-            resp.append('<div><h2 style="color:green">Validated successfully</h2></div>')
-        else:
-            resp.append('<div><h2 style="color:red">Validation Error: %s</h2></div>' % results['error'])
-
-        if results.get('warnings', []):
-            resp.append('<div style="margin-top: 20px">Warnings:<ul>')
-            for w in results['warnings']:
-                resp.append('<li>%s</li>' % w)
-            resp.append('</ul></div>')
-
-        resp.append('</div>')
-        fh = file(os.path.join(os.path.dirname(__file__),'foot.html'))
-        data = fh.read()
-        fh.close()
-        resp.append(data)
-
-        return ''.join(resp)
-
-    def format_response(self, data, fmt):
-        if fmt == "html":
-            response.content_type = "text/html"
-            return self.make_html(data)
-        else:
-            response.content_type = "application/json"
-            return json.dumps(data)
+    def format_response(self, data):
+        response.content_type = "application/json"
+        return json.dumps(data)
 
     def do_POST_test(self):
         data = request.json
         version = '2.0'
-        fmt = 'json'
         warnings = []
 
         # Now check data
@@ -91,24 +58,23 @@ class Validator(object):
 
         warnings.extend(reader.get_warnings())
         infojson = {'received': data, 'okay': okay, 'warnings': warnings, 'error': str(err)}
-        return self.format_response(infojson, fmt)
+        return self.format_response(infojson)
 
 
     def do_GET_test(self):
         url = request.query.get('url', '')
         version = request.query.get('version', '2.0')
-        fmt = request.query.get('format', 'html')
 
         url = url.strip()
 
         parsed_url = urlparse(url)
         if not parsed_url.scheme.startswith('http'):
-            return self.format_response({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url}, fmt)
+            return self.format_response({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url})
 
         try:
             (data, webhandle) = self.fetch(url)
         except:
-            return self.format_response({'okay': 0, 'error': 'Cannot fetch url', 'url': url}, fmt)
+            return self.format_response({'okay': 0, 'error': 'Cannot fetch url', 'url': url})
 
         # First check HTTP level
         ct = webhandle.headers.get('content-type', '')
@@ -136,21 +102,21 @@ class Validator(object):
 
         warnings.extend(reader.get_warnings())
         infojson = {'url': url, 'okay': okay, 'warnings': warnings, 'error': str(err)}
-        return self.format_response(infojson, fmt)
+        return self.format_response(infojson)
 
     def index_route(self):
         resp = []
-        fh = file('head.html')
+        fh = file(os.path.join(os.path.dirname(__file__),'head.html'))
         data = fh.read()
         fh.close()
         resp.append(data)
 
-        fh = file('index.html')
+        fh = file(os.path.join(os.path.dirname(__file__),'index.html'))
         data = fh.read()
         fh.close()
         resp.append(data)
 
-        fh = file('foot.html')
+        fh = file(os.path.join(os.path.dirname(__file__),'foot.html'))
         data = fh.read()
         fh.close()
         resp.append(data)
@@ -164,8 +130,6 @@ class Validator(object):
         self.app.route("/validate", "POST", self.do_POST_test)
 
     def after_request(self):
-        """A bottle hook for json responses."""
-        # response["content_type"] = "application/json"
         methods = 'GET'
         headers = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
         response.headers['Access-Control-Allow-Origin'] = '*'
