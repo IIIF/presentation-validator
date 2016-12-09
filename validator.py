@@ -135,7 +135,28 @@ class Validator(object):
         infojson = {'url': url, 'okay': okay, 'warnings': warnings, 'error': str(err)}
         return self.format_response(infojson, fmt)
 
+    def index_route(self):
+        resp = []
+        fh = file('head.html')
+        data = fh.read()
+        fh.close()
+        resp.append(data)
+
+        fh = file('index.html')
+        data = fh.read()
+        fh.close()
+        resp.append(data)
+
+        fh = file('foot.html')
+        data = fh.read()
+        fh.close()
+        resp.append(data)
+
+        return ''.join(resp)
+
+
     def dispatch_views(self):
+        self.app.route("/", "GET", self.index_route)
         self.app.route("/validate", "GET", self.do_GET_test)
         self.app.route("/validate", "POST", self.do_POST_test)
 
