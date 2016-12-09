@@ -105,23 +105,12 @@ class Validator(object):
         return self.format_response(infojson)
 
     def index_route(self):
-        resp = []
-        fh = file(os.path.join(os.path.dirname(__file__),'head.html'))
-        data = fh.read()
-        fh.close()
-        resp.append(data)
 
         fh = file(os.path.join(os.path.dirname(__file__),'index.html'))
         data = fh.read()
         fh.close()
-        resp.append(data)
-
-        fh = file(os.path.join(os.path.dirname(__file__),'foot.html'))
-        data = fh.read()
-        fh.close()
-        resp.append(data)
-
-        return ''.join(resp)
+        
+        return data
 
 
     def dispatch_views(self):
