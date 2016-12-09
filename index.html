@@ -17,7 +17,6 @@ Select Presentation API Version:
   <option value="1.0">1.0</option>
 </select>
 <br/>
-<input type="hidden" name="format" value="html"><br/>
 <input type="submit" value="Go!" id="submit-url">
 </form>
 </div>
@@ -54,18 +53,18 @@ If you would like to use the validator programatically, there are two options:
 </style>
 <script type="text/javascript">
   
-  // Function for calling out to the service and getting a result
+  // Call out to the validation service and get a result
   function handleSubmission(e) {
     e.preventDefault();
     var data = {
       url: $("input[name='url'").val(),
-      version: $("select[name='version']").val(),
-      format: "json"
+      version: $("select[name='version']").val()
     }
     var url = $('#manifest-validation-form').attr("action");
     $.getJSON(url,data,handleValidationResponse);
   }
 
+  // Handle validation service response, render response block
   function handleValidationResponse(data) {
     str  = '<div style="margin-left: 20px">'
     str += '<div>URL Tested: '+ data.url + '</div><br/>'
