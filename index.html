@@ -123,7 +123,7 @@
       function handleSubmission(e) {
         e.preventDefault();
         var data = {
-          url: $("input[name='url'").val(),
+          url: $("input[name='url']").val(),
           version: $("select[name='version']").val()
         }
         var url = $('#manifest-validation-form').attr("action");
