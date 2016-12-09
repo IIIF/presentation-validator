@@ -5,7 +5,16 @@ This is the codebase for the IIIF Presentation Validator, which can be seen at <
 
 ## Data Structure
 
-*(write me)*
+### Response
+
+``JSON
+  {
+    "url": "<SUBMITTED URL>",
+    "error": "<ERROR MESSAGE>",
+    "okay": 1,
+    "warnings": []
+  }
+```
 
 ## Usage
 
