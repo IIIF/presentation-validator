@@ -93,7 +93,7 @@ class Validator(object):
             okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {'recieved': data, 'okay': okay, 'warnings': warnings, 'error': str(err)}
+        infojson = {'received': data, 'okay': okay, 'warnings': warnings, 'error': str(err)}
         return self.format_response(infojson, fmt)
 
 
