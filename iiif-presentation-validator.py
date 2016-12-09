@@ -137,20 +137,11 @@ class Validator(object):
         response.headers['Access-Control-Allow-Headers'] = headers
         response.headers['Allow'] = methods
 
-    def not_implemented(self, *args, **kwargs):
-        """Returns not implemented status."""
-        abort(501)
-
     def empty_response(self, *args, **kwargs):
         """Empty response"""
 
     options_list = empty_response
     options_detail = empty_response
-
-    def error(self, error, message=None):
-        """Returns the error response."""
-        return self._jsonify({"error": error.status_code,
-                              "message": error.body or message}, "")
 
     def get_bottle_app(self):
         """Returns bottle instance"""
