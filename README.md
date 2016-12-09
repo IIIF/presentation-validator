@@ -1,13 +1,17 @@
-# IIIF Presentation Validator
-
+IIIF Presentation Validator
+======================
 
 This is the codebase for the IIIF Presentation Validator, which can be seen at <http://iiif.io/api/presentation/validator/>.
 
+## Usage
+
+*(Write me)*
+
 ## Data Structure
 
-### Response
+**JSON Response**
 
-```json
+``JSON
   {
     "url": "<SUBMITTED URL>",
     "error": "<ERROR MESSAGE>",
@@ -16,9 +20,12 @@ This is the codebase for the IIIF Presentation Validator, which can be seen at <
   }
 ```
 
-## Usage
-
-*(Write me)*
+Key      |  Definition                       | Example Value
+---------|-----------------------------------|----------
+url      | Submitted URL for the manifest    | http://example.com/iiif/manifest.json
+error    | The text of the breaking error    | sc:Manifest['thumbnail'] has broken value
+okay     | Did the manifest parse properly?  | 1 *or* 0
+warnings | An array of warning messages      | (TBD)
 
 ## Local Installation
 
