@@ -8,7 +8,7 @@ from bottle import Response
 # the classes within
 fh = open('iiif-presentation-validator.py', 'r')
 try:
-    val_mod = imp.load_module('ipv', fh, '', ('py','r',imp.PY_SOURCE))
+    val_mod = imp.load_module('ipv', fh, '.', ('py','r',imp.PY_SOURCE))
 finally:
     fh.close()
 
