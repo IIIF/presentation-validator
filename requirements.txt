@@ -1,2 +1,2 @@
 bottle>=0.12.9
-iiif_prezi>=0.2.1
+iiif_prezi>=0.2.2
