@@ -1,5 +1,5 @@
-IIIF Presentation Validator
-======================
+# IIIF Presentation Validator
+
 
 This is the codebase for the IIIF Presentation Validator, which can be seen at <http://iiif.io/api/presentation/validator/>.
 
@@ -7,7 +7,7 @@ This is the codebase for the IIIF Presentation Validator, which can be seen at <
 
 ### Response
 
-``JSON
+```json
   {
     "url": "<SUBMITTED URL>",
     "error": "<ERROR MESSAGE>",
