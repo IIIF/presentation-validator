@@ -6,8 +6,14 @@ import argparse
 import json
 import os
 import sys
-import urllib2
-from urlparse import urlparse
+try:
+    # python3
+    from urllib.request import urlopen, HTTPError
+    from urllib.parse import urlparse
+except ImportError:
+    # fall back to python2
+    from urllib2 import urlopen, HTTPError
+    from urlparse import urlparse    
 
 from bottle import Bottle, abort, request, response, run
 
@@ -25,8 +31,8 @@ class Validator(object):
     def fetch(self, url):
         # print url
         try:
-            wh = urllib2.urlopen(url)
-        except urllib2.HTTPError, wh:
+            wh = urlopen(url)
+        except HTTPError as wh:
             pass
         data = wh.read()
         wh.close()
@@ -82,7 +88,7 @@ class Validator(object):
             mf.toJSON()
             # Passed!
             okay = 1
-        except Exception, err:
+        except Exception as err:
             # Failed
             okay = 0
 
@@ -127,7 +133,7 @@ class Validator(object):
             mf.toJSON()
             # Passed!
             okay = 1
-        except Exception, err:
+        except Exception as err:
             # Failed
             okay = 0
 
