@@ -14,10 +14,10 @@ from bottle import Bottle, abort, request, response, run
 egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
 
-os.chdir(os.path.dirname(__file__))
-sys.path.append(os.path.dirname(__file__))
+#os.chdir(os.path.dirname(__file__))
+#sys.path.append(os.path.dirname(__file__))
 
-from loader import ManifestReader
+from iiif_prezi.loader import ManifestReader
 
 
 class Validator(object):
