@@ -35,15 +35,7 @@ class Validator(object):
         wh.close()
         return (data, wh)
 
-    def format_response(self, data):
-        response.content_type = "application/json"
-        return json.dumps(data)
-
-    def do_POST_test(self):
-        data = request.json
-        version = '2.0'
-        warnings = []
-
+    def check_manifest(self, data, version, warnings=[]):
         # Now check data
         reader = ManifestReader(data, version=version)
         err = None
@@ -58,13 +50,20 @@ class Validator(object):
 
         warnings.extend(reader.get_warnings())
         infojson = {'received': data, 'okay': okay, 'warnings': warnings, 'error': str(err)}
-        return self.format_response(infojson)
+        response.content_type = "application/json"
+        return json.dumps(infojson)
 
+    def do_POST_test(self):
+        data = request.json
+        if not data:
+            b = request._get_body_string()
+            data = json.loads(b)
+        version = '2.1'
+        return self.check_manifest(data, version)
 
     def do_GET_test(self):
         url = request.query.get('url', '')
         version = request.query.get('version', '2.0')
-
         url = url.strip()
 
         parsed_url = urlparse(url)
@@ -88,38 +87,22 @@ class Validator(object):
             warnings.append("URL does not have correct access-control-allow-origin header:"
                             " got \"%s\", expected *" % cors)
 
-        # Now check data
-        reader = ManifestReader(data, version=version)
-        err = None
-        try:
-            mf = reader.read()
-            mf.toJSON()
-            # Passed!
-            okay = 1
-        except Exception as err:
-            # Failed
-            okay = 0
-
-        warnings.extend(reader.get_warnings())
-        infojson = {'url': url, 'okay': okay, 'warnings': warnings, 'error': str(err)}
-        return self.format_response(infojson)
+        return self.check_manifest(data, version, warnings)
 
     def index_route(self):
-
         fh = file(os.path.join(os.path.dirname(__file__),'index.html'))
         data = fh.read()
-        fh.close()
-        
+        fh.close()        
         return data
-
 
     def dispatch_views(self):
         self.app.route("/", "GET", self.index_route)
+        self.app.route("/validate", "OPTIONS", self.empty_response)
         self.app.route("/validate", "GET", self.do_GET_test)
         self.app.route("/validate", "POST", self.do_POST_test)
 
     def after_request(self):
-        methods = 'GET'
+        methods = 'GET,POST,OPTIONS'
         headers = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
         response.headers['Access-Control-Allow-Origin'] = '*'
         response.headers['Access-Control-Allow-Methods'] = methods
@@ -128,9 +111,6 @@ class Validator(object):
 
     def empty_response(self, *args, **kwargs):
         """Empty response"""
-
-    options_list = empty_response
-    options_detail = empty_response
 
     def get_bottle_app(self):
         """Returns bottle instance"""
