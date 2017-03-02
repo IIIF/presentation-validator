@@ -36,6 +36,8 @@ class Validator(object):
         try:
             if type(data) == bytes:
                 data = unicode(data)
+        except:
+            pass
         return (data, wh)
 
     def check_manifest(self, data, version, warnings=[]):
@@ -63,6 +65,8 @@ class Validator(object):
             try:
                 if type(b) == bytes:
                     b = unicode(b)
+            except:
+                pass
             data = json.loads(b)
         version = '2.1'
         return self.check_manifest(data, version)
