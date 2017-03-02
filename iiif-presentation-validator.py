@@ -35,7 +35,7 @@ class Validator(object):
         wh.close()
         try:
             if type(data) == bytes:
-                data = unicode(data)
+                data = str(data)
         except:
             pass
         return (data, wh)
@@ -55,7 +55,7 @@ class Validator(object):
 
         warnings.extend(reader.get_warnings())
         infojson = {'received': data, 'okay': okay, 'warnings': warnings, \
-            'error': unicode(err)}
+            'error': str(err)}
         response.content_type = "application/json"
         return json.dumps(infojson)
 
@@ -65,7 +65,7 @@ class Validator(object):
             b = request._get_body_string()
             try:
                 if type(b) == bytes:
-                    b = unicode(b)
+                    b = str(b)
             except:
                 pass
             data = json.loads(b)
