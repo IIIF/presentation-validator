@@ -34,8 +34,7 @@ class Validator(object):
         data = wh.read()
         wh.close()
         try:
-            if type(data) == bytes:
-                data = str(data)
+            data = data.decode('utf-8')
         except:
             pass
         return (data, wh)
@@ -64,8 +63,7 @@ class Validator(object):
         if not data:
             b = request._get_body_string()
             try:
-                if type(b) == bytes:
-                    b = str(b)
+                data = data.decode('utf-8')
             except:
                 pass
             data = json.loads(b)
