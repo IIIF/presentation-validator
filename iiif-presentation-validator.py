@@ -33,6 +33,9 @@ class Validator(object):
             pass
         data = wh.read()
         wh.close()
+        try:
+            if type(data) == bytes:
+                data = unicode(data)
         return (data, wh)
 
     def check_manifest(self, data, version, warnings=[]):
@@ -57,6 +60,9 @@ class Validator(object):
         data = request.json
         if not data:
             b = request._get_body_string()
+            try:
+                if type(b) == bytes:
+                    b = unicode(b)
             data = json.loads(b)
         version = '2.1'
         return self.check_manifest(data, version)
