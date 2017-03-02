@@ -54,7 +54,8 @@ class Validator(object):
             okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {'received': data, 'okay': okay, 'warnings': warnings, 'error': str(err)}
+        infojson = {'received': data, 'okay': okay, 'warnings': warnings, \
+            'error': unicode(err)}
         response.content_type = "application/json"
         return json.dumps(infojson)
 
@@ -78,12 +79,14 @@ class Validator(object):
 
         parsed_url = urlparse(url)
         if not parsed_url.scheme.startswith('http'):
-            return self.format_response({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url})
+            return self.format_response({'okay': 0, 'error': \
+                'URLs must use HTTP or HTTPS', 'url': url})
 
         try:
             (data, webhandle) = self.fetch(url)
         except:
-            return self.format_response({'okay': 0, 'error': 'Cannot fetch url', 'url': url})
+            return self.format_response({'okay': 0, 'error': \
+                'Cannot fetch url', 'url': url})
 
         # First check HTTP level
         ct = webhandle.headers.get('content-type', '')
