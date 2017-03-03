@@ -25,6 +25,9 @@ from iiif_prezi.loader import ManifestReader
 
 class Validator(object):
 
+    def __init__(self):
+        self.default_version = "2.1"
+
     def fetch(self, url):
         # print url
         try:
@@ -33,6 +36,10 @@ class Validator(object):
             pass
         data = wh.read()
         wh.close()
+        try:
+            data = data.decode('utf-8')
+        except:
+            pass
         return (data, wh)
 
     def check_manifest(self, data, version, warnings=[]):
@@ -49,31 +56,38 @@ class Validator(object):
             okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {'received': data, 'okay': okay, 'warnings': warnings, 'error': str(err)}
+        infojson = {'received': data, 'okay': okay, 'warnings': warnings, \
+            'error': str(err)}
+        return self.return_json(infojson)
+
+    def return_json(self, js):
         response.content_type = "application/json"
-        return json.dumps(infojson)
+        return json.dumps(js)
 
     def do_POST_test(self):
         data = request.json
         if not data:
             b = request._get_body_string()
+            try:
+                b = b.decode('utf-8')
+            except:
+                pass
             data = json.loads(b)
-        version = '2.1'
-        return self.check_manifest(data, version)
+        return self.check_manifest(data, self.default_version)
 
     def do_GET_test(self):
         url = request.query.get('url', '')
-        version = request.query.get('version', '2.0')
+        version = request.query.get('version', self.default_version)
         url = url.strip()
 
         parsed_url = urlparse(url)
         if not parsed_url.scheme.startswith('http'):
-            return self.format_response({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url})
+            return self.return_json({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url})
 
         try:
             (data, webhandle) = self.fetch(url)
         except:
-            return self.format_response({'okay': 0, 'error': 'Cannot fetch url', 'url': url})
+            return self.return_json({'okay': 0, 'error': 'Cannot fetch url', 'url': url})
 
         # First check HTTP level
         ct = webhandle.headers.get('content-type', '')
