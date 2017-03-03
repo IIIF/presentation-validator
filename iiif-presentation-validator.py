@@ -25,6 +25,9 @@ from iiif_prezi.loader import ManifestReader
 
 class Validator(object):
 
+    def __init__(self):
+        self.default_version = "2.1"
+
     def fetch(self, url):
         # print url
         try:
@@ -70,12 +73,11 @@ class Validator(object):
             except:
                 pass
             data = json.loads(b)
-        version = '2.1'
-        return self.check_manifest(data, version)
+        return self.check_manifest(data, self.default_version)
 
     def do_GET_test(self):
         url = request.query.get('url', '')
-        version = request.query.get('version', '2.0')
+        version = request.query.get('version', self.default_version)
         url = url.strip()
 
         parsed_url = urlparse(url)
