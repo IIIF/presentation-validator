@@ -51,8 +51,9 @@ class Validator(object):
             mf.toJSON()
             # Passed!
             okay = 1
-        except Exception as err:
+        except Exception as e:
             # Failed
+            err = e
             okay = 0
 
         warnings.extend(reader.get_warnings())
