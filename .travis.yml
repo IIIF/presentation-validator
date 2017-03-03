@@ -9,3 +9,18 @@ install:
   - pip install -r requirements.txt
 script:
   - py.test
+before_deploy:
+  - mkdir build; zip -q -r build/presentation-validator.zip .
+deploy:
+  provider: s3
+  access_key_id:
+    secure: NBYUTQ7iS+y8KjeHdpwooU327ztNl88YknqBoC6QUacSaTGZ/Ym1nqZR3T0W8L+hPf/ATPf68MPBjJ+u/Mk7eG1uor+4rcqgp3zfwoLNCmqzVWqOcHGQiSDU/C7KzAuo7RIO0jQh7fvWeS/u3XOTby8+uboA30OywF+aKaUHEfQ=
+  secret_access_key:
+    secure: KyIFa8ASKaftvdfKiELkyAYEaHKGCNyTSVY4WjEv3Knu/R3R5/CIKtCo2iy6Q5KIO8m+zCVai34k+kG7oIbURvDy+TeDaYaOJgqqVUURQ149PyCG0jYMs2RXZKMkwWOZz5zL0ZbHu0v486LL6yFmQHQTgWSa+Vg79sUX8qYDLqQ=
+  bucket: iiif-deployment-artifacts
+  region: us-west-2
+  local_dir: build
+  skip_cleanup: true
+  upload-dir: presentation-validator/${TRAVIS_BRANCH}
+  on:
+    python: '3.4'
