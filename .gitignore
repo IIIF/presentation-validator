@@ -1,1 +1,8 @@
 .cache
+.c
+.coverage
+*.egg
+.eggs
+build
+__pycache__
+htmlcov

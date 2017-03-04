@@ -6,9 +6,13 @@ python:
   - "3.4"
   - "3.5"
 install:
-  - pip install -r requirements.txt
+  - python setup.py install
+  - pip install coveralls
 script:
-  - py.test
+  - python setup.py test
+  - coverage run --omit=tests/*,setup.py,*.egg --include=iiif-presentation-validator.py setup.py test
+after_success:
+  - coveralls
 before_deploy:
   - mkdir build; zip -q -r build/presentation-validator.zip .
 deploy:

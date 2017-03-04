@@ -51,8 +51,9 @@ class Validator(object):
             mf.toJSON()
             # Passed!
             okay = 1
-        except Exception as err:
+        except Exception as e:
             # Failed
+            err = e
             okay = 0
 
         warnings.extend(reader.get_warnings())
@@ -104,9 +105,8 @@ class Validator(object):
         return self.check_manifest(data, version, warnings)
 
     def index_route(self):
-        fh = file(os.path.join(os.path.dirname(__file__),'index.html'))
-        data = fh.read()
-        fh.close()        
+        with open(os.path.join(os.path.dirname(__file__),'index.html'), 'r') as fh:
+            data = fh.read()
         return data
 
     def dispatch_views(self):

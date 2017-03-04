@@ -33,7 +33,7 @@ warnings | An array of warning messages      | "WARNING: Resource type 'sc:Manif
 **Step one:  Install dependencies**
 
 ```bash
-pip install -r requirements.txt
+python setup.py install
 ```
 
 **Step two:  Run the application**
@@ -42,11 +42,11 @@ pip install -r requirements.txt
 python iiif-presentation-validator.py
 ```
 
-This should start up a local server, running at <localhost:8080>. To test it, try [this url](http://localhost:8080/validate?url=http://iiif.io/api/presentation/2.0/example/fixtures/1/manifest.json) and see if you get a JSON response that looks like this:
+This should start up a local server, running at <localhost:8080>. To test it, try [this url](http://localhost:8080/validate?url=http://iiif.io/api/presentation/2.1/example/fixtures/1/manifest.json) and see if you get a JSON response that looks like this:
 
 ```json
 {
-  "url": "http://iiif.io/api/presentation/2.0/example/fixtures/1/manifest.json", 
+  "url": "http://iiif.io/api/presentation/2.1/example/fixtures/1/manifest.json",
   "error": "None", 
   "okay": 1, 
   "warnings": ["WARNING: Resource type 'sc:Manifest' should have 'description' set\n", "WARNING: Resource type 'sc:Sequence' should have '@id' set\n", "WARNING: Resource type 'oa:Annotation' should have '@id' set\n", "WARNING: Resource type 'dctypes:Image' should have 'format' set\n"]
