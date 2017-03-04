@@ -96,3 +96,8 @@ class TestAll(unittest.TestCase):
         v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'),MockWebHandle()))
         j = json.loads(v.do_GET_test())
         self.assertEqual(j['okay'], 1)  #FIXME!
+
+    def test06_index_route(self):
+        v = val_mod.Validator()
+        html = v.index_route()
+        self.assertTrue(html.startswith('<!DOCTYPE html>'))

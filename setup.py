@@ -25,7 +25,7 @@ class Coverage(Command):
         print("See htmlcov/index.html for details.")
 
 setup(
-    name='iiif',
+    name='iiif-presentation-validator',
     version='0.0.2',
     scripts=['iiif-presentation-validator.py'],
     classifiers=["Development Status :: 4 - Beta",
