@@ -2,7 +2,7 @@
 import unittest
 from mock import Mock
 import imp
-from bottle import Response, request
+from bottle import Response, request, LocalRequest
 try:
     # python3
     from urllib.request import URLError
@@ -17,29 +17,36 @@ import json
 fh = open('iiif-presentation-validator.py', 'r')
 try:
     val_mod = imp.load_module('ipv', fh, 'iiif-presentation-validator.py',
-                              ('py','r',imp.PY_SOURCE))
+                              ('py', 'r', imp.PY_SOURCE))
 finally:
     fh.close()
 
 
 def read_fixture(fixture):
+    """Read data from text fixture."""
     with open(fixture, 'r') as fh:
         data = fh.read()
     return(data)
 
 
 class MockWSGI(object):
+    """Mock WSGI object with data read from fixture."""
 
     def __init__(self, fixture):
+        """Initialize mock object with fixture filename."""
         self.fixture = fixture
 
     def read(self, clen):
+        """Read from fixture."""
         return read_fixture(self.fixture)
 
+
 class MockWebHandle(object):
+    """Mock WebHandle object with empty headers."""
 
     def __init__(self):
-        self.headers={}
+        """Initialize mock object with empty headers."""
+        self.headers = {}
 
 
 class TestAll(unittest.TestCase):
@@ -69,6 +76,7 @@ class TestAll(unittest.TestCase):
             self.assertEqual(j['okay'], 0)
 
     def test04_do_POST_test(self):
+        """Test POST requests -- machine interaction with validator service."""
         v = val_mod.Validator()
         # FIXME - nasty hack to mock data for bottle.request
         m = MockWSGI('fixtures/1/manifest.json')
@@ -78,26 +86,39 @@ class TestAll(unittest.TestCase):
         self.assertEqual(j['okay'], 1)
 
     def test05_do_GET_test(self):
-        # FIXME - hack to mock data for bottle.request
+        """Test GET requests -- typical user interaction with web form."""
+        # Note that attempting to set request.environ['QUERY_STRING'] to mock
+        # input data works only the first time. Instead create a new request 
+        # object to similate each web request, with data that sets request.environ
         v = val_mod.Validator()
-        request.environ['QUERY_STRING'] = 'url=http://example.org/a'
-        v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'),MockWebHandle()))
+        request = LocalRequest({'QUERY_STRING': 'url=https://example.org/a'})
+        v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'), MockWebHandle()))
         j = json.loads(v.do_GET_test())
         self.assertEqual(j['okay'], 1)
-        # bogus URL
+        self.assertEqual(j['url'], 'https://example.org/a')
+        # fetch failure
         v = val_mod.Validator()
-        request.environ['QUERY_STRING'] = 'url=not_http://a.b.c/'
-        v.fetch = Mock(return_value=('',MockWebHandle()))
+        request = LocalRequest({'QUERY_STRING': 'url=http://example.org/a'})
+        v.fetch = Mock()
+        v.fetch.side_effect = Exception('Fetch failed')
         j = json.loads(v.do_GET_test())
         self.assertEqual(j['okay'], 0)
-        # bogus URL but not caught
+        self.assertEqual(j['error'], 'Cannot fetch url')
+        # bogus URL
         v = val_mod.Validator()
-        request.environ['QUERY_STRING'] = 'url=httpX://a.b/'
-        v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'),MockWebHandle()))
+        request = LocalRequest({'QUERY_STRING': 'url=not_http://a.b.c/'})
+        v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'), MockWebHandle()))
         j = json.loads(v.do_GET_test())
-        self.assertEqual(j['okay'], 1)  #FIXME!
+        self.assertEqual(j['okay'], 0)
+        # another bogus URL
+        v = val_mod.Validator()
+        request = LocalRequest({'QUERY_STRING': 'url=httpX://a.b/'})
+        v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'), MockWebHandle()))
+        j = json.loads(v.do_GET_test())
+        self.assertEqual(j['okay'], 0)
 
     def test06_index_route(self):
+        """Test index page."""
         v = val_mod.Validator()
         html = v.index_route()
         self.assertTrue(html.startswith('<!DOCTYPE html>'))

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-"""IIIF Presentation Validation Service"""
+"""IIIF Presentation Validation Service."""
 
 import argparse
 import json
@@ -24,12 +24,14 @@ from iiif_prezi.loader import ManifestReader
 
 
 class Validator(object):
+    """Validator class that runs with Bottle."""
 
     def __init__(self):
+        """Initialize Validator with default_version."""
         self.default_version = "2.1"
 
     def fetch(self, url):
-        # print url
+        """Fetch manifest from url."""
         try:
             wh = urlopen(url)
         except HTTPError as wh:
@@ -40,10 +42,10 @@ class Validator(object):
             data = data.decode('utf-8')
         except:
             pass
-        return (data, wh)
+        return(data, wh)
 
-    def check_manifest(self, data, version, warnings=[]):
-        # Now check data
+    def check_manifest(self, data, version, url=None, warnings=[]):
+        """Check manifest data at version, return JSON."""
         reader = ManifestReader(data, version=version)
         err = None
         try:
@@ -57,15 +59,17 @@ class Validator(object):
             okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {'received': data, 'okay': okay, 'warnings': warnings, \
-            'error': str(err)}
+        infojson = {'received': data, 'okay': okay, 'warnings': warnings,
+                    'error': str(err), 'url': url}
         return self.return_json(infojson)
 
     def return_json(self, js):
+        """Set header and return JSON response."""
         response.content_type = "application/json"
         return json.dumps(js)
 
     def do_POST_test(self):
+        """Implement POST request to test posted data at default version."""
         data = request.json
         if not data:
             b = request._get_body_string()
@@ -77,12 +81,12 @@ class Validator(object):
         return self.check_manifest(data, self.default_version)
 
     def do_GET_test(self):
+        """Implement GET request to test url at version."""
         url = request.query.get('url', '')
         version = request.query.get('version', self.default_version)
         url = url.strip()
-
         parsed_url = urlparse(url)
-        if not parsed_url.scheme.startswith('http'):
+        if (parsed_url.scheme != 'http' and parsed_url.scheme != 'https'):
             return self.return_json({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url})
 
         try:
@@ -102,20 +106,23 @@ class Validator(object):
             warnings.append("URL does not have correct access-control-allow-origin header:"
                             " got \"%s\", expected *" % cors)
 
-        return self.check_manifest(data, version, warnings)
+        return self.check_manifest(data, version, url, warnings)
 
     def index_route(self):
-        with open(os.path.join(os.path.dirname(__file__),'index.html'), 'r') as fh:
+        """Read and return index page."""
+        with open(os.path.join(os.path.dirname(__file__), 'index.html'), 'r') as fh:
             data = fh.read()
         return data
 
     def dispatch_views(self):
+        """Set up path mappings."""
         self.app.route("/", "GET", self.index_route)
         self.app.route("/validate", "OPTIONS", self.empty_response)
         self.app.route("/validate", "GET", self.do_GET_test)
         self.app.route("/validate", "POST", self.do_POST_test)
 
     def after_request(self):
+        """Used with after_request hook to set response headers."""
         methods = 'GET,POST,OPTIONS'
         headers = 'Origin, Accept, Content-Type, X-Requested-With, X-CSRF-Token'
         response.headers['Access-Control-Allow-Origin'] = '*'
@@ -124,10 +131,10 @@ class Validator(object):
         response.headers['Allow'] = methods
 
     def empty_response(self, *args, **kwargs):
-        """Empty response"""
+        """Empty response."""
 
     def get_bottle_app(self):
-        """Returns bottle instance"""
+        """Return bottle instance."""
         self.app = Bottle()
         self.dispatch_views()
         self.app.hook('after_request')(self.after_request)
@@ -135,11 +142,13 @@ class Validator(object):
 
 
 def apache():
+    """Run as WSGI application."""
     v = Validator()
     return v.get_bottle_app()
 
 
 def main():
+    """Parse argument and run server when run from command line."""
     parser = argparse.ArgumentParser(description=__doc__.strip(),
                                      formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
@@ -152,6 +161,7 @@ def main():
 
     v = Validator()
     run(host=args.hostname, port=args.port, app=v.get_bottle_app())
+
 
 if __name__ == "__main__":
     main()
