@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import sys
+import codecs
 try:
     # python3
     from urllib.request import urlopen, HTTPError
@@ -105,7 +106,7 @@ class Validator(object):
         return self.check_manifest(data, version, warnings)
 
     def index_route(self):
-        with open(os.path.join(os.path.dirname(__file__),'index.html'), 'r') as fh:
+        with codecs.open(os.path.join(os.path.dirname(__file__),'index.html'), 'r', 'utf-8') as fh:
             data = fh.read()
         return data
 
