@@ -2,7 +2,9 @@
 .c
 .coverage
 *.egg
+*.egg-info
 .eggs
 build
 __pycache__
 htmlcov
+*.pyc
