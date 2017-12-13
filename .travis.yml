@@ -15,16 +15,3 @@ after_success:
   - coveralls
 before_deploy:
   - mkdir build; zip -q -r build/presentation-validator.zip .
-deploy:
-  provider: s3
-  access_key_id:
-    secure: eDbi9m/gyWE2JTo/s7qQ8GhnprIB39ASyu/IDfIpgmamYTC8VkU9V7EhUxEgzyAonvi/IAPVdEWODYCyx8x7umWwIroUjOrUJWhW9u9ApagJr7K1QG9V0mS3gJbhIxNcIyAqywXqypBmUWYdTjAy5bhvb6CMBC/5Vvk/FuLwHQM=
-  secret_access_key:
-    secure: QNmlCxC0S2dOQugCgW1NnJm+6TaRgg2qPrVVzzZUjBj/ipxX74SXm+goP3n51NvLX7ZomjLCe1mV2Hq2B3YXf+8FGAHJziMj+2s2OojkSKJXbLxNx/Sycety+PHCIuk2JjUVoaq5Bg1rMhPHRubcexsNY3xeyrDeWNEovlqTFLU=
-  bucket: iiif-deployment-artifacts
-  region: us-west-2
-  local_dir: build
-  skip_cleanup: true
-  upload-dir: presentation-validator/${TRAVIS_BRANCH}
-  on:
-    python: '3.4'
