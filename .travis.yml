@@ -13,5 +13,3 @@ script:
   - coverage run --omit=tests/*,setup.py,*.egg --include=iiif-presentation-validator.py setup.py test
 after_success:
   - coveralls
-before_deploy:
-  - mkdir build; zip -q -r build/presentation-validator.zip .
