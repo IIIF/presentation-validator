@@ -6,13 +6,16 @@ import argparse
 import codecs
 import json
 import os
+from gzip import GzipFile
+from io import BytesIO
+
 try:
     # python3
-    from urllib.request import urlopen, HTTPError
+    from urllib.request import urlopen, HTTPError, Request
     from urllib.parse import urlparse
 except ImportError:
     # fall back to python2
-    from urllib2 import urlopen, HTTPError
+    from urllib2 import urlopen, HTTPError, Request
     from urlparse import urlparse
 
 from bottle import Bottle, request, response, run
@@ -29,17 +32,25 @@ class Validator(object):
         self.default_version = "2.1"
 
     def fetch(self, url):
-        # print url
+        req = Request(url)
+        req.add_header('Accept-Encoding', 'gzip')
+
         try:
-            wh = urlopen(url)
+            wh = urlopen(req)
         except HTTPError as wh:
             pass
         data = wh.read()
         wh.close()
+
+        if wh.headers.get('Content-Encoding') == 'gzip':
+            with GzipFile(fileobj=BytesIO(data)) as f:
+                data = f.read()
+
         try:
             data = data.decode('utf-8')
         except:
             pass
+
         return (data, wh)
 
     def check_manifest(self, data, version, warnings=[]):
@@ -105,6 +116,16 @@ class Validator(object):
         if cors != "*":
             warnings.append("URL does not have correct access-control-allow-origin header:"
                             " got \"%s\", expected *" % cors)
+
+        content_encoding = webhandle.headers.get('Content-Encoding', '')
+        if content_encoding != 'gzip':
+            warnings.append('The remote server did not use the requested gzip'
+                            ' transfer compression, which will slow access.'
+                            ' (Content-Encoding: %s)' % content_encoding)
+        elif 'Accept-Encoding' not in webhandle.headers.get('Vary', ''):
+            warnings.append('gzip transfer compression is enabled but the Vary'
+                            ' header does not include Accept-Encoding, which'
+                            ' can cause compatibility issues')
 
         return self.check_manifest(data, version, warnings)
 
