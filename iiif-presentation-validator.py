@@ -3,10 +3,9 @@
 """IIIF Presentation Validation Service"""
 
 import argparse
+import codecs
 import json
 import os
-import sys
-import codecs
 try:
     # python3
     from urllib.request import urlopen, HTTPError
@@ -16,7 +15,7 @@ except ImportError:
     from urllib2 import urlopen, HTTPError
     from urlparse import urlparse
 
-from bottle import Bottle, abort, request, response, run
+from bottle import Bottle, request, response, run
 
 egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
@@ -58,8 +57,12 @@ class Validator(object):
             okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {'received': data, 'okay': okay, 'warnings': warnings, \
-            'error': str(err)}
+        infojson = {
+            'received': data,
+            'okay': okay,
+            'warnings': warnings,
+            'error': str(err)
+        }
         return self.return_json(infojson)
 
     def return_json(self, js):
@@ -106,7 +109,7 @@ class Validator(object):
         return self.check_manifest(data, version, warnings)
 
     def index_route(self):
-        with codecs.open(os.path.join(os.path.dirname(__file__),'index.html'), 'r', 'utf-8') as fh:
+        with codecs.open(os.path.join(os.path.dirname(__file__), 'index.html'), 'r', 'utf-8') as fh:
             data = fh.read()
         return data
 
