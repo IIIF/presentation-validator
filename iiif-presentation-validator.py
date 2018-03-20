@@ -132,7 +132,7 @@ class Validator(object):
                             ' header does not include Accept-Encoding, which'
                             ' can cause compatibility issues')
 
-        return self.check_manifest(data, version, warnings)
+        return self.check_manifest(data, version, url, warnings)
 
     def index_route(self):
         """Read and return index page."""
