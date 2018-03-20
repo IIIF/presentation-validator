@@ -3,20 +3,22 @@
 """IIIF Presentation Validation Service"""
 
 import argparse
+import codecs
 import json
 import os
-import sys
-import codecs
+from gzip import GzipFile
+from io import BytesIO
+
 try:
     # python3
-    from urllib.request import urlopen, HTTPError
+    from urllib.request import urlopen, HTTPError, Request
     from urllib.parse import urlparse
 except ImportError:
     # fall back to python2
-    from urllib2 import urlopen, HTTPError
+    from urllib2 import urlopen, HTTPError, Request
     from urlparse import urlparse
 
-from bottle import Bottle, abort, request, response, run
+from bottle import Bottle, request, response, run
 
 egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
@@ -30,17 +32,25 @@ class Validator(object):
         self.default_version = "2.1"
 
     def fetch(self, url):
-        # print url
+        req = Request(url)
+        req.add_header('Accept-Encoding', 'gzip')
+
         try:
-            wh = urlopen(url)
+            wh = urlopen(req)
         except HTTPError as wh:
             pass
         data = wh.read()
         wh.close()
+
+        if wh.headers.get('Content-Encoding') == 'gzip':
+            with GzipFile(fileobj=BytesIO(data)) as f:
+                data = f.read()
+
         try:
             data = data.decode('utf-8')
         except:
             pass
+
         return (data, wh)
 
     def check_manifest(self, data, version, warnings=[]):
@@ -58,8 +68,12 @@ class Validator(object):
             okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {'received': data, 'okay': okay, 'warnings': warnings, \
-            'error': str(err)}
+        infojson = {
+            'received': data,
+            'okay': okay,
+            'warnings': warnings,
+            'error': str(err)
+        }
         return self.return_json(infojson)
 
     def return_json(self, js):
@@ -103,10 +117,20 @@ class Validator(object):
             warnings.append("URL does not have correct access-control-allow-origin header:"
                             " got \"%s\", expected *" % cors)
 
+        content_encoding = webhandle.headers.get('Content-Encoding', '')
+        if content_encoding != 'gzip':
+            warnings.append('The remote server did not use the requested gzip'
+                            ' transfer compression, which will slow access.'
+                            ' (Content-Encoding: %s)' % content_encoding)
+        elif 'Accept-Encoding' not in webhandle.headers.get('Vary', ''):
+            warnings.append('gzip transfer compression is enabled but the Vary'
+                            ' header does not include Accept-Encoding, which'
+                            ' can cause compatibility issues')
+
         return self.check_manifest(data, version, warnings)
 
     def index_route(self):
-        with codecs.open(os.path.join(os.path.dirname(__file__),'index.html'), 'r', 'utf-8') as fh:
+        with codecs.open(os.path.join(os.path.dirname(__file__), 'index.html'), 'r', 'utf-8') as fh:
             data = fh.read()
         return data
 
