@@ -1,4 +1,4 @@
-"""Setup for iiif/presentation-validator"""
+"""Setup for iiif/presentation-validator."""
 from setuptools import setup, Command
 import os
 import re

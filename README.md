@@ -52,3 +52,4 @@ This should start up a local server, running at <localhost:8080>. To test it, tr
   "warnings": ["WARNING: Resource type 'sc:Manifest' should have 'description' set\n", "WARNING: Resource type 'sc:Sequence' should have '@id' set\n", "WARNING: Resource type 'oa:Annotation' should have '@id' set\n", "WARNING: Resource type 'dctypes:Image' should have 'format' set\n"]
 }
 ```
+You may also use `--hostname` to specify a hostname or IP address to which to bind and `--port` for a port to which to bind.
