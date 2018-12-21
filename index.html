@@ -81,16 +81,16 @@
 
                 <input type="submit" value="Go!" id="submit-url">
               </form>
-
-              <div id='loading' style='float:right; display:none;'>
-                <img src='assets/loading_icon.gif' width='80' height='60'>
-              </div>
             </div>
 
-            <div id='results' style="display: none;" >
+            <div id='results' style="display: none;">
               <h3>Validation Results:</h3>
               <hr/>
-              <div id='results-content'></div>
+              <div id='loading' style='display:none;'>
+                <img src='assets/loading_icon.gif' width='80' height='60'>
+              </div>
+              <div id='results-content' style="display: none;">
+              </div>
             </div>
 
             <br/>
@@ -127,7 +127,11 @@
       // Call out to the validation service and get a result
       function handleSubmission(e) {
         e.preventDefault();
-        $("#form-container #loading").show();
+        // if there were previous results, remove them
+        $('#results-content').html('');
+        // show the title and loading gif
+        $('#results').show();
+        $("#loading").show();
         var data = {
           url: $("input[name='url']").val(),
           version: $("select[name='version']").val()
@@ -155,9 +159,9 @@
         }
         str += '</div>';
 
-        $('#results-content').html(str);
-        $('#results').show();
-        $("#form-container #loading").hide();
+        // add the results, remove the loading gif
+        $('#results-content').html(str).show();
+        $("#loading").hide();
       }
 
       // Set up event handler.
