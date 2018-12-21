@@ -65,7 +65,7 @@
               This service will validate a IIIF Presentation API resource against the specification.  Fill in the URL of your manifest, and it will try to parse it and issue errors for failed requirements, and warnings for recommendations that haven't been followed.
             </div>
 
-            <div style="border: 1px solid black;margin-left: 10px; margin-top: 20px; padding: 10px">
+            <div style="border: 1px solid black;margin-left: 10px; margin-top: 20px; padding: 10px" id='form-container'>
               <form id='manifest-validation-form' method="GET" action="validate">
 
                 URL of Manifest to Validate:<br/>
@@ -81,6 +81,10 @@
 
                 <input type="submit" value="Go!" id="submit-url">
               </form>
+
+              <div id='loading' style='float:right; display:none;'>
+                <img src='assets/loading_icon.gif' width='80' height='60'>
+              </div>
             </div>
 
             <div id='results' style="display: none;" >
@@ -123,12 +127,13 @@
       // Call out to the validation service and get a result
       function handleSubmission(e) {
         e.preventDefault();
+        $("#form-container #loading").show();
         var data = {
           url: $("input[name='url']").val(),
           version: $("select[name='version']").val()
         }
         var url = $('#manifest-validation-form').attr("action");
-        $.getJSON(url,data,handleValidationResponse);
+        $.getJSON(url, data, handleValidationResponse);
       }
 
       // Handle validation service response, render response block
@@ -148,10 +153,11 @@
           }
           str += '</ul></div>';
         }
-       str += '</div>';
+        str += '</div>';
 
-       $('#results-content').html(str);
-       $('#results').show();
+        $('#results-content').html(str);
+        $('#results').show();
+        $("#form-container #loading").hide();
       }
 
       // Set up event handler.
