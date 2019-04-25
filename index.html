@@ -55,7 +55,7 @@
     <div class="sub-pages-container">
       <div class="presentation-api clearfix">
         <article>
-          
+
           <header>
             <div class="wrapper"><h1>Presentation API Validator</h1></div>
           </header>
@@ -87,7 +87,7 @@
               <h3>Validation Results:</h3>
               <hr/>
               <div id='loading' style='display:none;'>
-                <img src='assets/loading_icon.gif' width='80' height='60'>
+                <img src='assets/Spin-1s-73px.gif' width='73' height='73'>
               </div>
               <div id='results-content' style="display: none;">
               </div>
@@ -123,7 +123,7 @@
 
     <!-- AJAX code for form submission -->
     <script type="text/javascript">
-      
+
       // Call out to the validation service and get a result
       function handleSubmission(e) {
         e.preventDefault();
@@ -131,7 +131,7 @@
         $('#results-content').html('');
         // show the title and loading gif
         $('#results').show();
-        $("#loading").show();
+        $("#loading").show('fast', 'swing');
         var data = {
           url: $("input[name='url']").val(),
           version: $("select[name='version']").val()
@@ -167,7 +167,7 @@
       // Set up event handler.
       $('#submit-url').on("click", handleSubmission);
     </script>
-    
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
