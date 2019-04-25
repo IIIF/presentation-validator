@@ -18,7 +18,7 @@ except ImportError:
     from urllib2 import urlopen, HTTPError, Request
     from urlparse import urlparse
 
-from bottle import Bottle, request, response, run
+from bottle import Bottle, request, response, run, static_file
 
 egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
@@ -140,12 +140,17 @@ class Validator(object):
             data = fh.read()
         return data
 
+
+    def static_route(self, filename):
+        return static_file(filename, root='assets/')
+
     def dispatch_views(self):
         """Set up path mappings."""
         self.app.route("/", "GET", self.index_route)
         self.app.route("/validate", "OPTIONS", self.empty_response)
         self.app.route("/validate", "GET", self.do_GET_test)
         self.app.route("/validate", "POST", self.do_POST_test)
+        self.app.route("/assets/<filename>", "GET", self.static_route)
 
     def after_request(self):
         """Used with after_request hook to set response headers."""

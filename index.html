@@ -55,7 +55,7 @@
     <div class="sub-pages-container">
       <div class="presentation-api clearfix">
         <article>
-          
+
           <header>
             <div class="wrapper"><h1>Presentation API Validator</h1></div>
           </header>
@@ -65,7 +65,7 @@
               This service will validate a IIIF Presentation API resource against the specification.  Fill in the URL of your manifest, and it will try to parse it and issue errors for failed requirements, and warnings for recommendations that haven't been followed.
             </div>
 
-            <div style="border: 1px solid black;margin-left: 10px; margin-top: 20px; padding: 10px">
+            <div style="border: 1px solid black;margin-left: 10px; margin-top: 20px; padding: 10px" id='form-container'>
               <form id='manifest-validation-form' method="GET" action="validate">
 
                 URL of Manifest to Validate:<br/>
@@ -83,10 +83,14 @@
               </form>
             </div>
 
-            <div id='results' style="display: none;" >
+            <div id='results' style="display: none;">
               <h3>Validation Results:</h3>
               <hr/>
-              <div id='results-content'></div>
+              <div id='loading' style='display:none;'>
+                <img src='assets/Spin-1s-73px.gif' width='73' height='73'>
+              </div>
+              <div id='results-content' style="display: none;">
+              </div>
             </div>
 
             <br/>
@@ -119,16 +123,21 @@
 
     <!-- AJAX code for form submission -->
     <script type="text/javascript">
-      
+
       // Call out to the validation service and get a result
       function handleSubmission(e) {
         e.preventDefault();
+        // if there were previous results, remove them
+        $('#results-content').html('');
+        // show the title and loading gif
+        $('#results').show();
+        $("#loading").show('fast', 'swing');
         var data = {
           url: $("input[name='url']").val(),
           version: $("select[name='version']").val()
         }
         var url = $('#manifest-validation-form').attr("action");
-        $.getJSON(url,data,handleValidationResponse);
+        $.getJSON(url, data, handleValidationResponse);
       }
 
       // Handle validation service response, render response block
@@ -141,23 +150,24 @@
         else {
           str += '<div><h2 style="color:red">Validation Error: '+data.error+'</h2></div>'
         }
-        if (data.warnings.length){
+        if (data.warnings && data.warnings.length){
           str += '<div style="margin-top: 20px">Warnings:<ul>';
           for(var i =0; i < data.warnings.length; i++) {
             str+= '<li>'+data.warnings[i]+'</li>';
           }
           str += '</ul></div>';
         }
-       str += '</div>';
+        str += '</div>';
 
-       $('#results-content').html(str);
-       $('#results').show();
+        // add the results, remove the loading gif
+        $('#results-content').html(str).show();
+        $("#loading").hide();
       }
 
       // Set up event handler.
       $('#submit-url').on("click", handleSubmission);
     </script>
-    
+
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
