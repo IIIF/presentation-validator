@@ -158,7 +158,7 @@
                 str += '<div><h2 style="color:red">Validation Error: '+data.error+'</h2></div>'
             }    
         }
-        if (data.warnings.length){
+        if (data.warnings && data.warnings.length){
           str += '<div style="margin-top: 20px">Warnings:<ul>';
           for(var i =0; i < data.warnings.length; i++) {
             str+= '<li>'+data.warnings[i]+'</li>';
