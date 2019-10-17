@@ -1,0 +1,79 @@
+{
+    "@context": [
+      "http://www.w3.org/ns/anno.jsonld",
+      "http://iiif.io/api/presentation/{{ page.major }}/context.json"
+    ],
+    "id": "http://example.org/iiif/book1/manifest",
+    "type": "Manifest",
+    "label": { 
+        "en": [ "Image 1" ],
+        "zh-Hant-CN": ["test2", "Test3"],
+        "none": ["test3"],
+        "cy": ["test"]
+    },
+    "provider": [
+    {
+      "id": "https://example.org/about",
+      "type": "Agent",
+      "label": { "en": [ "Example Organization" ] },
+      "homepage": [
+        {
+          "id": "https://example.org/",
+          "type": "Text",
+          "label": { "en": [ "Example Organization Homepage" ] },
+          "format": "text/html"
+        }
+      ],
+      "logo": [
+        {
+          "type": "Image",
+          "format": "image/png",
+          "height": 100,
+          "width": 120,
+          "service": [
+        {
+          "id": "https://example.org/service/inst1",
+          "type": "ImageService3",
+          "profile": "level2"
+        }
+      ]
+        }
+      ],
+      "seeAlso": [
+        {
+          "type": "Dataset",
+          "format": "application/ld+json",
+          "profile": "https://schema.org/"
+        }
+      ]
+    }
+  ],
+    "items": [
+      {
+        "type": "Canvas",
+        "height": 1800,
+        "width": 1200,
+        "items": [
+          {
+            "id": "https://example.org/iiif/book1/page/p1/1",
+            "type": "AnnotationPage",
+            "items": [
+              {
+                "id": "https://example.org/iiif/book1/annotation/p0001-image",
+                "type": "Annotation",
+                "motivation": "painting",
+                "body": {
+                  "id": "http://iiif.io/api/presentation/2.1/example/fixtures/resources/page1-full.png",
+                  "type": "Image",
+                  "format": "image/png",
+                  "height": 1800,
+                  "width": 1200
+                },
+                "target": "https://example.org/iiif/book1/canvas/p1"
+              }
+            ]
+          }
+        ]
+      }    
+    ]
+  }

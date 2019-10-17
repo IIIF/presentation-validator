@@ -122,3 +122,18 @@ class TestAll(unittest.TestCase):
         v = val_mod.Validator()
         html = v.index_route()
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
+
+    def test07_check_manifest3(self):
+        v = val_mod.Validator()
+        # good manifests
+        for good in ('fixtures/3/simple_image.json',
+                     'fixtures/3/simple_video.json',
+                     'fixtures/3/full_example.json'):
+            with open(good, 'r') as fh:
+                data = fh.read()
+                j = json.loads(v.check_manifest(data, '3.0'))
+                self.assertEqual(j['okay'], 1)
+        for bad_data in ('', '{}'):
+            j = json.loads(v.check_manifest(bad_data, '3.0'))
+            self.assertEqual(j['okay'], 0)
+
