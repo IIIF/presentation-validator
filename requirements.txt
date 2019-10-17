@@ -1,2 +1,3 @@
 bottle
 iiif_prezi
+jsonschema
