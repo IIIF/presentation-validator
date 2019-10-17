@@ -46,7 +46,8 @@ setup(
     long_description=open('README.md').read(),
     install_requires=[
         'bottle>=0.12.9',
-        'iiif_prezi>=0.2.2'
+        'iiif_prezi>=0.2.2',
+        'jsonschema'
     ],
     test_suite="tests",
     tests_require=[

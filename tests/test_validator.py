@@ -3,6 +3,7 @@ import unittest
 from mock import Mock
 import imp
 from bottle import Response, request, LocalRequest
+
 try:
     # python3
     from urllib.request import URLError
@@ -10,6 +11,9 @@ except ImportError:
     # fall back to python2
     from urllib2 import URLError
 import json
+
+from os import sys, path
+sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
 # The validator isn't a module but with a little magic
 # we can load it up as if it were in order to access
@@ -122,3 +126,21 @@ class TestAll(unittest.TestCase):
         v = val_mod.Validator()
         html = v.index_route()
         self.assertTrue(html.startswith('<!DOCTYPE html>'))
+
+    def test07_check_manifest3(self):
+        v = val_mod.Validator()
+        # good manifests
+        for good in ['fixtures/3/simple_video.json',
+                     'fixtures/3/full_example.json']:
+            with open(good, 'r') as fh:
+                data = fh.read()
+                j = json.loads(v.check_manifest(data, '3.0'))
+                self.assertEqual(j['okay'], 1)
+        for bad_data in ['fixtures/3/broken_simple_image.json']:
+            with open(bad_data, 'r') as fh:
+                data = fh.read()
+                j = json.loads(v.check_manifest(data, '3.0'))
+                self.assertEqual(j['okay'], 0)
+
+if __name__ == '__main__':
+    unittest.main()

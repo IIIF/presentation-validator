@@ -8,3 +8,4 @@ build
 __pycache__
 htmlcov
 *.pyc
+*.swp

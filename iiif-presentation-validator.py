@@ -19,6 +19,7 @@ except ImportError:
     from urlparse import urlparse
 
 from bottle import Bottle, request, response, run
+from schema import schemavalidator
 
 egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
@@ -57,26 +58,31 @@ class Validator(object):
 
     def check_manifest(self, data, version, url=None, warnings=[]):
         """Check manifest data at version, return JSON."""
-        reader = ManifestReader(data, version=version)
-        err = None
-        try:
-            mf = reader.read()
-            mf.toJSON()
-            # Passed!
-            okay = 1
-        except Exception as e:
-            # Failed
-            err = e
-            okay = 0
+        infojson = {}
+        # Check if 3.0 if so run through schema rather than this version...
+        if version == '3.0':
+            infojson = schemavalidator.validate(data, version, url)
+        else:
+            reader = ManifestReader(data, version=version)
+            err = None
+            try:
+                mf = reader.read()
+                mf.toJSON()
+                # Passed!
+                okay = 1
+            except Exception as e:
+                # Failed
+                err = e
+                okay = 0
 
-        warnings.extend(reader.get_warnings())
-        infojson = {
-            'received': data,
-            'okay': okay,
-            'warnings': warnings,
-            'error': str(err),
-            'url': url
-        }
+            warnings.extend(reader.get_warnings())
+            infojson = {
+                'received': data,
+                'okay': okay,
+                'warnings': warnings,
+                'error': str(err),
+                'url': url
+            }
         return self.return_json(infojson)
 
     def return_json(self, js):
