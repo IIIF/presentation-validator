@@ -131,13 +131,16 @@ class TestAll(unittest.TestCase):
         v = val_mod.Validator()
         # good manifests
         for good in ['fixtures/3/simple_video.json',
-                     'fixtures/3/full_example.json']:
+                     'fixtures/3/full_example.json',
+                     'fixtures/3/choice.json']:
             with open(good, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
                 self.assertEqual(j['okay'], 1)
-        for bad_data in ['fixtures/3/broken_simple_image.json']:
+        for bad_data in ['fixtures/3/broken_simple_image.json',
+                          'fixtures/3/broken_choice.json']:
             with open(bad_data, 'r') as fh:
+
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
                 self.assertEqual(j['okay'], 0)
