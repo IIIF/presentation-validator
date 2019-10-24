@@ -59,6 +59,8 @@
             },
             "required": ["id", "type"]
         },
+        "duration": {
+            "type": "number",
             "minimum": 0
         }
     },        
