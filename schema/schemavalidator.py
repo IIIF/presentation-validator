@@ -54,14 +54,15 @@ def validate(data, version, url):
             print('\n Path for error: {}'.format(printPath(err.path, err.message)))
             context = err.instance
             print (json.dumps(err.instance, indent=4))
-            for key in context:
-                print('****')
-                print(key)
-                print('****')
-                if isinstance(context[key], list): 
-                    context[key] = '[ ... ]'
-                elif isinstance(context[key], dict):
-                    context[key] = '{ ... }'
+            if isinstance(context, dict):
+                for key in context:
+                    print('****')
+                    print(key)
+                    print('****')
+                    if isinstance(context[key], list): 
+                        context[key] = '[ ... ]'
+                    elif isinstance(context[key], dict):
+                        context[key] = '{ ... }'
             errorsJson.append({
                 'title': 'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
                 'detail': detail,
