@@ -159,6 +159,15 @@
                         }
                     ]
                 },
+                "height": {
+                    "type": "integer"
+                },
+                "width": {
+                    "type": "integer"
+                },
+                "duration": {
+                    "$ref": "#/types/duration"
+                },
                 "service": { "$ref": "#/classes/service" },
                 "format": { "$ref": "#/types/format" },
                 "label": { "$ref": "#/types/label" }
