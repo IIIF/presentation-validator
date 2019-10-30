@@ -1,0 +1,72 @@
+{
+  "@context": [
+      "http://www.w3.org/ns/anno.jsonld",
+      "http://iiif.io/api/presentation/3/context.json"
+  ],
+  "type": "Manifest",
+  "id": "https://iiif.gdmrdigital.com/nlw/LLOYD_GEORGE_FARMING-mp4.json",
+  "label": {
+      "en": [
+          "Lloyd George: farming, officiating and breakfasting"
+      ]
+  },
+  "metadata": [
+      {
+          "label": {
+              "en": [
+                  "Title"
+              ]
+          },
+          "value": {
+              "en": [
+                  "Lloyd George: farming, officiating and breakfasting"
+              ]
+          }
+      }
+  ],
+  "items": [
+      {
+          "type": "Canvas",
+          "id": "https://iiif.gdmrdigital.com/nlw/LLOYD_GEORGE_FARMING/canvas/1",
+          "thumbnail": [
+              {
+                  "id": "https://datasyllwr.llgc.org.uk/video/dlg/LLOYD_GEORGE_FARMING.jpg",
+                  "type": "Image"
+              }
+          ],
+          "items": [
+              {
+                  "type": "AnnotationPage",
+                  "id": "https://iiif.gdmrdigital.com/nlw/LLOYD_GEORGE_FARMING/AnnotationPage/1",
+                  "items": [
+                      {
+                        "id": "https://iiif.gdmrdigital.com/nlw/LLOYD_GEORGE_FARMING/Annotation/1",
+                        "type": "Annotation",
+                        "motivation": "painting",
+                        "target": "https://iiif.gdmrdigital.com/nlw/LLOYD_GEORGE_FARMING/canvas/1",
+                        "body": {
+                          "type": "Choice",
+                          "items": [
+                            {
+                              "id": "https://datasyllwr.llgc.org.uk/video/dlg/LLOYD_GEORGE_FARMING.mp4",
+                              "type": "Video",
+                              "height": 360,
+                              "width": 480,
+                              "duration": 765,
+                              "format": "video/mp4"
+                            },
+                            {
+                              "id": "https://datasyllwr.llgc.org.uk/video/dlg/LLOYD_GEORGE_FARMING.avi",
+                              "type": "Video",
+                              "format": "video/mp4"
+                            }
+                          ]
+                        }
+                      }
+                  ]
+              }
+          ],
+          "width": 480
+      }
+  ]
+}

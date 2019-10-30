@@ -58,6 +58,10 @@
                 "label": { "$ref": "#/types/lngString" } 
             },
             "required": ["id", "type"]
+        },
+        "duration": {
+            "type": "number",
+            "minimum": 0
         }
     },        
 
@@ -110,6 +114,19 @@
                 "$ref": "#/types/class" 
             }
         },
+        "choice": {
+            "type": "object",
+            "properties":{
+                "type": {
+                    "type": "string",
+                    "const": "Choice"
+                },
+                "items":{
+                    "type": "array"
+                }
+            },
+            "required": ["type", "items"]
+        },
         "resource": {
             "type": "object",
             "properties": {
@@ -142,17 +159,34 @@
                         }
                     ]
                 },
-                "format": { "$ref": "#/types/format" },
                 "height": {
                     "type": "integer"
                 },
                 "width": {
                     "type": "integer"
                 },
-                "service": { "$ref": "#/classes/imgSvr" }
-            }
+                "duration": {
+                    "$ref": "#/types/duration"
+                },
+                "service": { "$ref": "#/classes/service" },
+                "format": { "$ref": "#/types/format" },
+                "label": { "$ref": "#/types/label" }
+            },
+            "required": ["id","type"]
         },
         "imgSvr": {
+            "allOf": [
+                { "$ref": "#/classes/service" },
+                {
+                    "properties": {
+                        "profile": { "type": "string" },
+                        "@id": { "$ref": "#/types/id" },
+                        "@type": { "type": "string" }
+                    }
+                }
+            ]
+        },
+        "service": {
             "type": "array",
             "items": {
                 "allOf": [
@@ -161,13 +195,12 @@
                         "type": "object",
                         "properties": {
                             "profile": { "type": "string" },
-                            "@id": { "$ref": "#/types/id" },
-                            "@type": { "type": "string" }
+                            "service": { "$ref": "#/classes/service" }
                         }
                     }
                 ]
             }    
-        }, 
+        },
         "viewingDirection": {
             "anyOf": [
                 { 
@@ -299,8 +332,7 @@
                             "type": "integer"
                         },
                         "duration": {
-                            "type": "number",
-                            "minimum": 0
+                            "$ref": "#/types/duration"
                         },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
@@ -335,6 +367,15 @@
                                 "$ref": "#/classes/annotationPage"
                             }
                         }
+                    },
+                    "anyOf":[
+                        { "required": ["width"] },
+                        { "required": ["height"] },
+                        { "required": ["duration"] }
+                    ],
+                    "dependencies": {
+                        "width": ["height"],
+                        "height": ["width"]
                     }
                 }
             ]
@@ -397,7 +438,25 @@
                             "type": "string"
                         },
                         "body": {
-                            "$ref": "#/classes/resource"    
+                            "oneOf": [
+                                {
+                                    "$ref": "#/classes/resource"    
+                                },
+                                {
+                                    "allOf":[
+                                        { "$ref": "#/classes/choice" },
+                                        {
+                                            "properties": {
+                                                "items": {
+                                                    "type": "array",
+                                                    "items": {"$ref": "#/classes/resource"}
+                                                }
+                                            },
+                                            "required": ["items"]
+                                        }
+                                    ]
+                                }
+                            ]
                         },
                         "target": {
                             "type": "string", 
