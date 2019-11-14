@@ -3,7 +3,7 @@
     "$comment": "IIIF basic types",
     "types": {
         "id": {
-            "type": "string", 
+            "type": "string",
             "format": "uri",
             "pattern": "^http.*$",
             "title": "Id must be presesnt and must be a URI"
@@ -13,11 +13,11 @@
             "title": "Language string, must have a languagae and value must be an array.",
             "type": "object",
             "patternProperties": {
-                "^[a-zA-Z-][a-zA-Z-]*$": { 
+                "^[a-zA-Z-][a-zA-Z-]*$": {
                     "type": "array",
                     "items": { "type": "string"}
                 },
-                "^none$": { 
+                "^none$": {
                     "type": "array",
                     "items": { "type": "string"}
                 }
@@ -43,7 +43,7 @@
                     "type":"string",
                     "pattern": "^none$"
                 }
-            ]     
+            ]
         },
         "format": {
             "type": "string",
@@ -51,11 +51,11 @@
         },
         "class": {
             "title": "Classes MUST have an id and type property and MAY have a label.",
-            "type": "object", 
+            "type": "object",
             "properties": {
                 "id": { "$ref": "#/types/id" },
                 "type": { "type": "string" },
-                "label": { "$ref": "#/types/lngString" } 
+                "label": { "$ref": "#/types/lngString" }
             },
             "required": ["id", "type"]
         },
@@ -63,15 +63,15 @@
             "type": "number",
             "minimum": 0
         }
-    },        
+    },
 
     "$comment": "IIIF Classes",
     "classes": {
-        "metadata": { 
+        "metadata": {
             "type": "array",
             "items": {
                 "$ref": "#/types/keyValueString"
-            }    
+            }
         },
         "homepage": {
             "type": "array",
@@ -82,7 +82,7 @@
                         "type": "object",
                         "properties": {
                             "format": { "$ref": "#/types/format" },
-                            "language": { 
+                            "language": {
                                 "type": "array",
                                 "items": { "$ref": "#/types/BCP47" }
                             }
@@ -111,7 +111,7 @@
         "partOf": {
             "type": "array",
             "items": {
-                "$ref": "#/types/class" 
+                "$ref": "#/types/class"
             }
         },
         "choice": {
@@ -199,23 +199,23 @@
                         }
                     }
                 ]
-            }    
+            }
         },
         "viewingDirection": {
             "anyOf": [
-                { 
+                {
                     "type": "string",
                     "pattern": "^left-to-right$"
                 },
-                { 
+                {
                     "type": "string",
                     "pattern": "^right-to-left$"
                 },
-                { 
+                {
                     "type": "string",
                     "pattern": "^top-to-bottom$"
                 },
-                { 
+                {
                     "type": "string",
                     "pattern": "^bottom-to-top$"
                 }
@@ -225,67 +225,67 @@
             "type": "array",
             "items": {
                 "anyOf": [
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^auto-advance$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^no-auto-advance$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^repeat$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^no-repeat$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^unordered$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^individuals$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^continuous$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^paged$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^facing-pages$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^non-paged$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^multi-part$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^together$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^sequence$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^thumbnail-nav$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^no-nav$"
                     },
-                    { 
+                    {
                         "type": "string",
                         "pattern": "^hidden$"
                     }
@@ -308,12 +308,118 @@
                             "logo": {
                                 "type": "array",
                                 "items": { "$ref": "#/classes/resource" }
-                            },    
+                            },
                             "seeAlso": { "$ref": "#/classes/seeAlso" }
                         }
                     }
                 ]
             }
+        },
+        "collection": {
+            "allOf": [
+                { "$ref": "#/types/class" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Collection"
+                        },
+                        "metadata": { "$ref": "#/classes/metadata" },
+                        "summary": { "$ref": "#/types/lngString" },
+                        "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rights": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^http.*$"
+                        },
+                        "navDate": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "provider": { "$ref": "#/classes/provider" },
+                        "seeAlso": { "$ref": "#/classes/seeAlso" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
+                        "homepage": { "$ref": "#/classes/homepage" },
+                        "behavior": { "$ref": "#/classes/behavior" },
+                        "partOf": { "$ref": "#/classes/partOf" },
+                        "items": {
+                            "type": "array",
+                            "items": {
+                              "oneOf": [
+                                { "$ref": "#/classes/manifest" },
+                                { "$ref": "#/classes/collection" }
+                              ]
+                            }
+                        },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationPage"
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        "manifest": {
+            "allOf": [
+                { "$ref": "#/types/class" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Manifest"
+                        },
+                        "metadata": { "$ref": "#/classes/metadata" },
+                        "summary": { "$ref": "#/types/lngString" },
+                        "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rights": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^http.*$"
+                        },
+                        "height": {
+                            "type": "integer"
+                        },
+                        "width": {
+                            "type": "integer"
+                        },
+                        "duration": {
+                            "$ref": "#/types/duration"
+                        },
+                        "navDate": {
+                            "type": "string",
+                            "format": "date-time"
+                        },
+                        "provider": { "$ref": "#/classes/provider" },
+                        "seeAlso": { "$ref": "#/classes/seeAlso" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
+                        "homepage": { "$ref": "#/classes/homepage" },
+                        "behavior": { "$ref": "#/classes/behavior" },
+                        "partOf": { "$ref": "#/classes/partOf" },
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/canvas"
+                            }
+                        },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationPage"
+                            }
+                        }
+                    }
+                }
+            ]
         },
         "canvas": {
             "allOf": [
@@ -321,7 +427,7 @@
                 {
                     "type": "object",
                     "properties": {
-                        "type": { 
+                        "type": {
                             "type": "string",
                             "pattern": "^Canvas$"
                         },
@@ -338,12 +444,12 @@
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
                         "rights": {
-                            "type": "string", 
+                            "type": "string",
                             "format": "uri",
                             "pattern": "^http.*$"
                         },
                         "navDate": {
-                            "type": "string", 
+                            "type": "string",
                             "format": "date-time"
                         },
                         "provider": { "$ref": "#/classes/provider" },
@@ -386,7 +492,7 @@
                 {
                     "type": "object",
                     "properties": {
-                        "type": { 
+                        "type": {
                             "type": "string",
                             "pattern": "^AnnotationCollection$"
                         },
@@ -402,7 +508,7 @@
                         }
                     }
                 }
-            ] 
+            ]
         },
         "annotationPage": {
             "allOf": [
@@ -410,7 +516,7 @@
                 {
                     "type": "object",
                     "properties": {
-                        "type": { 
+                        "type": {
                             "type": "string",
                             "pattern": "^AnnotationPage$"
                         },
@@ -418,11 +524,11 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/classes/annotation"
-                            }     
+                            }
                         }
                     }
                 }
-            ] 
+            ]
         },
         "annotation": {
             "allOf": [
@@ -430,17 +536,17 @@
                 {
                     "type": "object",
                     "properties": {
-                        "type": { 
+                        "type": {
                             "type": "string",
                             "pattern": "^Annotation$"
                         },
-                        "motivation": { 
+                        "motivation": {
                             "type": "string"
                         },
                         "body": {
                             "oneOf": [
                                 {
-                                    "$ref": "#/classes/resource"    
+                                    "$ref": "#/classes/resource"
                                 },
                                 {
                                     "allOf":[
@@ -459,7 +565,7 @@
                             ]
                         },
                         "target": {
-                            "type": "string", 
+                            "type": "string",
                             "format": "uri",
                             "pattern": "^http.*$"
                         }
@@ -474,7 +580,7 @@
                 {
                     "type": "object",
                     "properties": {
-                        "type": { 
+                        "type": {
                             "type": "string",
                             "pattern": "^Range$"
                         },
@@ -529,7 +635,7 @@
                             }
                         }
                     }
-                }    
+                }
             ]
         }
     },
@@ -559,12 +665,12 @@
                 "summary": { "$ref": "#/types/lngString" },
                 "requiredStatement": { "$ref": "#/types/keyValueString" },
                 "rights": {
-                    "type": "string", 
+                    "type": "string",
                     "format": "uri",
                     "pattern": "^http.*$"
                 },
                 "navDate": {
-                    "type": "string", 
+                    "type": "string",
                     "format": "date-time"
                 },
                 "provider": { "$ref": "#/classes/provider" },
@@ -579,16 +685,22 @@
                 "behavior": { "$ref": "#/classes/behavior" },
                 "items": {
                     "type": "array",
-                    "items": { "$ref": "#/classes/canvas" }
+                    "items": {
+                      "oneOf": [
+                        { "$ref": "#/classes/manifest" },
+                        { "$ref": "#/classes/canvas" },
+                        { "$ref": "#/classes/collection" }
+                      ]
+                    }
                 },
                 "structures": {
                     "type": "array",
-                    "items": { 
+                    "items": {
                         "$ref": "#/classes/range"
                     }
                 }
             },
             "required": [ "label" ]
         }
-    ]             
+    ]
 }

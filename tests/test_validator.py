@@ -2,6 +2,7 @@
 import unittest
 from mock import Mock
 import imp
+import pprint
 from bottle import Response, request, LocalRequest
 
 try:
@@ -92,7 +93,7 @@ class TestAll(unittest.TestCase):
     def test05_do_GET_test(self):
         """Test GET requests -- typical user interaction with web form."""
         # Note that attempting to set request.environ['QUERY_STRING'] to mock
-        # input data works only the first time. Instead create a new request 
+        # input data works only the first time. Instead create a new request
         # object to similate each web request, with data that sets request.environ
         v = val_mod.Validator()
         request = LocalRequest({'QUERY_STRING': 'url=https://example.org/a'})
@@ -130,19 +131,27 @@ class TestAll(unittest.TestCase):
     def test07_check_manifest3(self):
         v = val_mod.Validator()
         # good manifests
+        pp = pprint.PrettyPrinter(indent=4)
         for good in ['fixtures/3/simple_video.json',
                      'fixtures/3/full_example.json',
-                     'fixtures/3/choice.json']:
+                     'fixtures/3/choice.json',
+                     'fixtures/3/collection.json',
+                     'fixtures/3/collection_of_collections.json'
+                     ]:
             with open(good, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
+                print("----------------------------")
+                pp.pprint(j)
+
                 self.assertEqual(j['okay'], 1)
         for bad_data in ['fixtures/3/broken_simple_image.json',
-                          'fixtures/3/broken_choice.json']:
+                         'fixtures/3/broken_choice.json']:
             with open(bad_data, 'r') as fh:
 
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
+                print("+++----------------------------")
                 self.assertEqual(j['okay'], 0)
 
 if __name__ == '__main__':
