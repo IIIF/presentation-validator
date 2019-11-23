@@ -170,7 +170,7 @@
                 },
                 "service": { "$ref": "#/classes/service" },
                 "format": { "$ref": "#/types/format" },
-                "label": { "$ref": "#/types/label" }
+                "label": {"$ref": "#/types/lngString" }
             },
             "required": ["id","type"]
         },
