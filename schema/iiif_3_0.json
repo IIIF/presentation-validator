@@ -201,6 +201,15 @@
                 ]
             }
         },
+        "rights": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^http.*$"
+        },
+        "navDate": {
+            "type": "string",
+            "format": "date-time"
+        },
         "viewingDirection": {
             "anyOf": [
                 {
@@ -328,15 +337,8 @@
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
-                        "rights": {
-                            "type": "string",
-                            "format": "uri",
-                            "pattern": "^http.*$"
-                        },
-                        "navDate": {
-                            "type": "string",
-                            "format": "date-time"
-                        },
+                        "rights": { "$ref": "#/classes/rights" },
+                        "navDate": { "$ref": "#/classes/navDate" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "thumbnail": {
@@ -378,11 +380,7 @@
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
-                        "rights": {
-                            "type": "string",
-                            "format": "uri",
-                            "pattern": "^http.*$"
-                        },
+                        "rights": { "$ref": "#/classes/rights" },
                         "height": {
                             "type": "integer"
                         },
@@ -392,10 +390,7 @@
                         "duration": {
                             "$ref": "#/types/duration"
                         },
-                        "navDate": {
-                            "type": "string",
-                            "format": "date-time"
-                        },
+                        "navDate": { "$ref": "#/classes/navDate" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "thumbnail": {
@@ -443,15 +438,8 @@
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
-                        "rights": {
-                            "type": "string",
-                            "format": "uri",
-                            "pattern": "^http.*$"
-                        },
-                        "navDate": {
-                            "type": "string",
-                            "format": "date-time"
-                        },
+                        "rights": { "$ref": "#/classes/rights" },
+                        "navDate": { "$ref": "#/classes/navDate" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "thumbnail": {
@@ -664,15 +652,8 @@
                 "metadata": { "$ref": "#/classes/metadata" },
                 "summary": { "$ref": "#/types/lngString" },
                 "requiredStatement": { "$ref": "#/types/keyValueString" },
-                "rights": {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "^http.*$"
-                },
-                "navDate": {
-                    "type": "string",
-                    "format": "date-time"
-                },
+                "rights": { "$ref": "#/classes/rights" },
+                "navDate": { "$ref": "#/classes/navDate" },
                 "provider": { "$ref": "#/classes/provider" },
                 "seeAlso": { "$ref": "#/classes/seeAlso" },
                 "partOf": { "$ref": "#/classes/partOf" },

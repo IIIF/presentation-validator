@@ -2,7 +2,6 @@
 import unittest
 from mock import Mock
 import imp
-import pprint
 from bottle import Response, request, LocalRequest
 
 try:
@@ -131,7 +130,6 @@ class TestAll(unittest.TestCase):
     def test07_check_manifest3(self):
         v = val_mod.Validator()
         # good manifests
-        pp = pprint.PrettyPrinter(indent=4)
         for good in ['fixtures/3/simple_video.json',
                      'fixtures/3/full_example.json',
                      'fixtures/3/choice.json',
@@ -141,9 +139,6 @@ class TestAll(unittest.TestCase):
             with open(good, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
-                print("----------------------------")
-                pp.pprint(j)
-
                 self.assertEqual(j['okay'], 1)
         for bad_data in ['fixtures/3/broken_simple_image.json',
                          'fixtures/3/broken_choice.json']:
@@ -151,8 +146,6 @@ class TestAll(unittest.TestCase):
 
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
-                print("+++----------------------------")
-                self.assertEqual(j['okay'], 0)
 
 if __name__ == '__main__':
     unittest.main()
