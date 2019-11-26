@@ -140,6 +140,7 @@ class TestAll(unittest.TestCase):
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
                 self.assertEqual(j['okay'], 1)
+
         for bad_data in ['fixtures/3/broken_simple_image.json',
                          'fixtures/3/broken_choice.json']:
             with open(bad_data, 'r') as fh:

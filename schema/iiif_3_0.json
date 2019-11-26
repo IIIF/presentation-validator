@@ -156,6 +156,10 @@
                         {
                             "type": "string",
                             "pattern": "^Text$"
+                        },
+                        {
+                            "type": "string",
+                            "pattern": "^TextualBody$"
                         }
                     ]
                 },
@@ -168,6 +172,7 @@
                 "duration": {
                     "$ref": "#/types/duration"
                 },
+                "language": { "type": "string"},
                 "service": { "$ref": "#/classes/service" },
                 "format": { "$ref": "#/types/format" },
                 "label": { "$ref": "#/types/label" }
@@ -373,6 +378,22 @@
                 {
                     "type": "object",
                     "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
                         "type": {
                             "type": "string",
                             "pattern": "^Manifest"
@@ -404,6 +425,12 @@
                             "type": "array",
                             "items": {
                                 "$ref": "#/classes/canvas"
+                            }
+                        },
+                        "structures": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/range"
                             }
                         },
                         "annotations": {
@@ -631,57 +658,10 @@
     "allOf": [
         { "$ref": "#/types/class" },
         {
-            "type": "object",
-            "properties": {
-                "@context": {
-                    "oneOf": [
-                        {
-                            "type": "array",
-                            "items": {
-                                "type": "string",
-                                "format": "uri",
-                                "pattern": "^http.*$"
-                            }
-                        },
-                        {
-                            "type": "string",
-                            "const": "http://iiif.io/api/presentation/3/context.json"
-                        }
-                    ]
-                },
-                "metadata": { "$ref": "#/classes/metadata" },
-                "summary": { "$ref": "#/types/lngString" },
-                "requiredStatement": { "$ref": "#/types/keyValueString" },
-                "rights": { "$ref": "#/classes/rights" },
-                "navDate": { "$ref": "#/classes/navDate" },
-                "provider": { "$ref": "#/classes/provider" },
-                "seeAlso": { "$ref": "#/classes/seeAlso" },
-                "partOf": { "$ref": "#/classes/partOf" },
-                "thumbnail": {
-                    "type": "array",
-                    "items": { "$ref": "#/classes/resource" }
-                },
-                "homepage": { "$ref": "#/classes/homepage" },
-                "viewingDirection": { "$ref": "#/classes/viewingDirection" },
-                "behavior": { "$ref": "#/classes/behavior" },
-                "items": {
-                    "type": "array",
-                    "items": {
-                      "oneOf": [
-                        { "$ref": "#/classes/manifest" },
-                        { "$ref": "#/classes/canvas" },
-                        { "$ref": "#/classes/collection" }
-                      ]
-                    }
-                },
-                "structures": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/classes/range"
-                    }
-                }
-            },
-            "required": [ "label" ]
+          "oneOf": [
+            { "$ref": "#/classes/manifest" },
+            { "$ref": "#/classes/collection" }
+          ]
         }
     ]
 }
