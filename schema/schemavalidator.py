@@ -42,23 +42,16 @@ def validate(data, version, url):
         print('Validation Failed')
         errorCount = 1
         for err in errors:
-            error += 'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message)
             detail = ''
             if 'title' in err.schema:
                 detail = err.schema['title']
-                print (' Test message: {}'.format(detail))
             description = ''    
             if 'description' in err.schema:
-                description = err.schema['description']
-                print (' Test description: {}'.format(description))
-            print('\n Path for error: {}'.format(printPath(err.path, err.message)))
+                detail += err.schema['description']
             context = err.instance
-            print (json.dumps(err.instance, indent=4))
+            #print (json.dumps(err.instance, indent=4))
             if isinstance(context, dict):
                 for key in context:
-                    print('****')
-                    print(key)
-                    print('****')
                     if isinstance(context[key], list): 
                         context[key] = '[ ... ]'
                     elif isinstance(context[key], dict):
@@ -71,7 +64,7 @@ def validate(data, version, url):
                 'context': context
         
             })
-            print (json.dumps(err.instance, indent=4))
+            #print (json.dumps(err.instance, indent=4))
             errorCount += 1
 
         # Return:
