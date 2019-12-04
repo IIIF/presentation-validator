@@ -236,9 +236,104 @@
             }
         },
         "rights": {
-            "type": "string",
-            "format": "uri",
-            "pattern": "^http.*$"
+            "title": "Rights URI isn't from either Creative Commons or Rights statements.org. Both require http links.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/by/4.0"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/by-sa/4.0"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/by-nd/4.0"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/by-nc/4.0"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/by-nc-sa/4.0"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/by-nc-nd/4.0"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/publicdomain/mark/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/InC/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/InC-OW-EU/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/InC-EDU/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/InC-NC/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/InC-RUU/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/NoC-CR/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/NoC-NC/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/NoC-OKLR/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/NoC-US/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/CNE/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/UND/1.0/"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/NKC/1.0/"
+                }
+            ]
         },
         "navDate": {
             "type": "string",

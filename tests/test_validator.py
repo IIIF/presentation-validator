@@ -163,8 +163,7 @@ class TestAll(unittest.TestCase):
         errorCount = 1
         for err in errors:
             print(err['title'])
-            if 'description' in err:
-                print (' Test description: {}'.format(err['description']))
+            print(err['detail'])
             print('\n Path for error: {}'.format(err['path']))
             print('\n Context: {}'.format(err['context']))
             errorCount += 1
