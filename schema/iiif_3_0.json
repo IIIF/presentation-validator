@@ -128,56 +128,71 @@
             "required": ["type", "items"]
         },
         "resource": {
-            "type": "object",
-            "properties": {
-                "id": { "$ref": "#/types/id" },
-                "type": {
-                    "oneOf": [
-                        {
-                            "type": "string",
-                            "pattern": "^Image$"
+            "oneOf": [
+                {
+                    "title": "Annotation bodies MUST have an id and type property.",
+                    "type": "object",
+                    "properties": {
+                        "id": { "$ref": "#/types/id" },
+                        "type": {
+                            "oneOf": [
+                                {
+                                    "type": "string",
+                                    "pattern": "^Image$"
+                                },
+                                {
+                                    "type": "string",
+                                    "pattern": "^Sound$"
+                                },
+                                {
+                                    "type": "string",
+                                    "pattern": "^Video$"
+                                },
+                                {
+                                    "type": "string",
+                                    "pattern": "^Model$"
+                                },
+                                {
+                                    "type": "string",
+                                    "pattern": "^Dataset$"
+                                },
+                                {
+                                    "type": "string",
+                                    "pattern": "^Text$"
+                                }                            ]
                         },
-                        {
-                            "type": "string",
-                            "pattern": "^Sound$"
+                        "height": {
+                            "type": "integer"
                         },
-                        {
-                            "type": "string",
-                            "pattern": "^Video$"
+                        "width": {
+                            "type": "integer"
                         },
-                        {
-                            "type": "string",
-                            "pattern": "^Model$"
+                        "duration": {
+                            "$ref": "#/types/duration"
                         },
-                        {
-                            "type": "string",
-                            "pattern": "^Dataset$"
-                        },
-                        {
-                            "type": "string",
-                            "pattern": "^Text$"
-                        },
-                        {
+                        "language": { "type": "string"},
+                        "service": { "$ref": "#/classes/service" },
+                        "format": { "$ref": "#/types/format" },
+                        "label": {"$ref": "#/types/lngString" }
+                    },
+                    "required": ["id", "type"]
+                },
+                {
+                    "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
+                    "type": "object",
+                    "properties": {
+                        "id": { "$ref": "#/types/id" },
+                        "type": {
                             "type": "string",
                             "pattern": "^TextualBody$"
-                        }
-                    ]
-                },
-                "height": {
-                    "type": "integer"
-                },
-                "width": {
-                    "type": "integer"
-                },
-                "duration": {
-                    "$ref": "#/types/duration"
-                },
-                "language": { "type": "string"},
-                "service": { "$ref": "#/classes/service" },
-                "format": { "$ref": "#/types/format" },
-                "label": {"$ref": "#/types/lngString" }
-            },
-            "required": ["id","type"]
+                        },
+                        "value": { "type": "string" },
+                        "format": { "$ref": "#/types/format" },
+                        "language": { "type": "string"}
+                    },
+                    "required": ["value", "type"]
+                }
+            ]
         },
         "imgSvr": {
             "allOf": [

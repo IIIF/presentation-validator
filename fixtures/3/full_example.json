@@ -233,7 +233,6 @@
           "type": "Annotation",
           "motivation": "commenting",
           "body": {
-            "id": "https://example.org/iiif/book1/annotationPage/Body/id",
             "type": "TextualBody",
             "language": "en",
             "value": "I love this manifest!"
