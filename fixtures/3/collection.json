@@ -1,0 +1,38 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://example.org/iiif/collection/top",
+  "type": "Collection",
+  "label": { "en": [ "Collection for Example Organization" ] },
+  "summary": { "en": [ "Short summary of the Collection" ] },
+  "requiredStatement": {
+    "label": { "en": [ "Attribution" ] },
+    "value": { "en": [ "Provided by Example Organization" ] }
+  },
+  "behavior": [ "multi-part" ],
+  "items": [
+    {
+      "id": "https://example.org/iiif/1/manifest",
+      "type": "Manifest",
+      "label": { "en": [ "Example Manifest 1" ] },
+      "thumbnail": [
+        {
+          "id": "https://example.org/manifest1/thumbnail.jpg",
+          "type": "Image",
+          "format": "image/jpeg"
+        }
+      ]
+    },
+    {
+      "id": "https://example.org/iiif/2/manifest",
+      "type": "Manifest",
+      "label": { "en": [ "Example Manifest 2" ] },
+      "thumbnail": [
+        {
+          "id": "https://example.org/manifest2/thumbnail.jpg",
+          "type": "Image",
+          "format": "image/jpeg"
+        }
+      ]
+    }
+  ]
+}
