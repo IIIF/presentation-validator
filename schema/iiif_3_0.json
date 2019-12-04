@@ -209,14 +209,28 @@
         "service": {
             "type": "array",
             "items": {
-                "allOf": [
-                    { "$ref": "#/types/class" },
+                "oneOf": [
+                    {
+                        "allOf": [
+                            { "$ref": "#/types/class" },
+                            {
+                                "type": "object",
+                                "properties": {
+                                    "profile": { "type": "string" },
+                                    "service": { "$ref": "#/classes/service" }
+                                }
+                            }
+                        ]
+                    },
                     {
                         "type": "object",
                         "properties": {
+                            "@id": { "$ref": "#/types/id" },
+                            "@type": { "type": "string" },
                             "profile": { "type": "string" },
                             "service": { "$ref": "#/classes/service" }
-                        }
+                        },
+                        "required": ["@id", "@type"]
                     }
                 ]
             }

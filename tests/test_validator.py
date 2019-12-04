@@ -134,7 +134,8 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/full_example.json',
                      'fixtures/3/choice.json',
                      'fixtures/3/collection.json',
-                     'fixtures/3/collection_of_collections.json'
+                     'fixtures/3/collection_of_collections.json',
+                     'fixtures/3/version2image.json'
                      ]:
             with open(good, 'r') as fh:
                 data = fh.read()
@@ -163,7 +164,7 @@ class TestAll(unittest.TestCase):
         for err in errors:
             print(err['title'])
             if 'description' in err:
-                print (' Test description: {}'.format(err.schema['description']))
+                print (' Test description: {}'.format(err['description']))
             print('\n Path for error: {}'.format(err['path']))
             print('\n Context: {}'.format(err['context']))
             errorCount += 1
