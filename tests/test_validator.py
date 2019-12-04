@@ -139,14 +139,30 @@ class TestAll(unittest.TestCase):
             with open(good, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
+                if j['okay'] != 1:
+                    self.printValidationerror(good, j['errorList'])
+
                 self.assertEqual(j['okay'], 1)
 
         for bad_data in ['fixtures/3/broken_simple_image.json',
                          'fixtures/3/broken_choice.json']:
             with open(bad_data, 'r') as fh:
-
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
+
+                self.assertEqual(j['okay'], 0)
+
+
+    def printValidationerror(self, filename, errors):                
+        print ('Failed to validate: {}'.format(filename))
+        errorCount = 1
+        for err in errors:
+            print(err['title'])
+            if 'description' in err:
+                print (' Test description: {}'.format(err.schema['description']))
+            print('\n Path for error: {}'.format(err['path']))
+            print('\n Context: {}'.format(err['context']))
+            errorCount += 1
 
 if __name__ == '__main__':
     unittest.main()
