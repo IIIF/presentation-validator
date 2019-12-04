@@ -383,7 +383,8 @@
                                 "$ref": "#/classes/annotationPage"
                             }
                         }
-                    }
+                    },
+                    "required": ["id", "type", "label"]
                 }
             ]
         },

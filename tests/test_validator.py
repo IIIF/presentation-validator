@@ -145,11 +145,15 @@ class TestAll(unittest.TestCase):
                 self.assertEqual(j['okay'], 1)
 
         for bad_data in ['fixtures/3/broken_simple_image.json',
-                         'fixtures/3/broken_choice.json']:
+                         'fixtures/3/broken_choice.json',
+                         'fixtures/3/broken_collection.json']:
             with open(bad_data, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
 
+                if j['okay'] == 1:
+                    print ("Expected {} to fail validation but it passed....".format(bad_data))
+                
                 self.assertEqual(j['okay'], 0)
 
 
