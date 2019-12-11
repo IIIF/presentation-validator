@@ -147,7 +147,8 @@ class TestAll(unittest.TestCase):
 
         for bad_data in ['fixtures/3/broken_simple_image.json',
                          'fixtures/3/broken_choice.json',
-                         'fixtures/3/broken_collection.json']:
+                         'fixtures/3/broken_collection.json',
+                         'fixtures/3/broken_embedded_annos.json']:
             with open(bad_data, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
