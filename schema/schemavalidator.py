@@ -41,29 +41,45 @@ def validate(data, version, url):
     if errors:
         print('Validation Failed')
         errorCount = 1
+        if len(errors) == 1 and 'is not valid under any of the given schemas' in errors[0].message:
+            errors = errors[0].context
         for err in errors:
-            detail = ''
-            if 'title' in err.schema:
-                detail = err.schema['title']
-            description = ''    
-            if 'description' in err.schema:
-                detail += err.schema['description']
-            context = err.instance
-            #print (json.dumps(err.instance, indent=4))
-            if isinstance(context, dict):
-                for key in context:
-                    if isinstance(context[key], list): 
-                        context[key] = '[ ... ]'
-                    elif isinstance(context[key], dict):
-                        context[key] = '{ ... }'
-            errorsJson.append({
-                'title': 'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
-                'detail': detail,
-                'description': description,
-                'path': printPath(err.path, err.message),
-                'context': context
+            if 'is not valid under any of the given schemas' in err.message:
+                subErrorMessages = []
+                for subErr in err.context:
+                    if 'is not valid under any of the given schemas' not in subErr.message:
+                        subErrorMessages.append(subErr.message)
+                errorsJson.append({
+                    'title': 'Error {} of {}.\n Message: Failed to process submission due to many errors'.format(errorCount, len(errors)),
+                    'detail': 'This error is likely due to other listed errors. Fix those errors first.',
+                    'description': "{}".format(subErrorMessages),
+                    'path': '',
+                    'context': ''
+                })
+
+            else:
+                detail = ''
+                if 'title' in err.schema:
+                    detail = err.schema['title']
+                description = ''    
+                if 'description' in err.schema:
+                    detail += ' ' + err.schema['description']
+                context = err.instance
+                #print (json.dumps(err.instance, indent=4))
+                if isinstance(context, dict):
+                    for key in context:
+                        if isinstance(context[key], list): 
+                            context[key] = '[ ... ]'
+                        elif isinstance(context[key], dict):
+                            context[key] = '{ ... }'
+                errorsJson.append({
+                    'title': 'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
+                    'detail': detail,
+                    'description': description,
+                    'path': printPath(err.path, err.message),
+                    'context': context
         
-            })
+                })
             #print (json.dumps(err.instance, indent=4))
             errorCount += 1
 
