@@ -50,7 +50,7 @@ def validate(data, version, url):
                     if 'is not valid under any of the given schemas' not in subErr.message:
                         subErrorMessages.append(subErr.message)
                 errorsJson.append({
-                    'title': 'Error {} of {}.\n Message: Failed to process submission due to many errors'.format(errorCount, len(errors)),
+                    'title': 'Error {} of {}.\n Message: Failed to process submission due too many errors'.format(errorCount, len(errors)),
                     'detail': 'This error is likely due to other listed errors. Fix those errors first.',
                     'description': "{}".format(subErrorMessages),
                     'path': '',
@@ -107,8 +107,8 @@ def validate(data, version, url):
     }
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print ('Usage:\n\t{} manifest schema'.format(sys.argv[0]))
+    if len(sys.argv) != 2:
+        print ('Usage:\n\t{} manifest'.format(sys.argv[0]))
         exit(-1)
     with open(sys.argv[1]) as json_file:
         print ('Loading: {}'.format(sys.argv[1])) 
@@ -118,50 +118,6 @@ if __name__ == '__main__':
             print ('Failed to load JSON due to: {}'.format(err))
             exit(-1)
 
-    with open(sys.argv[2]) as schema_file:
-        print ('Loading schema: {}\n'.format(sys.argv[2])) 
-        try:
-            schema = json.load(schema_file)
-        except ValueError as err:
-            print ('Failed to load schema due to JSON error: {}'.format(err))
-            exit(-1)
-
-    try:
-        validator = Draft7Validator(schema)
-        results = validator.iter_errors(iiif_json)
-    except SchemaError as err:    
-        print('Problem with the supplied schema:\n')
-        print(err)
-
-    errors = sorted(results, key=lambda e: e.path)
-    if errors:
-        print('Validation Failed')
-        errorCount = 1
-        for err in errors:
-            print('Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message))
-            if 'title' in err.schema:
-                print (' Test message: {}'.format(err.schema['title']))
-            if 'description' in err.schema:
-                print (' Test description: {}'.format(err.schema['description']))
-            print('\n Path for error: {}'.format(printPath(err.path, err.message)))
-            context = err.instance
-            for key in context:
-                if isinstance(context[key], list): 
-                    context[key] = '[ ... ]'
-                elif isinstance(context[key], dict):
-                    context[key] = '{ ... }'
-
-            print (json.dumps(err.instance, indent=4))
-            errorCount += 1
-
-        # Return:
-       # infojson = {
-      #      'received': data,
-     #       'okay': okay,
-    #        'warnings': warnings,
-   #         'error': str(err),
-  #          'url': url
- #        }
-
-    else:
-        print ('Passed Validation!')
+    result = validate(json.dumps(iiif_json), '3.0', sys.argv[1])
+    for error in result['errorList']:
+        print (error['title'])

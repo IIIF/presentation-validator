@@ -659,6 +659,7 @@
                     "type": "object",
                     "properties": {
                         "id": { "$ref": "#/types/id" },
+                        "@context": {},
                         "type": {
                             "type": "string",
                             "pattern": "^AnnotationPage$"
@@ -709,12 +710,62 @@
                             ]
                         },
                         "target": {
-                            "type": "string",
-                            "format": "uri",
-                            "pattern": "^http.*$"
+                            "oneOf": [
+                                { "$ref": "#/classes/annoTarget" },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/classes/annoTarget"
+                                    }
+                                }
+                            ]
                         }
                     },
                     "required": ["target", "type"]
+                }
+            ]
+        },
+        "annoTarget": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^http.*$"
+                },
+                {
+                    "$ref": "#/classes/specificResource"
+                }
+            ]
+        },
+        "specificResource": {
+            "type": "object",
+            "properties": {
+                "id": { "$ref": "#/types/id" },
+                "type": { 
+                    "type": "string",
+                    "pattern": "^SpecificResource$"
+                },
+                "format": { "$ref": "#/types/format" },
+                "accessibility": { "type": "string"},
+                "source": { "$ref": "#/types/id" },
+                "selector": { "$ref": "#/classes/annoSelector" }
+            },
+            "required": ["source", "selector"]
+        },
+        "annoSelector": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^http.*$"
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { "type": "string" },
+                        "t": { "$ref": "#/types/duration" }
+                    },
+                    "required": ["type"]
                 }
             ]
         },
@@ -734,28 +785,7 @@
                             "items": {
                                 "oneOf": [
                                     {
-                                        "type": "object",
-                                        "properties": {
-                                            "type": {
-                                                "type": "string",
-                                                "pattern": "^SpecificResource$"
-                                            },
-                                            "source": {
-                                                "type": "string"
-                                            },
-                                            "selector": {
-                                                "type": "object",
-                                                "properties": {
-                                                    "type": {
-                                                        "type": "string"
-                                                    },
-                                                    "value": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            }
-                                        },
-                                        "required": ["source", "selector"]
+                                        "$ref": "#/classes/specificResource"
                                     },
                                     {
                                         "allOf": [
@@ -789,7 +819,8 @@
         {
           "oneOf": [
             { "$ref": "#/classes/manifest" },
-            { "$ref": "#/classes/collection" }
+            { "$ref": "#/classes/collection" },
+            { "$ref": "#/classes/annotationPage" }
           ]
         }
     ]

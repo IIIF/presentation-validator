@@ -1,0 +1,19 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://preview.iiif.io/cookbook/0068-newspaper/recipe/0068-newspaper/newspaper_issue_1-anno_p1.json",
+  "type": "AnnotationPage",
+  "items": [
+    {
+      "id": "https://data.europeana.eu/annotation/9200355/BibliographicResource_3000096302513/20b3b1f4cb15f062e53fd50d584d66ff",
+      "type": "Annotation",
+      "motivation": "supplementing",
+      "body": {
+        "type": "TextualBody",
+        "format": "text/plain",
+        "language": "de",
+        "value": "84"
+      },
+      "target": "https://iiif.europeana.eu/presentation/9200355/BibliographicResource_3000096302513/canvas/p1#xywh=182,476,59,43"
+    }
+  ]
+}
