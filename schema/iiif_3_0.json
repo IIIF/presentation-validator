@@ -760,42 +760,14 @@
                     "pattern": "^http.*$"
                 },
                 {
-                    "$ref": "#/classes/pointSelector"
-                },
-                {
                     "type": "object",
                     "properties": {
-                        "oneOf": [
-                            {
-                                "type": { 
-                                    "type": "string",
-                                    "pattern": "^FragmentSelector$"
-                                }
-                            },
-                            {
-                                "type": { 
-                                    "type": "string",
-                                    "pattern": "^SvgSelector$"
-                                }
-                            }
-                        ]
+                        "type": { "type": "string" },
+                        "t": { "$ref": "#/types/duration" }
                     },
                     "required": ["type"]
                 }
             ]
-        },
-        "pointSelector": {
-            "type": "object",
-            "properties": {
-                "type": { 
-                    "type": "string",
-                    "pattern": "^PointSelector$"
-                },
-                "x": { "type": "integer" },
-                "y": { "type": "integer" },
-                "t": { "$ref": "#/types/duration" }
-            },
-            "required": ["type"]
         },
         "range": {
             "allOf": [

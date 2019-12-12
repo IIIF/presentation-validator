@@ -45,18 +45,17 @@ def validate(data, version, url):
             errors = errors[0].context
         for err in errors:
             if 'is not valid under any of the given schemas' in err.message:
-                continue
-                #subErrorMessages = []
-                #for subErr in err.context:
-                #    if 'is not valid under any of the given schemas' not in subErr.message:
-                #        subErrorMessages.append(subErr.message)
-                #errorsJson.append({
-                #    'title': 'Error {} of {}.\n Message: Failed to process submission due too many errors'.format(errorCount, len(errors)),
-                #    'detail': 'This error is likely due to other listed errors. Fix those errors first.',
-                #    'description': "{}".format(subErrorMessages),
-                #    'path': '',
-                #    'context': ''
-                #})
+                subErrorMessages = []
+                for subErr in err.context:
+                    if 'is not valid under any of the given schemas' not in subErr.message:
+                        subErrorMessages.append(subErr.message)
+                errorsJson.append({
+                    'title': 'Error {} of {}.\n Message: Failed to process submission due too many errors'.format(errorCount, len(errors)),
+                    'detail': 'This error is likely due to other listed errors. Fix those errors first.',
+                    'description': "{}".format(subErrorMessages),
+                    'path': '',
+                    'context': ''
+                })
 
             else:
                 detail = ''
