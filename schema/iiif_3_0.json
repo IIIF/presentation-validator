@@ -686,7 +686,15 @@
                             "pattern": "^Annotation$"
                         },
                         "motivation": {
-                            "type": "string"
+                            "oneOf": [
+                                { "type": "string" },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string"
+                                    }
+                                }
+                            ]    
                         },
                         "body": {
                             "oneOf": [
