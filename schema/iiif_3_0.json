@@ -10,7 +10,7 @@
         },
         "lngString": {
             "$id": "#lngString",
-            "title": "Language string, must have a languagae and value must be an array.",
+            "title": "Language string, must have a language and value must be an array.",
             "type": "object",
             "patternProperties": {
                 "^[a-zA-Z-][a-zA-Z-]*$": {
