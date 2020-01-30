@@ -62,7 +62,9 @@
 
           <section class="wrapper">
             <div>
-              This service will validate a IIIF Presentation API resource against the specification.  Fill in the URL of your manifest, and it will try to parse it and issue errors for failed requirements, and warnings for recommendations that haven't been followed.
+              This service will validate a IIIF Presentation API resource against the specification.  Fill in the URL
+              of your manifest, and it will try to parse it and issue errors for failed requirements, and warnings for
+              recommendations that haven't been followed.
             </div>
 
             <div style="border: 1px solid black;margin-left: 10px; margin-top: 20px; padding: 10px">
@@ -79,6 +81,8 @@
                   <option value="1.0">1.0</option>
                 </select>
                 <br/>
+                <input type="checkbox" id="accept" name="accept">
+                <label for="accept">Include <code>Accept</code> header in request for specified version</label><br />
 
                 <input type="submit" value="Go!" id="submit-url">
               </form>
@@ -94,13 +98,20 @@
             <hr/>
 
             <div style="margin-top:20px">
-            <b>Technical Note</b>
+            <b>Technical Notes</b>
+              <p>
+                The <code>Accept</code> header option tells the validator to use <a href="https://tools.ietf.org/html/rfc7231#section-5.3.2">content negotiation</a>
+                to retrieve a manifest at a given URL. This may be used to retrieve manifests from service
+                providers that support content negotiation for switching between IIIF versions.
+              </p>
             <p>
             If you would like to use the validator programatically, there are two options:
             </p>
             <ul>
               <li><a href="https://github.com/IIIF/presentation-validator">Download</a> the code from github and run it locally.</li>
-              <li>Use it online with JSON based output, by an HTTP GET to this endpoint:<br/>http://iiif.io/api/presentation/validator/service/validate?version=2.1&amp;url=<i>manifest-url-here</i></li>
+              <li>Use it online with JSON based output, by an HTTP GET to this endpoint: <br/>
+                  http://iiif.io/api/presentation/validator/service/validate?version=2.1&amp;url=<i>manifest-url-here</i>&accept=<i>true|false</i>
+              </li>
             </ul>
             </div>
           </section>
@@ -124,23 +135,26 @@
       // Call out to the validation service and get a result
       function handleSubmission(e) {
         e.preventDefault();
+
         var data = {
           url: $("input[name='url']").val(),
-          version: $("select[name='version']").val()
-        }
+          version: $("select[name='version']").val(),
+          accept: $("#accept").is(":checked"),
+        };
+
         var url = $('#manifest-validation-form').attr("action");
-        $.getJSON(url,data,handleValidationResponse);
+        $.getJSON(url, data, handleValidationResponse);
       }
 
       // Handle validation service response, render response block
       function handleValidationResponse(data) {
-        str  = '<div style="margin-left: 20px">'
-        str += '<div>URL Tested: '+ data.url + '</div><br/>'
+        var str  = '<div style="margin-left: 20px">';
+        str += '<div>URL Tested: '+ data.url + '</div><br/>';
         if (data.okay) {
-          str += '<div><h2 style="color:green">Validated successfully</h2></div>'
+          str += '<div><h2 style="color:green">Validated successfully</h2></div>';
         } else {
             if (data.errorList) {
-                for (var i = 0; i < data.errorList.length; i++) {
+                for (var i = 0, len = data.errorList.length; i < len; i++) {
                     var error = data.errorList[i];
                     str+='<div>';
                     str+='<h2 style="color:red">' + error.title + '</h2>';
@@ -155,12 +169,12 @@
                     str+='</div>';
                 }
             } else {
-                str += '<div><h2 style="color:red">Validation Error: '+data.error+'</h2></div>'
+                str += '<div><h2 style="color:red">Validation Error: '+data.error+'</h2></div>';
             }    
         }
         if (data.warnings && data.warnings.length){
           str += '<div style="margin-top: 20px">Warnings:<ul>';
-          for(var i =0; i < data.warnings.length; i++) {
+          for(var i =0, len = data.warnings.length; i < len; i++) {
             str+= '<li>'+data.warnings[i]+'</li>';
           }
           str += '</ul></div>';
