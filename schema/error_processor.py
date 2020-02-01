@@ -59,7 +59,7 @@ class IIIFErrorParser(object):
             Given a schema error that ends in oneOf the current json schema library 
             will check all possibilities in oneOf and return validation error messages for each one
             This method will identify the real oneOf that causes the error by checking the type of 
-            each oneOf possiblity and returning only the one that matches. 
+            each oneOf possibility and returning only the one that matches. 
 
             Arguments:
                 error_path: list of strings and ints which are the path to the error in the schema
