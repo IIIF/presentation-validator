@@ -47,7 +47,8 @@ setup(
     install_requires=[
         'bottle>=0.12.9',
         'iiif_prezi>=0.2.2',
-        'jsonschema'
+        'jsonschema',
+        'jsonpath_rw'
     ],
     test_suite="tests",
     tests_require=[
