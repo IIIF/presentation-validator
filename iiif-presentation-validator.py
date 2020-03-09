@@ -37,6 +37,7 @@ class Validator(object):
     def fetch(self, url):
         """Fetch manifest from url."""
         req = Request(url)
+        req.add_header('User-Agent', 'IIIF Validation Service')
         req.add_header('Accept-Encoding', 'gzip')
 
         try:
