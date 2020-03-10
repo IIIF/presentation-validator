@@ -107,7 +107,7 @@ class TestAll(unittest.TestCase):
         v.fetch.side_effect = Exception('Fetch failed')
         j = json.loads(v.do_GET_test())
         self.assertEqual(j['okay'], 0)
-        self.assertEqual(j['error'], 'Cannot fetch url')
+        self.assertTrue(j['error'].startswith('Cannot fetch url'))
         # bogus URL
         v = val_mod.Validator()
         request = LocalRequest({'QUERY_STRING': 'url=not_http://a.b.c/'})
