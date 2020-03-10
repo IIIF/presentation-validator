@@ -43,7 +43,7 @@ class Validator(object):
         try:
             wh = urlopen(req)
         except HTTPError as wh:
-            pass
+            raise wh
         data = wh.read()
         wh.close()
 
@@ -54,7 +54,7 @@ class Validator(object):
         try:
             data = data.decode('utf-8')
         except:
-            pass
+            raise
         return(data, wh)
 
     def check_manifest(self, data, version, url=None, warnings=[]):
@@ -114,8 +114,8 @@ class Validator(object):
 
         try:
             (data, webhandle) = self.fetch(url)
-        except:
-            return self.return_json({'okay': 0, 'error': 'Cannot fetch url', 'url': url})
+        except Exception as error:
+            return self.return_json({'okay': 0, 'error': 'Cannot fetch url. Got "{}"'.format(error), 'url': url})
 
         # First check HTTP level
         ct = webhandle.headers.get('content-type', '')
