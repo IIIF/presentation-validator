@@ -223,6 +223,43 @@ class TestAll(unittest.TestCase):
         path = ['allOf', 1, 'oneOf', 0, 'allOf', 1, 'properties', 'provider', 'items', 'allOf', 1, 'properties', 'seeAlso', 'items', 'allOf', 0, 'required']
         iiifPath = ['provider', 0, 'seeAlso', 0]
         self.assertTrue(errorParser.isValid(path, iiifPath))
+    
+    def test_version3errors(self):
+        v = val_mod.Validator()
+
+        filename = 'fixtures/3/broken_simple_image.json'
+        errorPaths = [
+            '/provider[0]/logo[0]',
+            '/provider[0]/seeAlso[0]',
+            '/items[0]'
+        ]
+        response = self.helperRunValidation(v, filename)
+        self.helperTestValidationErrors(filename, response, errorPaths)
+
+        filename = 'fixtures/3/broken_service.json'
+        errorPaths = [
+            '/thumbnail[0]/service',
+            '/body[0]/items[0]/items[0]/items/items[0]/items[0]/items[0]/body/service'
+        ]
+        response = self.helperRunValidation(v, filename)
+        self.helperTestValidationErrors(filename, response, errorPaths)
+
+
+    def helperTestValidationErrors(self, filename, response, errorPaths):       
+        self.assertEqual(response['okay'], 0, 'Expected {} to fail validation but it past.'.format(filename))
+        self.assertEqual(len(response['errorList']), len(errorPaths), 'Expected {} validation errors but found {} for file {}'.format(len(errorPaths), len(response['errorList']), filename))
+
+        for error in response['errorList']:
+            foundPath = False
+            for path in errorPaths:
+                if error['path'].startswith(path):
+                    foundPath=True
+            self.assertTrue(foundPath, 'Unexpected path: {} in file {}'.format(error['path'], filename)) 
+
+    def helperRunValidation(self, validator, iiifFile, version="3.0"):
+        with open(iiifFile, 'r') as fh:
+            data = fh.read()
+            return json.loads(validator.check_manifest(data, '3.0'))
 
     def printValidationerror(self, filename, errors):                
         print ('Failed to validate: {}'.format(filename))
