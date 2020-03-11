@@ -138,7 +138,9 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/version2image.json',
                      'fixtures/3/annoPage.json',
                      'fixtures/3/anno_pointselector.json',
-                     'fixtures/3/annoPageMultipleMotivations.json'
+                     'fixtures/3/annoPageMultipleMotivations.json',
+                     'fixtures/3/old_cc_license.json',
+                     'fixtures/3/rightsstatement_license.json'
                      ]:
             with open(good, 'r') as fh:
                 data = fh.read()
@@ -151,7 +153,8 @@ class TestAll(unittest.TestCase):
         for bad_data in ['fixtures/3/broken_simple_image.json',
                          'fixtures/3/broken_choice.json',
                          'fixtures/3/broken_collection.json',
-                         'fixtures/3/broken_embedded_annos.json']:
+                         'fixtures/3/broken_embedded_annos.json',
+                         'fixtures/3/non_cc_license.json']:
             with open(bad_data, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
