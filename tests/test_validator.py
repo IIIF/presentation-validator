@@ -11,7 +11,6 @@ except ImportError:
     # fall back to python2
     from urllib2 import URLError
 import json
-
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 
@@ -25,6 +24,7 @@ try:
 finally:
     fh.close()
 
+from schema.error_processor import IIIFErrorParser
 
 def read_fixture(fixture):
     """Read data from text fixture."""
@@ -161,6 +161,105 @@ class TestAll(unittest.TestCase):
                 
                 self.assertEqual(j['okay'], 0)
 
+    def test08_errortrees(self):
+        with open('fixtures/3/broken_service.json') as json_file:
+            iiif_json = json.load(json_file)
+
+        schema_file = 'schema/iiif_3_0.json'
+        with open(schema_file) as json_file:
+            schema = json.load(json_file)
+
+        errorParser = IIIFErrorParser(schema, iiif_json)
+
+        # annotationPage
+        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'type', u'pattern']
+        iiifPath = [u'items', 0, u'type']
+        self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
+
+        # annotationPage
+        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'required']
+        iiifPath = [u'items', 0]
+        self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
+
+        # annotationPage
+        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'properties', u'type', u'pattern']
+        iiifPath = [u'type']
+        self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
+
+        # annotationPage
+        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'additionalProperties']
+        iiifPath = []
+        self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
+
+        # Collection
+        path = [u'allOf', 1, u'oneOf', 1, u'allOf', 1, u'properties', u'thumbnail', u'items', u'oneOf']
+        iiifPath = [u'thumbnail', 0]
+        self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to collection incorrectly')
+
+        # Collection
+        path = [u'allOf', 1, u'oneOf', 1, u'allOf', 1, u'properties', u'type', u'pattern']
+        iiifPath = [u'type']
+        self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to collection incorrectly')
+
+        # Collection
+        path = [u'allOf', 1, u'oneOf', 1, u'allOf', 1, u'properties', u'items', u'items', u'oneOf']
+        iiifPath = [u'items', 0]
+        self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to collection incorrectly')
+
+        # annotationPage
+        path = [u'allOf', 1, u'oneOf', 0, u'allOf', 1, u'properties', u'thumbnail', u'items', u'oneOf']
+        iiifPath = [u'thumbnail', 0]
+        self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in thumbnail needs to be an array.')
+
+        # annotationPage
+        path = [u'allOf', 1, u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'body', u'oneOf']
+        iiifPath = [u'items', 0, u'items', 0, u'items', 0, u'body']
+        self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in the canvas needs to be an array')
+
+        with open('fixtures/3/broken_simple_image.json') as json_file:
+            iiif_json = json.load(json_file)
+        errorParser = IIIFErrorParser(schema, iiif_json)
+        # Provider as list example:
+        path = ['allOf', 1, 'oneOf', 0, 'allOf', 1, 'properties', 'provider', 'items', 'allOf', 1, 'properties', 'seeAlso', 'items', 'allOf', 0, 'required']
+        iiifPath = ['provider', 0, 'seeAlso', 0]
+        self.assertTrue(errorParser.isValid(path, iiifPath))
+    
+    def test_version3errors(self):
+        v = val_mod.Validator()
+
+        filename = 'fixtures/3/broken_simple_image.json'
+        errorPaths = [
+            '/provider[0]/logo[0]',
+            '/provider[0]/seeAlso[0]',
+            '/items[0]'
+        ]
+        response = self.helperRunValidation(v, filename)
+        self.helperTestValidationErrors(filename, response, errorPaths)
+
+        filename = 'fixtures/3/broken_service.json'
+        errorPaths = [
+            '/thumbnail[0]/service',
+            '/body[0]/items[0]/items[0]/items/items[0]/items[0]/items[0]/body/service'
+        ]
+        response = self.helperRunValidation(v, filename)
+        self.helperTestValidationErrors(filename, response, errorPaths)
+
+
+    def helperTestValidationErrors(self, filename, response, errorPaths):       
+        self.assertEqual(response['okay'], 0, 'Expected {} to fail validation but it past.'.format(filename))
+        self.assertEqual(len(response['errorList']), len(errorPaths), 'Expected {} validation errors but found {} for file {}'.format(len(errorPaths), len(response['errorList']), filename))
+
+        for error in response['errorList']:
+            foundPath = False
+            for path in errorPaths:
+                if error['path'].startswith(path):
+                    foundPath=True
+            self.assertTrue(foundPath, 'Unexpected path: {} in file {}'.format(error['path'], filename)) 
+
+    def helperRunValidation(self, validator, iiifFile, version="3.0"):
+        with open(iiifFile, 'r') as fh:
+            data = fh.read()
+            return json.loads(validator.check_manifest(data, '3.0'))
 
     def printValidationerror(self, filename, errors):                
         print ('Failed to validate: {}'.format(filename))

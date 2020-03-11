@@ -8,6 +8,7 @@ import json
 import os
 from gzip import GzipFile
 from io import BytesIO
+from jsonschema.exceptions import ValidationError, SchemaError
 
 try:
     # python3
@@ -62,7 +63,17 @@ class Validator(object):
         infojson = {}
         # Check if 3.0 if so run through schema rather than this version...
         if version == '3.0':
-            infojson = schemavalidator.validate(data, version, url)
+            try:
+                infojson = schemavalidator.validate(data, version, url)
+                for error in infojson['errorList']:
+                    error.pop('error', None)
+            except ValidationError as e:
+                infojson = {
+                    'received': data,
+                    'okay': 0,
+                    'error': str(e),
+                    'url': url
+                }
         else:
             reader = ManifestReader(data, version=version)
             err = None
