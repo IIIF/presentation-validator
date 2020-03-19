@@ -236,7 +236,7 @@
             }
         },
         "rights": {
-            "title": "Rights URI isn't from either Creative Commons or Rights statements.org. Both require http links.",
+            "title": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
             "oneOf": [
                 {
                     "type": "string",
