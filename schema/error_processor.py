@@ -115,10 +115,10 @@ class IIIFErrorParser(object):
                         # if this oneOf possiblity is still relevant add it to the list and check
                         # its not another oneOf error
                         if addErrors:
-                            # if error is also a oneOf then diagnoise aggain
-                            if err.absolute_schema_path[-1] == 'oneOf':
+                            # if error is also a oneOf then diagnoise again
+                            if err.absolute_schema_path[-1] == 'oneOf' and err.absolute_schema_path != error_path:
                                 error_path.append(oneOfIndex) # this is is related to one of the original oneOfs at index oneOfIndex
-                                error_path.append('oneOf') # but we found another oneOf test at this location
+                                error_path.extend(err.absolute_schema_path) # but we found another oneOf test at this location
                                 store_errs.append(self.diagnoseWhichOneOf(error_path, IIIFJsonPath)) # so recursivly discovery real error
                         #print ('would add: {} by addErrors is {}'.format(err.message, addErrors))
                         store_errs.append(err)
@@ -142,7 +142,7 @@ class IIIFErrorParser(object):
             path = parse(self.pathToJsonPath(IIIFJsonPath))
             instance = path.find(self.iiif_asset)[0].value
             IIIFJsonPath.append('type')
-            print (IIIFJsonPath)
+            #print (IIIFJsonPath)
             return ValidationError(message='Failed to find out which oneOf test matched your data. This is likely due to an issue with the type and it not being valid value at this level. SchemaPath: {}'.format(self.pathToJsonPath(error_path)),
                                     path=[], schema_path=error_path, schema=self.getSchemaPortion(error_path), instance=instance) 
 
@@ -213,6 +213,11 @@ class IIIFErrorParser(object):
         if len(error_path) <= 0:
             return True
 
+        if isinstance(schemaEl, dict) and "$ref" in schemaEl:
+            #print ('Found ref, trying to resolve: {}'.format(schemaEl['$ref']))
+            return self.parse(error_path, self.resolver.resolve(schemaEl['$ref'])[1], iiif_asset, IIIFJsonPath, parent, jsonPath)
+
+
         pathEl = error_path.pop(0)
         # Check current type to see if its a match
         if pathEl == 'type' and parent == 'properties':
@@ -227,7 +232,7 @@ class IIIFErrorParser(object):
                         value.append(option['pattern'])
                     else:
                         value.append(option['const'])
-                print ('Using values: {}'.format(value))
+                #print ('Using values: {}'.format(value))
             if not self.isTypeMatch(jsonPath + '.type', iiif_asset, value, IIIFJsonPath):
                 return False
         # Check child type to see if its a match        
@@ -294,7 +299,7 @@ class IIIFErrorParser(object):
         #print ('Found type {} and schemaType {}'.format(typeValue, schemaType))
         if isinstance(schemaType, list):
             for typeOption in schemaType:
-                print ('Testing {} = {}'.format(typeOption, typeValue)) 
+                #print ('Testing {} = {}'.format(typeOption, typeValue)) 
                 if re.match(typeOption, typeValue):
                     return True
             return False        

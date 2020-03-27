@@ -247,10 +247,19 @@ class TestAll(unittest.TestCase):
         response = self.helperRunValidation(v, filename)
         self.helperTestValidationErrors(filename, response, errorPaths)
 
+        filename = 'fixtures/3/old_format_label.json'
+        errorPaths = [
+            '/label',
+            '/label/'
+          #  '/' Validator doesn't pick up extra sequence when it comes across the label error first
+        ]
+        response = self.helperRunValidation(v, filename)
+        self.helperTestValidationErrors(filename, response, errorPaths)
+
 
     def helperTestValidationErrors(self, filename, response, errorPaths):       
         self.assertEqual(response['okay'], 0, 'Expected {} to fail validation but it past.'.format(filename))
-        self.assertEqual(len(response['errorList']), len(errorPaths), 'Expected {} validation errors but found {} for file {}'.format(len(errorPaths), len(response['errorList']), filename))
+        self.assertEqual(len(response['errorList']), len(errorPaths), 'Expected {} validation errors but found {} for file {}\n{}'.format(len(errorPaths), len(response['errorList']), filename, response['errorList']))
 
         for error in response['errorList']:
             foundPath = False

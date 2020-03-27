@@ -54,7 +54,8 @@ setup(
         ':python_version>="3.0"': ["Pillow>=3.2.0"],
         ':python_version<"3.0"': [
             "Pillow==6.2.2",
-            "zipp==1.2.0"
+            "zipp==1.2.0",
+            "configparser==4.0.2"
         ],
     },
     test_suite="tests",
