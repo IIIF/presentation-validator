@@ -62,6 +62,23 @@
         "duration": {
             "type": "number",
             "minimum": 0
+        },
+        "external": {
+            "type": "array",
+            "items": {
+                "allOf": [
+                    { "$ref": "#/types/class" },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "format": { "$ref": "#/types/format" },
+                            "profile": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            }
         }
     },
 
@@ -92,21 +109,7 @@
             }
         },
         "seeAlso": {
-            "type": "array",
-            "items": {
-                "allOf": [
-                    { "$ref": "#/types/class" },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "format": { "$ref": "#/types/format" },
-                            "profile": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ]
-            }
+            "$ref": "#/types/external"
         },
         "partOf": {
             "type": "array",
@@ -424,6 +427,7 @@
                 { "$ref": "#/types/class" },
                 {
                     "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "@context": {
                             "oneOf": [
@@ -441,6 +445,8 @@
                                 }
                             ]
                         },
+                        "id": {},
+                        "label": {},
                         "type": {
                             "type": "string",
                             "pattern": "^Manifest"
@@ -448,15 +454,14 @@
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
+                        "service": { "$ref": "#/classes/service" },
+                        "viewingDirection": { "$ref": "#/classes/viewingDirection" },
                         "rights": { "$ref": "#/classes/rights" },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
+                        "start": {},
+                        "logo": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
                         },
                         "navDate": { "$ref": "#/classes/navDate" },
                         "provider": { "$ref": "#/classes/provider" },
