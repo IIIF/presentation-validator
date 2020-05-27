@@ -48,7 +48,8 @@ setup(
         'bottle>=0.12.9',
         'iiif_prezi>=0.2.2',
         'jsonschema',
-        'jsonpath_rw'
+        'jsonpath_rw',
+        'requests'
     ],
     extras_require={
         ':python_version>="3.0"': ["Pillow>=3.2.0"],
