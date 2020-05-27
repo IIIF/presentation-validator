@@ -3,3 +3,4 @@ iiif_prezi
 jsonschema
 mock
 jsonpath-rw
+requests
