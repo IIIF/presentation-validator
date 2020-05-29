@@ -140,7 +140,8 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/anno_pointselector.json',
                      'fixtures/3/annoPageMultipleMotivations.json',
                      'fixtures/3/old_cc_license.json',
-                     'fixtures/3/rightsstatement_license.json'
+                     'fixtures/3/rightsstatement_license.json',
+                     'fixtures/3/extension_anno.json'
                      ]:
             with open(good, 'r') as fh:
                 data = fh.read()

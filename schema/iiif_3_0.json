@@ -138,31 +138,7 @@
                     "properties": {
                         "id": { "$ref": "#/types/id" },
                         "type": {
-                            "oneOf": [
-                                {
-                                    "type": "string",
-                                    "pattern": "^Image$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Sound$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Video$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Model$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Dataset$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Text$"
-                                }                            ]
+                            "type": "string"
                         },
                         "height": {
                             "type": "integer"
