@@ -230,7 +230,7 @@ class IIIFErrorParser(object):
                 for option in schemaEl['type']['oneOf']:
                     if 'pattern' in option:
                         value.append(option['pattern'])
-                    else:
+                    elif 'const' in option:
                         value.append(option['const'])
                 #print ('Using values: {}'.format(value))
             if not self.isTypeMatch(jsonPath + '.type', iiif_asset, value, IIIFJsonPath):
