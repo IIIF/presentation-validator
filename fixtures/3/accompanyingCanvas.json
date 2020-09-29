@@ -1,0 +1,2885 @@
+{
+    "@context" : ["http://iiif.io/api/auth/1/context.json", "http://iiif.io/api/presentation/3/context.json"],
+    "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/manifest.json",
+    "type" : "Manifest",
+    "label" : {
+      "en" : ["R-Tracks"]
+    },
+    "metadata" : [{
+        "label" : {
+          "en" : ["Full title"]
+        },
+        "value" : {
+          "en" : ["R-Tracks"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Creator"]
+        },
+        "value" : {
+          "en" : ["Remano Eszildn"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Date"]
+        },
+        "value" : {
+          "en" : ["2015 (recorded)"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Label"]
+        },
+        "value" : {
+          "en" : ["PLANET MU RECORDS LTD."]
+        }
+      }, {
+        "label" : {
+          "en" : ["Format"]
+        },
+        "value" : {
+          "en" : ["1 image file", "18 sound files"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Usage"]
+        },
+        "value" : {
+          "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Held by"]
+        },
+        "value" : {
+          "en" : ["The British Library"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Provided by"]
+        },
+        "value" : {
+          "en" : ["FUGA"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Contributed by"]
+        },
+        "value" : {
+          "en" : ["Cargo"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Identifier"]
+        },
+        "value" : {
+          "en" : ["DAC0002995"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Shelfmark"]
+        },
+        "value" : {
+          "en" : ["DAC0002995"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Link to catalogue"]
+        },
+        "value" : {
+          "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8129007'>View the catalogue record</a>"]
+        }
+      }, {
+        "label" : {
+          "en" : ["Contents"]
+        },
+        "value" : {
+          "en" : ["R-Track.- Kinnoull.- J-Track.- Rat Trap Bond.- Gulamag.- S-Track.- The Brink.- Countdown To Meltdown.- Audio80.- Telistrex.- Memory Mirror.- Momentary Present.- R-Bottin.- Wavaslek.- Synfinalty III.- Alterant Arch.- Parallelatron.- Listening Picture"]
+        }
+      }],
+    "requiredStatement" : {
+      "label" : {
+        "en" : ["Copyright and Usage"]
+      },
+      "value" : {
+        "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8129007\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+      }
+    },
+    "provider" : [{
+        "id" : "https://www.bl.uk/about-us",
+        "type" : "Agent",
+        "label" : {
+          "en" : ["The British Library"]
+        },
+        "homepage" : [{
+            "id" : "https://www.bl.uk/",
+            "type" : "Text",
+            "format" : "text/html",
+            "label" : {
+              "en" : ["The British Library"]
+            }
+          }],
+        "logo" : [{
+            "id" : "https://www.bl.uk/images/bl_logo_100.gif",
+            "type" : "Image",
+            "format" : "image/gif"
+          }]
+      }],
+    "service" : [{
+        "id" : "https://apiirc.ad.bl.uk/auth/iiif/login",
+        "type" : "AuthCookieService1",
+        "profile" : "http://iiif.io/api/auth/1/login",
+        "description" : {
+          "en" : ["Some portions of this recording may be unavailable due to rights restrictions."]
+        },
+        "header" : {
+          "en" : ["Please Log-In"]
+        },
+        "label" : {
+          "en" : ["Login to The British Library"]
+        },
+        "service" : [{
+            "id" : "https://apiirc.ad.bl.uk/auth/iiif/token",
+            "type" : "AuthTokenService1",
+            "profile" : "http://iiif.io/api/auth/1/token"
+          }]
+      }, {
+        "id" : "http://access.bl.uk/item/share/ark:/81055/vdc_100058410368.0x000001",
+        "type" : "Service",
+        "profile" : "http://universalviewer.io/share-extensions-profile"
+      }],
+    "accompanyingCanvas" : {
+      "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/c/poster",
+      "type" : "Canvas",
+      "label" : {
+        "en" : ["Illustration"]
+      },
+      "width" : 1400,
+      "height" : 1400,
+      "items" : [{
+          "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/c/a1",
+          "type" : "AnnotationPage",
+          "items" : [{
+              "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/c/a1/a1",
+              "type" : "Annotation",
+              "motivation" : "painting",
+              "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/c/poster",
+              "body" : {
+                "id" : "https://apiirc.ad.bl.uk/image/static/ark:/81055/vdc_100058410374.0x00000a",
+                "type" : "Image",
+                "width" : 1400,
+                "height" : 1400,
+                "format" : "image/jpeg"
+              }
+            }]
+        }]
+    },
+    "homepage" : [{
+        "id" : "http://access.bl.uk/item/viewer/ark:/81055/vdc_100058410368.0x000001",
+        "type" : "Text",
+        "format" : "text/html",
+        "label" : {
+          "en" : ["View at the British Library"]
+        }
+      }],
+    "behavior" : ["auto-advance"],
+    "items" : [{
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000002",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 186.75999999999999,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000002/anno1",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000002/anno1/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000002#t=00.00,186.76",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412215.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412215.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412215.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412215.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x00000b.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000004",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 151.44,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000004/anno2",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000004/anno2/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000004#t=00.00,151.44",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412224.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412224.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412224.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412224.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x00000c.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000006",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 265.75999999999999,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000006/anno3",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000006/anno3/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000006#t=00.00,265.76",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412217.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412217.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412217.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412217.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x00000d.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000008",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 135.44,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000008/anno4",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000008/anno4/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000008#t=00.00,135.44",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412229.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412229.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412229.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412229.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x00000e.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000010",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 151.36000000000001,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000010/anno5",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000010/anno5/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000010#t=00.00,151.36",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412216.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412216.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412216.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412216.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x00000f.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000012",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 67.840000000000003,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000012/anno6",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000012/anno6/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000012#t=00.00,67.84",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412226.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412226.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412226.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412226.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000010.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000014",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 278.51999999999998,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000014/anno7",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000014/anno7/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000014#t=00.00,278.52",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412220.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412220.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412220.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412220.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000011.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000016",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 194.28,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000016/anno8",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000016/anno8/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000016#t=00.00,194.28",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412233.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412233.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412233.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412233.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000012.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000018",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 74.879999999999995,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000018/anno9",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000018/anno9/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000018#t=00.00,74.88",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412218.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412218.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412218.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412218.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000013.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000020",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 202.63999999999999,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000020/anno10",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000020/anno10/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000020#t=00.00,202.64",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412214.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412214.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412214.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412214.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000001.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000022",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 40.799999999999997,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000022/anno11",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000022/anno11/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000022#t=00.00,40.80",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412205.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412205.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412205.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412205.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000002.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000024",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 111.23999999999999,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000024/anno12",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000024/anno12/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000024#t=00.00,111.24",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412208.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412208.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412208.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412208.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000003.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000026",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 130.24000000000001,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000026/anno13",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000026/anno13/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000026#t=00.00,130.24",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412210.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412210.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412210.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412210.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000004.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000028",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 59.960000000000001,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000028/anno14",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000028/anno14/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000028#t=00.00,59.96",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412206.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412206.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412206.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412206.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000005.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000030",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 76.719999999999999,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000030/anno15",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000030/anno15/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000030#t=00.00,76.72",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412209.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412209.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412209.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412209.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000006.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000032",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 277.12,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000032/anno16",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000032/anno16/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000032#t=00.00,277.12",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412228.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412228.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412228.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412228.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000007.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000034",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 51.079999999999998,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000034/anno17",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000034/anno17/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000034#t=00.00,51.08",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412207.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412207.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412207.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412207.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000008.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }, {
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000036",
+        "type" : "Canvas",
+        "label" : {
+          "en" : ["[No Title]"]
+        },
+        "duration" : 256.83999999999997,
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000036/anno18",
+            "type" : "AnnotationPage",
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000036/anno18/1",
+                "type" : "Annotation",
+                "motivation" : "painting",
+                "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000036#t=00.00,256.84",
+                "body" : {
+                  "type" : "Choice",
+                  "items" : [{
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412222.0x000001/manifest.mpd",
+                      "format" : "application/dash+xml",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/dash/ark:/81055/vdc_100058412222.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }, {
+                      "id" : "https://apiirc.ad.bl.uk/media/iiif/ark:/81055/vdc_100058412222.0x000001/index.m3u8",
+                      "format" : "application/vnd.apple.mpegURL",
+                      "type" : "Sound",
+                      "service" : [{
+                          "id" : "https://apiirc.ad.bl.uk/media/hls/ark:/81055/vdc_100058412222.0x000001/probe.json",
+                          "type" : "AuthProbeService1",
+                          "profile" : "http://iiif.io/api/auth/1/probe"
+                        }]
+                    }]
+                },
+                "seeAlso" : [{
+                    "id" : "https://iiif-waveforms.s3.amazonaws.com/vdc_100058410374.0x000009.dat",
+                    "type" : "Dataset",
+                    "format" : "application/octet-stream",
+                    "profile" : "http://waveform.prototyping.bbc.co.uk"
+                  }]
+              }]
+          }]
+      }],
+    "structures" : [{
+        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/top",
+        "type" : "Range",
+        "label" : {
+          "en" : ["R-Tracks (45:13)"]
+        },
+        "metadata" : [{
+            "label" : {
+              "en" : ["Full title"]
+            },
+            "value" : {
+              "en" : ["R-Tracks"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Creator"]
+            },
+            "value" : {
+              "en" : ["Remano Eszildn"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Date"]
+            },
+            "value" : {
+              "en" : ["2015 (recorded)"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Label"]
+            },
+            "value" : {
+              "en" : ["PLANET MU RECORDS LTD."]
+            }
+          }, {
+            "label" : {
+              "en" : ["Format"]
+            },
+            "value" : {
+              "en" : ["1 image file", "18 sound files"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Usage"]
+            },
+            "value" : {
+              "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Held by"]
+            },
+            "value" : {
+              "en" : ["The British Library"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Provided by"]
+            },
+            "value" : {
+              "en" : ["FUGA"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Contributed by"]
+            },
+            "value" : {
+              "en" : ["Cargo"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Identifier"]
+            },
+            "value" : {
+              "en" : ["DAC0002995"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Shelfmark"]
+            },
+            "value" : {
+              "en" : ["DAC0002995"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Link to catalogue"]
+            },
+            "value" : {
+              "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8129007'>View the catalogue record</a>"]
+            }
+          }, {
+            "label" : {
+              "en" : ["Contents"]
+            },
+            "value" : {
+              "en" : ["R-Track.- Kinnoull.- J-Track.- Rat Trap Bond.- Gulamag.- S-Track.- The Brink.- Countdown To Meltdown.- Audio80.- Telistrex.- Memory Mirror.- Momentary Present.- R-Bottin.- Wavaslek.- Synfinalty III.- Alterant Arch.- Parallelatron.- Listening Picture"]
+            }
+          }],
+        "requiredStatement" : {
+          "label" : {
+            "en" : ["Copyright and Usage"]
+          },
+          "value" : {
+            "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8129007\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+          }
+        },
+        "rendering" : [{
+            "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410368.0x000001/top",
+            "type" : "Audio",
+            "label" : {
+              "en" : ["Download this recording"]
+            },
+            "format" : "audio/mp4"
+          }],
+        "items" : [{
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000001",
+            "type" : "Range",
+            "label" : {
+              "en" : ["R-Track (03:07)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["R-Track"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["3 min. 6 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/1"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130690'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130690\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000001",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000002#t=0.00,186.76",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000002",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Kinnoull (02:31)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Kinnoull"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["2 min. 31 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/2"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130691'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130691\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000002",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000004#t=0.00,151.44",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000003",
+            "type" : "Range",
+            "label" : {
+              "en" : ["J-Track (04:26)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["J-Track"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["4 min. 25 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/3"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130692'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130692\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000003",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000006#t=0.00,265.76",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000004",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Rat Trap Bond (02:15)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Rat Trap Bond"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["2 min. 15 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/4"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130693'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130693\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000004",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000008#t=0.00,135.44",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000005",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Gulamag (02:31)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Gulamag"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["2 min. 31 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/5"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130694'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130694\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000005",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000010#t=0.00,151.36",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000006",
+            "type" : "Range",
+            "label" : {
+              "en" : ["S-Track (01:08)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["S-Track"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["1 min. 7 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/6"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130695'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130695\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000006",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000012#t=0.00,67.84",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000007",
+            "type" : "Range",
+            "label" : {
+              "en" : ["The Brink (04:39)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["The Brink"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["4 min. 38 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/7"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130696'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130696\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000007",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000014#t=0.00,278.52",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000008",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Countdown To Meltdown (03:14)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Countdown To Meltdown"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["3 min. 14 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/8"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130697'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130697\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000008",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000016#t=0.00,194.28",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000009",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Audio80 (01:15)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Audio80"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["1 min. 14 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/9"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130698'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130698\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000009",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000018#t=0.00,74.88",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x00000a",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Telistrex (03:23)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Telistrex"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["3 min. 22 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/10"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130699'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130699\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x00000a",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000020#t=0.00,202.64",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x00000b",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Memory Mirror (00:41)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Memory Mirror"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["0 min. 40 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/11"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130700'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130700\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x00000b",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000022#t=0.00,40.80",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x00000c",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Momentary Present (01:51)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Momentary Present"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["1 min. 51 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/12"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130701'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130701\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x00000c",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000024#t=0.00,111.24",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x00000d",
+            "type" : "Range",
+            "label" : {
+              "en" : ["R-Bottin (02:10)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["R-Bottin"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["2 min. 10 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/13"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130702'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130702\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x00000d",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000026#t=0.00,130.24",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x00000e",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Wavaslek (00:60)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Wavaslek"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["0 min. 59 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/14"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130703'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130703\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x00000e",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000028#t=0.00,59.96",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x00000f",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Synfinalty III (01:17)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Synfinalty III"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["1 min. 16 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/15"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130704'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130704\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x00000f",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000030#t=0.00,76.72",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000010",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Alterant Arch (04:37)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Alterant Arch"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["4 min. 37 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/16"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130705'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130705\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000010",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000032#t=0.00,277.12",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000011",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Parallelatron (00:51)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Parallelatron"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["0 min. 51 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/17"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130706'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130706\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000011",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000034#t=0.00,51.08",
+                "type" : "Canvas"
+              }]
+          }, {
+            "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000012",
+            "type" : "Range",
+            "label" : {
+              "en" : ["Listening Picture (04:17)"]
+            },
+            "metadata" : [{
+                "label" : {
+                  "en" : ["Full title"]
+                },
+                "value" : {
+                  "en" : ["Listening Picture"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Creator"]
+                },
+                "value" : {
+                  "en" : ["Remano Eszildn (performer)"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Duration"]
+                },
+                "value" : {
+                  "en" : ["4 min. 16 sec."]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Usage"]
+                },
+                "value" : {
+                  "en" : ["<span>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further</span>"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Held by"]
+                },
+                "value" : {
+                  "en" : ["The British Library"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Provided by"]
+                },
+                "value" : {
+                  "en" : ["FUGA"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Contributed by"]
+                },
+                "value" : {
+                  "en" : ["Cargo"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Identifier"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995/18"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Shelfmark"]
+                },
+                "value" : {
+                  "en" : ["DAC0002995"]
+                }
+              }, {
+                "label" : {
+                  "en" : ["Link to catalogue"]
+                },
+                "value" : {
+                  "en" : ["<a href='http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130707'>View the catalogue record</a>"]
+                }
+              }],
+            "requiredStatement" : {
+              "label" : {
+                "en" : ["Copyright and Usage"]
+              },
+              "value" : {
+                "en" : ["<span><a href=\"http://explore.bl.uk/BLVU1:LSCOP-ALL:BLLSA8130707\">Please read the full information about this object</a><br>Except as otherwise permitted under your national copyright law this material may not be copied or distributed further.</span>"]
+              }
+            },
+            "accompanyingCanvas" : {
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000012/poster",
+                "type" : "Canvas",
+                "label" : {
+                  "en" : ["Illustration"]
+                },
+                "width" : 1400,
+                "height" : 1400,
+                "items" : [{
+                    "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000012/a1",
+                    "type" : "AnnotationPage",
+                    "items" : [{
+                        "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000012/a1/a1",
+                        "type" : "Annotation",
+                        "motivation" : "painting",
+                        "target" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410377.0x000012/poster",
+                        "body" : {
+                          "id" : "https://apiirc.ad.bl.uk/image/static/ark:/81055/vdc_100058410374.0x00000a",
+                          "type" : "Image",
+                          "width" : 1400,
+                          "height" : 1400,
+                          "format" : "image/jpeg"
+                        }
+                      }]
+                  }]
+              },
+            "rendering" : [{
+                "id" : "https://apiirc.ad.bl.uk/item/download/ark:/81055/vdc_100058410368.0x000001/ark:/81055/vdc_100058410377.0x000012",
+                "type" : "Audio",
+                "label" : {
+                  "en" : ["Download this recording"]
+                },
+                "format" : "audio/mp4"
+              }],
+            "items" : [{
+                "id" : "https://apiirc.ad.bl.uk/metadata/iiif/ark:/81055/vdc_100058410368.0x000001/canvas/node-id-000036#t=0.00,256.84",
+                "type" : "Canvas"
+              }]
+          }]
+      }]
+  }

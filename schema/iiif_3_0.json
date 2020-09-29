@@ -357,7 +357,26 @@
                 { "$ref": "#/types/class" },
                 {
                     "type": "object",
+                    "additionalProperties": false,
                     "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
+                        "id": {},
+                        "label": {},
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
@@ -449,6 +468,8 @@
                         "homepage": { "$ref": "#/classes/homepage" },
                         "behavior": { "$ref": "#/classes/behavior" },
                         "partOf": { "$ref": "#/classes/partOf" },
+                        "accompanyingCanvas": {"$ref": "#/classes/canvas"},
+                        "placeholderCanvas": {"$ref": "#/classes/canvas"},
                         "items": {
                             "type": "array",
                             "items": {
@@ -718,6 +739,10 @@
                             }
                         }
                     }
+                },
+                {
+                    "accompanyingCanvas": {"$ref": "#/classes/canvas"},
+                    "placeholderCanvas": {"$ref": "#/classes/canvas"}
                 }
             ]
         }
