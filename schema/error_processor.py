@@ -299,7 +299,7 @@ class IIIFErrorParser(object):
         if not results:
             # type not found so return True as this maybe the correct error
             return True
-        typeValue = [0].value
+        typeValue = results[0].value
         #print ('Found type {} and schemaType {}'.format(typeValue, schemaType))
         if isinstance(schemaType, list):
             for typeOption in schemaType:
