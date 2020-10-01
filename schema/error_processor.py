@@ -295,7 +295,11 @@ class IIIFErrorParser(object):
 
         #print ('JsonPath: {}'.format(iiifPath))
         path = parse(iiifPath)
-        typeValue = path.find(iiif_asset)[0].value
+        results = path.find(iiif_asset)
+        if not results:
+            # type not found so return True as this maybe the correct error
+            return True
+        typeValue = results[0].value
         #print ('Found type {} and schemaType {}'.format(typeValue, schemaType))
         if isinstance(schemaType, list):
             for typeOption in schemaType:

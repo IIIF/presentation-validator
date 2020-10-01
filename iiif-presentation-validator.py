@@ -75,6 +75,14 @@ class Validator(object):
                     'error': str(e),
                     'url': url
                 }
+            except Exception as e:    
+                infojson = {
+                    'received': data,
+                    'okay': 0,
+                    'error': 'Presentation Validator bug: "{}". Please create a <a href="https://github.com/IIIF/presentation-validator/issues">Validator Issue</a>, including a link to the manifest.'.format(e),
+                    'url': url
+                }
+
         else:
             reader = ManifestReader(data, version=version)
             err = None

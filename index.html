@@ -128,6 +128,8 @@
           url: $("input[name='url']").val(),
           version: $("select[name='version']").val()
         }
+        $('#results-content').html('Processing ' + data.version + " validation...");
+        $('#results').show();
         var url = $('#manifest-validation-form').attr("action");
         $.getJSON(url,data,handleValidationResponse);
       }
