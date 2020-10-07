@@ -77,7 +77,6 @@ class IIIFErrorParser(object):
         # Extract only the part of the schema that has failed and in practice will
         # be a list of the oneOf possibilities. Also add all references in the schema
         # so these resolve
-        original_error_path = error_path.copy()
         schema_part = self.addReferences(self.getSchemaPortion(error_path))
         valid_errors = []            
         oneOfIndex = 0
@@ -118,7 +117,6 @@ class IIIFErrorParser(object):
                         if addErrors:
                             # if error is also a oneOf then diagnoise again
                             if err.absolute_schema_path[-1] == 'oneOf' and err.absolute_schema_path != error_path and 'rights' not in err.absolute_schema_path:
-                                error_path = original_error_path.copy()
                                 error_path.append(oneOfIndex) # this is is related to one of the original oneOfs at index oneOfIndex
                                 error_path.extend(err.absolute_schema_path) # but we found another oneOf test at this location
                                 result = (self.diagnoseWhichOneOf(error_path, IIIFJsonPath)) # so recursivly discovery real error
