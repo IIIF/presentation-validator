@@ -251,12 +251,43 @@ class TestAll(unittest.TestCase):
         filename = 'fixtures/3/old_format_label.json'
         errorPaths = [
             '/label',
-            '/label/'
-          #  '/' Validator doesn't pick up extra sequence when it comes across the label error first
+            '/'
         ]
         response = self.helperRunValidation(v, filename)
         self.helperTestValidationErrors(filename, response, errorPaths)
 
+    def test_lang_rights(self):
+        v = val_mod.Validator()
+
+        filename = 'fixtures/3/rights_lang_issues.json'
+        errorPaths = [
+            '/label',
+            '/items[0]/label[0]',
+            '/items[0]/',
+            '/rights',
+            '/metadata[0]/label/',
+            '/metadata[0]/value/',
+            '/metadata[1]/label/',
+            '/metadata[1]/value/',
+            '/metadata[2]/label/',
+            '/metadata[2]/value/',
+            '/metadata[3]/label/',
+            '/metadata[3]/value/',
+            '/metadata[4]/label/',
+            '/metadata[4]/value/',
+            '/metadata[5]/label/',
+            '/metadata[5]/value/',
+            '/metadata[6]/label/',
+            '/metadata[6]/value/',
+            '/metadata[7]/label/',
+            '/metadata[7]/value/',
+            '/metadata[8]/label/',
+            '/metadata[8]/value/',
+            '/metadata[9]/label/',
+            '/metadata[9]/value/'
+        ]
+        response = self.helperRunValidation(v, filename)
+        self.helperTestValidationErrors(filename, response, errorPaths)
 
     def helperTestValidationErrors(self, filename, response, errorPaths):       
         self.assertEqual(response['okay'], 0, 'Expected {} to fail validation but it past.'.format(filename))

@@ -9,6 +9,7 @@ import os
 from gzip import GzipFile
 from io import BytesIO
 from jsonschema.exceptions import ValidationError, SchemaError
+import traceback    
 
 try:
     # python3
@@ -73,14 +74,17 @@ class Validator(object):
                     'received': data,
                     'okay': 0,
                     'error': str(e),
-                    'url': url
+                    'url': url,
+                    'warnings': []
                 }
             except Exception as e:    
+                traceback.print_exc()
                 infojson = {
                     'received': data,
                     'okay': 0,
                     'error': 'Presentation Validator bug: "{}". Please create a <a href="https://github.com/IIIF/presentation-validator/issues">Validator Issue</a>, including a link to the manifest.'.format(e),
-                    'url': url
+                    'url': url,
+                    'warnings': []
                 }
 
         else:
