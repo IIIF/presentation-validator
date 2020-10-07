@@ -92,7 +92,7 @@ class IIIFErrorParser(object):
                 print(err)
                 raise
 
-            # One of the oneOf possibilities is a reference to anouther part of the schema
+            # One of the oneOf possibilities is a reference to another part of the schema
             # this won't bother the validator but will complicate the diagnoise so replace
             # it with the actual schema json (and copy all references)
             if isinstance(possibility, dict) and "$ref" in possibility:
@@ -116,12 +116,19 @@ class IIIFErrorParser(object):
                         # its not another oneOf error
                         if addErrors:
                             # if error is also a oneOf then diagnoise again
-                            if err.absolute_schema_path[-1] == 'oneOf' and err.absolute_schema_path != error_path:
+                            if err.absolute_schema_path[-1] == 'oneOf' and err.absolute_schema_path != error_path and 'rights' not in err.absolute_schema_path:
                                 error_path.append(oneOfIndex) # this is is related to one of the original oneOfs at index oneOfIndex
                                 error_path.extend(err.absolute_schema_path) # but we found another oneOf test at this location
-                                store_errs.append(self.diagnoseWhichOneOf(error_path, IIIFJsonPath)) # so recursivly discovery real error
+                                result = (self.diagnoseWhichOneOf(error_path, IIIFJsonPath)) # so recursivly discovery real error
+
+                                if isinstance(result, ValidationError):    
+                                    store_errs.append(result)
+                                else:
+                                    store_errs.extend(result)
+
                         #print ('would add: {} by addErrors is {}'.format(err.message, addErrors))
-                        store_errs.append(err)
+                            else:
+                                store_errs.append(err)
                 # if All errors are relevant to the current type add them to the list        
                 if addErrors:
                     valid_errors += store_errs
@@ -131,10 +138,12 @@ class IIIFErrorParser(object):
             # this may hide errors as we are only selecting the first one but better to get one to work on and then can re-run
             # Also need to convert back the error paths to the full path
             error_path.reverse()
-            valid_errors[0].absolute_schema_path.extendleft(error_path)
             IIIFJsonPath.reverse()
-            valid_errors[0].absolute_path.extendleft(IIIFJsonPath)
-            return valid_errors[0] 
+            for error in valid_errors:
+                error.absolute_schema_path.extendleft(error_path)
+                error.absolute_path.extendleft(IIIFJsonPath)
+            #    print ('Err {}, path {}'.format(error.message, error.path))
+            return valid_errors
         else:
             # Failed to find the source of the error so most likely its a problem with the type
             # and it didn't match any of the possible oneOf types
@@ -171,10 +180,14 @@ class IIIFErrorParser(object):
         """
         schemaEl = self.schema
         for pathPart in schemaPath:
-            if isinstance(schemaEl[pathPart], dict) and "$ref" in schemaEl[pathPart]:
-                schemaEl = self.resolver.resolve(schemaEl[pathPart]['$ref'])[1]
-            else:
-                schemaEl = schemaEl[pathPart]
+            try:
+                if isinstance(schemaEl[pathPart], dict) and "$ref" in schemaEl[pathPart]:
+                    schemaEl = self.resolver.resolve(schemaEl[pathPart]['$ref'])[1]
+                else:
+                    schemaEl = schemaEl[pathPart]
+            except KeyError as error:
+               # print (schemaEl)
+                raise KeyError
 
         return schemaEl    
 
@@ -218,6 +231,7 @@ class IIIFErrorParser(object):
             return self.parse(error_path, self.resolver.resolve(schemaEl['$ref'])[1], iiif_asset, IIIFJsonPath, parent, jsonPath)
 
 
+        #print ("Path: {} ".format(error_path))
         pathEl = error_path.pop(0)
         # Check current type to see if its a match
         if pathEl == 'type' and parent == 'properties':
@@ -242,7 +256,7 @@ class IIIFErrorParser(object):
                 return False
         # This is the case where additionalProperties has falied but need to check
         # if the type didn't match anyway
-        elif pathEl == 'additionalProperties' and 'type' in schemaEl['properties'] and 'pattern' in schemaEl['properties']['type']:
+        elif pathEl == 'additionalProperties' and 'properties' in schemaEl and 'type' in schemaEl['properties'] and 'pattern' in schemaEl['properties']['type']:
             value = schemaEl['properties']['type']['pattern']
             if not self.isTypeMatch(jsonPath + '.type', iiif_asset, value, IIIFJsonPath):
                 return False

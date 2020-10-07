@@ -58,17 +58,26 @@ def validate(data, version, url):
         # if a oneOf possibility is of type Collection but we have passed a Manifest
         # then its safe to ignore the validation error.
         for err in errors:
-            #print (err)
             if errorParser.isValid(list(err.absolute_schema_path), list(err.absolute_path)):
                 # if it is valid we want a good error message so diagnose which oneOf is 
                 # relevant for the error we've found.
                 if err.absolute_schema_path[-1] == 'oneOf':
                     err = errorParser.diagnoseWhichOneOf(list(err.absolute_schema_path), list(err.absolute_path))
-                relevantErrors.append(err)
+                if isinstance(err, ValidationError):    
+                    relevantErrors.append(err)
+                else:
+                    relevantErrors.extend(err)
             #else:
             #    print ('Dismissing schema: {} path: {}'.format(err.absolute_schema_path, err.absolute_path))
             i += 1
-        errors = relevantErrors
+        # Remove dupes    
+        seen_titles = set()    
+        errors = []
+        for errorDup in relevantErrors:
+            errorPath = errorParser.pathToJsonPath(errorDup.path)
+            if errorPath not in seen_titles:
+                errors.append(errorDup)
+                seen_titles.add(errorPath)
         errorCount = 1
         # Now create some useful messsages to pass on
         for err in errors:
