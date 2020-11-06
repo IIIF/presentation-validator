@@ -302,12 +302,20 @@ class IIIFErrorParser(object):
                 if isinstance(item, int):
                     indexes.append(item)
             count = 0        
+            #print (iiifPath)
+            indexDelta = 0
             for index in find(iiifPath, '_'):
+                index += indexDelta
                 #print ('Replacing {} with {}'.format(iiifPath[index], indexes[count]))
                 iiifPath = iiifPath[:index] + str(indexes[count]) + iiifPath[index + 1:]
+                # if you replace [_] with a number greater than 9 you are taking up two spaces in the
+                # string so the index in the for loop starts to be off by one. Calculating the delta
+                # sorts this out
+                if len(str(indexes[count])) > 1:
+                    indexDelta += len(str(indexes[count])) -1
                 count += 1
 
-        #print ('JsonPath: {}'.format(iiifPath))
+        #print ('JsonPath: {} IIIF Path {} '.format(iiifPath, IIIFJsonPath))
         path = parse(iiifPath)
         results = path.find(iiif_asset)
         if not results:
