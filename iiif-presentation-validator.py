@@ -69,6 +69,10 @@ class Validator(object):
                 infojson = schemavalidator.validate(data, version, url)
                 for error in infojson['errorList']:
                     error.pop('error', None)
+
+                mf = json.loads(data)
+                if url and 'id' in mf and mf['id'] != url:
+                    raise ValidationError("The manifest id ({}) should be the same as the URL it is published at ({}).".format(mf["id"], url))
             except ValidationError as e:
                 infojson = {
                     'received': data,
@@ -93,6 +97,8 @@ class Validator(object):
             try:
                 mf = reader.read()
                 mf.toJSON()
+                if url and mf.id != url:
+                    raise ValidationError("Manifest @id ({}) is different to the location where it was retrieved ({})".format(mf.id, url))
                 # Passed!
                 okay = 1
             except Exception as e:
