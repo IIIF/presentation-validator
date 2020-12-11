@@ -95,11 +95,11 @@ class TestAll(unittest.TestCase):
         # input data works only the first time. Instead create a new request
         # object to similate each web request, with data that sets request.environ
         v = val_mod.Validator()
-        request = LocalRequest({'QUERY_STRING': 'url=https://example.org/a'})
+        request = LocalRequest({'QUERY_STRING': 'url=http://iiif.io/api/presentation/2.0/example/fixtures/1/manifest.json'})
         v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'), MockWebHandle()))
         j = json.loads(v.do_GET_test())
         self.assertEqual(j['okay'], 1)
-        self.assertEqual(j['url'], 'https://example.org/a')
+        self.assertEqual(j['url'], 'http://iiif.io/api/presentation/2.0/example/fixtures/1/manifest.json')
         # fetch failure
         v = val_mod.Validator()
         request = LocalRequest({'QUERY_STRING': 'url=http://example.org/a'})
