@@ -141,7 +141,8 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/annoPageMultipleMotivations.json',
                      'fixtures/3/old_cc_license.json',
                      'fixtures/3/rightsstatement_license.json',
-                     'fixtures/3/extension_anno.json'
+                     'fixtures/3/extension_anno.json',
+                     'fixtures/3/multi_bodies.json'
                      ]:
             with open(good, 'r') as fh:
                 data = fh.read()
@@ -216,7 +217,7 @@ class TestAll(unittest.TestCase):
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in thumbnail needs to be an array.')
 
         # annotationPage
-        path = [u'allOf', 1, u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'body', u'oneOf']
+        path = [u'allOf', 1, u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'body', u'anyOf']
         iiifPath = [u'items', 0, u'items', 0, u'items', 0, u'body']
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in the canvas needs to be an array')
 
@@ -243,7 +244,7 @@ class TestAll(unittest.TestCase):
         filename = 'fixtures/3/broken_service.json'
         errorPaths = [
             '/thumbnail[0]/service',
-            '/body[0]/items[0]/items[0]/items/items[0]/items[0]/items[0]/body/service'
+            '/items[0]/items[0]/items[0]/body/'
         ]
         response = self.helperRunValidation(v, filename)
         self.helperTestValidationErrors(filename, response, errorPaths)
@@ -264,6 +265,7 @@ class TestAll(unittest.TestCase):
             '/label',
             '/items[0]/label[0]',
             '/items[0]/',
+            '/items[0]/items[0]/items[0]/body/',
             '/rights',
             '/metadata[0]/label/',
             '/metadata[0]/value/',
