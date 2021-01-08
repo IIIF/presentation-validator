@@ -74,13 +74,22 @@ class Validator(object):
                 if url and 'id' in mf and mf['id'] != url:
                     raise ValidationError("The manifest id ({}) should be the same as the URL it is published at ({}).".format(mf["id"], url))
             except ValidationError as e:
-                infojson = {
-                    'received': data,
-                    'okay': 0,
-                    'error': str(e),
-                    'url': url,
-                    'warnings': []
-                }
+                if infojson:
+                    infojson['errorList'].append({
+                        'title': 'Resolve Error',
+                        'detail': str(e),
+                        'description': '',
+                        'path': '/id',
+                        'context': '{ \'id\': \'...\'}'
+                        })
+                else:
+                    infojson = {
+                        'received': data,
+                        'okay': 0,
+                        'error': str(e),
+                        'url': url,
+                        'warnings': []
+                    }
             except Exception as e:    
                 traceback.print_exc()
                 infojson = {
