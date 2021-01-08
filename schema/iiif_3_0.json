@@ -598,11 +598,13 @@
                             ]    
                         },
                         "body": {
-                            "oneOf": [
+                            "anyOf": [
                                 {
+                                    "type": "object",
                                     "$ref": "#/classes/resource"
                                 },
                                 {
+                                    "type": "object",
                                     "allOf":[
                                         { "$ref": "#/classes/choice" },
                                         {
@@ -615,11 +617,18 @@
                                             "required": ["items"]
                                         }
                                     ]
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
                                 }
+
                             ]
                         },
                         "target": {
-                            "oneOf": [
+                            "anyOf": [
                                 { "$ref": "#/classes/annoTarget" },
                                 {
                                     "type": "array",

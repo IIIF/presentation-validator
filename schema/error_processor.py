@@ -247,6 +247,15 @@ class IIIFErrorParser(object):
                     elif 'const' in option:
                         value.append(option['const'])
                 #print ('Using values: {}'.format(value))
+            elif 'anyOf' in schemaEl['type']:
+                value = []
+                for option in schemaEl['type']['anyOf']:
+                    if 'pattern' in option:
+                        value.append(option['pattern'])
+                    elif 'const' in option:
+                        value.append(option['const'])
+                #print ('Using values: {}'.format(value))
+
             if not self.isTypeMatch(jsonPath + '.type', iiif_asset, value, IIIFJsonPath):
                 return False
         # Check child type to see if its a match        
@@ -273,7 +282,6 @@ class IIIFErrorParser(object):
 
 
         if isinstance(schemaEl[pathEl], dict) and "$ref" in schemaEl[pathEl]:
-
             #print ('Found ref, trying to resolve: {}'.format(schemaEl[pathEl]['$ref']))
             return self.parse(error_path, self.resolver.resolve(schemaEl[pathEl]['$ref'])[1], iiif_asset, IIIFJsonPath, pathEl, jsonPath)
         else:    
