@@ -84,7 +84,6 @@ class Validator(object):
                         })
                 else:
                     infojson = {
-                        'received': data,
                         'okay': 0,
                         'error': str(e),
                         'url': url,
@@ -93,7 +92,6 @@ class Validator(object):
             except Exception as e:    
                 traceback.print_exc()
                 infojson = {
-                    'received': data,
                     'okay': 0,
                     'error': 'Presentation Validator bug: "{}". Please create a <a href="https://github.com/IIIF/presentation-validator/issues">Validator Issue</a>, including a link to the manifest.'.format(e),
                     'url': url,
@@ -118,7 +116,6 @@ class Validator(object):
 
             warnings.extend(reader.get_warnings())
             infojson = {
-                'received': data,
                 'okay': okay,
                 'warnings': warnings,
                 'error': str(err),

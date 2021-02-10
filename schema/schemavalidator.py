@@ -108,7 +108,6 @@ def validate(data, version, url):
 
         # Return:
        # infojson = {
-      #      'received': data,
      #       'okay': okay,
     #        'warnings': warnings,
    #         'error': str(err),
@@ -121,7 +120,6 @@ def validate(data, version, url):
         okay = 1
 
     return {
-        'received': data,
         'okay': okay,
         'warnings': [],
         'error': error,
