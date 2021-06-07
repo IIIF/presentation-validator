@@ -220,17 +220,17 @@
                 {
                     "type": "string",
                     "format": "uri",
-                    "pattern": "http://creativecommons.org/licenses/.*"
+                    "pattern": "https?://creativecommons.org/licenses/.*"
                 },
                 {
                     "type": "string",
                     "format": "uri",
-                    "pattern": "http://creativecommons.org/publicdomain/mark/.*"
+                    "pattern": "https?://creativecommons.org/publicdomain/mark/.*"
                 },
                 {
                     "type": "string",
                     "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/.*"
+                    "pattern": "https?://rightsstatements.org/vocab/.*"
                 }
             ]
         },
