@@ -231,6 +231,21 @@
                     "type": "string",
                     "format": "uri",
                     "pattern": "http://rightsstatements.org/vocab/.*"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "https://creativecommons.org/licenses/.*"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "https://creativecommons.org/publicdomain/mark/.*"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "https://rightsstatements.org/vocab/.*"
                 }
             ]
         },
