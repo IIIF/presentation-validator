@@ -421,8 +421,8 @@
                                 }
                             ]
                         },
-                        "id": {},
-                        "label": {},
+                        "id": { "$ref": "#/types/id" },
+                        "label": {"$ref": "#/types/lngString" },
                         "type": {
                             "type": "string",
                             "pattern": "^Manifest"
@@ -467,7 +467,8 @@
                                 "$ref": "#/classes/annotationPage"
                             }
                         }
-                    }
+                    },
+                    "required": ["id", "type", "label"]
                 }
             ]
         },

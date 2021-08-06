@@ -291,9 +291,20 @@ class TestAll(unittest.TestCase):
         response = self.helperRunValidation(v, filename)
         self.helperTestValidationErrors(filename, response, errorPaths)
 
+    def formatErrors(self, errorList):
+        response = ''
+        for error in errorList:
+            response += "Title: {}\n".format(error['title'])
+            response += "Path: {}\n".format(error['path'])
+            response += "Context: {}\n".format(error['path'])
+            response += "****************************\n"
+
+        return response
+
     def helperTestValidationErrors(self, filename, response, errorPaths):       
         self.assertEqual(response['okay'], 0, 'Expected {} to fail validation but it past.'.format(filename))
-        self.assertEqual(len(response['errorList']), len(errorPaths), 'Expected {} validation errors but found {} for file {}\n{}'.format(len(errorPaths), len(response['errorList']), filename, response['errorList']))
+        self.assertEqual(len(response['errorList']), len(errorPaths), 'Expected {} validation errors but found {} for file {}\n{}'.format(len(errorPaths), len(response['errorList']), filename, self.formatErrors(response['errorList'])))
+            
 
         for error in response['errorList']:
             foundPath = False
