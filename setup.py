@@ -59,7 +59,8 @@ setup(
             "zipp==1.2.0",
             "configparser==4.0.2",
             "pyld==1.0.5",
-            "pyrsistent==0.16.0"
+            "pyrsistent==0.16.0",
+            "decorator==4.4.2"
         ],
     },
     test_suite="tests",
