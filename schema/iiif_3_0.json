@@ -371,7 +371,6 @@
                         "navDate": { "$ref": "#/classes/navDate" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
-                        "services": { "$ref": "#/classes/service" },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
@@ -433,7 +432,6 @@
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
                         "rendering": { "$ref": "#/types/external" },
                         "service": { "$ref": "#/classes/service" },
-                        "services": { "$ref": "#/classes/service" },
                         "viewingDirection": { "$ref": "#/classes/viewingDirection" },
                         "rights": { "$ref": "#/classes/rights" },
                         "start": {},
@@ -669,7 +667,17 @@
                 "format": { "$ref": "#/types/format" },
                 "accessibility": { "type": "string"},
                 "source": { "$ref": "#/types/id" },
-                "selector": { "$ref": "#/classes/annoSelector" }
+                "selector": { 
+                    "oneOf": [    
+                        { "$ref": "#/classes/annoSelector" },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annoSelector"
+                            }
+                        }
+                    ]
+                }
             },
             "required": ["source", "selector"]
         },
