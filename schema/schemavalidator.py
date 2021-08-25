@@ -62,7 +62,10 @@ def validate(data, version, url):
                 # if it is valid we want a good error message so diagnose which oneOf is 
                 # relevant for the error we've found.
                 if err.absolute_schema_path[-1] == 'oneOf':
-                    err = errorParser.diagnoseWhichOneOf(list(err.absolute_schema_path), list(err.absolute_path))
+                    try:
+                        err = errorParser.diagnoseWhichOneOf(list(err.absolute_schema_path), list(err.absolute_path))
+                    except RecursionError as error:
+                        print ('Failed to diagnose error {} due to recursion error'.format(err))
                 if isinstance(err, ValidationError):    
                     relevantErrors.append(err)
                 else:

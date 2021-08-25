@@ -106,32 +106,29 @@ class IIIFErrorParser(object):
             if results:
                 addErrors = True
                 store_errs = []
-                try:
-                    for err in results:
-                        # For each of the reported errors check the types with the IIIF data to see if its relevant
-                        # if one error in this oneOf possibility group is not relevant then none a relevant so discard
-                        if not self.parse(list(err.absolute_schema_path), possibility, iiifJsonPart, list(err.absolute_path)):
-                            addErrors = False
-                        else:    
-                            # if this oneOf possiblity is still relevant add it to the list and check
-                            # its not another oneOf error
-                            if addErrors:
-                                # if error is also a oneOf then diagnoise again
-                                if err.absolute_schema_path[-1] == 'oneOf' and err.absolute_schema_path != error_path and 'rights' not in err.absolute_schema_path:
-                                    error_path.append(oneOfIndex) # this is is related to one of the original oneOfs at index oneOfIndex
-                                    error_path.extend(err.absolute_schema_path) # but we found another oneOf test at this location
-                                    result = (self.diagnoseWhichOneOf(error_path, IIIFJsonPath)) # so recursivly discovery real error
+                for err in results:
+                    # For each of the reported errors check the types with the IIIF data to see if its relevant
+                    # if one error in this oneOf possibility group is not relevant then none a relevant so discard
+                    if not self.parse(list(err.absolute_schema_path), possibility, iiifJsonPart, list(err.absolute_path)):
+                        addErrors = False
+                    else:    
+                        # if this oneOf possiblity is still relevant add it to the list and check
+                        # its not another oneOf error
+                        if addErrors:
+                            # if error is also a oneOf then diagnoise again
+                            if err.absolute_schema_path[-1] == 'oneOf' and err.absolute_schema_path != error_path and 'rights' not in err.absolute_schema_path:
+                                error_path.append(oneOfIndex) # this is is related to one of the original oneOfs at index oneOfIndex
+                                error_path.extend(err.absolute_schema_path) # but we found another oneOf test at this location
+                                result = (self.diagnoseWhichOneOf(error_path, IIIFJsonPath)) # so recursivly discovery real error
 
-                                    if isinstance(result, ValidationError):    
-                                        store_errs.append(result)
-                                    else:
-                                        store_errs.extend(result)
-
-                            #print ('would add: {} by addErrors is {}'.format(err.message, addErrors))
+                                if isinstance(result, ValidationError):    
+                                    store_errs.append(result)
                                 else:
-                                    store_errs.append(err)
-                except RecursionError as error:
-                    return ValidationError("Failed to find error due to RecursionError. Error path: {}, IIIF Path: {} ".format(error_path, IIIFJsonPath));
+                                    store_errs.extend(result)
+
+                        #print ('would add: {} by addErrors is {}'.format(err.message, addErrors))
+                            else:
+                                store_errs.append(err)
                 # if All errors are relevant to the current type add them to the list        
                 if addErrors:
                     valid_errors += store_errs
