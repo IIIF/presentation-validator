@@ -9,7 +9,6 @@
             "title": "Id must be presesnt and must be a URI"
         },
         "lngString": {
-            "$id": "#lngString",
             "title": "Language string, must have a language and value must be an array.",
             "type": "object",
             "patternProperties": {
@@ -25,7 +24,6 @@
             "additionalProperties": false
         },
         "keyValueString": {
-            "$id": "#keyValueString",
             "type": "object",
             "properties": {
                 "label": {"$ref": "#/types/lngString" },
