@@ -177,47 +177,47 @@ class TestAll(unittest.TestCase):
         errorParser = IIIFErrorParser(schema, iiif_json)
 
         # annotationPage
-        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'type', u'pattern']
+        path = [ u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'type', u'pattern']
         iiifPath = [u'items', 0, u'type']
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
         # annotationPage
-        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'required']
+        path = [u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'required']
         iiifPath = [u'items', 0]
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
         # annotationPage
-        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'properties', u'type', u'pattern']
+        path = [u'oneOf', 2, u'allOf', 1, u'properties', u'type', u'pattern']
         iiifPath = [u'type']
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
         # annotationPage
-        path = [u'allOf', 1, u'oneOf', 2, u'allOf', 1, u'additionalProperties']
+        path = [u'oneOf', 2, u'allOf', 1, u'additionalProperties']
         iiifPath = []
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
         # Collection
-        path = [u'allOf', 1, u'oneOf', 1, u'allOf', 1, u'properties', u'thumbnail', u'items', u'oneOf']
+        path = [u'oneOf', 1, u'allOf', 1, u'properties', u'thumbnail', u'items', u'oneOf']
         iiifPath = [u'thumbnail', 0]
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to collection incorrectly')
 
         # Collection
-        path = [u'allOf', 1, u'oneOf', 1, u'allOf', 1, u'properties', u'type', u'pattern']
+        path = [u'oneOf', 1, u'allOf', 1, u'properties', u'type', u'pattern']
         iiifPath = [u'type']
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to collection incorrectly')
 
         # Collection
-        path = [u'allOf', 1, u'oneOf', 1, u'allOf', 1, u'properties', u'items', u'items', u'oneOf']
+        path = [u'oneOf', 1, u'allOf', 1, u'properties', u'items', u'items', u'oneOf']
         iiifPath = [u'items', 0]
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to collection incorrectly')
 
         # annotationPage
-        path = [u'allOf', 1, u'oneOf', 0, u'allOf', 1, u'properties', u'thumbnail', u'items', u'oneOf']
+        path = [u'oneOf', 0, u'allOf', 1, u'properties', u'thumbnail', u'items', u'oneOf']
         iiifPath = [u'thumbnail', 0]
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in thumbnail needs to be an array.')
 
         # annotationPage
-        path = [u'allOf', 1, u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'body', u'anyOf']
+        path = [u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'body', u'anyOf']
         iiifPath = [u'items', 0, u'items', 0, u'items', 0, u'body']
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in the canvas needs to be an array')
 
@@ -225,7 +225,7 @@ class TestAll(unittest.TestCase):
             iiif_json = json.load(json_file)
         errorParser = IIIFErrorParser(schema, iiif_json)
         # Provider as list example:
-        path = ['allOf', 1, 'oneOf', 0, 'allOf', 1, 'properties', 'provider', 'items', 'allOf', 1, 'properties', 'seeAlso', 'items', 'allOf', 0, 'required']
+        path = ['oneOf', 0, 'allOf', 1, 'properties', 'provider', 'items', 'allOf', 1, 'properties', 'seeAlso', 'items', 'allOf', 0, 'required']
         iiifPath = ['provider', 0, 'seeAlso', 0]
         self.assertTrue(errorParser.isValid(path, iiifPath))
     
