@@ -131,7 +131,7 @@ class IIIFErrorParser(object):
                                 else:
                                     store_errs.append(err)
                 except RecursionError as error:
-                    print ("Failed to find error due to RecursionError. Errors: {}".format(results));
+                    print ("Failed to find error due to RecursionError. Error path: {}, IIIF Path: {} ".format(error_path, IIIFJsonPath));
                 # if All errors are relevant to the current type add them to the list        
                 if addErrors:
                     valid_errors += store_errs
