@@ -743,14 +743,9 @@
         }
     },
     "$id": "http://iiif.io/api/presentation/3/schema.json" ,
-    "allOf": [
-        { "$ref": "#/types/class" },
-        {
-          "oneOf": [
-            { "$ref": "#/classes/manifest" },
-            { "$ref": "#/classes/collection" },
-            { "$ref": "#/classes/annotationPage" }
-          ]
-        }
-    ]
+     "oneOf": [
+        { "$ref": "#/classes/manifest" },
+        { "$ref": "#/classes/collection" },
+        { "$ref": "#/classes/annotationPage" }
+     ]
 }
