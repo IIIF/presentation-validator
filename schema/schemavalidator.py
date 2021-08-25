@@ -65,7 +65,9 @@ def validate(data, version, url):
                     try:
                         err = errorParser.diagnoseWhichOneOf(list(err.absolute_schema_path), list(err.absolute_path))
                     except RecursionError as error:
-                        print ('Failed to diagnose error {} due to recursion error'.format(err))
+                        print ('Failed to diagnose error due to recursion error. Schema: {} IIIF path: {}'.format(err.absolute_schema_path, err.absolute_path))
+
+                        relevantErrors.append(err)
                 if isinstance(err, ValidationError):    
                     relevantErrors.append(err)
                 else:
