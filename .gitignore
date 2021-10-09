@@ -9,5 +9,3 @@ __pycache__
 htmlcov
 *.pyc
 *.swp
-
-.DS_Store
