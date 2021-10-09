@@ -397,7 +397,7 @@
                             "type": "array",
                             "items": {
                               "oneOf": [
-                                { "$ref": "#/classes/manifest" },
+                                { "$ref": "#/classes/refmanifest" },
                                 { "$ref": "#/classes/collection" }
                               ]
                             }
@@ -413,6 +413,30 @@
                 }
             ]
         },
+
+        "refmanifest": {
+            "allOf": [
+                { "$ref": "#/types/class" },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "id": {},
+                        "label": {},
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Manifest",
+                            "description":"refmanifest is used for referencing manifests inside collections."
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        }
+                    }
+                }
+            ]
+        },
+
         "manifest": {
             "allOf": [
                 { "$ref": "#/types/class" },
