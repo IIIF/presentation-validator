@@ -359,6 +359,7 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
+                            "default":"Collection",
                             "title": "Are you validating a collection?",
                             "description":"If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
                         },
@@ -501,6 +502,10 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Manifest"
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
                         }
                     },
                     "required": ["id", "type", "label"]
