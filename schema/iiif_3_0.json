@@ -381,7 +381,7 @@
                             "type": "array",
                             "items": {
                               "oneOf": [
-                                { "$ref": "#/classes/manifest" },
+                                { "$ref": "#/classes/refmanifest" },
                                 { "$ref": "#/classes/collection" }
                               ]
                             }
@@ -466,6 +466,41 @@
                             "items": {
                                 "$ref": "#/classes/annotationPage"
                             }
+                        }
+                    },
+                    "required": ["id", "type", "label"]
+                }
+            ]
+        },
+        "refmanifest": {
+            "allOf": [
+                { "$ref": "#/types/class" },
+                {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$",
+                                        "description":"refmanifest is used for referencing manifests inside collections."
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
+                        "id": { "$ref": "#/types/id" },
+                        "label": {"$ref": "#/types/lngString" },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Manifest"
                         }
                     },
                     "required": ["id", "type", "label"]
