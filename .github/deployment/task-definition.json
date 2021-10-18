@@ -1,0 +1,41 @@
+{
+    "status": "ACTIVE", 
+    "family": "PreziValidatorTask", 
+    "placementConstraints": [], 
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        }, 
+        {
+            "name": "com.amazonaws.ecs.capability.task-iam-role"
+        }
+    ], 
+    "compatibilities": [
+        "EXTERNAL", 
+        "EC2"
+    ], 
+    "volumes": [], 
+    "requiresCompatibilities": [
+        "EC2"
+    ], 
+    "containerDefinitions": [
+        {
+            "memoryReservation": 128, 
+            "environment": [], 
+            "name": "PreziValidatorContainer", 
+            "mountPoints": [], 
+            "image": "docker.io/glenrobson/iiif-presentation-validator", 
+            "cpu": 0, 
+            "portMappings": [
+                {
+                    "protocol": "tcp", 
+                    "containerPort": 8080, 
+                    "hostPort": 0
+                }
+            ], 
+            "essential": true, 
+            "volumesFrom": []
+        }
+    ], 
+    "revision": 1
+}
