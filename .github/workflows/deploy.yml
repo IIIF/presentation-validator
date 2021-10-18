@@ -1,0 +1,60 @@
+name: Deploy to AWS
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: docker login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: |
+        echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
+
+    - name: Build the Docker image
+      env: 
+        IMAGE_TAG: ${{ github.sha }}
+      run: docker build . --file Dockerfile --tag glenrobson/iiif-presentation-validator:$IMAGE_TAG --tag glenrobson/iiif-presentation-validator:latest
+      
+    - name: Docker Push
+      env: 
+        IMAGE_TAG: ${{ github.sha }}
+      run: docker push glenrobson/iiif-presentation-validator:$IMAGE_TAG && docker push glenrobson/iiif-presentation-validator:latest
+
+    - name: Docker logout
+      run: docker logout
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Login to Amazon ECR
+      id: login-ecr
+      uses: aws-actions/amazon-ecr-login@v1  
+
+    - name: Fill in the new image ID in the Amazon ECS task definition
+      id: task-def
+      uses: aws-actions/amazon-ecs-render-task-definition@v1
+      with:
+        task-definition: .github/deployment/task-definition.json
+        container-name: PreziValidatorContainer
+        image: docker.io/glenrobson/iiif-presentation-validator:${{ github.sha }}
+
+    - name: Deploy Amazon ECS task definition
+      uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+      with:
+        task-definition: ${{ steps.task-def.outputs.task-definition }}
+        service: PreziValidatorService
+        cluster: DockerHost
+        wait-for-service-stability: true
