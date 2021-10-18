@@ -20,7 +20,8 @@ jobs:
         echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
 
     - name: Build the Docker image
-      env: IMAGE_TAG: ${{ github.sha }}
+      env: 
+        IMAGE_TAG: ${{ github.sha }}
       run: docker build . --file Dockerfile --tag glenrobson/iiif-presentation-validator:$IMAGE_TAG --tag glenrobson/iiif-presentation-validator:latest
       
     - name: Docker Push
