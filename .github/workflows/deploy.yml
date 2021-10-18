@@ -25,6 +25,8 @@ jobs:
       run: docker build . --file Dockerfile --tag glenrobson/iiif-presentation-validator:$IMAGE_TAG --tag glenrobson/iiif-presentation-validator:latest
       
     - name: Docker Push
+      env: 
+        IMAGE_TAG: ${{ github.sha }}
       run: docker push glenrobson/iiif-presentation-validator:$IMAGE_TAG && docker push glenrobson/iiif-presentation-validator:latest
 
     - name: Docker logout
