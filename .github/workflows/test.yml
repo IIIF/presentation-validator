@@ -35,6 +35,9 @@ jobs:
       - name: Test
         run: python setup.py test
 
+      - name: install coveralls
+        run: pip install coveralls
+
       - name: Upload coverage data to coveralls.io
         run: coveralls --service=github
         env:
