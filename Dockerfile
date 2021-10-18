@@ -1,4 +1,4 @@
-ARG version=3.10
+ARG version=3.9
 FROM python:${version}-slim
 
 
