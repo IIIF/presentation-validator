@@ -20,7 +20,7 @@ jobs:
         echo ${{ secrets.DOCKER_PASSWORD }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
 
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag glenrobson/iiif-presentation-validator:$(date +%s)
+      run: docker build . --file Dockerfile --tag glenrobson/iiif-presentation-validator:$(date +%s) --tag glenrobson/iiif-presentation-validator:latest
       
     - name: Docker Push
       run: docker push glenrobson/iiif-presentation-validator
