@@ -35,6 +35,10 @@ jobs:
       - name: install coveralls
         run: pip install coveralls
 
+
+      - name: Generate coverage
+        run: coverage run --include=iiif-presentation-validator.py setup.py test
+
       - name: Upload coverage data to coveralls.io
         run: coveralls --service=github
         env:
