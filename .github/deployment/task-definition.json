@@ -1,19 +1,6 @@
 {
-    "status": "ACTIVE", 
     "family": "PreziValidatorTask", 
-    "placementConstraints": [], 
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
-        }, 
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        }
-    ], 
-    "compatibilities": [
-        "EXTERNAL", 
-        "EC2"
-    ], 
+    "placementConstraints": [],
     "volumes": [], 
     "requiresCompatibilities": [
         "EC2"
@@ -36,6 +23,5 @@
             "essential": true, 
             "volumesFrom": []
         }
-    ], 
-    "revision": 1
+    ]
 }
