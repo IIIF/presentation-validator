@@ -359,7 +359,6 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
-                            "default":"Collection",
                             "title": "Are you validating a collection?",
                             "description":"If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
                         },
@@ -473,7 +472,7 @@
                 }
             ]
         },
-        "refmanifest": {
+        "reference": {
             "allOf": [
                 { "$ref": "#/types/class" },
                 {
@@ -488,7 +487,7 @@
                                         "type": "string",
                                         "format": "uri",
                                         "pattern": "^http.*$",
-                                        "description":"refmanifest is used for referencing manifests inside collections."
+                                        "description":"reference is used for referencing IIIF objects."
                                     }
                                 },
                                 {
@@ -501,14 +500,15 @@
                         "label": {"$ref": "#/types/lngString" },
                         "type": {
                             "type": "string",
-                            "pattern": "^Manifest"
+                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$"
                         },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
                         }
                     },
-                    "required": ["id", "type", "label"]
+                    "required": ["id", "type", "label"],
+                    "not": { "required": [ "items" ] }
                 }
             ]
         },
