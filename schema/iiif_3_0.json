@@ -478,7 +478,7 @@
                 { "$ref": "#/types/class" },
                 {
                     "type": "object",
-                    "additionalProperties": false,
+                    "additionalProperties": true,
                     "properties": {
                         "@context": {
                             "oneOf": [
