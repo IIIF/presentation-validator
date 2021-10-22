@@ -223,7 +223,7 @@
                 {
                     "type": "string",
                     "format": "uri",
-                    "pattern": "http://creativecommons.org/publicdomain/mark/.*"
+                    "pattern": "http://creativecommons.org/publicdomain/.*"
                 },
                 {
                     "type": "string",
