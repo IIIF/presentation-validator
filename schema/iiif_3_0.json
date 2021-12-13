@@ -378,12 +378,12 @@
                         "behavior": { "$ref": "#/classes/behavior" },
                         "partOf": { "$ref": "#/classes/partOf" },
                         "items": {
-                            "type": "array",
-                            "items": {
-                              "oneOf": [
-                                { "$ref": "#/classes/manifest" },
-                                { "$ref": "#/classes/collection" }
-                              ]
+                            "type": "array",	
+                            "items": {	
+                            "anyOf": [
+                              { "$ref": "#/classes/reference" },
+                              { "$ref": "#/classes/collection" }
+                            ]
                             }
                         },
                         "annotations": {
@@ -469,6 +469,28 @@
                         }
                     },
                     "required": ["id", "type", "label"]
+                }
+            ]
+        },
+        "reference": {
+            "allOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "id": { "$ref": "#/types/id" },
+                        "label": {"$ref": "#/types/lngString" },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        }
+                    },
+                    "required": ["id", "type", "label"],
+                    "not": { "required": [ "items" ] }
                 }
             ]
         },
