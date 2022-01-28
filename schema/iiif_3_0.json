@@ -161,7 +161,8 @@
                         "id": { "$ref": "#/types/id" },
                         "type": {
                             "type": "string",
-                            "pattern": "^TextualBody$"
+                            "pattern": "^TextualBody$",
+                            "default": "TextualBody"
                         },
                         "value": { "type": "string" },
                         "format": { "$ref": "#/types/format" },
@@ -337,7 +338,8 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "pattern": "^Agent$"
+                                "pattern": "^Agent$",
+                                "default": "Agent"
                             },
                             "homepage": { "$ref": "#/classes/homepage" },
                             "logo": {
@@ -359,6 +361,7 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
+                            "default": "Collection",
                             "title": "Are you validating a collection?",
                             "description":"If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
                         },
@@ -424,7 +427,8 @@
                         "label": {"$ref": "#/types/lngString" },
                         "type": {
                             "type": "string",
-                            "pattern": "^Manifest"
+                            "pattern": "^Manifest",
+                            "default": "Manifest"
                         },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
@@ -502,7 +506,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Canvas$"
+                            "pattern": "^Canvas$",
+                            "default": "Canvas"
                         },
                         "height": {
                             "type": "integer"
@@ -560,7 +565,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^AnnotationCollection$"
+                            "pattern": "^AnnotationCollection$",
+                            "default": "AnnotationCollection"
                         },
                         "partOf": { "$ref": "#/classes/partOf" },
                         "next": { "$ref": "#/classes/annotationPage" },
@@ -586,7 +592,8 @@
                         "@context": {},
                         "type": {
                             "type": "string",
-                            "pattern": "^AnnotationPage$"
+                            "pattern": "^AnnotationPage$",
+                            "default": "AnnotationPage"
                         },
                         "items": {
                             "type": "array",
@@ -607,7 +614,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Annotation$"
+                            "pattern": "^Annotation$",
+                            "default": "Annotation"
                         },
                         "motivation": {
                             "oneOf": [
@@ -684,7 +692,8 @@
                 "id": { "$ref": "#/types/id" },
                 "type": { 
                     "type": "string",
-                    "pattern": "^SpecificResource$"
+                    "pattern": "^SpecificResource$",
+                    "default": "SpecificResource"
                 },
                 "format": { "$ref": "#/types/format" },
                 "accessibility": { "type": "string"},
@@ -728,7 +737,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Range$"
+                            "pattern": "^Range$",
+                            "default": "Range"
                         },
                         "supplementary": { "$ref": "#/classes/annotationCollection" },
                         "items": {
@@ -746,7 +756,8 @@
                                                 "properties": {
                                                     "type": {
                                                         "type": "string",
-                                                        "pattern": "^Canvas$"
+                                                        "pattern": "^Canvas$",
+                                                        "default": "Canvas"
                                                     }
                                                 }
 
