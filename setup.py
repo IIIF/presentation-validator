@@ -32,10 +32,9 @@ setup(
                  "Intended Audience :: Developers",
                  "Operating System :: OS Independent",
                  "Programming Language :: Python",
-                 "Programming Language :: Python :: 2.7",
-                 "Programming Language :: Python :: 3.5",
-                 "Programming Language :: Python :: 3.6",
                  "Programming Language :: Python :: 3.7",
+                 "Programming Language :: Python :: 3.8",
+                 "Programming Language :: Python :: 3.9",
                  "Topic :: Internet :: WWW/HTTP",
                  "Topic :: Multimedia :: Graphics :: Graphics Conversion",
                  "Topic :: Software Development :: "
@@ -53,16 +52,6 @@ setup(
     ],
     extras_require={
         ':python_version>="3.6"': ["Pillow>=3.2.0"],
-        ':python_version=="3.5"': ["Pillow==7.2.0"],
-        ':python_version<"3.0"': [
-            "Pillow==6.2.2",
-            "zipp==1.2.0",
-            "configparser==4.0.2",
-            "pyld==1.0.5",
-            "pyrsistent==0.16.0",
-            "decorator==4.4.2",
-            "coverage==5.5"
-        ],
     },
     test_suite="tests",
     tests_require=[
