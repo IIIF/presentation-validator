@@ -237,6 +237,23 @@
             "type": "string",
             "format": "date-time"
         },
+        "navPlace": {
+            "type": "object",
+            "properties": {
+                "id": { "$ref": "#/types/id" },
+                "type": { 
+                    "type": "string",
+                    "default": "FeatureCollection"
+                },
+                "features": { 
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "required": ["id", "type"]
+        },
         "viewingDirection": {
             "anyOf": [
                 {
@@ -370,6 +387,7 @@
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
                         "rights": { "$ref": "#/classes/rights" },
                         "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "services": { "$ref": "#/classes/service" },
@@ -444,6 +462,7 @@
                             "items": { "$ref": "#/classes/resource" }
                         },
                         "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "thumbnail": {
@@ -523,6 +542,7 @@
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
                         "rights": { "$ref": "#/classes/rights" },
                         "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "thumbnail": {
