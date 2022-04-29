@@ -9,7 +9,6 @@
     "it" : [ "Bronzo Laocoonte e i suoi figli" ]
   },
   "navPlace" : {
-    "id" : "https://iiif.io/api/cookbook/recipe/0154-geo-extension/location.json",
     "type" : "FeatureCollection",
     "features" : [ {
       "type" : "Feature",

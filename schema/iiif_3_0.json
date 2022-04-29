@@ -252,7 +252,7 @@
                     }
                 }
             },
-            "required": ["id", "type"]
+            "required": ["type"]
         },
         "viewingDirection": {
             "anyOf": [
