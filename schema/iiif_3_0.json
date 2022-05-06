@@ -690,7 +690,7 @@
                             ]
                         }
                     },
-                    "required": ["target", "type"]
+                    "required": ["id", "target", "type"]
                 }
             ]
         },
