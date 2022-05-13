@@ -603,27 +603,25 @@
             ]
         },
         "annotationPage": {
-            "allOf": [
-                { "$ref": "#/types/class" },
-                {
-                    "type": "object",
-                    "properties": {
-                        "@context": {},
-                        "type": {
-                            "type": "string",
-                            "pattern": "^AnnotationPage$",
-                            "default": "AnnotationPage"
-                        },
-                        "items": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/classes/annotation"
-                            }
-                        }
-                    },
-                    "additionalProperties": false
+            "type": "object",
+            "properties": {
+                "@context": {},
+                "id": { "$ref": "#/types/id" },
+                "type": {
+                    "type": "string",
+                    "pattern": "^AnnotationPage$",
+                    "default": "AnnotationPage"
+                },
+                "label": {"$ref": "#/types/lngString" },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/classes/annotation"
+                    }
                 }
-            ]
+            },
+            "required": ["id", "type"],
+            "additionalProperties": false
         },
         "annotation": {
             "allOf": [
