@@ -608,7 +608,6 @@
                 {
                     "type": "object",
                     "properties": {
-                        "id": { "$ref": "#/types/id" },
                         "@context": {},
                         "type": {
                             "type": "string",
