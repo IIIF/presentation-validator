@@ -397,6 +397,7 @@
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "services": { "$ref": "#/classes/service" },
+                        "service": { "$ref": "#/classes/service" },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
@@ -551,6 +552,7 @@
                         "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
+                        "service": { "$ref": "#/classes/service" },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
@@ -598,6 +600,7 @@
                         "next": { "$ref": "#/classes/annotationPage" },
                         "first": { "$ref": "#/classes/annotationPage" },
                         "last": { "$ref": "#/classes/annotationPage" },
+                        "service": { "$ref": "#/classes/service" },
                         "items": {
                             "type": "array",
                             "items": {
@@ -619,6 +622,7 @@
                     "default": "AnnotationPage"
                 },
                 "label": {"$ref": "#/types/lngString" },
+                "service": { "$ref": "#/classes/service" },
                 "items": {
                     "type": "array",
                     "items": {
@@ -640,6 +644,7 @@
                             "pattern": "^Annotation$",
                             "default": "Annotation"
                         },
+                        "service": { "$ref": "#/classes/service" },
                         "motivation": {
                             "oneOf": [
                                 { "type": "string" },
@@ -764,6 +769,7 @@
                             "default": "Range"
                         },
                         "supplementary": { "$ref": "#/classes/annotationCollection" },
+                        "service": { "$ref": "#/classes/service" },
                         "annotations": {
                             "type": "array",
                             "items": {
