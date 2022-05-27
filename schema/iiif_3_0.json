@@ -150,7 +150,13 @@
                         "language": { "type": "string"},
                         "service": { "$ref": "#/classes/service" },
                         "format": { "$ref": "#/types/format" },
-                        "label": {"$ref": "#/types/lngString" }
+                        "label": {"$ref": "#/types/lngString" },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationPage"
+                            }
+                        }
                     },
                     "required": ["id", "type"]
                 },
@@ -758,6 +764,12 @@
                             "default": "Range"
                         },
                         "supplementary": { "$ref": "#/classes/annotationCollection" },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationPage"
+                            }
+                        },
                         "items": {
                             "type": "array",
                             "items": {
