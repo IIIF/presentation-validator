@@ -112,7 +112,8 @@ class Validator(object):
                 okay = 1
             except Exception as e:
                 # Failed
-                print (e)
+                print ('Failed falidation due to:')
+                traceback.print_exc()
                 err = e
                 okay = 0
 
