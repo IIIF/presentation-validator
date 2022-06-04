@@ -110,9 +110,15 @@ class Validator(object):
                     raise ValidationError("Manifest @id ({}) is different to the location where it was retrieved ({})".format(mf.id, url))
                 # Passed!
                 okay = 1
+            except KeyError as e:    
+                print ('Failed falidation due to:')
+                traceback.print_exc()
+                err = 'Failed due to KeyError {}, check trace for details'.format(e)
+                okay = 0
             except Exception as e:
                 # Failed
-                print (e)
+                print ('Failed falidation due to:')
+                traceback.print_exc()
                 err = e
                 okay = 0
 
