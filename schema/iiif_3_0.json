@@ -464,10 +464,6 @@
                         "viewingDirection": { "$ref": "#/classes/viewingDirection" },
                         "rights": { "$ref": "#/classes/rights" },
                         "start": {},
-                        "logo": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
-                        },
                         "navDate": { "$ref": "#/classes/navDate" },
                         "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
