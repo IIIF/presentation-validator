@@ -144,15 +144,21 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/extension_anno.json',
                      'fixtures/3/multi_bodies.json',
                      'fixtures/3/publicdomain.json',
-                     'fixtures/3/navPlace.json'
+                     'fixtures/3/navPlace.json',
+                     'fixtures/3/anno_source.json'
                      ]:
             with open(good, 'r') as fh:
+                print ('Testing: {}'.format(good))
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
                 if j['okay'] != 1:
-                    self.printValidationerror(good, j['errorList'])
+                    if 'errorList' in j:
+                        self.printValidationerror(good, j['errorList'])
+                    else:
+                        print ('Failed to find errors but manifest {} failed validation'.format(good))
+                        print (j)
 
-                self.assertEqual(j['okay'], 1)
+                self.assertEqual(j['okay'], 1, 'Expected manifest {} to pass validation but it failed'.format(good))
 
         for bad_data in ['fixtures/3/broken_simple_image.json',
                          'fixtures/3/broken_choice.json',
