@@ -149,6 +149,10 @@
                         "service": { "$ref": "#/classes/service" },
                         "format": { "$ref": "#/types/format" },
                         "label": {"$ref": "#/types/lngString" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "annotations": {
                             "type": "array",
                             "items": {
@@ -589,6 +593,10 @@
                         "first": { "$ref": "#/classes/annotationPage" },
                         "last": { "$ref": "#/classes/annotationPage" },
                         "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "items": {
                             "type": "array",
                             "items": {
@@ -611,6 +619,10 @@
                 },
                 "label": {"$ref": "#/types/lngString" },
                 "service": { "$ref": "#/classes/service" },
+                "thumbnail": {
+                    "type": "array",
+                    "items": { "$ref": "#/classes/resource" }
+                },
                 "items": {
                     "type": "array",
                     "items": {
@@ -633,6 +645,10 @@
                             "default": "Annotation"
                         },
                         "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "motivation": {
                             "oneOf": [
                                 { "type": "string" },
@@ -772,6 +788,10 @@
                             "items": {
                                 "$ref": "#/classes/annotationPage"
                             }
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
                         },
                         "items": {
                             "type": "array",
