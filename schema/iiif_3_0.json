@@ -23,6 +23,10 @@
             },
             "additionalProperties": false
         },
+        "dimension": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+        },
         "keyValueString": {
             "type": "object",
             "properties": {
@@ -59,7 +63,7 @@
         },
         "duration": {
             "type": "number",
-            "minimum": 0
+            "exclusiveMinimum": 0
         },
         "external": {
             "type": "array",
@@ -138,15 +142,9 @@
                         "type": {
                             "type": "string"
                         },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
-                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
                         "language": { "type": "string"},
                         "service": { "$ref": "#/classes/service" },
                         "format": { "$ref": "#/types/format" },
@@ -531,15 +529,9 @@
                             "pattern": "^Canvas$",
                             "default": "Canvas"
                         },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
-                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
