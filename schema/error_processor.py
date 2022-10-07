@@ -116,6 +116,7 @@ class IIIFErrorParser(object):
                         # its not another oneOf error
                         if addErrors:
                             # if error is also a oneOf then diagnoise again
+                            #print ('Schema path: {} error path: {}'.format(err.absolute_schema_path, error_path))
                             if err.absolute_schema_path[-1] == 'oneOf' and err.absolute_schema_path != error_path and 'rights' not in err.absolute_schema_path:
                                 error_path.append(oneOfIndex) # this is is related to one of the original oneOfs at index oneOfIndex
                                 error_path.extend(err.absolute_schema_path) # but we found another oneOf test at this location
@@ -323,9 +324,10 @@ class IIIFErrorParser(object):
                     indexDelta += len(str(indexes[count])) -1
                 count += 1
 
-        #print ('JsonPath: {} IIIF Path {} '.format(iiifPath, IIIFJsonPath))
+        #print ('JsonPath: {} IIIF Path {} type: {}'.format(iiifPath, IIIFJsonPath, schemaType))
         path = parse(iiifPath)
         results = path.find(iiif_asset)
+        #print ('Path: {} Results: '.format(path, results))
         if not results:
             # type not found so return True as this maybe the correct error
             return True

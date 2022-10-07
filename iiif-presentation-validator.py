@@ -111,13 +111,13 @@ class Validator(object):
                 # Passed!
                 okay = 1
             except KeyError as e:    
-                print ('Failed falidation due to:')
+                print ('Failed validation due to:')
                 traceback.print_exc()
                 err = 'Failed due to KeyError {}, check trace for details'.format(e)
                 okay = 0
             except Exception as e:
                 # Failed
-                print ('Failed falidation due to:')
+                print ('Failed validation due to:')
                 traceback.print_exc()
                 err = e
                 okay = 0

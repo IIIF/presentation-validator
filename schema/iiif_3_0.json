@@ -81,6 +81,28 @@
                     }
                 ]
             }
+        },
+        "reference": {
+            "allOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "id": { "$ref": "#/types/id" },
+                        "label": {"$ref": "#/types/lngString" },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        }
+                    },
+                    "required": ["id", "type", "label"],
+                    "not": { "required": [ "items" ] }
+                }
+            ]
         }
     },
 
@@ -411,7 +433,8 @@
                             "type": "array",	
                             "items": {	
                             "anyOf": [
-                              { "$ref": "#/classes/reference" },
+                              { "$ref": "#/classes/manifestRef" },
+                              { "$ref": "#/classes/collectionRef" },
                               { "$ref": "#/classes/collection" }
                             ]
                             }
@@ -500,28 +523,62 @@
                 }
             ]
         },
-        "reference": {
+        "manifestRef": {
             "allOf": [
+                { "$ref": "#/types/reference" },
                 {
                     "type": "object",
-                    "additionalProperties": true,
                     "properties": {
-                        "id": { "$ref": "#/types/id" },
-                        "label": {"$ref": "#/types/lngString" },
                         "type": {
                             "type": "string",
-                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
-                        },
-                        "thumbnail": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
+                            "pattern": "^Manifest$"
                         }
-                    },
-                    "required": ["id", "type", "label"],
-                    "not": { "required": [ "items" ] }
+                    }
                 }
-            ]
-        },
+            ]    
+        },    
+        "collectionRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Collection$"
+                        }
+                    }
+                }
+            ]    
+        },  
+        "rangeRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Range$"
+                        }
+                    }
+                }
+            ]    
+        },  
+        "canvasRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Canvas$"
+                        }
+                    }
+                }
+            ]    
+        },  
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -565,6 +622,7 @@
                             }
                         }
                     },
+                    "required": ["items"],
                     "anyOf":[
                         { "required": ["width"] },
                         { "required": ["height"] },
@@ -797,9 +855,7 @@
                             "type": "array",
                             "items": {
                                 "oneOf": [
-                                    {
-                                        "$ref": "#/classes/specificResource"
-                                    },
+                                    { "$ref": "#/classes/specificResource" },
                                     {
                                         "allOf": [
                                             { "$ref": "#/types/class" },
@@ -816,13 +872,14 @@
                                             }
                                         ]
                                     },
-                                    {
-                                        "$ref": "#/classes/range"
-                                    }
+                                    { "$ref": "#/classes/range" },
+                                    { "$ref": "#/classes/canvasRef" },
+                                    { "$ref": "#/classes/rangeRef" }
                                 ]
                             }
                         }
-                    }
+                    },
+                    "required":["items"]
                 }
             ]
         }
