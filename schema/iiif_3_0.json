@@ -23,6 +23,10 @@
             },
             "additionalProperties": false
         },
+        "dimension": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+        },
         "keyValueString": {
             "type": "object",
             "properties": {
@@ -59,7 +63,7 @@
         },
         "duration": {
             "type": "number",
-            "minimum": 0
+            "exclusiveMinimum": 0
         },
         "external": {
             "type": "array",
@@ -77,6 +81,28 @@
                     }
                 ]
             }
+        },
+        "reference": {
+            "allOf": [
+                {
+                    "type": "object",
+                    "additionalProperties": true,
+                    "properties": {
+                        "id": { "$ref": "#/types/id" },
+                        "label": {"$ref": "#/types/lngString" },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        }
+                    },
+                    "required": ["id", "type", "label"],
+                    "not": { "required": [ "items" ] }
+                }
+            ]
         }
     },
 
@@ -138,19 +164,17 @@
                         "type": {
                             "type": "string"
                         },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
-                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
                         "language": { "type": "string"},
                         "service": { "$ref": "#/classes/service" },
                         "format": { "$ref": "#/types/format" },
                         "label": {"$ref": "#/types/lngString" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "annotations": {
                             "type": "array",
                             "items": {
@@ -409,7 +433,8 @@
                             "type": "array",	
                             "items": {	
                             "anyOf": [
-                              { "$ref": "#/classes/reference" },
+                              { "$ref": "#/classes/manifestRef" },
+                              { "$ref": "#/classes/collectionRef" },
                               { "$ref": "#/classes/collection" }
                             ]
                             }
@@ -498,28 +523,62 @@
                 }
             ]
         },
-        "reference": {
+        "manifestRef": {
             "allOf": [
+                { "$ref": "#/types/reference" },
                 {
                     "type": "object",
-                    "additionalProperties": true,
                     "properties": {
-                        "id": { "$ref": "#/types/id" },
-                        "label": {"$ref": "#/types/lngString" },
                         "type": {
                             "type": "string",
-                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
-                        },
-                        "thumbnail": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
+                            "pattern": "^Manifest$"
                         }
-                    },
-                    "required": ["id", "type", "label"],
-                    "not": { "required": [ "items" ] }
+                    }
                 }
-            ]
-        },
+            ]    
+        },    
+        "collectionRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Collection$"
+                        }
+                    }
+                }
+            ]    
+        },  
+        "rangeRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Range$"
+                        }
+                    }
+                }
+            ]    
+        },  
+        "canvasRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Canvas$"
+                        }
+                    }
+                }
+            ]    
+        },  
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -531,15 +590,9 @@
                             "pattern": "^Canvas$",
                             "default": "Canvas"
                         },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
-                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
@@ -569,6 +622,7 @@
                             }
                         }
                     },
+                    "required": ["items"],
                     "anyOf":[
                         { "required": ["width"] },
                         { "required": ["height"] },
@@ -597,6 +651,10 @@
                         "first": { "$ref": "#/classes/annotationPage" },
                         "last": { "$ref": "#/classes/annotationPage" },
                         "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "items": {
                             "type": "array",
                             "items": {
@@ -619,6 +677,10 @@
                 },
                 "label": {"$ref": "#/types/lngString" },
                 "service": { "$ref": "#/classes/service" },
+                "thumbnail": {
+                    "type": "array",
+                    "items": { "$ref": "#/classes/resource" }
+                },
                 "items": {
                     "type": "array",
                     "items": {
@@ -641,6 +703,10 @@
                             "default": "Annotation"
                         },
                         "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "motivation": {
                             "oneOf": [
                                 { "type": "string" },
@@ -781,13 +847,15 @@
                                 "$ref": "#/classes/annotationPage"
                             }
                         },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "items": {
                             "type": "array",
                             "items": {
                                 "oneOf": [
-                                    {
-                                        "$ref": "#/classes/specificResource"
-                                    },
+                                    { "$ref": "#/classes/specificResource" },
                                     {
                                         "allOf": [
                                             { "$ref": "#/types/class" },
@@ -804,13 +872,14 @@
                                             }
                                         ]
                                     },
-                                    {
-                                        "$ref": "#/classes/range"
-                                    }
+                                    { "$ref": "#/classes/range" },
+                                    { "$ref": "#/classes/canvasRef" },
+                                    { "$ref": "#/classes/rangeRef" }
                                 ]
                             }
                         }
-                    }
+                    },
+                    "required":["items"]
                 }
             ]
         }

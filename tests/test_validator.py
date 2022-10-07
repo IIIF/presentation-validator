@@ -145,7 +145,8 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/multi_bodies.json',
                      'fixtures/3/publicdomain.json',
                      'fixtures/3/navPlace.json',
-                     'fixtures/3/anno_source.json'
+                     'fixtures/3/anno_source.json',
+                     'fixtures/3/range_range.json'
                      ]:
             with open(good, 'r') as fh:
                 print ('Testing: {}'.format(good))
@@ -164,7 +165,8 @@ class TestAll(unittest.TestCase):
                          'fixtures/3/broken_choice.json',
                          'fixtures/3/broken_collection.json',
                          'fixtures/3/broken_embedded_annos.json',
-                         'fixtures/3/non_cc_license.json']:
+                         'fixtures/3/non_cc_license.json',
+                         'fixtures/3/collection_of_canvases.json']:
             with open(bad_data, 'r') as fh:
                 data = fh.read()
                 j = json.loads(v.check_manifest(data, '3.0'))
@@ -184,7 +186,7 @@ class TestAll(unittest.TestCase):
 
         errorParser = IIIFErrorParser(schema, iiif_json)
 
-        print (errorParser)
+        #print (errorParser)
         # annotationPage
         path = [ u'oneOf', 2, u'properties', u'items', u'items', u'properties', u'type', u'pattern']
         iiifPath = [u'items', 0, u'type']
