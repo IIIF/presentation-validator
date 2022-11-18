@@ -579,6 +579,20 @@
                 }
             ]    
         },  
+        "annotationPageRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^AnnotationPage$"
+                        }
+                    }
+                }
+            ]    
+        },
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -666,30 +680,34 @@
             ]
         },
         "annotationPage": {
-            "type": "object",
-            "properties": {
-                "@context": {},
-                "id": { "$ref": "#/types/id" },
-                "type": {
-                    "type": "string",
-                    "pattern": "^AnnotationPage$",
-                    "default": "AnnotationPage"
+            "oneOf": [
+                {
+                    "type": "object",
+                    "properties": {
+                        "@context": {},
+                        "id": { "$ref": "#/types/id" },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^AnnotationPage$",
+                            "default": "AnnotationPage"
+                        },
+                        "label": {"$ref": "#/types/lngString" },
+                        "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotation"
+                            }
+                        }
+                    },
+                    "required": ["id", "type", "items"],
+                    "additionalProperties": false
                 },
-                "label": {"$ref": "#/types/lngString" },
-                "service": { "$ref": "#/classes/service" },
-                "thumbnail": {
-                    "type": "array",
-                    "items": { "$ref": "#/classes/resource" }
-                },
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/classes/annotation"
-                    }
-                }
-            },
-            "required": ["id", "type"],
-            "additionalProperties": false
+                { "$ref": "#/classes/annotationPageRef" }
         },
         "annotation": {
             "allOf": [
