@@ -168,6 +168,7 @@
                         "width": { "$ref": "#/types/dimension" },
                         "duration": { "$ref": "#/types/duration" },
                         "language": { "type": "string"},
+                        "rendering": { "$ref": "#/types/external" },
                         "service": { "$ref": "#/classes/service" },
                         "format": { "$ref": "#/types/format" },
                         "label": {"$ref": "#/types/lngString" },
@@ -415,6 +416,7 @@
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
                         "rights": { "$ref": "#/classes/rights" },
                         "navDate": { "$ref": "#/classes/navDate" },
                         "navPlace": { "$ref": "#/classes/navPlace" },
@@ -610,6 +612,7 @@
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
                         "rights": { "$ref": "#/classes/rights" },
                         "navDate": { "$ref": "#/classes/navDate" },
                         "navPlace": { "$ref": "#/classes/navPlace" },
@@ -660,6 +663,7 @@
                             "pattern": "^AnnotationCollection$",
                             "default": "AnnotationCollection"
                         },
+                        "rendering": { "$ref": "#/types/external" },
                         "partOf": { "$ref": "#/classes/partOf" },
                         "next": { "$ref": "#/classes/annotationPage" },
                         "first": { "$ref": "#/classes/annotationPage" },
@@ -693,6 +697,7 @@
                         },
                         "label": {"$ref": "#/types/lngString" },
                         "service": { "$ref": "#/classes/service" },
+                        "rendering": { "$ref": "#/types/external" },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
@@ -722,6 +727,7 @@
                             "default": "Annotation"
                         },
                         "service": { "$ref": "#/classes/service" },
+                        "rendering": { "$ref": "#/types/external" },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
@@ -858,6 +864,7 @@
                             "pattern": "^Range$",
                             "default": "Range"
                         },
+                        "rendering": { "$ref": "#/types/external" },
                         "supplementary": { "$ref": "#/classes/annotationCollection" },
                         "service": { "$ref": "#/classes/service" },
                         "annotations": {
