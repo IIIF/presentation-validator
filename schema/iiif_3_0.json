@@ -450,7 +450,7 @@
                             }
                         }
                     },
-                    "required": ["id", "type", "label"]
+                    "required": ["id", "type", "label", "items"]
                 }
             ]
         },
@@ -525,7 +525,7 @@
                             }
                         }
                     },
-                    "required": ["id", "type", "label"]
+                    "required": ["id", "type", "label", "items"]
                 }
             ]
         },
@@ -789,7 +789,8 @@
                                 "$ref": "#/classes/annotation"
                             }
                         }
-                    }
+                    },
+                    "required": ["items"]
                 }
             ]
         },
@@ -817,7 +818,7 @@
                     }
                 }
             },
-            "required": ["id", "type"],
+            "required": ["id", "type", "items"],
             "additionalProperties": false
         },
         "annotation": {
