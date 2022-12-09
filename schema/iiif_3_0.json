@@ -692,7 +692,7 @@
                         "items": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/anonPage"
+                                "$ref": "#/classes/annotationPage"
                             }
                         },
                         "annotations": {
@@ -750,7 +750,7 @@
                         "items": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/anonPage"
+                                "$ref": "#/classes/annotationPage"
                             }
                         },
                         "annotations": {
