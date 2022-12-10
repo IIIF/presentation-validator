@@ -145,7 +145,7 @@
         {
           "@id": "https://example.org/iiif/auth/token",
           "@type": "AuthTokenService1",
-          "profile": "http://iiif.io/api/auth/1/token"          
+          "profile": "http://iiif.io/api/auth/1/token"
         }
       ]
     }

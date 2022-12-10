@@ -83,26 +83,21 @@
             }
         },
         "reference": {
-            "allOf": [
-                {
-                    "type": "object",
-                    "additionalProperties": true,
-                    "properties": {
-                        "id": { "$ref": "#/types/id" },
-                        "label": {"$ref": "#/types/lngString" },
-                        "type": {
-                            "type": "string",
-                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
-                        },
-                        "thumbnail": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
-                        }
-                    },
-                    "required": ["id", "type", "label"],
-                    "not": { "required": [ "items" ] }
+            "type": "object",
+            "additionalProperties": true,
+            "properties": {
+                "id": { "$ref": "#/types/id" },
+                "type": {
+                    "type": "string",
+                    "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
+                },
+                "thumbnail": {
+                    "type": "array",
+                    "items": { "$ref": "#/classes/resource" }
                 }
-            ]
+            },
+            "required": ["id", "type"],
+            "not": { "required": [ "items" ] }
         }
     },
 
@@ -142,6 +137,8 @@
             }
         },
         "choice": {
+            "title": "Choice",
+            "description": "must have a type:'Choice' and an items array",
             "type": "object",
             "properties":{
                 "type": {
@@ -155,53 +152,60 @@
             "required": ["type", "items"]
         },
         "resource": {
-            "oneOf": [
-                {
-                    "title": "Annotation bodies MUST have an id and type property.",
-                    "type": "object",
-                    "properties": {
-                        "id": { "$ref": "#/types/id" },
-                        "type": {
-                            "type": "string"
-                        },
-                        "height": { "$ref": "#/types/dimension" },
-                        "width": { "$ref": "#/types/dimension" },
-                        "duration": { "$ref": "#/types/duration" },
-                        "language": { "type": "string"},
-                        "rendering": { "$ref": "#/types/external" },
-                        "service": { "$ref": "#/classes/service" },
-                        "format": { "$ref": "#/types/format" },
-                        "label": {"$ref": "#/types/lngString" },
-                        "thumbnail": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
-                        },
-                        "annotations": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/classes/annotationPage"
-                            }
-                        }
-                    },
-                    "required": ["id", "type"]
-                },
-                {
-                    "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
-                    "type": "object",
-                    "properties": {
-                        "id": { "$ref": "#/types/id" },
-                        "type": {
-                            "type": "string",
-                            "pattern": "^TextualBody$",
-                            "default": "TextualBody"
-                        },
-                        "value": { "type": "string" },
-                        "format": { "$ref": "#/types/format" },
-                        "language": { "type": "string"}
-                    },
-                    "required": ["value", "type"]
+            "title": "ContentResource",
+            "if": {
+                "type": "object",
+                "properties": {
+                    "type": { "const": "TextualBody" }
                 }
-            ]
+            },
+            "then": {
+                "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
+                "type": "object",
+                "properties": {
+                    "id": { "$ref": "#/types/id" },
+                    "type": {
+                        "type": "string",
+                        "pattern": "^TextualBody$",
+                        "default": "TextualBody"
+                    },
+                    "value": { "type": "string" },
+                    "format": { "$ref": "#/types/format" },
+                    "language": { "type": "string"}
+                },
+                "required": ["value", "type"]
+            },
+            "else": {
+                "title": "ContentResource: (not a TextualBody): ",
+                "description": "Annotation bodies MUST have an id and type property.",
+                "type": "object",
+                "properties": {
+                    "id": { "$ref": "#/types/id" },
+                    "type": {
+                        "type": "string"
+                    },
+                    "height": { "$ref": "#/types/dimension" },
+                    "width": { "$ref": "#/types/dimension" },
+                    "duration": { "$ref": "#/types/duration" },
+                    "language": { "type": "string"},
+                    "rendering": { "$ref": "#/types/external" },
+                    "service": { "$ref": "#/classes/service" },
+                    "format": { "$ref": "#/types/format" },
+                    "label": {"$ref": "#/types/lngString" },
+                    "thumbnail": {
+                        "type": "array",
+                        "items": { "$ref": "#/classes/resource" }
+                    },
+                    "annotations": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/classes/annotationPage"
+                        }
+                    }
+                },
+                "required": ["id", "type"]
+            }
+                
         },
         "imgSvr": {
             "allOf": [
@@ -216,6 +220,8 @@
             ]
         },
         "service": {
+            "title": "Service",
+            "description": "must be an array and have an id and type or @id and @type",
             "type": "array",
             "items": {
                 "oneOf": [
@@ -436,11 +442,13 @@
                         "items": {
                             "type": "array",	
                             "items": {	
-                            "anyOf": [
-                              { "$ref": "#/classes/manifestRef" },
-                              { "$ref": "#/classes/collectionRef" },
-                              { "$ref": "#/classes/collection" }
-                            ]
+                                "title":"Collection items",
+                                "description": " can only by Manifest references or Collections",
+                                "anyOf": [
+                                  { "$ref": "#/classes/manifestRef" },
+                                  { "$ref": "#/classes/collectionRef" },
+                                  { "$ref": "#/classes/collection" }
+                                ]
                             }
                         },
                         "annotations": {
@@ -538,8 +546,10 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Manifest$"
-                        }
-                    }
+                        },
+                        "label": {"$ref": "#/types/lngString" }
+                    },
+                    "required": ["label"]
                 }
             ]    
         },    
@@ -552,8 +562,10 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Collection$"
-                        }
-                    }
+                        },
+                        "label": {"$ref": "#/types/lngString" }
+                    },
+                    "required": ["label"]
                 }
             ]    
         },  
@@ -566,7 +578,8 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Range$"
-                        }
+                        },
+                        "label": {"$ref": "#/types/lngString" }
                     }
                 }
             ]    
@@ -580,7 +593,8 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Canvas$"
-                        }
+                        },
+                        "label": {"$ref": "#/types/lngString" }
                     }
                 }
             ]    
@@ -594,7 +608,8 @@
                         "type": {
                             "type": "string",
                             "pattern": "^AnnotationPage$"
-                        }
+                        },
+                        "label": {"$ref": "#/types/lngString" }
                     }
                 }
             ]    
@@ -603,6 +618,8 @@
             "allOf": [
                 { "$ref": "#/types/class" },
                 {
+                    "title":"Canvas",
+                    "description": "require items, (height and width) or (duration) or (height, width and duration)",
                     "type": "object",
                     "properties": {
                         "type": {
@@ -808,36 +825,40 @@
             ]
         },
         "annotationPage": {
-            "oneOf": [
-                {
-                    "type": "object",
-                    "properties": {
-                        "@context": {},
-                        "id": { "$ref": "#/types/id" },
-                        "type": {
-                            "type": "string",
-                            "pattern": "^AnnotationPage$",
-                            "default": "AnnotationPage"
-                        },
-                        "label": {"$ref": "#/types/lngString" },
-                        "service": { "$ref": "#/classes/service" },
-                        "rendering": { "$ref": "#/types/external" },
-                        "thumbnail": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
-                        },
-                        "items": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/classes/annotation"
-                            }
-                        }
+            "if": { 
+                "type": "object",
+                "required": ["items"]
+            },
+            "then": {
+                "type": "object",
+                "properties": {
+                    "@context": {},
+                    "id": { "$ref": "#/types/id" },
+                    "type": {
+                        "type": "string",
+                        "pattern": "^AnnotationPage$",
+                        "default": "AnnotationPage"
                     },
-                    "required": ["id", "type", "items"],
-                    "additionalProperties": false
+                    "label": {"$ref": "#/types/lngString" },
+                    "service": { "$ref": "#/classes/service" },
+                    "rendering": { "$ref": "#/types/external" },
+                    "thumbnail": {
+                        "type": "array",
+                        "items": { "$ref": "#/classes/resource" }
+                    },
+                    "items": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/classes/annotation"
+                        }
+                    }
                 },
-                { "$ref": "#/classes/annotationPageRef" }
-            ]
+                "required": ["id", "type", "items"],
+                "additionalProperties": false
+            },
+            "else": {
+                "$ref": "#/classes/annotationPageRef" 
+            }
         },
         "annotation": {
             "allOf": [
@@ -868,34 +889,29 @@
                             ]    
                         },
                         "body": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
+                            "if": {
+                                "type": "object",
+                                "properties": {
+                                    "type": { "const": "Choice" }
+                                }
+                            },
+                            "then": {
+                                "$ref": "#/classes/choice"
+                            },
+                            "else": {
+                                "if": {
+                                    "type": "object"
+                                },
+                                "then": {
                                     "$ref": "#/classes/resource"
                                 },
-                                {
-                                    "type": "object",
-                                    "allOf":[
-                                        { "$ref": "#/classes/choice" },
-                                        {
-                                            "properties": {
-                                                "items": {
-                                                    "type": "array",
-                                                    "items": {"$ref": "#/classes/resource"}
-                                                }
-                                            },
-                                            "required": ["items"]
-                                        }
-                                    ]
-                                },
-                                {
+                                "else": {
                                     "type": "array",
                                     "items": {
-                                        "type": "object"
+                                        "$ref": "#/classes/resource"
                                     }
                                 }
-
-                            ]
+                            }
                         },
                         "target": {
                             "anyOf": [
@@ -1018,8 +1034,12 @@
                                                         "type": "string",
                                                         "pattern": "^Canvas$",
                                                         "default": "Canvas"
+                                                    },
+                                                    "items": {
+                                                        "type": "array"
                                                     }
-                                                }
+                                                },
+                                                "required": ["items"]
 
                                             }
                                         ]
@@ -1037,9 +1057,27 @@
         }
     },
     "$id": "http://iiif.io/api/presentation/3/schema.json" ,
-     "oneOf": [
-        { "$ref": "#/classes/manifest" },
-        { "$ref": "#/classes/collection" },
-        { "$ref": "#/classes/annotationPage" }
-     ]
+    "if": { 
+        "type": "object",
+        "properties": {
+            "type": {"const":"Manifest"}
+        }
+    },
+    "then": {
+        "$ref": "#/classes/manifest" 
+    },
+    "else": {    
+        "if": {
+            "type": "object",
+            "properties": {
+                "type": {"const":"Collection"}
+            }
+        },
+        "then": { 
+            "$ref": "#/classes/collection" 
+        },
+        "else": { 
+            "$ref": "#/classes/annotationPage" 
+        }
+    }
 }

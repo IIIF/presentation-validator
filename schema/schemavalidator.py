@@ -28,22 +28,56 @@ def validate(data, version, url):
                 print ('Failed to load JSON due to: {}'.format(err))
                 raise
 
+    error = ''
+    errorsJson = []
     try:
         validator = Draft7Validator(schema)
-        results = validator.iter_errors(json.loads(data))
+        validator.validate(json.loads(data))
+        print ('Passed Validation!')
+        okay = 1
     except SchemaError as err:    
         print('Problem with the supplied schema:\n')
         print(err)
         raise
+    except ValidationError as err:    
+        results = validator.iter_errors(json.loads(data))
 
-    okay = 0
-    #print (best_match(results))
-    errors = sorted(results, key=relevance)
-    #errors = [best_match(results)]
-    error = ''
-    errorsJson = []
-    if errors:
+        okay = 0
+        #print (best_match(results))
+        errors = sorted(results, key=relevance)
+        #errors = [best_match(results)]
+        errorCount = 1
+        for err in errors:
+            detail = ''
+            if err and 'title' in err.schema:
+                detail = err.schema['title']
+            description = ''    
+            if 'description' in err.schema:
+                detail += ' ' + err.schema['description']
+            context = err.instance
+            if isinstance(context, dict):
+                for key in context:
+                    if isinstance(context[key], list): 
+                        context[key] = '[ ... ]'
+                    elif isinstance(context[key], dict):
+                        context[key] = '{ ... }'
+
+            #print (json.dumps(err.schema,indent=2))
+            errorsJson.append({
+                'title': 'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
+                'detail': detail,
+                'description': description,
+                'path': printPath(err.path, err.message),
+                'context': context,
+                'error': err
+    
+            })
+            errorCount +=1 
+
+    if False: #errors:
         print('Validation Failed')
+        
+
         if len(errors) == 1 and 'is not valid under any of the given schemas' in errors[0].message:
             errors = errors[0].context
 
@@ -121,9 +155,6 @@ def validate(data, version, url):
  #        }
 
         okay = 0
-    else:
-        print ('Passed Validation!')
-        okay = 1
 
     return {
         'received': data,
