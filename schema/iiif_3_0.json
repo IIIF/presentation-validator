@@ -455,7 +455,10 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
                     },
@@ -530,7 +533,10 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
                     },
@@ -609,12 +615,11 @@
                         "type": {
                             "type": "string",
                             "pattern": "^AnnotationPage$"
-                        },
-                        "label": {"$ref": "#/types/lngString" }
+                        }
                     }
                 }
             ]    
-        },
+        }, 
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -659,7 +664,10 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
                     },
@@ -716,7 +724,10 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
                     },
@@ -774,7 +785,10 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
                     },
@@ -805,9 +819,9 @@
                         },
                         "rendering": { "$ref": "#/types/external" },
                         "partOf": { "$ref": "#/classes/partOf" },
-                        "next": { "$ref": "#/classes/annotationPage" },
-                        "first": { "$ref": "#/classes/annotationPage" },
-                        "last": { "$ref": "#/classes/annotationPage" },
+                        "next": { "$ref": "#/classes/annotationPageRef" },
+                        "first": { "$ref": "#/classes/annotationPageRef" },
+                        "last": { "$ref": "#/classes/annotationPageRef" },
                         "service": { "$ref": "#/classes/service" },
                         "thumbnail": {
                             "type": "array",
@@ -1041,7 +1055,10 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         },
                         "thumbnail": {
