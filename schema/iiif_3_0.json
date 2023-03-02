@@ -1057,27 +1057,37 @@
         }
     },
     "$id": "http://iiif.io/api/presentation/3/schema.json" ,
-    "if": { 
-        "type": "object",
-        "properties": {
-            "type": {"const":"Manifest"}
-        }
-    },
-    "then": {
-        "$ref": "#/classes/manifest" 
-    },
-    "else": {    
-        "if": {
-            "type": "object",
-            "properties": {
-                "type": {"const":"Collection"}
+    "allOf": [
+        {
+            "if": { 
+                "type": "object",
+                "properties": {
+                    "type": {"const":"Manifest"}
+                }
+            },
+            "then": {
+                "$ref": "#/classes/manifest" 
             }
         },
-        "then": { 
-            "$ref": "#/classes/collection" 
-        },
-        "else": { 
+        {    
+            "if": {
+                "type": "object",
+                "properties": {
+                    "type": {"const":"Collection"}
+                }
+            },
+            "then": { 
+                "$ref": "#/classes/collection" 
+            }
+        }, 
+        { 
+            "if": {
+                "type": "object",
+                "properties": {
+                    "type": {"const":"AnnotationPage"}
+                }
+            },
             "$ref": "#/classes/annotationPage" 
         }
-    }
+    ]
 }
