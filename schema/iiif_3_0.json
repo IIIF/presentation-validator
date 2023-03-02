@@ -6,7 +6,7 @@
             "type": "string",
             "format": "uri",
             "pattern": "^http.*$",
-            "title": "Id must be presesnt and must be a URI"
+            "title": "Id must be present and must be a URI"
         },
         "lngString": {
             "title": "Language string, must have a language and value must be an array.",
@@ -87,6 +87,8 @@
                 {
                     "type": "object",
                     "additionalProperties": true,
+                    "title": "Reference",
+                    "description":"Id. type, label but not items are required",
                     "properties": {
                         "id": { "$ref": "#/types/id" },
                         "label": {"$ref": "#/types/lngString" },
@@ -760,8 +762,6 @@
                 }
             ]
         },
-
-
         "annotationCollection": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -794,31 +794,53 @@
             ]
         },
         "annotationPage": {
-            "type": "object",
-            "properties": {
-                "@context": {},
-                "id": { "$ref": "#/types/id" },
-                "type": {
-                    "type": "string",
-                    "pattern": "^AnnotationPage$",
-                    "default": "AnnotationPage"
-                },
-                "rendering": { "$ref": "#/types/external" },
-                "label": {"$ref": "#/types/lngString" },
-                "service": { "$ref": "#/classes/service" },
-                "thumbnail": {
-                    "type": "array",
-                    "items": { "$ref": "#/classes/resource" }
-                },
-                "items": {
-                    "type": "array",
-                    "items": {
-                        "$ref": "#/classes/annotation"
-                    }
+            "allOf": [
+                { "$ref": "#/types/class" },
+                {
+                    "type": "object",
+                    "title": "AnnotationPage",
+                    "description":"id, type and items required",
+                    "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
+                        "id": { "$ref": "#/types/id" },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^AnnotationPage$",
+                            "default": "AnnotationPage"
+                        },
+                        "rendering": { "$ref": "#/types/external" },
+                        "label": {"$ref": "#/types/lngString" },
+                        "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotation"
+                            }
+                        }
+                    },
+                    "required": ["id","type","items"],
+                    "additionalProperties": false
                 }
-            },
-            "required": ["id", "type"],
-            "additionalProperties": false
+            ]
         },
         "annotation": {
             "allOf": [
@@ -926,7 +948,12 @@
                 },
                 "format": { "$ref": "#/types/format" },
                 "accessibility": { "type": "string"},
-                "source": { "$ref": "#/types/id" },
+                "source": { 
+                    "oneOf": [
+                        { "$ref": "#/types/id" },
+                        { "$ref": "#/types/class" }
+                    ]
+                },
                 "selector": { 
                     "oneOf": [    
                         { "$ref": "#/classes/annoSelector" },
@@ -954,7 +981,27 @@
                         "type": { "type": "string" },
                         "t": { "$ref": "#/types/duration" }
                     },
-                    "required": ["type"]
+                    "required": ["type","t"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { 
+                            "type": "string",
+                            "pattern": "^FragmentSelector$",
+                            "default": "FragmentSelector"
+                        },
+                        "conformsTo": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^http.*$",
+                            "default": "http://www.w3.org/TR/media-frags/"
+                        },
+                        "value": { 
+                            "type:": "string"
+                         }
+                    },
+                    "required": ["type","value"]
                 }
             ]
         },
