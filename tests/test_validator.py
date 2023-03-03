@@ -190,22 +190,22 @@ class TestAll(unittest.TestCase):
 
         #print (errorParser)
         # annotationPage
-        path = [ u'oneOf', 2, u'properties', u'items', u'items', u'properties', u'type', u'pattern']
+        path = [ u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'properties', u'type', u'pattern']
         iiifPath = [u'items', 0, u'type']
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
         # annotationPage
-        path = [u'oneOf', 2, u'properties', u'items', u'items', u'required']
+        path = [u'oneOf', 2, u'allOf', 1, u'properties', u'items', u'items', u'required']
         iiifPath = [u'items', 0]
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
         # annotationPage
-        path = [u'oneOf', 2, u'properties', u'type', u'pattern']
+        path = [u'oneOf', 2,u'allOf', 1,  u'properties', u'type', u'pattern']
         iiifPath = [u'type']
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
         # annotationPage
-        path = [u'oneOf', 2, u'additionalProperties']
+        path = [u'oneOf', 2,u'allOf', 1,  u'additionalProperties']
         iiifPath = []
         self.assertFalse(errorParser.isValid(path, iiifPath), 'Matched manifest to annotation page incorrectly')
 
@@ -230,7 +230,7 @@ class TestAll(unittest.TestCase):
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in thumbnail needs to be an array.')
 
         # annotationPage
-        path = [u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items',  u'properties', u'items', u'items', u'allOf', 1, u'properties', u'body', u'anyOf']
+        path = [u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items',  u'allOf', 1, u'properties',  u'items', u'items', u'allOf', 1, u'properties', u'body', u'anyOf']
         iiifPath = [u'items', 0, u'items', 0, u'items', 0, u'body']
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in the canvas needs to be an array')
 
