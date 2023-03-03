@@ -83,28 +83,24 @@
             }
         },
         "reference": {
-            "allOf": [
-                {
-                    "type": "object",
-                    "additionalProperties": true,
-                    "title": "Reference",
-                    "description":"Id. type, label but not items are required",
-                    "properties": {
-                        "id": { "$ref": "#/types/id" },
-                        "label": {"$ref": "#/types/lngString" },
-                        "type": {
-                            "type": "string",
-                            "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
-                        },
-                        "thumbnail": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
-                        }
-                    },
-                    "required": ["id", "type", "label"],
-                    "not": { "required": [ "items" ] }
+            "type": "object",
+            "additionalProperties": true,
+            "title": "Reference",
+            "description":"Id. type, label but not items are required",
+            "properties": {
+                "id": { "$ref": "#/types/id" },
+                "label": {"$ref": "#/types/lngString" },
+                "type": {
+                    "type": "string",
+                    "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
+                },
+                "thumbnail": {
+                    "type": "array",
+                    "items": { "$ref": "#/classes/resource" }
                 }
-            ]
+            },
+            "required": ["id", "type"],
+            "not": { "required": [ "items" ] }
         }
     },
 
@@ -441,11 +437,11 @@
                         "items": {
                             "type": "array",	
                             "items": {	
-                            "anyOf": [
-                              { "$ref": "#/classes/manifestRef" },
-                              { "$ref": "#/classes/collectionRef" },
-                              { "$ref": "#/classes/collection" }
-                            ]
+                                "anyOf": [
+                                    { "$ref": "#/classes/manifestRef" },
+                                    { "$ref": "#/classes/collectionRef" },
+                                    { "$ref": "#/classes/collection" }
+                                ]
                             }
                         },
                         "annotations": {
@@ -548,9 +544,12 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Manifest$"
-                        }
-                    }
+                            "pattern": "^Manifest$",
+                            "default": "Manifest" 
+                        },
+                        "label": {"$ref": "#/types/lngString" }
+                    },
+                    "required":["label"]
                 }
             ]    
         },    
@@ -563,8 +562,10 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Collection$"
-                        }
-                    }
+                        },
+                        "label": {"$ref": "#/types/lngString" }
+                    },
+                    "required":["label"]
                 }
             ]    
         },  
@@ -1081,15 +1082,17 @@
                                                         "type": "string",
                                                         "pattern": "^Canvas$",
                                                         "default": "Canvas"
+                                                    },
+                                                    "items": {
+                                                        "type": "array"
                                                     }
-                                                }
-
+                                                },
+                                                "required": ["items"]
                                             }
                                         ]
                                     },
                                     { "$ref": "#/classes/range" },
-                                    { "$ref": "#/classes/canvasRef" },
-                                    { "$ref": "#/classes/rangeRef" }
+                                    { "$ref": "#/classes/canvasRef" }
                                 ]
                             }
                         }
