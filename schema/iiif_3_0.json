@@ -1003,19 +1003,19 @@
                         "type":"object"
                     },
                     "then": {
-                        "$ref": "#/classes/annoSelector"
+                        "$ref": "#/classes/selector"
                     },
                     "else": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/classes/annoSelector"
+                            "$ref": "#/classes/selector"
                         }
                     }
                 }
             },
             "required": ["source", "selector"]
         },
-        "annoSelector": {
+        "selector": {
             "allOf": [
                 {
                     "if": {
@@ -1096,8 +1096,31 @@
                         },
                         "required": ["type","value"]
                     }
+                },
+                {
+                    "if": {
+                        "type": "object",
+                        "properties": {
+                            "type": {"const":"ImageApiSelector"}
+                        }
+                    },
+                    "then": { 
+                        "type": "object",
+                        "properties": {
+                            "type": { 
+                                "type": "string",
+                                "pattern": "^ImageApiSelector$",
+                                "default": "ImageApiSelector"
+                            },
+                            "region": { "type:": "string" },
+                            "size": { "type:": "string" },
+                            "rotation": { "type:": "string" },
+                            "quality": { "type:": "string" },
+                            "format": { "type:": "string" }
+                        },
+                        "required": ["type"]
+                    }
                 }
-
             ]
         },
         "range": {
