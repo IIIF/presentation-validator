@@ -1031,15 +1031,17 @@
                     "if": {
                         "type":"object",
                         "properties": {
-                            "type": { "type": "string" },
-                            "t": {} 
-                        },
-                        "required": ["type","t"]
+                            "type": {"const":"PointSelector"}
+                        }
                     },
                     "then": {
                         "type": "object",
                         "properties": {
-                            "type": { "type": "string" },
+                            "type": { 
+                                "type": "string",
+                                "pattern": "^PointSelector$",
+                                "default": "PointSelector"
+                            },
                             "t": { "$ref": "#/types/duration" }
                         },
                         "required": ["type","t"]
