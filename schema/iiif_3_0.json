@@ -1074,7 +1074,30 @@
                         },
                         "required": ["type","value"]
                     }
+                },
+                {
+                    "if": {
+                        "type": "object",
+                        "properties": {
+                            "type": {"const":"SvgSelector"}
+                        }
+                    },
+                    "then": { 
+                        "type": "object",
+                        "properties": {
+                            "type": { 
+                                "type": "string",
+                                "pattern": "^SvgSelector$",
+                                "default": "SvgSelector"
+                            },
+                            "value": { 
+                                "type:": "string"
+                             }
+                        },
+                        "required": ["type","value"]
+                    }
                 }
+
             ]
         },
         "range": {
