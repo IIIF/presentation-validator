@@ -194,48 +194,44 @@
             "required": ["type", "items"]
         },
         "resource": {
-            "allOf": [
-                {
-                    "title": "ContentResource",
-                    "if": {
-                        "type": "object",
-                        "properties": {
-                            "type": { "const": "TextualBody" }
+            "title": "ContentResource",
+            "if": {
+                "type": "object",
+                "properties": {
+                    "type": { "const": "TextualBody" }
+                }
+            },
+            "then": {
+                "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
+                "type": "object",
+                "properties": {
+                    "id": { "$ref": "#/types/id" },
+                    "type": {
+                        "type": "string",
+                        "pattern": "^TextualBody$",
+                        "default": "TextualBody"
+                    },
+                    "value": { "type": "string" },
+                    "format": { "$ref": "#/types/format" },
+                    "language": { "type": "string"}
+                },
+                "required": ["value", "type"]
+            },
+            "else": {
+                "if": {
+                    "type":"object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "const": "SpecificResource"
                         }
-                    },
-                    "then": {
-                        "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
-                        "type": "object",
-                        "properties": {
-                            "id": { "$ref": "#/types/id" },
-                            "type": {
-                                "type": "string",
-                                "pattern": "^TextualBody$",
-                                "default": "TextualBody"
-                            },
-                            "value": { "type": "string" },
-                            "format": { "$ref": "#/types/format" },
-                            "language": { "type": "string"}
-                        },
-                        "required": ["value", "type"]
-                    }
+                    }    
                 },
-                {
+                "then": {
                     "title": "SpecificResource",
-                    "if": {
-                        "type":"object",
-                        "properties": {
-                            "type": {
-                                "type": "string",
-                                "const": "SpecificResource"
-                            }
-                        }    
-                    },
-                    "then": {
-                        "$ref": "#/classes/specificResource" 
-                    }
+                    "$ref": "#/classes/specificResource" 
                 },
-                {
+                "else": {
                     "title": "ContentResource: (not a TextualBody): ",
                     "description": "Annotation bodies MUST have an id and type property.",
                     "type": "object",
@@ -260,7 +256,7 @@
                     },
                     "required": ["id", "type"]
                 }
-            ]
+            }
         },
         "imgSvr": {
             "allOf": [
