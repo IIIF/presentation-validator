@@ -1035,6 +1035,20 @@
                          }
                     },
                     "required": ["type","value"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { 
+                            "type": "string",
+                            "pattern": "^SvgSelector$",
+                            "default": "SvgSelector"
+                        },
+                        "value": { 
+                            "type:": "string"
+                         }
+                    },
+                    "required": ["type","value"]
                 }
             ]
         },
