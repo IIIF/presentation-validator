@@ -940,16 +940,13 @@
                                 },
                                 {
                                     "if": {
-                                        "type": "object"
+                                        "type": "object",
+                                        "properties": {
+                                            "type": {"not": { "const": "Choice" }}
+                                        }
                                     },
                                     "then": {
                                         "$ref": "#/classes/resource"
-                                    },
-                                    "else": {
-                                        "type": "array",
-                                        "items": {
-                                            "$ref": "#/classes/resource"
-                                        }
                                     }
                                 }, 
                                 {
