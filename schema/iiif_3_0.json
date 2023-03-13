@@ -195,68 +195,88 @@
         },
         "resource": {
             "title": "ContentResource",
-            "if": {
-                "type": "object",
-                "properties": {
-                    "type": { "const": "TextualBody" }
-                }
-            },
-            "then": {
-                "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
-                "type": "object",
-                "properties": {
-                    "id": { "$ref": "#/types/id" },
-                    "type": {
-                        "type": "string",
-                        "pattern": "^TextualBody$",
-                        "default": "TextualBody"
-                    },
-                    "value": { "type": "string" },
-                    "format": { "$ref": "#/types/format" },
-                    "language": { "type": "string"}
-                },
-                "required": ["value", "type"]
-            },
-            "else": {
-                "if": {
-                    "type":"object",
-                    "properties": {
-                        "type": {
-                            "type": "string",
-                            "const": "SpecificResource"
+            "allOf":[
+                {
+                    "if": {
+                        "type": "object",
+                        "properties": {
+                            "type": { "const": "TextualBody" }
                         }
-                    }    
-                },
-                "then": {
-                    "title": "SpecificResource",
-                    "$ref": "#/classes/specificResource" 
-                },
-                "else": {
-                    "title": "ContentResource: (not a TextualBody): ",
-                    "description": "Annotation bodies MUST have an id and type property.",
-                    "type": "object",
-                    "properties": {
-                        "id": { "$ref": "#/types/id" },
-                        "type": {
-                            "type": "string"
-                        },
-                        "height": { "$ref": "#/types/dimension" },
-                        "width": { "$ref": "#/types/dimension" },
-                        "duration": { "$ref": "#/types/duration" },
-                        "language": { "type": "string"},
-                        "rendering": { "$ref": "#/types/external" },
-                        "service": { "$ref": "#/classes/service" },
-                        "format": { "$ref": "#/types/format" },
-                        "label": {"$ref": "#/types/lngString" },
-                        "thumbnail": {
-                            "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
-                        },
-                        "annotations": { "$ref": "#/types/annotationsLink" }
                     },
-                    "required": ["id", "type"]
+                    "then": {
+                        "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
+                        "type": "object",
+                        "properties": {
+                            "id": { "$ref": "#/types/id" },
+                            "type": {
+                                "type": "string",
+                                "pattern": "^TextualBody$",
+                                "default": "TextualBody"
+                            },
+                            "value": { "type": "string" },
+                            "format": { "$ref": "#/types/format" },
+                            "language": { "type": "string"}
+                        },
+                        "required": ["value", "type"]
+                    }
+                },
+                {
+                    "if": {
+                        "type":"object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "const": "SpecificResource"
+                            }
+                        }    
+                    },
+                    "then": {
+                        "title": "SpecificResource",
+                        "$ref": "#/classes/specificResource" 
+                    }
+                },
+                {
+                    "if": {
+                        "type":"object",
+                        "properties": {
+                            "type": {
+                                "type": "string",
+                                "not":{ 
+                                    "oneOf":[
+                                        { "const": "SpecificResource"},
+                                        { "const": "TextualBody" }
+                                    ]
+                                }   
+                            }
+                        }    
+                    },
+                    "then": {
+                        "title": "ContentResource: (not a TextualBody): ",
+                        "description": "Annotation bodies MUST have an id and type property.",
+                        "type": "object",
+                        "properties": {
+                            "id": { "$ref": "#/types/id" },
+                            "type": {
+                                "type": "string"
+                            },
+                            "height": { "$ref": "#/types/dimension" },
+                            "width": { "$ref": "#/types/dimension" },
+                            "duration": { "$ref": "#/types/duration" },
+                            "language": { "type": "string"},
+                            "rendering": { "$ref": "#/types/external" },
+                            "service": { "$ref": "#/classes/service" },
+                            "format": { "$ref": "#/types/format" },
+                            "label": {"$ref": "#/types/lngString" },
+                            "thumbnail": {
+                                "type": "array",
+                                "items": { "$ref": "#/classes/resource" }
+                            },
+                            "annotations": { "$ref": "#/types/annotationsLink" }
+                        },
+                        "required": ["id", "type"]
+                    }
                 }
-            }
+            ]
         },
         "imgSvr": {
             "allOf": [
@@ -906,29 +926,44 @@
                             }
                         },
                         "body": {
-                            "if": {
-                                "type": "object",
-                                "properties": {
-                                    "type": { "const": "Choice" }
-                                }
-                            },
-                            "then": {
-                                "$ref": "#/classes/choice"
-                            },
-                            "else": {
-                                "if": {
-                                    "type": "object"
+                            "allOf": [
+                                {
+                                    "if": {
+                                        "type": "object",
+                                        "properties": {
+                                            "type": { "const": "Choice" }
+                                        }
+                                    },
+                                    "then": {
+                                        "$ref": "#/classes/choice"
+                                    }
                                 },
-                                "then": {
-                                    "$ref": "#/classes/resource"
-                                },
-                                "else": {
-                                    "type": "array",
-                                    "items": {
+                                {
+                                    "if": {
+                                        "type": "object"
+                                    },
+                                    "then": {
                                         "$ref": "#/classes/resource"
+                                    },
+                                    "else": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/classes/resource"
+                                        }
+                                    }
+                                }, 
+                                {
+                                    "if": {
+                                        "type": "array"
+                                    },
+                                    "then": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/classes/resource"
+                                        }
                                     }
                                 }
-                            }
+                            ]
                         },
                         "target": {
                             "anyOf": [
