@@ -3,8 +3,7 @@ import unittest
 import json
 import os, sys
 
-sys.path.append('.')
-#sys.path.append(os.path.dirname(__file__))
+sys.path.insert(0,'.')
 
 from schema import schemavalidator
 
