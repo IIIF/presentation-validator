@@ -1122,6 +1122,7 @@
                                         ]
                                     },
                                     { "$ref": "#/classes/range" },
+                                    { "$ref": "#/classes/canvasRef" },
                                     { "$ref": "#/classes/canvasRef" }
                                 ]
                             }
