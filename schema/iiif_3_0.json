@@ -1011,10 +1011,16 @@
                 {
                     "type": "object",
                     "properties": {
-                        "type": { "type": "string" },
-                        "t": { "$ref": "#/types/duration" }
+                        "type": { 
+                            "type": "string",
+                            "pattern": "^PointSelector$",
+                            "default": "PointSelector"
+                        },
+                        "t": { "$ref": "#/types/duration" },
+                        "x": { "$ref": "#/types/dimension" },
+                        "y": { "$ref": "#/types/dimension" }
                     },
-                    "required": ["type","t"]
+                    "required": ["type"]
                 },
                 {
                     "type": "object",
