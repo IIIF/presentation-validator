@@ -28,6 +28,7 @@ setup(
     name='iiif-presentation-validator',
     version='0.0.3',
     scripts=['iiif-presentation-validator.py'],
+    packages=['schema' 'tests'],
     classifiers=["Development Status :: 4 - Beta",
                  "Intended Audience :: Developers",
                  "Operating System :: OS Independent",
