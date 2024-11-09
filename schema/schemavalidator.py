@@ -40,7 +40,7 @@ def validate(data, version, url):
     #print (best_match(results))
     errors = sorted(results, key=relevance)
     #errors = [best_match(results)]
-    error = ''
+    error = " "
     errorsJson = []
     if errors:
         print('Validation Failed')
@@ -65,6 +65,7 @@ def validate(data, version, url):
                     try:
                         err = errorParser.diagnoseWhichOneOf(list(err.absolute_schema_path), list(err.absolute_path))
                     except RecursionError as error:
+                        print (error)
                         print ('Failed to diagnose error due to recursion error. Schema: {} IIIF path: {}'.format(err.absolute_schema_path, err.absolute_path))
 
                         relevantErrors.append(err)
@@ -123,7 +124,7 @@ def validate(data, version, url):
     else:
         print ('Passed Validation!')
         okay = 1
-
+    error = ""
     return {
         'okay': okay,
         'warnings': [],
