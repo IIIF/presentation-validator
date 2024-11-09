@@ -868,7 +868,16 @@
                             "items": {
                                 "$ref": "#/classes/annotation"
                             }
-                        }
+                        },
+                        "partOf": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationCollection"
+                            }
+                        },
+                        "next": { "$ref": "#/classes/annotationPageRef" },
+                        "first": { "$ref": "#/classes/annotationPageRef" },
+                        "last": { "$ref": "#/classes/annotationPageRef" }
                     },
                     "required": ["id","type","items"],
                     "additionalProperties": false
@@ -1139,7 +1148,7 @@
         }
     },
     "$id": "http://iiif.io/api/presentation/3/schema.json" ,
-     "oneOf": [
+    "oneOf": [
         { "$ref": "#/classes/manifest" },
         { "$ref": "#/classes/collection" },
         { "$ref": "#/classes/annotationPage" }
