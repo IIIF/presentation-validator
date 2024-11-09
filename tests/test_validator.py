@@ -1,7 +1,11 @@
 """Test code for iiif-presentation-validator.py."""
 import unittest
 from mock import Mock
-import imp
+try:
+    import imp
+except ImportError:
+    import importlib
+
 from bottle import Response, request, LocalRequest
 
 try:
@@ -21,6 +25,8 @@ fh = open('iiif-presentation-validator.py', 'r')
 try:
     val_mod = imp.load_module('ipv', fh, 'iiif-presentation-validator.py',
                               ('py', 'r', imp.PY_SOURCE))
+except:
+    val_mod = importlib.import_module("iiif-presentation-validator")                              
 finally:
     fh.close()
 
