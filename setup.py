@@ -53,6 +53,7 @@ setup(
     ],
     extras_require={
         ':python_version>="3.6"': ["Pillow>=3.2.0"],
+        ':python_version="3.8"': ["Pillow=10.4.0"],
     },
     test_suite="tests",
     tests_require=[
