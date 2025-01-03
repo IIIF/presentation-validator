@@ -1020,7 +1020,7 @@
                     ]
                 }
             },
-            "required": ["source", "selector"]
+            "required": ["source"]
         },
         "selector": {
             "oneOf": [
