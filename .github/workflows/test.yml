@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: [ '3.9', '3.10', '3.11', '3.12']
+        python-version: [ '3.9', '3.10', '3.11', '3.12', '3.13']
     name: Python ${{ matrix.python-version }} sample
     steps:
       - uses: actions/checkout@v4
@@ -25,6 +25,9 @@ jobs:
         with:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+
+      - name: Install setup tools
+        run: pip install setuptools
 
       - name: Install
         run: python setup.py install
