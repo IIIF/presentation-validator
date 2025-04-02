@@ -8,6 +8,8 @@ import json
 import os
 from gzip import GzipFile
 from io import BytesIO
+from jsonschema.exceptions import ValidationError, SchemaError
+import traceback    
 
 try:
     # python3
@@ -25,9 +27,10 @@ egg_cache = "/path/to/web/egg_cache"
 os.environ['PYTHON_EGG_CACHE'] = egg_cache
 
 from iiif_prezi.loader import ManifestReader
+from pyld import jsonld
+jsonld.set_document_loader(jsonld.requests_document_loader(timeout=60))
 
 IIIF_HEADER = "application/ld+json;profile=http://iiif.io/api/presentation/{iiif_version}/context.json"
-
 
 class Validator(object):
     """Validator class that runs with Bottle."""
@@ -39,6 +42,7 @@ class Validator(object):
     def fetch(self, url, accept_header):
         """Fetch manifest from url."""
         req = Request(url)
+        req.add_header('User-Agent', 'IIIF Validation Service')
         req.add_header('Accept-Encoding', 'gzip')
 
         if accept_header:
@@ -47,7 +51,7 @@ class Validator(object):
         try:
             wh = urlopen(req)
         except HTTPError as wh:
-            pass
+            raise wh
         data = wh.read()
         wh.close()
 
@@ -58,7 +62,7 @@ class Validator(object):
         try:
             data = data.decode('utf-8')
         except:
-            pass
+            raise
         return(data, wh)
 
     def check_manifest(self, data, version, url=None, warnings=[]):
@@ -66,23 +70,63 @@ class Validator(object):
         infojson = {}
         # Check if 3.0 if so run through schema rather than this version...
         if version == '3.0':
-            infojson = schemavalidator.validate(data, version, url)
+            try:
+                infojson = schemavalidator.validate(data, version, url)
+                for error in infojson['errorList']:
+                    error.pop('error', None)
+
+                mf = json.loads(data)
+                if url and 'id' in mf and mf['id'] != url:
+                    raise ValidationError("The manifest id ({}) should be the same as the URL it is published at ({}).".format(mf["id"], url))
+            except ValidationError as e:
+                if infojson:
+                    infojson['errorList'].append({
+                        'title': 'Resolve Error',
+                        'detail': str(e),
+                        'description': '',
+                        'path': '/id',
+                        'context': '{ \'id\': \'...\'}'
+                        })
+                else:
+                    infojson = {
+                        'okay': 0,
+                        'error': str(e),
+                        'url': url,
+                        'warnings': []
+                    }
+            except Exception as e:    
+                traceback.print_exc()
+                infojson = {
+                    'okay': 0,
+                    'error': 'Presentation Validator bug: "{}". Please create a <a href="https://github.com/IIIF/presentation-validator/issues">Validator Issue</a>, including a link to the manifest.'.format(e),
+                    'url': url,
+                    'warnings': []
+                }
+
         else:
             reader = ManifestReader(data, version=version)
             err = None
             try:
                 mf = reader.read()
                 mf.toJSON()
+                if url and mf.id != url:
+                    raise ValidationError("Manifest @id ({}) is different to the location where it was retrieved ({})".format(mf.id, url))
                 # Passed!
                 okay = 1
+            except KeyError as e:    
+                print ('Failed validation due to:')
+                traceback.print_exc()
+                err = 'Failed due to KeyError {}, check trace for details'.format(e)
+                okay = 0
             except Exception as e:
                 # Failed
+                print ('Failed validation due to:')
+                traceback.print_exc()
                 err = e
                 okay = 0
 
             warnings.extend(reader.get_warnings())
             infojson = {
-                'received': data,
                 'okay': okay,
                 'warnings': warnings,
                 'error': str(err),
@@ -129,8 +173,8 @@ class Validator(object):
 
         try:
             (data, webhandle) = self.fetch(url, accept_header)
-        except:
-            return self.return_json({'okay': 0, 'error': 'Cannot fetch url', 'url': url})
+        except Exception as error:
+            return self.return_json({'okay': 0, 'error': 'Cannot fetch url. Got "{}"'.format(error), 'url': url})
 
         # First check HTTP level
         ct = webhandle.headers.get('content-type', '')

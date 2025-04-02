@@ -26,16 +26,16 @@ class Coverage(Command):
 
 setup(
     name='iiif-presentation-validator',
-    version='0.0.2',
+    version='0.0.3',
     scripts=['iiif-presentation-validator.py'],
+    packages=['schema', 'tests'],
     classifiers=["Development Status :: 4 - Beta",
                  "Intended Audience :: Developers",
                  "Operating System :: OS Independent",
                  "Programming Language :: Python",
-                 "Programming Language :: Python :: 2.7",
-                 "Programming Language :: Python :: 3.4",
-                 "Programming Language :: Python :: 3.5",
-                 "Programming Language :: Python :: 3.6",
+                 "Programming Language :: Python :: 3.9",
+                 "Programming Language :: Python :: 3.10",
+                 "Programming Language :: Python :: 3.11",
                  "Topic :: Internet :: WWW/HTTP",
                  "Topic :: Multimedia :: Graphics :: Graphics Conversion",
                  "Topic :: Software Development :: "
@@ -47,8 +47,13 @@ setup(
     install_requires=[
         'bottle>=0.12.9',
         'iiif_prezi>=0.2.2',
-        'jsonschema'
+        'jsonschema',
+        'jsonpath_rw',
+        'requests'
     ],
+    extras_require={
+        ':python_version>="3.6"': ["Pillow>=3.2.0"]
+    },
     test_suite="tests",
     tests_require=[
         "coverage",

@@ -1,0 +1,52 @@
+{
+  "@context": [
+    "http://www.w3.org/ns/anno.jsonld",
+    "http://iiif.io/api/presentation/3/context.json"
+  ],
+  "id": "https://example.com/manifest",
+  "label": "Old table label which doesn't have a language",
+  "type": "Manifest",
+  "sequences": [
+    {
+      "id": "https://example.com/sequence",
+      "label": "Current order",
+      "type": "Sequence",
+      "viewingDirection": "left-to-right",
+      "canvases": [
+        {
+          "type": "Canvas",
+          "id": "https://example.com/canvas1",
+          "label": "Image 1",
+          "height": 3820,
+          "width": 5426,
+          "content": [
+            {
+              "type": "AnnotationPage",
+              "id": "https://example.com/anno1",
+              "items": [
+                {
+                  "id": "https://example.com/image1",
+                  "type": "Annotation",
+                  "motivation": "painting",
+                  "target": "https://example.com/canvas1",
+                  "body": {
+                    "type": "Image",
+                    "id": "https://example.com/image/full.jpg",
+                    "format": "image/jpeg",
+                    "height": 3820,
+                    "width": 5426,
+                    "service": {
+                      "@context": "http://iiif.io/api/image/2/context.json",
+                      "id": "https://example.com/image1/api/1",
+                      "profile": "http://iiif.io/api/image/2/level2.json"
+                    }
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

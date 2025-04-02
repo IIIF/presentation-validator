@@ -13,6 +13,7 @@
         "format": "text/plain"
       },
       "target": {
+        "type": "SpecificResource",
         "source": "https://preview.iiif.io/cookbook/0103-poetry/recipe/0103-poetry-reading-annotations/canvas/1",
         "selector": {
           "type": "PointSelector",

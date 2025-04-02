@@ -1,0 +1,56 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://example.org/iiif/book1/manifest",
+  "type": "Manifest",
+  "label": { "en": [ "Book 1" ] },
+  "thumbnail": [
+    {
+      "id": "https://example.org/iiif/book1/page1/full/80,100/0/default.jpg",
+      "type": "Image",
+      "format": "image/jpeg",
+      "service": 
+        {
+          "id": "https://example.org/iiif/book1/page1",
+          "type": "ImageService3",
+          "profile": "level1"
+        }
+      
+    }
+  ],
+  "items": [
+    {
+      "id": "https://example.org/iiif/book1/canvas/p1",
+      "type": "Canvas",
+      "height": 1000,
+      "width": 750,
+      "items": [
+        {
+          "id": "https://example.org/iiif/book1/page/p1/1",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "https://example.org/iiif/book1/annotation/p0001-image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://example.org/iiif/book1/page1/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "service": 
+                  {
+                    "id": "https://example.org/iiif/book1/page1",
+                    "type": "ImageService3",
+                    "profile": "level2"
+                  }
+                ,
+                "height": 2000,
+                "width": 1500
+              },
+              "target": "https://example.org/iiif/book1/canvas/p1"
+            }
+          ]
+        }
+      ]
+    }
+  ]  
+}

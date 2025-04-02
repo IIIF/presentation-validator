@@ -1,0 +1,119 @@
+{
+  "@context": [
+    "http://geojson.org/geojson-ld/geojson-context.jsonld",
+    "http://iiif.io/api/presentation/3/context.json"
+  ],
+  "id": "http://localhost:4000/recipe/0139-geo-annotation/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Geographic Annotation Example Manifest"
+    ]
+  },
+  "summary": {
+    "en": [
+      "A Manifest containing GeoJSON-LD Web Annotations to target the word 'Paris' on the Cover Page of Le Scarabée D'or in order to transcribe it and geocode it to Paris, France."
+    ]
+  },
+  "items": [
+    {
+      "id": "http://localhost:4000/recipe/0139-geo-annotation/canvas.json",
+      "type": "Canvas",
+      "label": {
+        "fr": [
+          "Page de Couverture du Le Scarabée D'or"
+        ]
+      },
+      "width": 3204,
+      "height": 4613,
+      "items": [
+        {
+          "id": "http://localhost:4000/recipe/0139-geo-annotation/contentPage.json",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "http://localhost:4000/recipe/0139-geo-annotation/content.json",
+              "type": "Annotation",
+              "motivation": "painting",
+              "label": {
+                "en": [
+                  "The cover page."
+                ]
+              },
+              "body": {
+                "id": "https://iiif.io/api/image/3.0/example/reference/59d09e6773341f28ea166e9f3c1e674f-gallica_ark_12148_bpt6k1526005v_f20/full/max/0/default.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "service": [
+                  {
+                    "id": "https://iiif.io/api/image/3.0/example/reference/59d09e6773341f28ea166e9f3c1e674f-gallica_ark_12148_bpt6k1526005v_f20",
+                    "type": "ImageService3",
+                    "profile": "level1"
+                  }
+                ],
+                "width": 3204,
+                "height": 4613
+              },
+              "target": "http://localhost:4000/recipe/0139-geo-annotation/canvas.json"
+            }
+          ]
+        }
+      ],
+      "annotations": [
+        {
+          "id": "http://localhost:4000/recipe/0139-geo-annotation/supplementingPage.json",
+          "type": "AnnotationPage",
+          "items": [
+            {
+              "id": "http://localhost:4000/recipe/0139-geo-annotation/transcriptionAnno.json",
+              "type": "Annotation",
+              "motivation": "supplementing",
+              "label": {
+                "en": [
+                  "Transcription text for this region of the canvas."
+                ]
+              },
+              "body": {
+                "type": "TextualBody",
+                "value": "Paris",
+                "format": "text/plain",
+                "language": "en",
+                "purpose": "transcribing"
+              },
+              "target": "http://localhost:4000/recipe/0139-geo-annotation/canvas.json#xywh=1300,3370,250,100"
+            },
+            {
+              "id": "http://localhost:4000/recipe/0139-geo-annotation/geoAnno.json",
+              "type": "Annotation",
+              "motivation": "geocode",
+              "label": {
+                "en": [
+                  "The piece of the canvas containing the word 'Paris' geocoded to Paris, France."
+                ]
+              },
+              "body": {
+                "id": "http://localhost:4000/recipe/0139-geo-annotation/geo.json",
+                "type": "ExtensionType",
+                "properties": {
+                  "label": {
+                    "en": [
+                      "Paris, France"
+                    ]
+                  }
+                },
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [
+                    48.86,
+                    2.34
+                  ]
+                }
+              },
+              "target": "http://localhost:4000/recipe/0139-geo-annotation/canvas.json#xywh=1300,3370,250,100"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

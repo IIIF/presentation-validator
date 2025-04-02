@@ -6,11 +6,10 @@
             "type": "string",
             "format": "uri",
             "pattern": "^http.*$",
-            "title": "Id must be presesnt and must be a URI"
+            "title": "Id must be present and must be a URI"
         },
         "lngString": {
-            "$id": "#lngString",
-            "title": "Language string, must have a languagae and value must be an array.",
+            "title": "Language string, must have a language and value must be an array.",
             "type": "object",
             "patternProperties": {
                 "^[a-zA-Z-][a-zA-Z-]*$": {
@@ -24,8 +23,11 @@
             },
             "additionalProperties": false
         },
+        "dimension": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+        },
         "keyValueString": {
-            "$id": "#keyValueString",
             "type": "object",
             "properties": {
                 "label": {"$ref": "#/types/lngString" },
@@ -61,7 +63,44 @@
         },
         "duration": {
             "type": "number",
-            "minimum": 0
+            "exclusiveMinimum": 0
+        },
+        "external": {
+            "type": "array",
+            "items": {
+                "allOf": [
+                    { "$ref": "#/types/class" },
+                    {
+                        "type": "object",
+                        "properties": {
+                            "format": { "$ref": "#/types/format" },
+                            "profile": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                ]
+            }
+        },
+        "reference": {
+            "type": "object",
+            "additionalProperties": true,
+            "title": "Reference",
+            "description":"Id. type, label but not items are required",
+            "properties": {
+                "id": { "$ref": "#/types/id" },
+                "label": {"$ref": "#/types/lngString" },
+                "type": {
+                    "type": "string",
+                    "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
+                },
+                "thumbnail": {
+                    "type": "array",
+                    "items": { "$ref": "#/classes/resource" }
+                }
+            },
+            "required": ["id", "type"],
+            "not": { "required": [ "items" ] }
         }
     },
 
@@ -92,21 +131,7 @@
             }
         },
         "seeAlso": {
-            "type": "array",
-            "items": {
-                "allOf": [
-                    { "$ref": "#/types/class" },
-                    {
-                        "type": "object",
-                        "properties": {
-                            "format": { "$ref": "#/types/format" },
-                            "profile": {
-                                "type": "string"
-                            }
-                        }
-                    }
-                ]
-            }
+            "$ref": "#/types/external"
         },
         "partOf": {
             "type": "array",
@@ -135,45 +160,29 @@
                     "properties": {
                         "id": { "$ref": "#/types/id" },
                         "type": {
-                            "oneOf": [
-                                {
-                                    "type": "string",
-                                    "pattern": "^Image$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Sound$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Video$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Model$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Dataset$"
-                                },
-                                {
-                                    "type": "string",
-                                    "pattern": "^Text$"
-                                }                            ]
+                            "type": "string"
                         },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
-                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
                         "language": { "type": "string"},
+                        "rendering": { "$ref": "#/types/external" },
                         "service": { "$ref": "#/classes/service" },
                         "format": { "$ref": "#/types/format" },
-                        "label": {"$ref": "#/types/lngString" }
+                        "label": {"$ref": "#/types/lngString" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
+                            }
+                        }
                     },
                     "required": ["id", "type"]
                 },
@@ -184,7 +193,8 @@
                         "id": { "$ref": "#/types/id" },
                         "type": {
                             "type": "string",
-                            "pattern": "^TextualBody$"
+                            "pattern": "^TextualBody$",
+                            "default": "TextualBody"
                         },
                         "value": { "type": "string" },
                         "format": { "$ref": "#/types/format" },
@@ -236,108 +246,45 @@
             }
         },
         "rights": {
-            "title": "Rights URI isn't from either Creative Commons or Rights statements.org. Both require http links.",
+            "title": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
             "oneOf": [
                 {
                     "type": "string",
                     "format": "uri",
-                    "pattern": "http://creativecommons.org/licenses/by/4.0"
+                    "pattern": "http://creativecommons.org/licenses/.*"
                 },
                 {
                     "type": "string",
                     "format": "uri",
-                    "pattern": "http://creativecommons.org/licenses/by-sa/4.0"
+                    "pattern": "http://creativecommons.org/publicdomain/.*"
                 },
                 {
                     "type": "string",
                     "format": "uri",
-                    "pattern": "http://creativecommons.org/licenses/by-nd/4.0"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://creativecommons.org/licenses/by-nc/4.0"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://creativecommons.org/licenses/by-nc-sa/4.0"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://creativecommons.org/licenses/by-nc-nd/4.0"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://creativecommons.org/publicdomain/mark/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/InC/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/InC-OW-EU/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/InC-EDU/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/InC-NC/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/InC-RUU/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/NoC-CR/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/NoC-NC/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/NoC-OKLR/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/NoC-US/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/CNE/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/UND/1.0/"
-                },
-                {
-                    "type": "string",
-                    "format": "uri",
-                    "pattern": "http://rightsstatements.org/vocab/NKC/1.0/"
+                    "pattern": "http://rightsstatements.org/vocab/.*"
                 }
             ]
         },
         "navDate": {
             "type": "string",
             "format": "date-time"
+        },
+        "navPlace": {
+            "type": "object",
+            "properties": {
+                "id": { "$ref": "#/types/id" },
+                "type": { 
+                    "type": "string",
+                    "default": "FeatureCollection"
+                },
+                "features": { 
+                    "type": "array",
+                    "items": {
+                        "type": "object"
+                    }
+                }
+            },
+            "required": ["type"]
         },
         "viewingDirection": {
             "anyOf": [
@@ -440,7 +387,8 @@
                         "properties": {
                             "type": {
                                 "type": "string",
-                                "pattern": "^Agent$"
+                                "pattern": "^Agent$",
+                                "default": "Agent"
                             },
                             "homepage": { "$ref": "#/classes/homepage" },
                             "logo": {
@@ -462,16 +410,23 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
+                            "default": "Collection",
                             "title": "Are you validating a collection?",
                             "description":"If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
                         },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
                         "rights": { "$ref": "#/classes/rights" },
                         "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
+                        "services": { "$ref": "#/classes/service" },
+                        "service": { "$ref": "#/classes/service" },
+                        "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
+                        "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
@@ -480,18 +435,22 @@
                         "behavior": { "$ref": "#/classes/behavior" },
                         "partOf": { "$ref": "#/classes/partOf" },
                         "items": {
-                            "type": "array",
-                            "items": {
-                              "oneOf": [
-                                { "$ref": "#/classes/manifest" },
-                                { "$ref": "#/classes/collection" }
-                              ]
+                            "type": "array",	
+                            "items": {	
+                                "anyOf": [
+                                    { "$ref": "#/classes/manifestRef" },
+                                    { "$ref": "#/classes/collectionRef" },
+                                    { "$ref": "#/classes/collection" }
+                                ]
                             }
                         },
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
                     },
@@ -504,6 +463,7 @@
                 { "$ref": "#/types/class" },
                 {
                     "type": "object",
+                    "additionalProperties": false,
                     "properties": {
                         "@context": {
                             "oneOf": [
@@ -521,24 +481,26 @@
                                 }
                             ]
                         },
+                        "id": { "$ref": "#/types/id" },
+                        "label": {"$ref": "#/types/lngString" },
                         "type": {
                             "type": "string",
-                            "pattern": "^Manifest"
+                            "pattern": "^Manifest",
+                            "default": "Manifest"
                         },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
+                        "service": { "$ref": "#/classes/service" },
+                        "services": { "$ref": "#/classes/service" },
+                        "viewingDirection": { "$ref": "#/classes/viewingDirection" },
+                        "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
+                        "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
                         "rights": { "$ref": "#/classes/rights" },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
-                        },
+                        "start": {},
                         "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
                         "thumbnail": {
@@ -563,13 +525,99 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
-                    }
+                    },
+                    "required": ["id", "type", "label"]
                 }
             ]
         },
+        "manifestRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Manifest$",
+                            "default": "Manifest" 
+                        },
+                        "label": {"$ref": "#/types/lngString" }
+                    },
+                    "required":["label"]
+                }
+            ]    
+        },    
+        "collectionRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Collection$"
+                        },
+                        "label": {"$ref": "#/types/lngString" }
+                    },
+                    "required":["label"]
+                }
+            ]    
+        },  
+        "rangeRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Range$"
+                        }
+                    }
+                }
+            ]    
+        },  
+        "canvasRef": {
+            "allOf": [
+                { "$ref": "#/types/reference" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Canvas$"
+                        }
+                    }
+                }
+            ]    
+        },  
+        "annotationPageRef": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "allOf": [
+                        { "$ref": "#/types/reference" },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "pattern": "^AnnotationPage$"
+                                }
+                            }
+                        }
+                    ]    
+                }
+            ]
+        }, 
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -578,24 +626,24 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Canvas$"
+                            "pattern": "^Canvas$",
+                            "default": "Canvas"
                         },
-                        "height": {
-                            "type": "integer"
-                        },
-                        "width": {
-                            "type": "integer"
-                        },
-                        "duration": {
-                            "$ref": "#/types/duration"
-                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
                         "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
                         "rights": { "$ref": "#/classes/rights" },
                         "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
                         "provider": { "$ref": "#/classes/provider" },
                         "seeAlso": { "$ref": "#/classes/seeAlso" },
+                        "service": { "$ref": "#/classes/service" },
+                        "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
+                        "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
@@ -612,10 +660,14 @@
                         "annotations": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationPage"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
                             }
                         }
                     },
+                    "required": ["items"],
                     "anyOf":[
                         { "required": ["width"] },
                         { "required": ["height"] },
@@ -628,6 +680,128 @@
                 }
             ]
         },
+        "placeholderCanvas": {
+            "allOf": [
+                { "$ref": "#/types/class" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Canvas$",
+                            "default": "Canvas"
+                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
+                        "metadata": { "$ref": "#/classes/metadata" },
+                        "summary": { "$ref": "#/types/lngString" },
+                        "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
+                        "rights": { "$ref": "#/classes/rights" },
+                        "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
+                        "provider": { "$ref": "#/classes/provider" },
+                        "seeAlso": { "$ref": "#/classes/seeAlso" },
+                        "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
+                        "homepage": { "$ref": "#/classes/homepage" },
+                        "behavior": { "$ref": "#/classes/behavior" },
+                        "partOf": { "$ref": "#/classes/partOf" },
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationPage"
+                            }
+                        },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
+                            }
+                        }
+                    },
+                    "required": ["items"],
+                    "anyOf":[
+                        { "required": ["width"] },
+                        { "required": ["height"] },
+                        { "required": ["duration"] }
+                    ],
+                    "dependencies": {
+                        "width": ["height"],
+                        "height": ["width"]
+                    },
+                    "not": { "required": [ "placeholderCanvas", "accompanyingCanvas" ] }
+                }
+            ]
+        },
+        "accompanyingCanvas": {
+            "allOf": [
+                { "$ref": "#/types/class" },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Canvas$",
+                            "default": "Canvas"
+                        },
+                        "height": { "$ref": "#/types/dimension" },
+                        "width": { "$ref": "#/types/dimension" },
+                        "duration": { "$ref": "#/types/duration" },
+                        "metadata": { "$ref": "#/classes/metadata" },
+                        "summary": { "$ref": "#/types/lngString" },
+                        "requiredStatement": { "$ref": "#/types/keyValueString" },
+                        "rendering": { "$ref": "#/types/external" },
+                        "rights": { "$ref": "#/classes/rights" },
+                        "navDate": { "$ref": "#/classes/navDate" },
+                        "navPlace": { "$ref": "#/classes/navPlace" },
+                        "provider": { "$ref": "#/classes/provider" },
+                        "seeAlso": { "$ref": "#/classes/seeAlso" },
+                        "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
+                        "homepage": { "$ref": "#/classes/homepage" },
+                        "behavior": { "$ref": "#/classes/behavior" },
+                        "partOf": { "$ref": "#/classes/partOf" },
+                        "items": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationPage"
+                            }
+                        },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
+                            }
+                        }
+                    },
+                    "required": ["items"],
+                    "anyOf":[
+                        { "required": ["width"] },
+                        { "required": ["height"] },
+                        { "required": ["duration"] }
+                    ],
+                    "dependencies": {
+                        "width": ["height"],
+                        "height": ["width"]
+                    },
+                    "not": { "required": [ "placeholderCanvas", "accompanyingCanvas" ] }
+                }
+            ]
+        },
         "annotationCollection": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -636,12 +810,23 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^AnnotationCollection$"
+                            "pattern": "^AnnotationCollection$",
+                            "default": "AnnotationCollection"
                         },
+                        "rendering": { "$ref": "#/types/external" },
                         "partOf": { "$ref": "#/classes/partOf" },
-                        "next": { "$ref": "#/classes/annotationPage" },
-                        "first": { "$ref": "#/classes/annotationPage" },
-                        "last": { "$ref": "#/classes/annotationPage" },
+                        "next": { "$ref": "#/classes/annotationPageRef" },
+                        "first": { "$ref": "#/classes/annotationPageRef" },
+                        "last": { "$ref": "#/classes/annotationPageRef" },
+                        "service": { "$ref": "#/classes/service" },
+                        "total": {
+                            "type": "integer",
+                            "exclusiveMinimum": 0
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "items": {
                             "type": "array",
                             "items": {
@@ -657,20 +842,56 @@
                 { "$ref": "#/types/class" },
                 {
                     "type": "object",
+                    "title": "AnnotationPage",
+                    "description":"id, type and items required",
                     "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
                         "id": { "$ref": "#/types/id" },
-                        "@context": {},
                         "type": {
                             "type": "string",
-                            "pattern": "^AnnotationPage$"
+                            "pattern": "^AnnotationPage$",
+                            "default": "AnnotationPage"
+                        },
+                        "rendering": { "$ref": "#/types/external" },
+                        "label": {"$ref": "#/types/lngString" },
+                        "service": { "$ref": "#/classes/service" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
                         },
                         "items": {
                             "type": "array",
                             "items": {
                                 "$ref": "#/classes/annotation"
                             }
-                        }
+                        },
+                        "partOf": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annotationCollection"
+                            }
+                        },
+                        "next": { "$ref": "#/classes/annotationPageRef" },
+                        "prev": { "$ref": "#/classes/annotationPageRef" },
+                        "first": { "$ref": "#/classes/annotationPageRef" },
+                        "last": { "$ref": "#/classes/annotationPageRef" }
                     },
+                    "required": ["id","type","items"],
                     "additionalProperties": false
                 }
             ]
@@ -683,7 +904,14 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Annotation$"
+                            "pattern": "^Annotation$",
+                            "default": "Annotation"
+                        },
+                        "service": { "$ref": "#/classes/service" },
+                        "rendering": { "$ref": "#/types/external" },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
                         },
                         "motivation": {
                             "oneOf": [
@@ -697,11 +925,13 @@
                             ]    
                         },
                         "body": {
-                            "oneOf": [
+                            "anyOf": [
                                 {
+                                    "type": "object",
                                     "$ref": "#/classes/resource"
                                 },
                                 {
+                                    "type": "object",
                                     "allOf":[
                                         { "$ref": "#/classes/choice" },
                                         {
@@ -714,11 +944,18 @@
                                             "required": ["items"]
                                         }
                                     ]
+                                },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object"
+                                    }
                                 }
+
                             ]
                         },
                         "target": {
-                            "oneOf": [
+                            "anyOf": [
                                 { "$ref": "#/classes/annoTarget" },
                                 {
                                     "type": "array",
@@ -729,7 +966,7 @@
                             ]
                         }
                     },
-                    "required": ["target", "type"]
+                    "required": ["id", "target", "type"]
                 }
             ]
         },
@@ -742,6 +979,15 @@
                 },
                 {
                     "$ref": "#/classes/specificResource"
+                },
+                {
+                    "title": "Annotation target can also contain just scope and source",
+                    "type": "object",
+                    "properties": {
+                        "source": { "$ref": "#/types/id" },
+                        "scope": { "$ref": "#/types/id" }
+                    }, 
+                    "required": ["source", "scope"]
                 }
             ]
         },
@@ -751,16 +997,32 @@
                 "id": { "$ref": "#/types/id" },
                 "type": { 
                     "type": "string",
-                    "pattern": "^SpecificResource$"
+                    "pattern": "^SpecificResource$",
+                    "default": "SpecificResource"
                 },
                 "format": { "$ref": "#/types/format" },
                 "accessibility": { "type": "string"},
-                "source": { "$ref": "#/types/id" },
-                "selector": { "$ref": "#/classes/annoSelector" }
+                "source": { 
+                    "oneOf": [
+                        { "$ref": "#/types/id" },
+                        { "$ref": "#/types/class" }
+                    ]
+                },
+                "selector": { 
+                    "oneOf": [    
+                        { "$ref": "#/classes/selector" },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/selector"
+                            }
+                        }
+                    ]
+                }
             },
             "required": ["source", "selector"]
         },
-        "annoSelector": {
+        "selector": {
             "oneOf": [
                 {
                     "type": "string",
@@ -770,8 +1032,64 @@
                 {
                     "type": "object",
                     "properties": {
-                        "type": { "type": "string" },
-                        "t": { "$ref": "#/types/duration" }
+                        "type": { 
+                            "type": "string",
+                            "pattern": "^PointSelector$",
+                            "default": "PointSelector"
+                        },
+                        "t": { "$ref": "#/types/duration" },
+                        "x": { "$ref": "#/types/dimension" },
+                        "y": { "$ref": "#/types/dimension" }
+                    },
+                    "required": ["type"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { 
+                            "type": "string",
+                            "pattern": "^FragmentSelector$",
+                            "default": "FragmentSelector"
+                        },
+                        "conformsTo": {
+                            "type": "string",
+                            "format": "uri",
+                            "pattern": "^http.*$",
+                            "default": "http://www.w3.org/TR/media-frags/"
+                        },
+                        "value": { 
+                            "type:": "string"
+                         }
+                    },
+                    "required": ["type","value"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { 
+                            "type": "string",
+                            "pattern": "^SvgSelector$",
+                            "default": "SvgSelector"
+                        },
+                        "value": { 
+                            "type:": "string"
+                         }
+                    },
+                    "required": ["type","value"]
+                },
+                {
+                    "type": "object",
+                    "properties": {
+                        "type": { 
+                            "type": "string",
+                            "pattern": "^ImageApiSelector$",
+                            "default": "ImageApiSelector"
+                        },
+                        "region": { "type:": "string" },
+                        "size": { "type:": "string" },
+                        "rotation": { "type:": "string" },
+                        "quality": { "type:": "string" },
+                        "format": { "type:": "string" }
                     },
                     "required": ["type"]
                 }
@@ -785,16 +1103,32 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Range$"
+                            "pattern": "^Range$",
+                            "default": "Range"
                         },
+                        "rendering": { "$ref": "#/types/external" },
                         "supplementary": { "$ref": "#/classes/annotationCollection" },
+                        "service": { "$ref": "#/classes/service" },
+                        "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
+                        "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
+                        "annotations": {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationPage" },
+                                    { "$ref": "#/classes/annotationPageRef"}
+                                ]
+                            }
+                        },
+                        "thumbnail": {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/resource" }
+                        },
                         "items": {
                             "type": "array",
                             "items": {
                                 "oneOf": [
-                                    {
-                                        "$ref": "#/classes/specificResource"
-                                    },
+                                    { "$ref": "#/classes/specificResource" },
                                     {
                                         "allOf": [
                                             { "$ref": "#/types/class" },
@@ -803,33 +1137,33 @@
                                                 "properties": {
                                                     "type": {
                                                         "type": "string",
-                                                        "pattern": "^Canvas$"
+                                                        "pattern": "^Canvas$",
+                                                        "default": "Canvas"
+                                                    },
+                                                    "items": {
+                                                        "type": "array"
                                                     }
-                                                }
-
+                                                },
+                                                "required": ["items"]
                                             }
                                         ]
                                     },
-                                    {
-                                        "$ref": "#/classes/range"
-                                    }
+                                    { "$ref": "#/classes/range" },
+                                    { "$ref": "#/classes/canvasRef" }
                                 ]
                             }
                         }
-                    }
+                    },
+                    "required":["items"]
                 }
             ]
         }
     },
     "$id": "http://iiif.io/api/presentation/3/schema.json" ,
-    "allOf": [
-        { "$ref": "#/types/class" },
-        {
-          "oneOf": [
-            { "$ref": "#/classes/manifest" },
-            { "$ref": "#/classes/collection" },
-            { "$ref": "#/classes/annotationPage" }
-          ]
-        }
-    ]
+    "oneOf": [
+        { "$ref": "#/classes/manifest" },
+        { "$ref": "#/classes/collection" },
+        { "$ref": "#/classes/annotationCollection" },
+        { "$ref": "#/classes/annotationPage" }
+     ]
 }

@@ -50,25 +50,49 @@
   "behavior": [ "paged" ],
   "navDate": "1856-01-01T00:00:00Z",
 
-  "rights": "http://creativecommons.org/licenses/by/4.0",
+  "rights": "http://creativecommons.org/licenses/by/4.0/",
   "requiredStatement": {
     "label": { "en": [ "Attribution" ] },
     "value": { "en": [ "Provided by Example Organization" ] }
   },
-  "logo": [
-    {
-      "id": "https://example.org/service/inst1/full/max/0/default.png",
-      "type": "Image",
-      "format": "image/png",
-      "service": [
-        {
-          "id": "https://example.org/service/inst1",
-          "type": "ImageService3",
-          "profile": "level2"
-        }
-      ]
-    }
-  ],
+
+  "provider": [
+      {
+        "id": "https://example.org/about",
+        "type": "Agent",
+        "label": { "en": [ "Example Organization" ] },
+        "homepage": [
+          {
+            "id": "https://example.org/",
+            "type": "Text",
+            "label": { "en": [ "Example Organization Homepage" ] },
+            "format": "text/html"
+          }
+        ],
+        "logo": [
+          {
+            "id": "https://example.org/service/inst1/full/max/0/default.png",
+            "type": "Image",
+            "format": "image/png",
+            "service": [
+              {
+                "id": "https://example.org/service/inst1",
+                "type": "ImageService3",
+                "profile": "level2"
+              }
+            ]
+          }
+        ],
+        "seeAlso": [
+          {
+            "id": "https://data.example.org/about/us.jsonld",
+            "type": "Dataset",
+            "format": "application/ld+json",
+            "profile": "https://schema.org/"
+          }
+        ]
+      }
+    ],
   "homepage": [
     {
       "id": "https://example.org/info/book1/",
@@ -111,6 +135,22 @@
     "type": "Canvas"
   },
 
+  "services": [
+    {
+      "@id": "https://example.org/iiif/auth/login",
+      "@type": "AuthCookieService1",
+      "profile": "http://iiif.io/api/auth/1/login",
+      "label": "Login to Example Institution",
+      "service": [
+        {
+          "@id": "https://example.org/iiif/auth/token",
+          "@type": "AuthTokenService1",
+          "profile": "http://iiif.io/api/auth/1/token"          
+        }
+      ]
+    }
+  ],
+
   "items": [
     {
       "id": "https://example.org/iiif/book1/canvas/p1",
@@ -135,7 +175,13 @@
                   {
                     "id": "https://example.org/iiif/book1/page1",
                     "type": "ImageService3",
-                    "profile": "level2"
+                    "profile": "level2",
+                    "service": [
+                      {
+                        "@id": "https://example.org/iiif/auth/login",
+                        "@type": "AuthCookieService1"
+                      }
+                    ]
                   }
                 ],
                 "height": 2000,
