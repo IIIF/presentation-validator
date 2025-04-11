@@ -891,11 +891,11 @@
                         "prev": { "$ref": "#/classes/annotationPageRef" },
                         "first": { "$ref": "#/classes/annotationPageRef" },
                         "last": { "$ref": "#/classes/annotationPageRef" }
-                    }
+                    },
+                    "required": ["id", "type", "items"],
+                    "additionalProperties": false
                 }    
-            ],
-            "required": ["id", "type", "items"],
-            "additionalProperties": false
+            ]
         },
         "annotation": {
             "allOf": [
