@@ -30,6 +30,8 @@ from iiif_prezi.loader import ManifestReader
 from pyld import jsonld
 jsonld.set_document_loader(jsonld.requests_document_loader(timeout=60))
 
+IIIF_HEADER = "application/ld+json;profile=http://iiif.io/api/presentation/{iiif_version}/context.json"
+
 class Validator(object):
     """Validator class that runs with Bottle."""
 
@@ -37,11 +39,14 @@ class Validator(object):
         """Initialize Validator with default_version."""
         self.default_version = "2.1"
 
-    def fetch(self, url):
+    def fetch(self, url, accept_header):
         """Fetch manifest from url."""
         req = Request(url)
         req.add_header('User-Agent', 'IIIF Validation Service')
         req.add_header('Accept-Encoding', 'gzip')
+
+        if accept_header:
+            req.add_header('Accept', accept_header)
 
         try:
             wh = urlopen(req)
@@ -150,13 +155,24 @@ class Validator(object):
         """Implement GET request to test url at version."""
         url = request.query.get('url', '')
         version = request.query.get('version', self.default_version)
+        accept = request.query.get('accept')
+        accept_header = None
         url = url.strip()
         parsed_url = urlparse(url)
+
+        if accept and accept == 'true':
+            if version in ("2.0", "2.1"):
+                accept_header = IIIF_HEADER.format(iiif_version=2)
+            elif version in ("3.0",):
+                accept_header = IIIF_HEADER.format(iiif_version=3)
+            else:
+                accept_header = "application/json"
+
         if (parsed_url.scheme != 'http' and parsed_url.scheme != 'https'):
             return self.return_json({'okay': 0, 'error': 'URLs must use HTTP or HTTPS', 'url': url})
 
         try:
-            (data, webhandle) = self.fetch(url)
+            (data, webhandle) = self.fetch(url, accept_header)
         except Exception as error:
             return self.return_json({'okay': 0, 'error': 'Cannot fetch url. Got "{}"'.format(error), 'url': url})
 
@@ -236,6 +252,7 @@ def main():
     args = parser.parse_args()
 
     v = Validator()
+
     run(host=args.hostname, port=args.port, app=v.get_bottle_app())
 
 

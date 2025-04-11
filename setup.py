@@ -28,12 +28,11 @@ setup(
     name='iiif-presentation-validator',
     version='0.0.3',
     scripts=['iiif-presentation-validator.py'],
-    packages=['schema'],
+    packages=['schema', 'tests'],
     classifiers=["Development Status :: 4 - Beta",
                  "Intended Audience :: Developers",
                  "Operating System :: OS Independent",
                  "Programming Language :: Python",
-                 "Programming Language :: Python :: 3.8",
                  "Programming Language :: Python :: 3.9",
                  "Programming Language :: Python :: 3.10",
                  "Programming Language :: Python :: 3.11",
@@ -53,7 +52,7 @@ setup(
         'requests'
     ],
     extras_require={
-        ':python_version>="3.6"': ["Pillow>=3.2.0"],
+        ':python_version>="3.6"': ["Pillow>=3.2.0"]
     },
     test_suite="tests",
     tests_require=[
