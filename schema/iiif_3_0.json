@@ -979,15 +979,6 @@
                 },
                 {
                     "$ref": "#/classes/specificResource"
-                },
-                {
-                    "title": "Annotation target can also contain just scope and source",
-                    "type": "object",
-                    "properties": {
-                        "source": { "$ref": "#/types/id" },
-                        "scope": { "$ref": "#/types/id" }
-                    }, 
-                    "required": ["source", "scope"]
                 }
             ]
         },
@@ -1008,6 +999,7 @@
                         { "$ref": "#/types/class" }
                     ]
                 },
+                "scope": { "$ref": "#/types/id"},
                 "selector": { 
                     "oneOf": [    
                         { "$ref": "#/classes/selector" },
@@ -1020,7 +1012,7 @@
                     ]
                 }
             },
-            "required": ["source", "selector"]
+            "required": ["source"]
         },
         "selector": {
             "oneOf": [
