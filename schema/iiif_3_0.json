@@ -454,7 +454,7 @@
                             }
                         }
                     },
-                    "required": ["id", "type", "label", "items"]
+                    "required": ["id", "type", "label"]
                 }
             ]
         },
@@ -532,7 +532,7 @@
                             }
                         }
                     },
-                    "required": ["id", "type", "label", "items"]
+                    "required": ["id", "type", "label"]
                 }
             ]
         },
@@ -618,6 +618,27 @@
                 }
             ]
         }, 
+        "annotationCollectionRef": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "allOf": [
+                        { "$ref": "#/types/reference" },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "pattern": "^AnnotationCollection$"
+                                }
+                            }
+                        }
+                    ]    
+                }
+            ]
+        },
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -884,7 +905,10 @@
                         "partOf": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationCollection"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationCollection" },
+                                    { "$ref": "#/classes/annotationCollectionRef" }
+                                ]
                             }
                         },
                         "next": { "$ref": "#/classes/annotationPageRef" },
@@ -892,9 +916,9 @@
                         "first": { "$ref": "#/classes/annotationPageRef" },
                         "last": { "$ref": "#/classes/annotationPageRef" }
                     },
-                    "required": ["id", "type", "items"],
+                    "required": ["id","type","items"],
                     "additionalProperties": false
-                }    
+                }
             ]
         },
         "annotation": {
@@ -981,7 +1005,7 @@
                 {
                     "$ref": "#/classes/specificResource"
                 }
-            ]
+                        ]
         },
         "specificResource": {
             "type": "object",
@@ -1100,7 +1124,12 @@
                             "default": "Range"
                         },
                         "rendering": { "$ref": "#/types/external" },
-                        "supplementary": { "$ref": "#/classes/annotationCollection" },
+                        "supplementary": { 
+                            "oneOf": [
+                                { "$ref": "#/classes/annotationCollection" },
+                                { "$ref": "#/classes/annotationCollectionRef" }
+                            ]
+                        },
                         "service": { "$ref": "#/classes/service" },
                         "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
                         "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
