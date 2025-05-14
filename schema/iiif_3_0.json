@@ -618,6 +618,27 @@
                 }
             ]
         }, 
+        "annotationCollectionRef": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "allOf": [
+                        { "$ref": "#/types/reference" },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "pattern": "^AnnotationCollection$"
+                                }
+                            }
+                        }
+                    ]    
+                }
+            ]
+        },
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -833,7 +854,8 @@
                                 "$ref": "#/classes/annotation"
                             }
                         }
-                    }
+                    },
+                    "required": ["items"]
                 }
             ]
         },
@@ -883,7 +905,10 @@
                         "partOf": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationCollection"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationCollection" },
+                                    { "$ref": "#/classes/annotationCollectionRef" }
+                                ]
                             }
                         },
                         "next": { "$ref": "#/classes/annotationPageRef" },
@@ -980,7 +1005,7 @@
                 {
                     "$ref": "#/classes/specificResource"
                 }
-            ]
+                        ]
         },
         "specificResource": {
             "type": "object",
@@ -1099,7 +1124,12 @@
                             "default": "Range"
                         },
                         "rendering": { "$ref": "#/types/external" },
-                        "supplementary": { "$ref": "#/classes/annotationCollection" },
+                        "supplementary": { 
+                            "oneOf": [
+                                { "$ref": "#/classes/annotationCollection" },
+                                { "$ref": "#/classes/annotationCollectionRef" }
+                            ]
+                        },
                         "service": { "$ref": "#/classes/service" },
                         "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
                         "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
