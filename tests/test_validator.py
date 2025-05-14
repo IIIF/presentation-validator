@@ -67,9 +67,9 @@ class TestAll(unittest.TestCase):
 
     def test02_fetch(self):
         v = val_mod.Validator()
-        (data, wh) = v.fetch('file:fixtures/1/manifest.json')
+        (data, wh) = v.fetch('file:fixtures/1/manifest.json', 'false')
         self.assertTrue(data.startswith('{'))
-        self.assertRaises(URLError, v.fetch, 'file:DOES_NOT_EXIST')
+        self.assertRaises(URLError, v.fetch, 'file:DOES_NOT_EXIST', 'false')
 
     def test03_check_manifest(self):
         v = val_mod.Validator()
@@ -124,6 +124,21 @@ class TestAll(unittest.TestCase):
         v = val_mod.Validator()
         request = LocalRequest({'QUERY_STRING': 'url=httpX://a.b/'})
         v.fetch = Mock(return_value=(read_fixture('fixtures/1/manifest.json'), MockWebHandle()))
+        j = json.loads(v.do_GET_test())
+        self.assertEqual(j['okay'], 0)
+        # Check v3 requests pass
+        request = LocalRequest({'QUERY_STRING': 'version=3.0&url=https://a.b/&accept=true'})
+        v.fetch = Mock(return_value=(read_fixture('fixtures/3/full_example.json'), MockWebHandle()))
+        j = json.loads(v.do_GET_test())
+        self.assertEqual(j['okay'], 1)
+        # Check v3 requests allow accept = false
+        request = LocalRequest({'QUERY_STRING': 'version=3.0&url=https://a.b/&accept=false'})
+        v.fetch = Mock(return_value=(read_fixture('fixtures/3/full_example.json'), MockWebHandle()))
+        j = json.loads(v.do_GET_test())
+        self.assertEqual(j['okay'], 1)
+        # Check v2 requests do not validate v3 manifests
+        request = LocalRequest({'QUERY_STRING': 'version=2.1&url=https://a.b/&accept=false'})
+        v.fetch = Mock(return_value=(read_fixture('fixtures/3/full_example.json'), MockWebHandle()))
         j = json.loads(v.do_GET_test())
         self.assertEqual(j['okay'], 0)
 
@@ -181,10 +196,13 @@ class TestAll(unittest.TestCase):
                 j = json.loads(v.check_manifest(data, '3.0'))
 
                 if j['okay'] == 1:
-                    print ("Expected {} to fail validation but it passed....".format(bad_data))
+                    print("Expected {} to fail validation but it passed....".format(bad_data))
                 
                 self.assertEqual(j['okay'], 0)
 
+    def printValidationerror(self, filename, errors):
+        print('Failed to validate: {}'.format(filename))
+        
     def test08_errortrees(self):
         with open('fixtures/3/broken_service.json') as json_file:
             iiif_json = json.load(json_file)
@@ -338,15 +356,15 @@ class TestAll(unittest.TestCase):
             data = fh.read()
             return json.loads(validator.check_manifest(data, '3.0'))
 
-    def printValidationerror(self, filename, errors):                
-        print ('Failed to validate: {}'.format(filename))
         errorCount = 1
+
         for err in errors:
             print(err['title'])
             print(err['detail'])
             print('\n Path for error: {}'.format(err['path']))
             print('\n Context: {}'.format(err['context']))
             errorCount += 1
+
 
 if __name__ == '__main__':
     unittest.main()
