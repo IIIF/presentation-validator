@@ -3,13 +3,15 @@
     "$comment": "IIIF basic types",
     "types": {
         "id": {
+            "title":"id",
+            "description": "Id must be present and must be a URI",
             "type": "string",
             "format": "uri",
-            "pattern": "^http.*$",
-            "title": "Id must be present and must be a URI"
+            "pattern": "^http.*$"
         },
         "lngString": {
-            "title": "Language string, must have a language and value must be an array.",
+            "title":"LngString",
+            "description": "Language string, must have a language and value must be an array.",
             "type": "object",
             "patternProperties": {
                 "^[a-zA-Z-][a-zA-Z-]*$": {
@@ -24,10 +26,12 @@
             "additionalProperties": false
         },
         "dimension": {
+            "title": "dimension",
             "type": "integer",
             "exclusiveMinimum": 0
         },
         "keyValueString": {
+            "title": "KeyValueString",
             "type": "object",
             "properties": {
                 "label": {"$ref": "#/types/lngString" },
@@ -36,6 +40,7 @@
             "required": ["label", "value"]
         },
         "BCP47": {
+            "title": "BCP47",
             "anyOf": [
                 {
                     "type":"string",
@@ -48,11 +53,13 @@
             ]
         },
         "format": {
+            "title": "format",
             "type": "string",
             "pattern": "^[a-z][a-z]*/.*$"
         },
         "class": {
-            "title": "Classes MUST have an id and type property and MAY have a label.",
+            "title": "class",
+            "description": "Classes MUST have an id and type property and MAY have a label.",
             "type": "object",
             "properties": {
                 "id": { "$ref": "#/types/id" },
@@ -62,10 +69,12 @@
             "required": ["id", "type"]
         },
         "duration": {
+            "title":"duration",
             "type": "number",
             "exclusiveMinimum": 0
         },
         "external": {
+            "title":"external",
             "type": "array",
             "items": {
                 "allOf": [
@@ -155,7 +164,8 @@
         "resource": {
             "oneOf": [
                 {
-                    "title": "Annotation bodies MUST have an id and type property.",
+                    "title": "resource",
+                    "description": "Annotation bodies MUST have an id and type property.",
                     "type": "object",
                     "properties": {
                         "id": { "$ref": "#/types/id" },
@@ -187,7 +197,8 @@
                     "required": ["id", "type"]
                 },
                 {
-                    "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
+                    "title":"AnnotationBody",
+                    "description": "Annotation bodies which are TextualBody MUST have an type and value property.",
                     "type": "object",
                     "properties": {
                         "id": { "$ref": "#/types/id" },
@@ -221,9 +232,12 @@
             "items": {
                 "oneOf": [
                     {
+                        "title": "service",
                         "allOf": [
+                            { "title": "test"},
                             { "$ref": "#/types/class" },
                             {
+                                "title": "Foobar2",
                                 "type": "object",
                                 "properties": {
                                     "profile": { "type": "string" },
@@ -246,7 +260,8 @@
             }
         },
         "rights": {
-            "title": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
+            "title": "rights",
+            "description": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
             "oneOf": [
                 {
                     "type": "string",
@@ -411,7 +426,7 @@
                             "type": "string",
                             "pattern": "^Collection",
                             "default": "Collection",
-                            "title": "Are you validating a collection?",
+                            "title": "Collection",
                             "description":"If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
                         },
                         "metadata": { "$ref": "#/classes/metadata" },
@@ -618,6 +633,27 @@
                 }
             ]
         }, 
+        "annotationCollectionRef": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "allOf": [
+                        { "$ref": "#/types/reference" },
+                        {
+                            "type": "object",
+                            "properties": {
+                                "type": {
+                                    "type": "string",
+                                    "pattern": "^AnnotationCollection$"
+                                }
+                            }
+                        }
+                    ]    
+                }
+            ]
+        },
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -833,7 +869,8 @@
                                 "$ref": "#/classes/annotation"
                             }
                         }
-                    }
+                    },
+                    "required": ["items"]
                 }
             ]
         },
@@ -883,7 +920,10 @@
                         "partOf": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/classes/annotationCollection"
+                                "oneOf": [
+                                    { "$ref": "#/classes/annotationCollection" },
+                                    { "$ref": "#/classes/annotationCollectionRef" }
+                                ]
                             }
                         },
                         "next": { "$ref": "#/classes/annotationPageRef" },
@@ -979,17 +1019,8 @@
                 },
                 {
                     "$ref": "#/classes/specificResource"
-                },
-                {
-                    "title": "Annotation target can also contain just scope and source",
-                    "type": "object",
-                    "properties": {
-                        "source": { "$ref": "#/types/id" },
-                        "scope": { "$ref": "#/types/id" }
-                    }, 
-                    "required": ["source", "scope"]
                 }
-            ]
+                        ]
         },
         "specificResource": {
             "type": "object",
@@ -1008,6 +1039,7 @@
                         { "$ref": "#/types/class" }
                     ]
                 },
+                "scope": { "$ref": "#/types/id"},
                 "selector": { 
                     "oneOf": [    
                         { "$ref": "#/classes/selector" },
@@ -1020,7 +1052,7 @@
                     ]
                 }
             },
-            "required": ["source", "selector"]
+            "required": ["source"]
         },
         "selector": {
             "oneOf": [
@@ -1107,7 +1139,12 @@
                             "default": "Range"
                         },
                         "rendering": { "$ref": "#/types/external" },
-                        "supplementary": { "$ref": "#/classes/annotationCollection" },
+                        "supplementary": { 
+                            "oneOf": [
+                                { "$ref": "#/classes/annotationCollection" },
+                                { "$ref": "#/classes/annotationCollectionRef" }
+                            ]
+                        },
                         "service": { "$ref": "#/classes/service" },
                         "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
                         "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
