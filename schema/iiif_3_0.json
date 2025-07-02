@@ -1062,6 +1062,7 @@
                     "pattern": "^http.*$"
                 },
                 {
+                    "title": "PointSelector",
                     "type": "object",
                     "properties": {
                         "type": { 
@@ -1076,6 +1077,7 @@
                     "required": ["type"]
                 },
                 {
+                    "title": "FragmentSelector",
                     "type": "object",
                     "properties": {
                         "type": { 
@@ -1096,6 +1098,7 @@
                     "required": ["type","value"]
                 },
                 {
+                    "title": "SVGSelector",
                     "type": "object",
                     "properties": {
                         "type": { 
@@ -1110,6 +1113,7 @@
                     "required": ["type","value"]
                 },
                 {
+                    "title": "ImageAPISelector",
                     "type": "object",
                     "properties": {
                         "type": { 
