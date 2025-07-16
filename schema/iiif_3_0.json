@@ -74,12 +74,13 @@
             "exclusiveMinimum": 0
         },
         "external": {
-            "title":"LinkedResource",
+            "title":"LinkedResources",
             "type": "array",
             "items": {
                 "allOf": [
                     { "$ref": "#/types/class" },
                     {
+                        "title": "linkedResource"
                         "type": "object",
                         "properties": {
                             "format": { "$ref": "#/types/format" },
@@ -122,11 +123,13 @@
             }
         },
         "homepage": {
+            "title":"homepages",
             "type": "array",
             "items": {
                 "allOf": [
                     { "$ref": "#/types/class" },
                     {
+                        "title": "homepage",
                         "type": "object",
                         "properties": {
                             "format": { "$ref": "#/types/format" },
