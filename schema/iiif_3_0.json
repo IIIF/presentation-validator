@@ -619,6 +619,7 @@
                     "type": "string"
                 },
                 {
+                    "title":"AnnotationPageRefExtended",
                     "allOf": [
                         { "$ref": "#/types/reference" },
                         {
