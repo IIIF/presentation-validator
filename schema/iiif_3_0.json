@@ -392,11 +392,13 @@
             }
         },
         "provider": {
+            "title": "providers",
             "type": "array",
             "items": {
                 "allOf": [
                     { "$ref": "#/types/class" },
                     {
+                        "title":"provider",
                         "type": "object",
                         "properties": {
                             "type": {
