@@ -164,7 +164,7 @@
         "resource": {
             "oneOf": [
                 {
-                    "title": "resource",
+                    "title": "AnnotationBody",
                     "description": "Annotation bodies MUST have an id and type property.",
                     "type": "object",
                     "properties": {
@@ -197,7 +197,7 @@
                     "required": ["id", "type"]
                 },
                 {
-                    "title":"AnnotationBody",
+                    "title":"TextualBody",
                     "description": "Annotation bodies which are TextualBody MUST have an type and value property.",
                     "type": "object",
                     "properties": {
