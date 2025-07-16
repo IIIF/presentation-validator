@@ -74,7 +74,7 @@
             "exclusiveMinimum": 0
         },
         "external": {
-            "title":"external",
+            "title":"LinkedResource",
             "type": "array",
             "items": {
                 "allOf": [
