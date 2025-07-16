@@ -232,12 +232,10 @@
             "items": {
                 "oneOf": [
                     {
-                        "title": "service",
+                        "title": "serviceV3",
                         "allOf": [
-                            { "title": "test"},
                             { "$ref": "#/types/class" },
                             {
-                                "title": "Foobar2",
                                 "type": "object",
                                 "properties": {
                                     "profile": { "type": "string" },
@@ -248,6 +246,7 @@
                     },
                     {
                         "type": "object",
+                        "title": "serviceV2",
                         "properties": {
                             "@id": { "$ref": "#/types/id" },
                             "@type": { "type": "string" },
