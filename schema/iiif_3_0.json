@@ -80,7 +80,7 @@
                 "allOf": [
                     { "$ref": "#/types/class" },
                     {
-                        "title": "linkedResource"
+                        "title": "linkedResource",
                         "type": "object",
                         "properties": {
                             "format": { "$ref": "#/types/format" },
