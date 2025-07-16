@@ -640,6 +640,7 @@
                     "type": "string"
                 },
                 {
+                    "title":"AnnotationCollectionRefExtended",
                     "allOf": [
                         { "$ref": "#/types/reference" },
                         {
