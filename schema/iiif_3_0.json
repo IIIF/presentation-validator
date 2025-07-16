@@ -1201,6 +1201,7 @@
         }
     },
     "$id": "http://iiif.io/api/presentation/3/schema.json" ,
+    "title":"AbstractIIIFResource",
     "oneOf": [
         { "$ref": "#/classes/manifest" },
         { "$ref": "#/classes/collection" },
