@@ -527,6 +527,7 @@
                         "behavior": { "$ref": "#/classes/behavior" },
                         "partOf": { "$ref": "#/classes/partOf" },
                         "items": {
+                            "title":"canvases",
                             "type": "array",
                             "items": {
                                 "$ref": "#/classes/canvas"
