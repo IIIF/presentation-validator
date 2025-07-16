@@ -1173,26 +1173,7 @@
                             "items": {
                                 "oneOf": [
                                     { "$ref": "#/classes/specificResource" },
-                                    {
-                                        "title":"canvases",
-                                        "allOf": [
-                                            { "$ref": "#/types/class" },
-                                            {
-                                                "type": "object",
-                                                "properties": {
-                                                    "type": {
-                                                        "type": "string",
-                                                        "pattern": "^Canvas$",
-                                                        "default": "Canvas"
-                                                    },
-                                                    "items": {
-                                                        "type": "array"
-                                                    }
-                                                },
-                                                "required": ["items"]
-                                            }
-                                        ]
-                                    },
+                                    { "$ref": "#/classes/canvas" },
                                     { "$ref": "#/classes/range" },
                                     { "$ref": "#/classes/rangeRef" },
                                     { "$ref": "#/classes/canvasRef" }
