@@ -527,7 +527,6 @@
                         "behavior": { "$ref": "#/classes/behavior" },
                         "partOf": { "$ref": "#/classes/partOf" },
                         "items": {
-                            "title":"canvases",
                             "type": "array",
                             "items": {
                                 "$ref": "#/classes/canvas"
@@ -1175,6 +1174,7 @@
                                 "oneOf": [
                                     { "$ref": "#/classes/specificResource" },
                                     {
+                                        "title":"canvases",
                                         "allOf": [
                                             { "$ref": "#/types/class" },
                                             {
