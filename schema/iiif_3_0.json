@@ -3,13 +3,15 @@
     "$comment": "IIIF basic types",
     "types": {
         "id": {
+            "title":"id",
+            "description": "Id must be present and must be a URI",
             "type": "string",
             "format": "uri",
-            "pattern": "^http.*$",
-            "title": "Id must be present and must be a URI"
+            "pattern": "^http.*$"
         },
         "lngString": {
-            "title": "Language string, must have a language and value must be an array.",
+            "title":"LngString",
+            "description": "Language string, must have a language and value must be an array.",
             "type": "object",
             "patternProperties": {
                 "^[a-zA-Z-][a-zA-Z-]*$": {
@@ -24,10 +26,12 @@
             "additionalProperties": false
         },
         "dimension": {
+            "title": "dimension",
             "type": "integer",
             "exclusiveMinimum": 0
         },
         "keyValueString": {
+            "title": "KeyValueString",
             "type": "object",
             "properties": {
                 "label": {"$ref": "#/types/lngString" },
@@ -36,6 +40,7 @@
             "required": ["label", "value"]
         },
         "BCP47": {
+            "title": "BCP47",
             "anyOf": [
                 {
                     "type":"string",
@@ -48,11 +53,13 @@
             ]
         },
         "format": {
+            "title": "format",
             "type": "string",
             "pattern": "^[a-z][a-z]*/.*$"
         },
         "class": {
-            "title": "Classes MUST have an id and type property and MAY have a label.",
+            "title": "class",
+            "description": "Classes MUST have an id and type property and MAY have a label.",
             "type": "object",
             "properties": {
                 "id": { "$ref": "#/types/id" },
@@ -62,15 +69,18 @@
             "required": ["id", "type"]
         },
         "duration": {
+            "title":"duration",
             "type": "number",
             "exclusiveMinimum": 0
         },
         "external": {
+            "title":"LinkedResources",
             "type": "array",
             "items": {
                 "allOf": [
                     { "$ref": "#/types/class" },
                     {
+                        "title": "linkedResource",
                         "type": "object",
                         "properties": {
                             "format": { "$ref": "#/types/format" },
@@ -113,11 +123,13 @@
             }
         },
         "homepage": {
+            "title":"homepages",
             "type": "array",
             "items": {
                 "allOf": [
                     { "$ref": "#/types/class" },
                     {
+                        "title": "homepage",
                         "type": "object",
                         "properties": {
                             "format": { "$ref": "#/types/format" },
@@ -155,7 +167,8 @@
         "resource": {
             "oneOf": [
                 {
-                    "title": "Annotation bodies MUST have an id and type property.",
+                    "title": "AnnotationBody",
+                    "description": "Annotation bodies MUST have an id and type property.",
                     "type": "object",
                     "properties": {
                         "id": { "$ref": "#/types/id" },
@@ -187,7 +200,8 @@
                     "required": ["id", "type"]
                 },
                 {
-                    "title": "Annotation bodies which are TextualBody MUST have an type and value property.",
+                    "title":"TextualBody",
+                    "description": "Annotation bodies which are TextualBody MUST have an type and value property.",
                     "type": "object",
                     "properties": {
                         "id": { "$ref": "#/types/id" },
@@ -221,6 +235,7 @@
             "items": {
                 "oneOf": [
                     {
+                        "title": "serviceV3",
                         "allOf": [
                             { "$ref": "#/types/class" },
                             {
@@ -234,6 +249,7 @@
                     },
                     {
                         "type": "object",
+                        "title": "serviceV2",
                         "properties": {
                             "@id": { "$ref": "#/types/id" },
                             "@type": { "type": "string" },
@@ -246,7 +262,8 @@
             }
         },
         "rights": {
-            "title": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
+            "title": "rights",
+            "description": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
             "oneOf": [
                 {
                     "type": "string",
@@ -378,11 +395,13 @@
             }
         },
         "provider": {
+            "title": "providers",
             "type": "array",
             "items": {
                 "allOf": [
                     { "$ref": "#/types/class" },
                     {
+                        "title":"provider",
                         "type": "object",
                         "properties": {
                             "type": {
@@ -411,7 +430,7 @@
                             "type": "string",
                             "pattern": "^Collection",
                             "default": "Collection",
-                            "title": "Are you validating a collection?",
+                            "title": "Collection",
                             "description":"If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
                         },
                         "metadata": { "$ref": "#/classes/metadata" },
@@ -603,6 +622,7 @@
                     "type": "string"
                 },
                 {
+                    "title":"AnnotationPageRefExtended",
                     "allOf": [
                         { "$ref": "#/types/reference" },
                         {
@@ -624,6 +644,7 @@
                     "type": "string"
                 },
                 {
+                    "title":"AnnotationCollectionRefExtended",
                     "allOf": [
                         { "$ref": "#/types/reference" },
                         {
@@ -1047,6 +1068,7 @@
                     "pattern": "^http.*$"
                 },
                 {
+                    "title": "PointSelector",
                     "type": "object",
                     "properties": {
                         "type": { 
@@ -1061,6 +1083,7 @@
                     "required": ["type"]
                 },
                 {
+                    "title": "FragmentSelector",
                     "type": "object",
                     "properties": {
                         "type": { 
@@ -1081,6 +1104,7 @@
                     "required": ["type","value"]
                 },
                 {
+                    "title": "SVGSelector",
                     "type": "object",
                     "properties": {
                         "type": { 
@@ -1095,6 +1119,7 @@
                     "required": ["type","value"]
                 },
                 {
+                    "title": "ImageAPISelector",
                     "type": "object",
                     "properties": {
                         "type": { 
@@ -1151,25 +1176,7 @@
                             "items": {
                                 "oneOf": [
                                     { "$ref": "#/classes/specificResource" },
-                                    {
-                                        "allOf": [
-                                            { "$ref": "#/types/class" },
-                                            {
-                                                "type": "object",
-                                                "properties": {
-                                                    "type": {
-                                                        "type": "string",
-                                                        "pattern": "^Canvas$",
-                                                        "default": "Canvas"
-                                                    },
-                                                    "items": {
-                                                        "type": "array"
-                                                    }
-                                                },
-                                                "required": ["items"]
-                                            }
-                                        ]
-                                    },
+                                    { "$ref": "#/classes/canvas" },
                                     { "$ref": "#/classes/range" },
                                     { "$ref": "#/classes/rangeRef" },
                                     { "$ref": "#/classes/canvasRef" }
@@ -1183,6 +1190,7 @@
         }
     },
     "$id": "http://iiif.io/api/presentation/3/schema.json" ,
+    "title":"AbstractIIIFResource",
     "oneOf": [
         { "$ref": "#/classes/manifest" },
         { "$ref": "#/classes/collection" },
