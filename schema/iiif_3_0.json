@@ -215,6 +215,9 @@
                         "language": { "type": "string"}
                     },
                     "required": ["value", "type"]
+                },
+                {
+                    "$ref": "#/classes/specificResource"
                 }
             ]
         },
