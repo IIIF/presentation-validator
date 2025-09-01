@@ -948,6 +948,7 @@
                 {
                     "type": "object",
                     "additionalProperties": true,
+                    "title": "Annotation",
                     "properties": {
                         "type": {
                             "type": "string",
