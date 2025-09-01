@@ -240,6 +240,7 @@
                             { "$ref": "#/types/class" },
                             {
                                 "type": "object",
+                                "additionalProperties": true,
                                 "properties": {
                                     "profile": { "type": "string" },
                                     "service": { "$ref": "#/classes/service" }
@@ -250,6 +251,7 @@
                     {
                         "type": "object",
                         "title": "serviceV2",
+                        "additionalProperties": true,
                         "properties": {
                             "@id": { "$ref": "#/types/id" },
                             "@type": { "type": "string" },
