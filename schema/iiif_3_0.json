@@ -236,11 +236,11 @@
                 "oneOf": [
                     {
                         "title": "serviceV3",
+                        "additionalProperties": true,
                         "allOf": [
                             { "$ref": "#/types/class" },
                             {
                                 "type": "object",
-                                "additionalProperties": true,
                                 "properties": {
                                     "profile": { "type": "string" },
                                     "service": { "$ref": "#/classes/service" }
