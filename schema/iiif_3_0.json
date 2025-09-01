@@ -947,6 +947,7 @@
                 { "$ref": "#/types/class" },
                 {
                     "type": "object",
+                    "additionalProperties": true,
                     "properties": {
                         "type": {
                             "type": "string",
@@ -1012,7 +1013,6 @@
                             ]
                         }
                     },
-                    "additionalProperties": true,
                     "required": ["id", "target", "type"]
                 }
             ]
