@@ -551,7 +551,7 @@
                             }
                         }
                     },
-                    "required": ["id", "type", "label"]
+                    "required": ["id", "type", "label", "items"]
                 }
             ]
         },
