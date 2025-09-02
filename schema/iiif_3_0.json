@@ -215,6 +215,9 @@
                         "language": { "type": "string"}
                     },
                     "required": ["value", "type"]
+                },
+                {
+                    "$ref": "#/classes/specificResource"
                 }
             ]
         },
@@ -235,7 +238,9 @@
             "items": {
                 "oneOf": [
                     {
+                        "type": "object",
                         "title": "serviceV3",
+                        "additionalProperties": true,
                         "allOf": [
                             { "$ref": "#/types/class" },
                             {
@@ -250,6 +255,7 @@
                     {
                         "type": "object",
                         "title": "serviceV2",
+                        "additionalProperties": true,
                         "properties": {
                             "@id": { "$ref": "#/types/id" },
                             "@type": { "type": "string" },
@@ -551,7 +557,7 @@
                             }
                         }
                     },
-                    "required": ["id", "type", "label"]
+                    "required": ["id", "type", "label", "items"]
                 }
             ]
         },
@@ -947,6 +953,8 @@
                 { "$ref": "#/types/class" },
                 {
                     "type": "object",
+                    "additionalProperties": true,
+                    "title": "Annotation",
                     "properties": {
                         "type": {
                             "type": "string",
