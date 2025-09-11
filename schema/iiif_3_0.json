@@ -173,7 +173,8 @@
                     "properties": {
                         "id": { "$ref": "#/types/id" },
                         "type": {
-                            "type": "string"
+                            "type": "string",
+                            "not": { "enum": ["TextualBody", "SpecificResource" ]}
                         },
                         "height": { "$ref": "#/types/dimension" },
                         "width": { "$ref": "#/types/dimension" },
@@ -1034,7 +1035,7 @@
                 {
                     "$ref": "#/classes/specificResource"
                 }
-                        ]
+            ]
         },
         "specificResource": {
             "type": "object",
@@ -1050,7 +1051,7 @@
                 "source": { 
                     "oneOf": [
                         { "$ref": "#/types/id" },
-                        { "$ref": "#/types/class" }
+                        { "$ref": "#/classes/resource" } 
                     ]
                 },
                 "scope": { "$ref": "#/types/id"},
