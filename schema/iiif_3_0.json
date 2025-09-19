@@ -1167,6 +1167,7 @@
                         "service": { "$ref": "#/classes/service" },
                         "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
                         "accompanyingCanvas": { "$ref": "#/classes/accompanyingCanvas" },
+                        "behavior": { "$ref": "#/classes/behavior" },
                         "annotations": {
                             "type": "array",
                             "items": {
