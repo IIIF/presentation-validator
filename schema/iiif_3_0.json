@@ -156,10 +156,14 @@
             "properties":{
                 "type": {
                     "type": "string",
-                    "const": "Choice"
+                    "const": "Choice",
+                    "default": "Choice"
                 },
                 "items":{
-                    "type": "array"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/classes/resource"
+                    }
                 }
             },
             "required": ["type", "items"]
@@ -987,23 +991,12 @@
                                 },
                                 {
                                     "type": "object",
-                                    "allOf":[
-                                        { "$ref": "#/classes/choice" },
-                                        {
-                                            "properties": {
-                                                "items": {
-                                                    "type": "array",
-                                                    "items": {"$ref": "#/classes/resource"}
-                                                }
-                                            },
-                                            "required": ["items"]
-                                        }
-                                    ]
+                                    "$ref": "#/classes/choice" 
                                 },
                                 {
                                     "type": "array",
                                     "items": {
-                                        "type": "object"
+                                        "$ref": "#/classes/resource"
                                     }
                                 }
 
