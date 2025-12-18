@@ -1,6 +1,6 @@
 """Test code for iiif-presentation-validator.py."""
 import unittest
-from mock import Mock
+from unittest.mock import Mock
 try:
     import imp
 except ImportError:
