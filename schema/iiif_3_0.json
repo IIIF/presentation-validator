@@ -92,6 +92,41 @@
                 ]
             }
         },
+        "agent": {
+            "title": "Agent",
+            "description": "W3C Web Annotation Agent (creator, generator)",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string", "format": "uri" },
+                "type": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "type": "array", "items": { "type": "string" } }
+                    ]
+                },
+                "name": { "type": "string" },
+                "nickname": { "type": "string" },
+                "email": { "type": "string", "format": "uri" },
+                "email_sha1": { "type": "string" },
+                "homepage": { "type": "string", "format": "uri" }
+            }
+        },
+        "audience": {
+            "title": "Audience",
+            "description": "W3C Web Annotation Audience",
+            "type": "object",
+            "properties": {
+                "id": { "type": "string", "format": "uri" },
+                "type": { "type": "string" }
+            },
+            "required": ["type"]
+        },
+        "textDirection": {
+            "title": "TextDirection",
+            "description": "Text direction for processing",
+            "type": "string",
+            "enum": ["ltr", "rtl", "auto"]
+        },
         "reference": {
             "type": "object",
             "additionalProperties": true,
@@ -217,7 +252,26 @@
                         },
                         "value": { "type": "string" },
                         "format": { "$ref": "#/types/format" },
-                        "language": { "type": "string"}
+                        "language": { "type": "string" },
+                        "processingLanguage": { "type": "string" },
+                        "textDirection": { "$ref": "#/types/textDirection" },
+                        "purpose": {
+                            "oneOf": [
+                                { "type": "string" },
+                                {
+                                    "type": "array",
+                                    "items": { "type": "string" }
+                                }
+                            ]
+                        },
+                        "creator": {
+                            "oneOf": [
+                                { "type": "string" },
+                                { "$ref": "#/types/agent" }
+                            ]
+                        },
+                        "created": { "type": "string" },
+                        "modified": { "type": "string" }
                     },
                     "required": ["value", "type"]
                 },
@@ -961,6 +1015,76 @@
                     "additionalProperties": true,
                     "title": "Annotation",
                     "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "format": "uri"
+                                }
+                            ]
+                        },
+                        "created": { "type": "string" },
+                        "modified": { "type": "string" },
+                        "generated": { "type": "string" },
+                        "creator": {
+                            "oneOf": [
+                                { "type": "string" },
+                                { "$ref": "#/types/agent" },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "oneOf": [
+                                            { "type": "string" },
+                                            { "$ref": "#/types/agent" }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        "generator": {
+                            "oneOf": [
+                                { "type": "string" },
+                                { "$ref": "#/types/agent" },
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "oneOf": [
+                                            { "type": "string" },
+                                            { "$ref": "#/types/agent" }
+                                        ]
+                                    }
+                                }
+                            ]
+                        },
+                        "audience": {
+                            "oneOf": [
+                                { "$ref": "#/types/audience" },
+                                {
+                                    "type": "array",
+                                    "items": { "$ref": "#/types/audience" }
+                                }
+                            ]
+                        },
+                        "bodyValue": { "type": "string" },
+                        "canonical": { "type": "string", "format": "uri" },
+                        "via": {
+                            "oneOf": [
+                                { "type": "string", "format": "uri" },
+                                {
+                                    "type": "array",
+                                    "items": { "type": "string", "format": "uri" }
+                                }
+                            ]
+                        },
+                        "stylesheet": { "$ref": "#/classes/stylesheet" },
                         "type": {
                             "type": "string",
                             "pattern": "^Annotation$",
@@ -1034,28 +1158,64 @@
             "type": "object",
             "properties": {
                 "id": { "$ref": "#/types/id" },
-                "type": { 
+                "type": {
                     "type": "string",
                     "pattern": "^SpecificResource$",
                     "default": "SpecificResource"
                 },
                 "format": { "$ref": "#/types/format" },
                 "accessibility": { "type": "string"},
-                "source": { 
+                "source": {
                     "oneOf": [
                         { "$ref": "#/types/id" },
-                        { "$ref": "#/classes/resource" } 
+                        { "$ref": "#/classes/resource" }
                     ]
                 },
                 "scope": { "$ref": "#/types/id"},
-                "selector": { 
-                    "oneOf": [    
+                "selector": {
+                    "oneOf": [
                         { "$ref": "#/classes/selector" },
                         {
                             "type": "array",
                             "items": {
                                 "$ref": "#/classes/selector"
                             }
+                        }
+                    ]
+                },
+                "state": {
+                    "oneOf": [
+                        { "$ref": "#/classes/state" },
+                        {
+                            "type": "array",
+                            "items": { "$ref": "#/classes/state" }
+                        }
+                    ]
+                },
+                "styleClass": {
+                    "oneOf": [
+                        { "type": "string" },
+                        {
+                            "type": "array",
+                            "items": { "type": "string" }
+                        }
+                    ]
+                },
+                "renderedVia": {
+                    "oneOf": [
+                        { "$ref": "#/types/agent" },
+                        {
+                            "type": "array",
+                            "items": { "$ref": "#/types/agent" }
+                        }
+                    ]
+                },
+                "purpose": {
+                    "oneOf": [
+                        { "type": "string" },
+                        {
+                            "type": "array",
+                            "items": { "type": "string" }
                         }
                     ]
                 }
@@ -1124,7 +1284,7 @@
                     "title": "ImageAPISelector",
                     "type": "object",
                     "properties": {
-                        "type": { 
+                        "type": {
                             "type": "string",
                             "pattern": "^ImageApiSelector$",
                             "default": "ImageApiSelector"
@@ -1136,6 +1296,150 @@
                         "format": { "type:": "string" }
                     },
                     "required": ["type"]
+                },
+                {
+                    "title": "XPathSelector",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^XPathSelector$",
+                            "default": "XPathSelector"
+                        },
+                        "value": { "type": "string" }
+                    },
+                    "required": ["type", "value"]
+                },
+                {
+                    "title": "CssSelector",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^CssSelector$",
+                            "default": "CssSelector"
+                        },
+                        "value": { "type": "string" }
+                    },
+                    "required": ["type", "value"]
+                },
+                {
+                    "title": "TextQuoteSelector",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^TextQuoteSelector$",
+                            "default": "TextQuoteSelector"
+                        },
+                        "exact": { "type": "string" },
+                        "prefix": { "type": "string" },
+                        "suffix": { "type": "string" }
+                    },
+                    "required": ["type", "exact"]
+                },
+                {
+                    "title": "TextPositionSelector",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^TextPositionSelector$",
+                            "default": "TextPositionSelector"
+                        },
+                        "start": { "type": "integer" },
+                        "end": { "type": "integer" }
+                    },
+                    "required": ["type", "start", "end"]
+                },
+                {
+                    "title": "DataPositionSelector",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^DataPositionSelector$",
+                            "default": "DataPositionSelector"
+                        },
+                        "start": { "type": "integer" },
+                        "end": { "type": "integer" }
+                    },
+                    "required": ["type", "start", "end"]
+                },
+                {
+                    "title": "RangeSelector",
+                    "type": "object",
+                    "properties": {
+                        "type": {
+                            "type": "string",
+                            "pattern": "^RangeSelector$",
+                            "default": "RangeSelector"
+                        },
+                        "startSelector": { "$ref": "#/classes/selector" },
+                        "endSelector": { "$ref": "#/classes/selector" },
+                        "refinedBy": { "$ref": "#/classes/selector" }
+                    },
+                    "required": ["type", "startSelector", "endSelector"]
+                }
+            ]
+        },
+        "timeState": {
+            "title": "TimeState",
+            "description": "W3C Web Annotation TimeState for temporal resource versions",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "pattern": "^TimeState$",
+                    "default": "TimeState"
+                },
+                "sourceDate": { "type": "string" },
+                "sourceDateStart": { "type": "string" },
+                "sourceDateEnd": { "type": "string" },
+                "cached": { "type": "string", "format": "uri" }
+            },
+            "required": ["type"]
+        },
+        "httpRequestState": {
+            "title": "HttpRequestState",
+            "description": "W3C Web Annotation HttpRequestState for HTTP header requirements",
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "pattern": "^HttpRequestState$",
+                    "default": "HttpRequestState"
+                },
+                "value": { "type": "string" }
+            },
+            "required": ["type", "value"]
+        },
+        "state": {
+            "title": "State",
+            "description": "W3C Web Annotation State (TimeState or HttpRequestState)",
+            "oneOf": [
+                { "$ref": "#/classes/timeState" },
+                { "$ref": "#/classes/httpRequestState" }
+            ]
+        },
+        "stylesheet": {
+            "title": "Stylesheet",
+            "description": "W3C Web Annotation Stylesheet for rendering",
+            "oneOf": [
+                { "type": "string", "format": "uri" },
+                {
+                    "type": "object",
+                    "title": "CssStylesheet",
+                    "properties": {
+                        "id": { "type": "string", "format": "uri" },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^CssStylesheet$",
+                            "default": "CssStylesheet"
+                        },
+                        "value": { "type": "string" }
+                    },
+                    "required": ["type", "value"]
                 }
             ]
         },
