@@ -4,7 +4,6 @@
     "type": "AnnotationPage",
     "items": [
         {
-            "@context": "http://www.w3.org/ns/anno.jsonld",
             "id": "http://example.org/anno38",
             "type": "Annotation",
             "motivation": "commenting",
