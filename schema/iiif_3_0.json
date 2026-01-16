@@ -1439,7 +1439,7 @@
                         },
                         "value": { "type": "string" }
                     },
-                    "required": ["type", "value"]
+                    "required": ["type"]
                 }
             ]
         },
