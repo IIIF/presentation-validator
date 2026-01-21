@@ -1,0 +1,53 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/service.json",
+    "type": "array",
+    "items": {
+        "oneOf": [
+            {
+                "type": "object",
+                "title": "serviceV3",
+                "additionalProperties": true,
+                "properties": {
+                    "id": { "$ref": "properties.json#/$defs/id" },
+                    "type": {
+                        "type": "string",
+                        "pattern": "^Service$",
+                        "default": "Service"
+                    },
+                    "profile": {
+                        "type": "string"
+                    },
+                    "service": {
+                        "$ref": "service.json"
+                    }
+                },
+                "required": [
+                    "id",
+                    "type"
+                ]
+            },
+            {
+                "type": "object",
+                "title": "serviceV2",
+                "additionalProperties": true,
+                "properties": {
+                    "@id": { "$ref": "properties.json#/$defs/id" },
+                    "@type": {
+                        "type": "string"
+                    },
+                    "profile": {
+                        "type": "string"
+                    },
+                    "service": {
+                        "$ref": "service.json"
+                    }
+                },
+                "required": [
+                    "@id",
+                    "@type"
+                ]
+            }
+        ]
+    }
+}

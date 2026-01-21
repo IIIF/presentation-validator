@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/agent.json",
+    "title": "Agent",
+    "description": "W3C Web Annotation Agent (creator, generator)",
+    "type": "object",
+    "properties": {
+        "id": { "$ref": "properties.json#/$defs/id" },
+        "type": {
+            "type": "string",
+            "pattern": "^Agent$",
+            "default": "Agent"
+        },
+        "name": {
+            "type": "string"
+        },
+        "nickname": {
+            "type": "string"
+        },
+        "email": {
+            "type": "string"
+        },
+        "email_sha1": {
+            "type": "string"
+        },
+        "homepage": {
+            "type": "string",
+            "format": "uri"
+        }
+    },
+    "required": ["id", "type"]
+}

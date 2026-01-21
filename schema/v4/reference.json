@@ -1,0 +1,42 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/reference.json",
+    "type": "object",
+    "additionalProperties": true,
+    "title": "Reference",
+    "description": "Id. type, label but not items are required",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "Manifest",
+                "Collection",
+                "AnnotationCollection",
+                "AnnotationPage",
+                "Canvas",
+                "Range"
+            ]
+        },
+        "thumbnail": {
+            "type": "array",
+            "items": {
+                "$ref": "resource.json"
+            }
+        }
+    },
+    "required": [
+        "id",
+        "type"
+    ],
+    "not": {
+        "required": [
+            "items"
+        ]
+    }
+}
