@@ -88,7 +88,7 @@ if __name__ == "__main__":
     if problems:
         print("\nMissing/unresolvable $refs:")
         for p in problems:
-            print(f"- In {p['schema'].split("/")[-1]}:\n at {p['where']}: {p['ref']}  (→ {p['resolved_target']})\n")
+            print(f"- In {p['schema'].split('/')[-1]}:\n at {p['where']}: {p['ref']}  (→ {p['resolved_target']})\n")
         raise SystemExit(2)
     else:
         print("All $refs resolved.")
