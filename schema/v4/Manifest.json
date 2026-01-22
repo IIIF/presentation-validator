@@ -1,0 +1,92 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Manifest.json",
+    "title": "Manifest",
+    "type": "object",
+    "properties": {
+        "@context": {
+            "$ref": "Context.json"
+        },
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^Manifest$",
+            "default": "Manifest"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "metadata": {
+            "$ref": "Metadata.json"
+        },
+        "summary": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "requiredStatement": {
+            "$ref": "properties.json#/$defs/keyValueString"
+        },
+        "rendering": {
+            "$ref": "External.json"
+        },
+        "service": {
+            "$ref": "Service.json"
+        },
+        "services": {
+            "$ref": "Service.json"
+        },
+        "viewingDirection": {
+            "$ref": "properties.json#/$defs/viewingDirection"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "required": [
+                    "type"
+                ],
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "Canvas"
+                        }
+                    }
+                },
+                "then": {
+                    "$ref": "Canvas.json"
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Timeline"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "Timeline.json"
+                    },
+                    "else": {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "Scene"
+                                }
+                            }
+                        },
+                        "then": {
+                            "$ref": "Scene.json"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "label",
+        "items"
+    ]
+}

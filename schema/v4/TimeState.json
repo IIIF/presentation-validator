@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/TimeState.json",
+    "title": "TimeState",
+    "description": "W3C Web Annotation TimeState for temporal resource versions",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "^TimeState$",
+            "default": "TimeState"
+        },
+        "sourceDate": {
+            "type": "string"
+        },
+        "sourceDateStart": {
+            "type": "string"
+        },
+        "sourceDateEnd": {
+            "type": "string"
+        },
+        "cached": {
+            "type": "string",
+            "format": "uri"
+        }
+    },
+    "required": [
+        "type"
+    ]
+}

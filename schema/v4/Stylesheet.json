@@ -1,0 +1,34 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Stylesheet.json",
+    "title": "Stylesheet",
+    "description": "W3C Web Annotation Stylesheet for rendering",
+    "if": {
+        "type": "string"
+    },
+    "then": {
+        "type": "string",
+        "format": "uri"
+    },
+    "else": {
+        "type": "object",
+        "title": "CssStylesheet",
+        "properties": {
+            "id": {
+                "type": "string",
+                "format": "uri"
+            },
+            "type": {
+                "type": "string",
+                "pattern": "^CssStylesheet$",
+                "default": "CssStylesheet"
+            },
+            "value": {
+                "type": "string"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    }
+}

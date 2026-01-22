@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/XPathSelector.json",
+    "title": "XPathSelector",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "^XPathSelector$",
+            "default": "XPathSelector"
+        },
+        "value": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "type",
+        "value"
+    ]
+}

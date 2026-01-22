@@ -1,0 +1,103 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/SpecificResource.json",
+    "title": "SpecificResource",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^SpecificResource$",
+            "default": "SpecificResource"
+        },
+        "format": {
+            "$ref": "properties.json#/$defs/format"
+        },
+        "accessibility": {
+            "type": "string"
+        },
+        "source": {
+            "oneOf": [
+                {
+                    "$ref": "properties.json#/$defs/id"
+                },
+                {
+                    "$ref": "Resource.json"
+                }
+            ]
+        },
+        "scope": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "selector": {
+            "oneOf": [
+                {
+                    "$ref": "Selector.json"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Selector.json"
+                    }
+                }
+            ]
+        },
+        "state": {
+            "oneOf": [
+                {
+                    "$ref": "State.json"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "State.json"
+                    }
+                }
+            ]
+        },
+        "styleClass": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "renderedVia": {
+            "oneOf": [
+                {
+                    "$ref": "Agent.json"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Agent.json"
+                    }
+                }
+            ]
+        },
+        "purpose": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        }
+    },
+    "required": [
+        "source"
+    ]
+}

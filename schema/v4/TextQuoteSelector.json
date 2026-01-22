@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/TextQuoteSelector.json",
+    "title": "TextQuoteSelector",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "^TextQuoteSelector$",
+            "default": "TextQuoteSelector"
+        },
+        "exact": {
+            "type": "string"
+        },
+        "prefix": {
+            "type": "string"
+        },
+        "suffix": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "type",
+        "exact"
+    ]
+}

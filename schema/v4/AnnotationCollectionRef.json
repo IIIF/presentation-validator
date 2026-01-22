@@ -1,0 +1,30 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/AnnotationCollectionRef.json",
+    "title": "AnnotationCollectionRef",
+    "if": {
+        "type": "string"
+    },
+    "then": {
+        "type": "string",
+        "format": "uri",
+        "pattern": "^http.*$"
+    },
+    "else": {
+        "title": "AnnotationCollectionRefExtended",
+        "allOf": [
+            {
+                "$ref": "Reference.json"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "type": {
+                        "type": "string",
+                        "pattern": "^AnnotationCollection$"
+                    }
+                }
+            }
+        ]
+    }
+}

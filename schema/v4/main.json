@@ -3,63 +3,68 @@
     "$id": "https://iiif.io/api/presentation/4.0/schema/main.json",
     "title": "AbstractIIIFResource",
     "type": "object",
-    "additionalProperties": true,
-    "properties": {
-        "@context": {
-            "oneOf": [
-                { "$ref": "properties.json#/$defs/context" },
-                {
-                    "$comment": "Array form of @context, with at least one entry that is the IIIF context. The IIIF context MUST be the last item but we can't test that with JSON Schema",
-                    "type": "array",
-                    "items": {
-                        "type": "string",
-                        "format": "uri",
-                        "pattern": "^http.*$"
-                    },
-                    "minItems": 1,
-                    "contains": {
-                        "type": "string",
-                        "$ref": "properties.json#/$defs/context"
-                    },
-                    "minContains": 1,
-                    "maxContains": 1
-                }
-            ]
-        },
-        "id": { "$ref": "properties.json#/$defs/id" },
-        "type": {
-            "type": "string",
-            "pattern": "^Manifest$",
-            "default": "Manifest"
-        },
-        "label": {
-            "$ref": "properties.json#/$defs/lngString"
-        },
-        "metadata": {
-            "$ref": "metadata.json"
-        },
-        "summary": {
-            "$ref": "properties.json#/$defs/lngString"
-        },
-        "requiredStatement": {
-            "$ref": "properties.json#/$defs/keyValueString"
-        },
-        "rendering": {
-            "$ref": "external.json"
-        },
-        "service": {
-            "$ref": "service.json"
-        },
-        "services": {
-            "$ref": "service.json"
-        },
-        "viewingDirection": {
-            "$ref": "properties.json#/$defs/viewingDirection"
+    "required": [
+        "type"
+    ],
+    "if": {
+        "properties": {
+            "type": {
+                "const": "Manifest"
+            }
         }
     },
-    "required": [
-        "id",
-        "type",
-        "label"
-    ]
+    "then": {
+        "$ref": "Manifest.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "Collection"
+                }
+            }
+        },
+        "then": {
+            "$ref": "Collection.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "AnnotationCollection"
+                    }
+                }
+            },
+            "then": {
+                "$ref": "AnnotationCollection.json"
+            },
+            "else": {
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "AnnotationPage"
+                        }
+                    }
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Annotation"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "Annotation.json"
+                    },
+                    "else": {
+                        "not": {}
+                    }
+                }
+            }
+        }
+    }
 }

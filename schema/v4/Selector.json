@@ -1,0 +1,137 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Selector.json",
+    "title": "Selector",
+    "if": {
+        "type": "string"
+    },
+    "then": {
+        "type": "string",
+        "format": "uri",
+        "pattern": "^http.*$"
+    },
+    "else": {
+        "type": "object",
+        "required": [
+            "type"
+        ],
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "PointSelector"
+                }
+            }
+        },
+        "then": {
+            "$ref": "PointSelector.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "FragmentSelector"
+                    }
+                }
+            },
+            "then": {
+                "$ref": "FragmentSelector.json"
+            },
+            "else": {
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "SvgSelector"
+                        }
+                    }
+                },
+                "then": {
+                    "$ref": "SVGSelector.json"
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "ImageApiSelector"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "ImageAPISelector.json"
+                    },
+                    "else": {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "XPathSelector"
+                                }
+                            }
+                        },
+                        "then": {
+                            "$ref": "XPathSelector.json"
+                        },
+                        "else": {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "CssSelector"
+                                    }
+                                }
+                            },
+                            "then": {
+                                "$ref": "CssSelector.json"
+                            },
+                            "else": {
+                                "if": {
+                                    "properties": {
+                                        "type": {
+                                            "const": "TextQuoteSelector"
+                                        }
+                                    }
+                                },
+                                "then": {
+                                    "$ref": "TextQuoteSelector.json"
+                                },
+                                "else": {
+                                    "if": {
+                                        "properties": {
+                                            "type": {
+                                                "const": "TextPositionSelector"
+                                            }
+                                        }
+                                    },
+                                    "then": {
+                                        "$ref": "TextPositionSelector.json"
+                                    },
+                                    "else": {
+                                        "if": {
+                                            "properties": {
+                                                "type": {
+                                                    "const": "DataPositionSelector"
+                                                }
+                                            }
+                                        },
+                                        "then": {
+                                            "$ref": "DataPositionSelector.json"
+                                        },
+                                        "else": {
+                                            "if": {
+                                                "properties": {
+                                                    "type": {
+                                                        "const": "RangeSelector"
+                                                    }
+                                                }
+                                            },
+                                            "then": {
+                                                "$ref": "RangeSelector.json"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

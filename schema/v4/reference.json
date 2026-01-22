@@ -1,8 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://iiif.io/api/presentation/4.0/schema/reference.json",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Reference.json",
     "type": "object",
-    "additionalProperties": true,
     "title": "Reference",
     "description": "Id. type, label but not items are required",
     "properties": {
@@ -26,7 +25,7 @@
         "thumbnail": {
             "type": "array",
             "items": {
-                "$ref": "resource.json"
+                "$ref": "Resource.json"
             }
         }
     },

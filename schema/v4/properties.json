@@ -31,8 +31,7 @@
                         "type": "string"
                     }
                 }
-            },
-            "additionalProperties": false
+            }
         },
         "dimension": {
             "title": "dimension",
@@ -122,6 +121,31 @@
                     "hidden"
                 ]
             }
+        },
+        "rights": {
+            "title": "rights",
+            "description": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/.*"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/publicdomain/.*"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/.*"
+                }
+            ]
+        },
+        "navDate": {
+            "type": "string",
+            "format": "date-time"
         }
     }
 }

@@ -1,0 +1,17 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/AnnoTarget.json",
+    "title": "AnnotationTarget",
+    "if": {
+        "type": "string"
+    },
+    "then": {
+        "type": "string",
+        "format": "uri",
+        "pattern": "^http.*$"
+    },
+    "else": {
+        "type": "object",
+        "$ref": "SpecificResource.json"
+    }
+}

@@ -1,0 +1,58 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/AnnotationCollection.json",
+    "title": "AnnotationCollection",
+    "type": "object",
+    "properties": {
+        "@context": {
+            "$ref": "Context.json"
+        },
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^AnnotationCollection$",
+            "default": "AnnotationCollection"
+        },
+        "rendering": {
+            "$ref": "External.json"
+        },
+        "partOf": {
+            "$ref": "PartOf.json"
+        },
+        "next": {
+            "$ref": "AnnotationPageRef.json"
+        },
+        "first": {
+            "$ref": "AnnotationPageRef.json"
+        },
+        "last": {
+            "$ref": "AnnotationPageRef.json"
+        },
+        "service": {
+            "$ref": "Service.json"
+        },
+        "total": {
+            "type": "integer",
+            "exclusiveMinimum": 0
+        },
+        "thumbnail": {
+            "type": "array",
+            "items": {
+                "$ref": "Resource.json"
+            }
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "Annotation.json"
+            }
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "items"
+    ]
+}

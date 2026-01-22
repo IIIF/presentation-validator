@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Resource.json",
+    "type": "object",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "TextualBody"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "TextualBody.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "SpecificResource"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "SpecificResource.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "Choice"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "$ref": "Choice.json"
+            },
+            "else": {
+                "$ref": "AnnotationBody.json"
+            }
+        }
+    }
+}

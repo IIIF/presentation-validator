@@ -1,8 +1,8 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://iiif.io/api/presentation/4.0/schema/metadata.json",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Metadata.json",
     "type": "array",
-    "title": "metadata",
+    "title": "Metadata",
     "items": {
         "$ref": "properties.json#/$defs/keyValueString"
     }

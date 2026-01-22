@@ -1,0 +1,107 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Collection.json",
+    "title": "Collection",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^Collection",
+            "default": "Collection",
+            "title": "Collection",
+            "description": "If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
+        },
+        "metadata": {
+            "$ref": "Metadata.json"
+        },
+        "summary": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "requiredStatement": {
+            "$ref": "properties.json#/$defs/keyValueString"
+        },
+        "rendering": {
+            "$ref": "External.json"
+        },
+        "rights": {
+            "$ref": "properties.json#/$defs/rights"
+        },
+        "navDate": {
+            "$ref": "properties.json#/$defs/navDate"
+        },
+        "navPlace": {
+            "$ref": "NavPlace.json"
+        },
+        "provider": {
+            "$ref": "Provider.json"
+        },
+        "seeAlso": {
+            "$ref": "SeeAlso.json"
+        },
+        "services": {
+            "$ref": "Service.json"
+        },
+        "service": {
+            "$ref": "Service.json"
+        },
+        "placeholderCanvas": {
+            "$ref": "PlaceholderCanvas.json"
+        },
+        "accompanyingCanvas": {
+            "$ref": "AccompanyingCanvas.json"
+        },
+        "thumbnail": {
+            "type": "array",
+            "items": {
+                "$ref": "Resource.json"
+            }
+        },
+        "homepage": {
+            "$ref": "Homepage.json"
+        },
+        "behavior": {
+            "$ref": "properties.json#/$defs/behavior"
+        },
+        "partOf": {
+            "$ref": "PartOf.json"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "ManifestRef.json"
+                    },
+                    {
+                        "$ref": "CollectionRef.json"
+                    },
+                    {
+                        "$ref": "Collection.json"
+                    }
+                ]
+            }
+        },
+        "annotations": {
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "AnnotationPage.json"
+                    },
+                    {
+                        "$ref": "AnnotationPageRef.json"
+                    }
+                ]
+            }
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "label",
+        "items"
+    ]
+}

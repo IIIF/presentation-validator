@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/PointSelector.json",
+    "title": "PointSelector",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "^PointSelector$",
+            "default": "PointSelector"
+        },
+        "t": {
+            "$ref": "properties.json#/$defs/duration"
+        },
+        "x": {
+            "$ref": "properties.json#/$defs/dimension"
+        },
+        "y": {
+            "$ref": "properties.json#/$defs/dimension"
+        }
+    },
+    "required": [
+        "type"
+    ]
+}

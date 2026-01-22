@@ -1,0 +1,65 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/TextualBody.json",
+    "title": "TextualBody",
+    "description": "Annotation bodies which are TextualBody MUST have an type and value property.",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^TextualBody$",
+            "default": "TextualBody"
+        },
+        "value": {
+            "type": "string"
+        },
+        "format": {
+            "$ref": "properties.json#/$defs/format"
+        },
+        "language": {
+            "type": "string"
+        },
+        "processingLanguage": {
+            "type": "string"
+        },
+        "textDirection": {
+            "$ref": "properties.json#/$defs/textDirection"
+        },
+        "purpose": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            ]
+        },
+        "creator": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "Agent.json"
+                }
+            ]
+        },
+        "created": {
+            "type": "string"
+        },
+        "modified": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "value",
+        "type"
+    ]
+}

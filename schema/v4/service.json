@@ -1,13 +1,13 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://iiif.io/api/presentation/4.0/schema/service.json",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Service.json",
+    "title": "Services",
     "type": "array",
     "items": {
         "oneOf": [
             {
                 "type": "object",
                 "title": "serviceV3",
-                "additionalProperties": true,
                 "properties": {
                     "id": { "$ref": "properties.json#/$defs/id" },
                     "type": {
@@ -19,7 +19,7 @@
                         "type": "string"
                     },
                     "service": {
-                        "$ref": "service.json"
+                        "$ref": "Service.json"
                     }
                 },
                 "required": [
@@ -30,7 +30,6 @@
             {
                 "type": "object",
                 "title": "serviceV2",
-                "additionalProperties": true,
                 "properties": {
                     "@id": { "$ref": "properties.json#/$defs/id" },
                     "@type": {
@@ -40,7 +39,7 @@
                         "type": "string"
                     },
                     "service": {
-                        "$ref": "service.json"
+                        "$ref": "Service.json"
                     }
                 },
                 "required": [

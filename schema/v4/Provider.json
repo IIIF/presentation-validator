@@ -1,0 +1,37 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Provider.json",
+    "title": "providers",
+    "type": "array",
+    "items": {
+        "allOf": [
+            {
+                "$ref": "Agent.json"
+            },
+            {
+                "title": "provider",
+                "type": "object",
+                "properties": {
+                    "label": {
+                        "$ref": "properties.json#/$defs/lngString"
+                    },
+                    "homepage": {
+                        "$ref": "Homepage.json"
+                    },
+                    "logo": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "Resource.json"
+                        }
+                    },
+                    "seeAlso": {
+                        "$ref": "SeeAlso.json"
+                    }
+                },
+                "required": [
+                    "label"
+                ]
+            }
+        ]
+    }
+}
