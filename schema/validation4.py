@@ -24,7 +24,7 @@ def validate(instance):
             # Use the filename as a URI-like key for consistency
             uri = f"{BASE_URI}/{json_file.name}"
             schemas[uri] = schema_content
-            print(f"Loaded schema: {json_file.name}")
+            #print(f"Loaded schema: {json_file.name}")
         except (json.JSONDecodeError, IOError) as e:
             print(f"Failed to load schema from {json_file}: {e}")
 

@@ -42,17 +42,10 @@
             "items": {
                 "$ref": "Resource.json"
             }
-        },
-        "items": {
-            "type": "array",
-            "items": {
-                "$ref": "Annotation.json"
-            }
         }
     },
     "required": [
         "id",
-        "type",
-        "items"
+        "type"
     ]
 }

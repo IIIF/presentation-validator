@@ -75,14 +75,18 @@
         "annotations": {
             "type": "array",
             "items": {
-                "oneOf": [
-                    {
-                        "$ref": "AnnotationPage.json"
-                    },
-                    {
-                        "$ref": "AnnotationPageRef.json"
-                    }
-                ]
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "$ref": "AnnotationPageRef.json"
+                }
             }
         }
     },

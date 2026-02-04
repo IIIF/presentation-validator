@@ -126,14 +126,7 @@
         "body": {
             "type": "array",
             "items": {
-                "anyOf": [
-                    {
-                        "$ref": "Resource.json"
-                    },
-                    {
-                        "$ref": "Choice.json"
-                    }
-                ]
+                "$ref": "Resource.json"
             }
         },
         "target": {
