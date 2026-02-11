@@ -28,7 +28,10 @@
             "$ref": "properties.json#/$defs/duration"
         },
         "language": {
-            "type": "string"
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         },
         "rendering": {
             "$ref": "External.json"
