@@ -13,10 +13,16 @@
             "$ref": "properties.json#/$defs/duration"
         },
         "x": {
-            "$ref": "properties.json#/$defs/dimension"
+            "title": "x",
+            "type": "number"
         },
         "y": {
-            "$ref": "properties.json#/$defs/dimension"
+            "title": "y",
+            "type": "number"
+        },
+        "z": {
+            "title": "z",
+            "type": "number"
         }
     },
     "required": [

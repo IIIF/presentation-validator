@@ -146,6 +146,11 @@
         "navDate": {
             "type": "string",
             "format": "date-time"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$",
+            "description": "RGB color expressed as a 6-digit hex string beginning with '#'."
         }
     }
 }

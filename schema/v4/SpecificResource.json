@@ -19,82 +19,83 @@
             "type": "string"
         },
         "source": {
-            "oneOf": [
-                {
-                    "$ref": "properties.json#/$defs/id"
-                },
-                {
-                    "$ref": "Resource.json"
-                }
-            ]
+            "if": {
+                "type": "object"
+            },
+            "then": {
+                "$ref": "Resource.json"
+            },
+            "else": {
+                "$ref": "properties.json#/$defs/id"
+            }
         },
         "scope": {
             "$ref": "properties.json#/$defs/id"
         },
         "selector": {
-            "oneOf": [
-                {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
                     "$ref": "Selector.json"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "$ref": "Selector.json"
-                    }
                 }
-            ]
+            },
+            "else": {
+                "$ref": "Selector.json"
+            }
         },
         "state": {
-            "oneOf": [
-                {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
                     "$ref": "State.json"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "$ref": "State.json"
-                    }
                 }
-            ]
+            },
+            "else": {
+                "$ref": "State.json"
+            }
         },
         "styleClass": {
-            "oneOf": [
-                {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
                     "type": "string"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
                 }
-            ]
+            },
+            "else": {
+                "type": "string"
+            }
         },
         "renderedVia": {
-            "oneOf": [
-                {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
                     "$ref": "Agent.json"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "$ref": "Agent.json"
-                    }
                 }
-            ]
+            },
+            "else": {
+                "$ref": "Agent.json"
+            }
         },
         "purpose": {
-            "oneOf": [
-                {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
                     "type": "string"
-                },
-                {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
-                    }
                 }
-            ]
+            },
+            "else": {
+                "type": "string"
+            }
         }
     },
     "required": [

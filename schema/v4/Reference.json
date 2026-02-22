@@ -19,7 +19,9 @@
                 "AnnotationCollection",
                 "AnnotationPage",
                 "Canvas",
-                "Range"
+                "Range",
+                "Scene",
+                "Timeline"
             ]
         },
         "thumbnail": {

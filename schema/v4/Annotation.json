@@ -124,16 +124,10 @@
             }
         },
         "body": {
-            "type": "array",
-            "items": {
-                "$ref": "Resource.json"
-            }
+            "$ref": "Resource.json"
         },
         "target": {
-            "type": "array",
-            "items": {
-                "$ref": "AnnoTarget.json"
-            }
+            "$ref": "AnnoTarget.json"
         }
     },
     "required": [

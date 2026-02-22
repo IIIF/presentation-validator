@@ -10,6 +10,9 @@
         {
             "type": "object",
             "properties": {
+                "id": {
+                    "$ref": "properties.json#/$defs/id"
+                },
                 "type": {
                     "type": "string",
                     "pattern": "^Canvas$",
@@ -26,12 +29,14 @@
                 },
                 "spatialScale": {
                     "$ref": "Quantity.json"
+                },
+                "backgroundColor": {
+                    "$ref": "properties.json#/$defs/backgroundColor"
                 }
             },
             "required": [
                 "id",
                 "type",
-                "items",
                 "height",
                 "width"
             ]

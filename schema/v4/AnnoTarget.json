@@ -2,16 +2,51 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://iiif.io/api/presentation/4.0/schema/AnnoTarget.json",
     "title": "AnnotationTarget",
+    "type": "object",
     "if": {
-        "type": "string"
+        "required": [
+            "type"
+        ],
+        "properties": {
+            "type": {
+                "const": "SpecificResource"
+            }
+        }
     },
     "then": {
-        "type": "string",
-        "format": "uri",
-        "pattern": "^http.*$"
+        "$ref": "SpecificResource.json"
     },
     "else": {
-        "type": "object",
-        "$ref": "SpecificResource.json"
+        "if": {
+            "required": [
+                "type"
+            ],
+            "properties": {
+                "type": {
+                    "const": "Canvas"
+                }
+            }
+        },
+        "then": {
+            "$ref": "CanvasRef.json"
+        },
+        "else": {
+            "if": {
+                "required": [
+                    "type"
+                ],
+                "properties": {
+                    "type": {
+                        "const": "Timeline"
+                    }
+                }
+            },
+            "then": {
+                "$ref": "TimelineRef.json"
+            },
+            "else": {
+                "$ref": "SceneRef.json"
+            }
+        }
     }
 }

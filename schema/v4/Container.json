@@ -92,6 +92,7 @@
     },
     "required": [
         "id",
-        "type"
+        "type",
+        "items"
     ]
 }

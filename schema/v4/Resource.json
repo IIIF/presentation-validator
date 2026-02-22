@@ -44,7 +44,52 @@
                 "$ref": "Choice.json"
             },
             "else": {
-                "$ref": "AnnotationBody.json"
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "Scene"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                },
+                "then": {
+                    "$ref": "SceneRef.json"
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Canvas"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "$ref": "CanvasRef.json"
+                    },
+                    "else": {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "Timeline"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        "then": {
+                            "$ref": "TimelineRef.json"
+                        },
+                        "else": {
+                            "$ref": "AnnotationBody.json"
+                        }
+                    }
+                }
             }
         }
     }

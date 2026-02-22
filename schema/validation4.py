@@ -2,6 +2,7 @@ from ast import main
 from pathlib import Path
 import json
 import sys
+from unique_ids import check
 
 from jsonschema import Draft202012Validator
 from referencing import Registry, Resource
@@ -37,6 +38,9 @@ def validate(instance):
     validator = Draft202012Validator(main, registry=registry)
 
     validator.validate(instance)
+
+    # check ids
+    check(instance)
     print ("Validation successful")
 
 def main():

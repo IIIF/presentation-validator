@@ -1,11 +1,10 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://iiif.io/api/presentation/4.0/schema/Timeline.json",
-    "title": "Timeline",
-    "type": "object",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/TimelineRef.json",
+    "title": "TimelineRef",
     "allOf": [
         {
-            "$ref": "Container.json"
+            "$ref": "Reference.json"
         },
         {
             "type": "object",
@@ -15,17 +14,12 @@
                 },
                 "type": {
                     "type": "string",
-                    "pattern": "^Timeline$",
-                    "default": "Timeline"
-                },
-                "duration": {
-                    "$ref": "properties.json#/$defs/duration"
+                    "pattern": "^Timeline$"
                 }
             },
             "required": [
                 "id",
-                "type",
-                "duration"
+                "type"
             ]
         }
     ]
