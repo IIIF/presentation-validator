@@ -15,7 +15,7 @@
                 "type": {
                     "type": "string",
                     "pattern": "^Timeline$"
-                }
+               }
             },
             "required": [
                 "id",
