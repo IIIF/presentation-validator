@@ -1,7 +1,7 @@
 import sys
 import json
 
-ignore = ["target", "lookAt", "range","structures","first","last","start"]
+ignore = ["target", "lookAt", "range","structures","first","last","start","source"]
 # create a method where you pass in a manifest and it checks to see if the id is unique
 # if it is not unique, then it should raise a validation error  
 def check(manifest):
