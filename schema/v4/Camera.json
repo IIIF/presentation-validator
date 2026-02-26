@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Camera.json",
+    "type": "object",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "PerspectiveCamera"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "PerspectiveCamera.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "OrthographicCamera"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "OrthographicCamera.json"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/DirectionalLight.json",
+    "type": "object",
+    "properties": {
+        "id": { "$ref": "properties.json#/$defs/id" },
+        "type": {
+            "const": "DirectionalLight"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "color": {
+            "$ref": "properties.json#/$defs/backgroundColor"
+        },
+        "intensity": { "$ref": "Intensity.json" }
+    },
+    "required": [
+        "type"
+    ]
+}

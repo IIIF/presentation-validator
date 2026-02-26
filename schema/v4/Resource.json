@@ -2,95 +2,72 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://iiif.io/api/presentation/4.0/schema/Resource.json",
     "type": "object",
-    "if": {
-        "properties": {
-            "type": {
-                "const": "TextualBody"
-            }
+    "title": "Resource",
+    "description": "Annotation bodies MUST have an id and type property.",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
         },
-        "required": [
-            "type"
-        ]
-    },
-    "then": {
-        "$ref": "TextualBody.json"
-    },
-    "else": {
-        "if": {
-            "properties": {
-                "type": {
-                    "const": "SpecificResource"
-                }
-            },
-            "required": [
-                "type"
+        "type": {
+            "type": "string",
+            "enum": [
+                "Image",
+                "Audio",
+                "Video",
+                "Model",
+                "Dataset",
+                "Text"
             ]
         },
-        "then": {
-            "$ref": "SpecificResource.json"
+        "height": {
+            "$ref": "properties.json#/$defs/dimension"
         },
-        "else": {
-            "if": {
-                "properties": {
-                    "type": {
-                        "const": "Choice"
+        "width": {
+            "$ref": "properties.json#/$defs/dimension"
+        },
+        "duration": {
+            "$ref": "properties.json#/$defs/duration"
+        },
+        "language": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "rendering": {
+            "$ref": "External.json"
+        },
+        "service": {
+            "$ref": "Service.json"
+        },
+        "format": {
+            "$ref": "properties.json#/$defs/format"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "thumbnail": {
+            "type": "array",
+            "items": {
+                "$ref": "Resource.json"
+            }
+        },
+        "annotations": {
+            "type": "array",
+            "items": {
+                "oneOf": [
+                    {
+                        "$ref": "AnnotationPage.json"
+                    },
+                    {
+                        "$ref": "AnnotationPageRef.json"
                     }
-                },
-                "required": [
-                    "type"
                 ]
-            },
-            "then": {
-                "$ref": "Choice.json"
-            },
-            "else": {
-                "if": {
-                    "properties": {
-                        "type": {
-                            "const": "Scene"
-                        }
-                    },
-                    "required": [
-                        "type"
-                    ]
-                },
-                "then": {
-                    "$ref": "SceneRef.json"
-                },
-                "else": {
-                    "if": {
-                        "properties": {
-                            "type": {
-                                "const": "Canvas"
-                            }
-                        },
-                        "required": [
-                            "type"
-                        ]
-                    },
-                    "then": {
-                        "$ref": "CanvasRef.json"
-                    },
-                    "else": {
-                        "if": {
-                            "properties": {
-                                "type": {
-                                    "const": "Timeline"
-                                }
-                            },
-                            "required": [
-                                "type"
-                            ]
-                        },
-                        "then": {
-                            "$ref": "TimelineRef.json"
-                        },
-                        "else": {
-                            "$ref": "AnnotationBody.json"
-                        }
-                    }
-                }
             }
         }
-    }
+    },
+    "required": [
+        "id",
+        "type"
+    ]
 }

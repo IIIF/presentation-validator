@@ -123,6 +123,18 @@
                                             },
                                             "then": {
                                                 "$ref": "RangeSelector.json"
+                                            },
+                                            "else": {
+                                                "if": {
+                                                    "properties": {
+                                                        "type": {
+                                                            "const": "WktSelector"
+                                                        }
+                                                    }
+                                                },
+                                                "then": {
+                                                    "$ref": "WktSelector.json"
+                                                }
                                             }
                                         }
                                     }

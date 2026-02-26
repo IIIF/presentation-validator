@@ -12,7 +12,7 @@
         "items": {
             "type": "array",
             "items": {
-                "$ref": "Resource.json"
+                "$ref": "Body.json"
             }
         }
     },

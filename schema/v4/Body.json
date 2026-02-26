@@ -1,0 +1,129 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Body.json",
+    "title": "Body",
+    "type": "object",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "TextualBody"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "TextualBody.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "SpecificResource"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "SpecificResource.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "Choice"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "$ref": "Choice.json"
+            },
+            "else": {
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "Scene"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                },
+                "then": {
+                    "$ref": "SceneRef.json"
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Canvas"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "$ref": "CanvasRef.json"
+                    },
+                    "else": {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "Timeline"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        "then": {
+                            "$ref": "TimelineRef.json"
+                        },
+                        "else": {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "pattern": "Camera"
+                                    }
+                                },
+                                "required": [
+                                    "type"
+                                ]
+                            },
+                            "then": {
+                                "$ref": "Camera.json"
+                            },
+                            "else": {
+                                "if": {
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "pattern": "Light"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ]
+                                },
+                                "then": {
+                                    "$ref": "Light.json"
+                                },
+                                "else": {
+                                    "$ref": "Resource.json"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

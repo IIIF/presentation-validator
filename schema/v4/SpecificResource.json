@@ -23,7 +23,7 @@
                 "type": "object"
             },
             "then": {
-                "$ref": "Resource.json"
+                "$ref": "Body.json"
             },
             "else": {
                 "$ref": "properties.json#/$defs/id"
@@ -43,6 +43,12 @@
             },
             "else": {
                 "$ref": "Selector.json"
+            }
+        },
+        "transform": {
+            "type": "array",
+            "items": {
+                "$ref": "Transform.json"
             }
         },
         "state": {

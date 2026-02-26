@@ -1,0 +1,51 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/LookAt.json",
+    "type": "object",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "PointSelector"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "PointSelector.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "WktSelector"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "WktSelector.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "SpecificResource"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "$ref": "SpecificResource.json"
+            },
+            "else": {
+                "$ref": "AnnotationRef.json"
+            }
+        }
+    }
+}

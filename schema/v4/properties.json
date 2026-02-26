@@ -151,6 +151,20 @@
             "type": "string",
             "pattern": "^#[0-9a-fA-F]{6}$",
             "description": "RGB color expressed as a 6-digit hex string beginning with '#'."
+        },
+        "interactionMode": {
+            "title": "interactionMode",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "locked",
+                    "orbit",
+                    "hemisphere-orbit",
+                    "free",
+                    "free-direction"
+                ]
+            }
         }
     }
 }

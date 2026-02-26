@@ -26,6 +26,9 @@
                 },
                 "backgroundColor": {
                     "$ref": "properties.json#/$defs/backgroundColor"
+                },
+                "interactionMode": {
+                    "$ref": "properties.json#/$defs/interactionMode"
                 }
             },
             "required": [
