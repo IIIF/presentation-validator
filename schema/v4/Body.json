@@ -99,7 +99,7 @@
                                 ]
                             },
                             "then": {
-                                "$ref": "Camera.json"
+                                "$ref": "CameraTypes.json"
                             },
                             "else": {
                                 "if": {
@@ -114,10 +114,26 @@
                                     ]
                                 },
                                 "then": {
-                                    "$ref": "Light.json"
+                                    "$ref": "LightTypes.json"
                                 },
                                 "else": {
-                                    "$ref": "Resource.json"
+                                    "if": {
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "pattern": "Audio"
+                                            }
+                                        },
+                                        "required": [
+                                            "type"
+                                        ]
+                                    },
+                                    "then": {
+                                        "$ref": "AudioTypes.json"
+                                    },
+                                    "else": {
+                                        "$ref": "Resource.json"
+                                    }
                                 }
                             }
                         }

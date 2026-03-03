@@ -1,20 +1,19 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://iiif.io/api/presentation/4.0/schema/OrthographicCamera.json",
-    "title": "OrthographicCamera",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/PointAudio.json",
+    "title": "PointAudio",
     "type": "object",
     "allOf": [
         {
-            "$ref": "Camera.json"
+            "$ref": "Audio.json"
         },
         {
             "type": "object",
             "properties": {
                 "type": {
-                    "const": "OrthographicCamera"
-                },
-                "viewHeight": {
-                    "type": "number"
+                    "type": "string",
+                    "pattern": "^PointAudio$",
+                    "default": "PointAudio"
                 }
             },
             "required": [

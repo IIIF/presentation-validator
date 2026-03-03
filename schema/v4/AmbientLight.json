@@ -2,20 +2,23 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://iiif.io/api/presentation/4.0/schema/AmbientLight.json",
     "type": "object",
-    "properties": {
-        "id": { "$ref": "properties.json#/$defs/id" },
-        "type": {
-            "const": "AmbientLight"
+    "allOf": [
+        {
+            "$ref": "Light.json"
         },
-        "label": {
-            "$ref": "properties.json#/$defs/lngString"
-        },
-        "color": {
-            "$ref": "properties.json#/$defs/backgroundColor"
-        },
-        "intensity": { "$ref": "Intensity.json" }
-    },
-    "required": [
-        "type"
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "AmbientLight"
+                },
+                "color": {
+                    "$ref": "properties.json#/$defs/backgroundColor"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        }
     ]
 }

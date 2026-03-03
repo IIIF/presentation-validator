@@ -1,41 +1,49 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://iiif.io/api/presentation/4.0/schema/ImageBasedLight.json",
+    "title": "ImageBasedLight",
     "type": "object",
-    "properties": {
-        "id": { "$ref": "properties.json#/$defs/id" },
-        "type": {
-            "const": "ImageBasedLight"
+    "allOf": [
+        {
+            "$ref": "Light.json"
         },
-        "label": {
-            "$ref": "properties.json#/$defs/lngString"
-        },
-        "environmentMap": {
+        {
             "type": "object",
             "properties": {
-                "id": { "$ref": "properties.json#/$defs/id" },
                 "type": {
-                    "const": "Image"
+                    "const": "ImageBasedLight"
                 },
-                "format": { "$ref": "properties.json#/$defs/format" },
-                "profile": {
-                    "type": "string",
-                    "enum": [
-                        "equirectangular",
-                        "cubic"
+                "environmentMap": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "properties.json#/$defs/id"
+                        },
+                        "type": {
+                            "const": "Image"
+                        },
+                        "format": {
+                            "$ref": "properties.json#/$defs/format"
+                        },
+                        "profile": {
+                            "type": "string",
+                            "enum": [
+                                "equirectangular",
+                                "cubic"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "type",
+                        "profile"
                     ]
                 }
             },
             "required": [
-                "id",
                 "type",
-                "profile"
+                "environmentMap"
             ]
-        },
-        "intensity": { "$ref": "Intensity.json" }
-    },
-    "required": [
-        "type",
-        "environmentMap"
+        }
     ]
 }

@@ -15,6 +15,9 @@
                 "Scene"
             ]
         },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
         "metadata": {
             "$ref": "Metadata.json"
         },

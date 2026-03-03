@@ -6,8 +6,8 @@
     "properties": {
         "type": {
             "type": "string",
-            "pattern": "^Scene$",
-            "default": "Scene"
+            "pattern": "^Quantity$",
+            "default": "Quantity"
         },
         "quantityValue": {
             "type": "number"
@@ -15,5 +15,10 @@
         "unit": {
             "type": "string"
         }
-    }
+    },
+    "required": [
+        "type",
+        "quantityValue",
+        "unit"
+    ]
 }

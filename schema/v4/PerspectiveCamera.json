@@ -1,24 +1,26 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://iiif.io/api/presentation/4.0/schema/PerspectiveCamera.json",
+    "title": "PerspectiveCamera",
     "type": "object",
-    "properties": {
-        "id": { "$ref": "properties.json#/$defs/id" },
-        "type": {
-            "const": "PerspectiveCamera"
+    "allOf": [
+        {
+            "$ref": "Camera.json"
         },
-        "near": {
-            "type": "number"
-        },
-        "far": {
-            "type": "number"
-        },
-        "fieldOfView": {
-            "type": "number"
-        }
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "PerspectiveCamera"
+                },
+                "fieldOfView": {
+                    "type": "number"
+                }
 
-    },
-    "required": [
-        "type"
+            },
+            "required": [
+                "type"
+            ]
+        }
     ]
 }

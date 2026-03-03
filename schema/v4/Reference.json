@@ -21,7 +21,8 @@
                 "Canvas",
                 "Range",
                 "Scene",
-                "Timeline"
+                "Timeline",
+                "Annotation"
             ]
         },
         "thumbnail": {

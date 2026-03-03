@@ -1,63 +1,21 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$id": "https://iiif.io/api/presentation/4.0/schema/Light.json",
+    "title": "Light",
     "type": "object",
-    "if": {
-        "properties": {
-            "type": {
-                "const": "ImageBasedLight"
-            }
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
         },
-        "required": [
-            "type"
-        ]
+        "type": {
+            "type": "string"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "intensity": { "$ref": "Intensity.json" }
     },
-    "then": {
-        "$ref": "ImageBasedLight.json"
-    },
-    "else": {
-        "if": {
-            "properties": {
-                "type": {
-                    "const": "SpotLight"
-                }
-            },
-            "required": [
-                "type"
-            ]
-        },
-        "then": {
-            "$ref": "SpotLight.json"
-        },
-        "else": {
-            "if": {
-                "properties": {
-                    "type": {
-                        "const": "AmbientLight"
-                    }
-                },
-                "required": [
-                    "type"
-                ]
-            },
-            "then": {
-                "$ref": "AmbientLight.json"
-            }, 
-            "else": {
-                "if": {
-                    "properties": {
-                        "type": {
-                            "const": "DirectionalLight"
-                        }
-                    },
-                    "required": [
-                        "type"
-                    ]
-                },
-                "then": {
-                    "$ref": "DirectionalLight.json"
-                }
-            }
-        }
-    }
+    "required": [
+        "type"
+    ]
 }

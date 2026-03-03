@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/AnnotationRef.json",
+    "title": "AnnotationRef",
+    "allOf": [
+        {
+            "$ref": "Reference.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "pattern": "^Annotation$"
+                }
+            }
+        }
+    ]
+}

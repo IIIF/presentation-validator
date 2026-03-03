@@ -1,19 +1,24 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://iiif.io/api/presentation/4.0/schema/DirectionalLight.json",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/SpotAudio.json",
+    "title": "SpotAudio",
     "type": "object",
     "allOf": [
         {
-            "$ref": "Light.json"
+            "$ref": "Audio.json"
         },
         {
             "type": "object",
             "properties": {
                 "type": {
-                    "const": "DirectionalLight"
+                    "type": "string",
+                    "pattern": "^SpotAudio$",
+                    "default": "SpotAudio"
                 },
-                "color": {
-                    "$ref": "properties.json#/$defs/backgroundColor"
+                "angle": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "exclusiveMaximum": 90
                 },
                 "lookAt": {
                     "$ref": "LookAt.json"
