@@ -70,7 +70,22 @@
                         ]
                     },
                     "then": {
-                        "$ref": "CanvasRef.json"
+                        "if": {
+                            "properties": {
+                                "items": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "items"
+                            ]
+                        },
+                        "then": {
+                            "$ref": "Canvas.json"
+                        },
+                        "else": {
+                            "$ref": "CanvasRef.json"
+                        }
                     },
                     "else": {
                         "if": {
