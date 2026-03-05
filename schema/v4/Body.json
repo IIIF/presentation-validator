@@ -99,7 +99,22 @@
                             ]
                         },
                         "then": {
-                            "$ref": "TimelineRef.json"
+                            "if": {
+                                "properties": {
+                                    "items": {
+                                        "type": "array"
+                                    }
+                                },
+                                "required": [
+                                    "items"
+                                ]
+                            },
+                            "then": {
+                                "$ref": "Timeline.json"
+                            },
+                            "else": {
+                                "$ref": "TimelineRef.json"
+                            }
                         },
                         "else": {
                             "if": {
