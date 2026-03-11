@@ -383,14 +383,14 @@
             "type": "object",
             "properties": {
                 "id": { "$ref": "#/types/id" },
-                "type": { 
+                "type": {
                     "type": "string",
                     "default": "FeatureCollection"
                 },
-                "features": { 
+                "features": {
                     "type": "array",
                     "items": {
-                        "type": "object"
+                        "$ref": "#/types/geoJSONFeature"
                     }
                 }
             },
