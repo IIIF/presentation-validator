@@ -56,7 +56,22 @@
                     ]
                 },
                 "then": {
-                    "$ref": "SceneRef.json"
+                     "if": {
+                            "properties": {
+                                "items": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "items"
+                            ]
+                        },
+                        "then": {
+                            "$ref": "Scene.json"
+                        },
+                        "else": {
+                            "$ref": "SceneRef.json"
+                        }
                 },
                 "else": {
                     "if": {
