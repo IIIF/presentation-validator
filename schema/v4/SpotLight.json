@@ -15,7 +15,7 @@
         "angle": {
             "type": "number",
             "exclusiveMinimum": 0,
-            "exclusiveMaximum": 90
+            "maximum": 90
         },
         "color": {
             "$ref": "properties.json#/$defs/backgroundColor"
