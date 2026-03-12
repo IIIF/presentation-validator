@@ -1,6 +1,6 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://iiif.io/api/presentation/4.0/schema/Camera.json",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/CameraTypes.json",
     "type": "object",
     "if": {
         "properties": {
