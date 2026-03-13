@@ -4,6 +4,9 @@
     "title": "Collection",
     "type": "object",
     "properties": {
+        "@context": {
+            "$ref": "Context.json"
+        },
         "id": {
             "$ref": "properties.json#/$defs/id"
         },
@@ -99,6 +102,7 @@
         }
     },
     "required": [
+        "@context",
         "id",
         "type",
         "label",

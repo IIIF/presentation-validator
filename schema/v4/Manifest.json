@@ -84,6 +84,7 @@
         }
     },
     "required": [
+        "@context",
         "id",
         "type",
         "label",
