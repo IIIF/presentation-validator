@@ -20,7 +20,10 @@
             "$ref": "properties.json#/$defs/format"
         },
         "language": {
-            "type": "string"
+            "type": "array",
+            "items": {
+                "$ref": "properties.json#/$defs/BCP47"
+            }
         },
         "processingLanguage": {
             "type": "string"

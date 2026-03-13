@@ -16,6 +16,12 @@
                     "Collection",
                     "Manifest"
                 ]
+            },
+            "language": {
+                "type": "array",
+                "items": {
+                    "$ref": "properties.json#/$defs/BCP47"
+                }
             }
         },
         "required": [
