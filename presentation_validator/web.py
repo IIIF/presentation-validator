@@ -2,6 +2,7 @@ import json
 from presentation_validator.validator import check_manifest, fetch_manifest
 
 from bottle import Bottle, request, response, template,static_file
+import traceback
 
 def create_app():
     app = Bottle()
@@ -37,10 +38,18 @@ def create_app():
                 'url': url
             }
 
-        result = check_manifest(data, version, url, warnings)  
+        try:
+            result = check_manifest(data, version, url, warnings)  
+        except Exception as error:
+            traceback.print_exc()
+            return {
+                'okay': 0, 
+                'error': f'Validation failed. Got "{error}"', 
+                'url': url
+            }
 
         response.content_type = 'application/json'
-        return result
+        return result.json()
 
     @app.route('/validate', method='POST')
     def post_response():
@@ -63,7 +72,7 @@ def create_app():
         result = check_manifest(data, version)  
 
         response.content_type = 'application/json'
-        return result
+        return result.json()
 
     @app.route('/')
     def index():

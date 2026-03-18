@@ -47,14 +47,14 @@ class TestAll(unittest.TestCase):
                      'fixtures/2/manifest.json'):
             with open(good, 'r') as fh:
                 data = fh.read()
-                j = check_manifest(data, '2.1')
-                self.assertEqual(j['okay'], 1)
+                result = check_manifest(data, '2.1')
+                self.assertTrue(result.passed)
 
     def test_bad_manifests_v2(self):
         # bad manifests
         for bad_data in ('', '{}'):
-            j = check_manifest(bad_data, '2.1')
-            self.assertEqual(j['okay'], 0)
+            result = check_manifest(bad_data, '2.1')
+            self.assertFalse(result.passed)
 
     def test_good_manifests_v3(self):
         # good manifests
@@ -83,15 +83,15 @@ class TestAll(unittest.TestCase):
             with open(good, 'r') as fh:
                 print ('Testing: {}'.format(good))
                 data = fh.read()
-                j = check_manifest(data, '3.0')
-                if j['okay'] != 1:
-                    if 'errorList' in j:
-                        self.printValidationerror(good, j['errorList'])
+                result = check_manifest(data, '3.0')
+                if not result.passed:
+                    if 'errorList' in result.errorList:
+                        self.printValidationerror(good, result.errorList)
                     else:
                         print ('Failed to find errors but manifest {} failed validation'.format(good))
-                        print (j)
+                        print (result)
 
-                self.assertEqual(j['okay'], 1, 'Expected manifest {} to pass validation but it failed'.format(good))
+                self.assertTrue(result.passed, 'Expected manifest {} to pass validation but it failed'.format(good))
 
     def test_bad_manifests_v3(self):
         for bad_data in ['fixtures/3/broken_simple_image.json',
@@ -102,12 +102,12 @@ class TestAll(unittest.TestCase):
                          'fixtures/3/collection_of_canvases.json']:
             with open(bad_data, 'r') as fh:
                 data = fh.read()
-                j = check_manifest(data, '3.0')
+                result = check_manifest(data, '3.0')
 
-                if j['okay'] == 1:
+                if result.passed:
                     print("Expected {} to fail validation but it passed....".format(bad_data))
                 
-                self.assertEqual(j['okay'], 0)
+                self.assertFalse(result.passed)
 
     def printValidationerror(self, filename, errors):
         print('Failed to validate: {}'.format(filename))
@@ -237,24 +237,24 @@ class TestAll(unittest.TestCase):
     def formatErrors(self, errorList):
         response = ''
         for error in errorList:
-            response += "Title: {}\n".format(error['title'])
-            response += "Path: {}\n".format(error['path'])
-            response += "Context: {}\n".format(error['path'])
+            response += f"Title: {error.title}\n"
+            response += f"Path: {error.path}\n"
+            response += f"Context: {error.context}\n"
             response += "****************************\n"
 
         return response
 
     def helperTestValidationErrors(self, filename, response, errorPaths):       
-        self.assertEqual(response['okay'], 0, 'Expected {} to fail validation but it past.'.format(filename))
-        self.assertEqual(len(response['errorList']), len(errorPaths), 'Expected {} validation errors but found {} for file {}\n{}'.format(len(errorPaths), len(response['errorList']), filename, self.formatErrors(response['errorList'])))
+        self.assertFalse(response.passed, 'Expected {} to fail validation but it past.'.format(filename))
+        self.assertEqual(len(response.errorList), len(errorPaths), 'Expected {} validation errors but found {} for file {}\n{}'.format(len(errorPaths), len(response.errorList), filename, self.formatErrors(response.errorList)))
             
 
-        for error in response['errorList']:
+        for error in response.errorList:
             foundPath = False
             for path in errorPaths:
-                if error['path'].startswith(path):
+                if error.path.startswith(path):
                     foundPath=True
-            self.assertTrue(foundPath, 'Unexpected path: {} in file {}'.format(error['path'], filename)) 
+            self.assertTrue(foundPath, 'Unexpected path: {} in file {}'.format(error.path, filename)) 
 
     def helperRunValidation(self, iiifFile, version="3.0"):
         with open(iiifFile, 'r') as fh:

@@ -57,6 +57,69 @@ class TestWeb(unittest.TestCase):
         self.assertIn("okay", data)
         self.assertEqual(data["okay"], 1)
 
+    def test_GET_response_v2(self):
+        resp = self.app.get(
+            "/validate",
+            params={
+                "url": "http://iiif.io/api/presentation/2.0/example/fixtures/1/manifest.json",
+                "version": "2.1"
+            }
+        )
+
+        self.assertEqual(resp.status_code, 200)
+
+        data = resp.json
+        self.assertIn("okay", data)    
+        self.assertEqual(data["okay"], 1)    
+
+        self.assertIn("warnings", data)    
+        self.assertEqual(len(data["warnings"]), 4)
+        for item in data["warnings"]:
+            self.assertTrue(isinstance(item, str))
+
+        self.assertIn("error", data)    
+        self.assertEqual(data["error"], "None")
+
+        self.assertIn("url", data)
+        self.assertEqual(data["url"], "http://iiif.io/api/presentation/2.0/example/fixtures/1/manifest.json")
+
+    @patch("presentation_validator.validator.requests.get")
+    def test_GET_response_v3(self, mock_get):
+        mock_get.return_value = mockRequests("fixtures/3/broken_simple_image.json")
+        resp = self.app.get(
+            "/validate",
+            params={
+                "url": "http://iiif.io/api/presentation/3.0/example/fixtures/1/manifest.json",
+                "version": "3.0"
+            }
+        )
+
+        self.assertEqual(resp.status_code, 200)
+
+        data = resp.json
+        self.assertIn("okay", data)    
+        self.assertEqual(data["okay"], 0)    
+
+        self.assertIn("warnings", data)    
+        self.assertEqual(len(data["warnings"]), 0)
+
+        self.assertIn("error", data)    
+        self.assertEqual(data["error"], "")
+
+        self.assertIn("errorList", data)
+        self.assertEqual(len(data["errorList"]), 4)
+
+        firstError = data["errorList"][0]
+        self.assertIn("title", firstError)
+        self.assertIn("detail", firstError)
+        self.assertIn("description", firstError)
+        self.assertIn("path", firstError)
+        self.assertIn("context", firstError)
+        self.assertTrue(isinstance(firstError["context"], dict))
+
+        self.assertIn("url", data)
+        self.assertEqual(data["url"], "http://iiif.io/api/presentation/3.0/example/fixtures/1/manifest.json")
+
     @patch("presentation_validator.validator.requests.get")
     def test_GET_success(self, mock_get):
         """Test GET requests -- typical user interaction with web form."""
@@ -132,7 +195,7 @@ class TestWeb(unittest.TestCase):
         resp = self.app.get(
             "/validate",
             params={
-                "url": "https://a.b/",
+                "url": "https://example.org/iiif/book1/manifest",
                 "version": "3.0",
                 "accept": "true"
             }
@@ -158,7 +221,7 @@ class TestWeb(unittest.TestCase):
         resp = self.app.get(
             "/validate",
             params={
-                "url": "https://a.b/",
+                "url": "https://example.org/iiif/book1/manifest",
                 "version": "3.0",
                 "accept": "false"
             }

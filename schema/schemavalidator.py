@@ -6,6 +6,7 @@ import json
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from schema.error_processor import IIIFErrorParser
+from presentation_validator.model import ValidationResult, ErrorDetail
 
 def printPath(pathObj, fields):
     path = ''
@@ -39,17 +40,16 @@ def validate(data, version, url):
         print(err)
         raise
 
-    okay = 0
     #print (best_match(results))
     errors = sorted(results, key=relevance)
     #errors = [best_match(results)]
     error = " "
     errorsJson = []
+    result = ValidationResult()
     if errors:
         print('Validation Failed')
         if len(errors) == 1 and 'is not valid under any of the given schemas' in errors[0].message:
             errors = errors[0].context
-
 
         # check to see if errors are relveant to IIIF asset
         errorParser = IIIFErrorParser(schema, data)
@@ -103,15 +103,14 @@ def validate(data, version, url):
                         context[key] = '[ ... ]'
                     elif isinstance(context[key], dict):
                         context[key] = '{ ... }'
-            errorsJson.append({
-                'title': 'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
-                'detail': detail,
-                'description': description,
-                'path': printPath(err.path, err.message),
-                'context': context,
-                'error': err
-    
-            })
+
+            result.errorList.append(ErrorDetail(
+                    'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
+                    detail, 
+                    description, 
+                    printPath(err.path, err.message), 
+                    context,
+                    err))
             #print (json.dumps(err.instance, indent=4))
             errorCount += 1
 
@@ -123,18 +122,16 @@ def validate(data, version, url):
   #          'url': url
  #        }
 
-        okay = 0
+        result.passed = False
     else:
         print ('Passed Validation!')
-        okay = 1
-    error = ""
-    return {
-        'okay': okay,
-        'warnings': [],
-        'error': error,
-        'errorList': errorsJson,
-        'url': url
-    }
+        result.passed = True
+
+    result.url = url
+    result.warnings = [] # Schema can't do warnings
+    result.error = "" # Only error list for schema
+  
+    return result
 
 def json_path(absolute_path):
     path = '$'

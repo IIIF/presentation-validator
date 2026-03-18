@@ -1,6 +1,7 @@
 from iiif_prezi.loader import ManifestReader
 from schema import schemavalidator
 from jsonschema.exceptions import ValidationError, SchemaError
+from presentation_validator.model import ValidationResult, ErrorDetail
 
 import requests
 from urllib.parse import urlparse
@@ -15,13 +16,11 @@ IIIF_HEADER = "application/ld+json;profile=http://iiif.io/api/presentation/{vers
 
 def check_manifest(data, version, url=None, warnings=[]):
     """Check manifest data at version, return JSON."""
-    infojson = {}
+    result = ValidationResult()
     # Check if 3.0 if so run through schema rather than this version...
     if version == '3.0':
         try:
-            infojson = schemavalidator.validate(data, version, url)
-            for error in infojson['errorList']:
-                error.pop('error', None)
+            result = schemavalidator.validate(data, version, url)
         
             if isinstance(data, str):
                 mf = json.loads(data)
@@ -31,30 +30,21 @@ def check_manifest(data, version, url=None, warnings=[]):
             if url and 'id' in mf and mf['id'] != url:
                 raise ValidationError("The manifest id ({}) should be the same as the URL it is published at ({}).".format(mf["id"], url))
         except ValidationError as e:
-            if infojson:
-                infojson['errorList'].append({
-                    'title': 'Resolve Error',
-                    'detail': str(e),
-                    'description': '',
-                    'path': '/id',
-                    'context': '{ \'id\': \'...\'}'
-                    })
+            if result.errorList:
+                result.errorList.append(ErrorDetail(
+                    'Resolve Error',
+                    str(e),
+                    '',
+                    '/id',
+                    '{ \'id\': \'...\'}',
+                    e))
             else:
-                infojson = {
-                    'okay': 0,
-                    'error': str(e),
-                    'url': url,
-                    'warnings': []
-                }
+                result.passed = False
+                result.error = str(e)
         except Exception as e:    
             traceback.print_exc()
-            infojson = {
-                'okay': 0,
-                'error': 'Presentation Validator bug: "{}". Please create a <a href="https://github.com/IIIF/presentation-validator/issues">Validator Issue</a>, including a link to the manifest.'.format(e),
-                'url': url,
-                'warnings': []
-            }
-
+            result.passed = False
+            result.error = f'Presentation Validator bug: "{e}". Please create a <a href="https://github.com/IIIF/presentation-validator/issues">Validator Issue</a>, including a link to the manifest.'
     else:
         if isinstance(data, dict):
             data = json.dumps(data, indent=3)
@@ -67,28 +57,26 @@ def check_manifest(data, version, url=None, warnings=[]):
             if url and mf.id != url:
                 raise ValidationError("Manifest @id ({}) is different to the location where it was retrieved ({})".format(mf.id, url))
             # Passed!
-            okay = 1
+            result.passed = True
         except KeyError as e:    
             print ('Failed validation due to:')
             traceback.print_exc()
             err = 'Failed due to KeyError {}, check trace for details'.format(e)
-            okay = 0
+            result.passed = False
         except Exception as e:
             # Failed
             print ('Failed validation due to:')
             traceback.print_exc()
+            result.passed = False
             err = e
-            okay = 0
 
         warnings.extend(reader.get_warnings())
-        infojson = {
-            'okay': okay,
-            'warnings': warnings,
-            'error': str(err),
-            'url': url
-        }
 
-    return infojson
+        result.warnings = warnings
+        result.error = str(err)
+        result.url = url
+
+    return result
 
 def fetch_manifest(url, accept, version):
     """
