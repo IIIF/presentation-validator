@@ -11,7 +11,7 @@ import json
 from pyld import jsonld
 jsonld.set_document_loader(jsonld.requests_document_loader(timeout=60))
 
-IIIF_HEADER = "application/ld+json;profile=http://iiif.io/api/presentation/{iiif_version}/context.json"
+IIIF_HEADER = "application/ld+json;profile=http://iiif.io/api/presentation/{version}/context.json"
 
 def check_manifest(data, version, url=None, warnings=[]):
     """Check manifest data at version, return JSON."""

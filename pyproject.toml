@@ -45,3 +45,14 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["presentation_validator", "schema"]
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "ignore::DeprecationWarning:webob.*"
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+    "webtest>=3.0.7",
+]
