@@ -1,11 +1,16 @@
-ARG version=3.9
+ARG version=3.12
 FROM python:${version}-slim
 
-
 WORKDIR /app
-ADD . /app
 
-RUN pip install --trusted-host pypi.python.org -r requirements.txt
+# Copy project files
+COPY . /app
 
+# Install the project (uses pyproject.toml)
+RUN pip install --no-cache-dir .
+
+# Expose port (match your CLI default or override)
 EXPOSE 8080
-CMD ["/usr/local/bin/python", "/app/iiif-presentation-validator.py", "--hostname", "0.0.0.0"]
+
+# Run the new CLI
+CMD ["iiif-validator", "serve", "--host", "0.0.0.0", "--port", "8080"]

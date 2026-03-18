@@ -30,7 +30,10 @@ def validate(data, version, url):
 
     try:
         validator = Draft7Validator(schema)
-        results = validator.iter_errors(json.loads(data))
+        if isinstance(data, str):
+            data = json.loads(data)
+
+        results = validator.iter_errors(data)
     except SchemaError as err:    
         print('Problem with the supplied schema:\n')
         print(err)
@@ -49,7 +52,7 @@ def validate(data, version, url):
 
 
         # check to see if errors are relveant to IIIF asset
-        errorParser = IIIFErrorParser(schema, json.loads(data))
+        errorParser = IIIFErrorParser(schema, data)
         relevantErrors = []
         i = 0
         # Go through the list of errors and check to see if they are relevant
