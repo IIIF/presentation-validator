@@ -5,7 +5,7 @@ from jsonschema.exceptions import ValidationError, SchemaError, best_match, rele
 import json
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-from schema.error_processor import IIIFErrorParser
+from .error_processor import IIIFErrorParser
 from presentation_validator.model import ValidationResult, ErrorDetail
 
 def printPath(pathObj, fields):

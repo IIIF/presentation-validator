@@ -5,13 +5,11 @@ import importlib
 
 from bottle import Response, request, LocalRequest
 
-# python3
 from urllib.request import URLError
 import json
 
-from presentation_validator.validator import fetch_manifest,check_manifest
-
-from schema.error_processor import IIIFErrorParser
+from presentation_validator.validator import check_manifest
+from presentation_validator.v3.error_processor import IIIFErrorParser
 
 def read_fixture(fixture):
     """Read data from text fixture."""

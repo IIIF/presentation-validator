@@ -1,7 +1,7 @@
 from iiif_prezi.loader import ManifestReader
-from schema import schemavalidator
-from jsonschema.exceptions import ValidationError, SchemaError
+from jsonschema.exceptions import ValidationError
 from presentation_validator.model import ValidationResult, ErrorDetail
+from presentation_validator.v3 import schemavalidator
 
 import requests
 from urllib.parse import urlparse
