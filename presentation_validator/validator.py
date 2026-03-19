@@ -16,19 +16,40 @@ IIIF_HEADER = "application/ld+json;profile=http://iiif.io/api/presentation/{vers
 
 def check_manifest(data, version, url=None, warnings=[]):
     """Check manifest data at version, return JSON."""
+    if isinstance(data, str):
+        try:
+            manifest = json.loads(data)
+        except json.JSONDecodeError as e:
+            result = ValidationResult()
+            result.passed = False
+            result.error = str(e)
+            return result
+    else:
+        manifest = data
+
     result = ValidationResult()
+
+    if not version:
+        # peak into the json to find the version
+        context = manifest.get('@context', '')
+        if 'http://iiif.io/api/presentation/4/context.json' in context:
+            version = '4.0'
+        elif 'http://iiif.io/api/presentation/3/context.json' in context:
+            version = '3.0'
+        elif 'http://iiif.io/api/presentation/2/context.json' in context:
+            version = '2.1'
+        else:
+            result.passed = False
+            result.error = "Unable to determine IIIF presentation version from @context"
+            return result
+
     # Check if 3.0 if so run through schema rather than this version...
     if version == '3.0':
         try:
-            result = schemavalidator.validate(data, version, url)
+            result = schemavalidator.validate(manifest, version, url)
         
-            if isinstance(data, str):
-                mf = json.loads(data)
-            else:
-                mf = data
-
-            if url and 'id' in mf and mf['id'] != url:
-                raise ValidationError("The manifest id ({}) should be the same as the URL it is published at ({}).".format(mf["id"], url))
+            if url and 'id' in manifest and manifest['id'] != url:
+                raise ValidationError(f"The manifest id ({manifest['id']}) should be the same as the URL it is published at ({url}).")
         except ValidationError as e:
             if result.errorList:
                 result.errorList.append(ErrorDetail(
