@@ -7,6 +7,9 @@ from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from .error_processor import IIIFErrorParser
 from presentation_validator.model import ValidationResult, ErrorDetail
+from pathlib import Path
+
+SCHEMA_DIR = Path(__file__).resolve().parent.parent.parent / "schema"
 
 def printPath(pathObj, fields):
     path = ''
@@ -22,7 +25,7 @@ def printPath(pathObj, fields):
 
 def validate(data, version, url):
     if version == '3.0':
-        with open('schema/iiif_3_0.json') as json_file:
+        with open(f'{SCHEMA_DIR}/iiif_3_0.json') as json_file:
             try:
                 schema = json.load(json_file)
             except ValueError as err:
