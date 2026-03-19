@@ -47,7 +47,6 @@ def validate(data, version, url):
     errorsJson = []
     result = ValidationResult()
     if errors:
-        print('Validation Failed')
         if len(errors) == 1 and 'is not valid under any of the given schemas' in errors[0].message:
             errors = errors[0].context
 
@@ -124,7 +123,6 @@ def validate(data, version, url):
 
         result.passed = False
     else:
-        print ('Passed Validation!')
         result.passed = True
 
     result.url = url

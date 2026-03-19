@@ -54,6 +54,16 @@ uv run iiif-validator validate --version <version> <url-or-file>
 iiif-validator validate --version <version> <url-or-file>
 ```
 
+It is also possible to validate a directory and any sub directories:
+
+```
+# Using uv
+uv run iiif-validator validate-dir --version <version> --extension <extension> <directory>
+
+# Using pip install
+iiif-validator validate-dir --version <version> --extension <extension> <directory>
+```
+
 ## Server
 
 To run the server:

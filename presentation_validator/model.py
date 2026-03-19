@@ -1,3 +1,5 @@
+import json
+
 class ErrorDetail:
     title: str
     detail: str
@@ -22,6 +24,9 @@ class ErrorDetail:
             "path": self.path,
             "context": self.context
         }
+
+    def __str__(self):
+        return f"{self.title}\nDetail: {self.detail}\nDescription: {self.description}\nPath: {self.path}\n:Context:\n{json.dumps(self.context, indent=2)}\n==============\n"
 
 class ValidationResult:
 #    {
