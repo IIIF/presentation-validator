@@ -11,9 +11,9 @@ inputs:
     default: ""
 
   extension:
-    description: "File extension or glob pattern to match (e.g. *.json, *.jsonld)"
+    description: "File extension or glob pattern to match (e.g. .json, .jsonld)"
     required: false
-    default: "*.json"
+    default: ".json"
 
 runs:
   using: "composite"

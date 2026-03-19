@@ -67,7 +67,7 @@ def run_validate_dir(args):
         return 1
 
     # find all files with the specified extension
-    json_files = list(base.rglob(f"*{args.extension}"))
+    json_files = list(base.rglob(f"*{args.extension.replace("*","")}"))
 
     print(f"Found {len(json_files)} files with extension '{args.extension}'\n")
 
