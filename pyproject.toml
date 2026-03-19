@@ -44,7 +44,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["presentation_validator", "schema"]
+packages = ["presentation_validator", "schema", "presentation_validator.v3"]
 
 [tool.pytest.ini_options]
 filterwarnings = [
