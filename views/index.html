@@ -65,10 +65,11 @@
 
                 Select Presentation API Version:
                 <select name="version">
-                  <option value="3.0">3.0</option>
-                  <option value="2.1">2.1</option>
-                  <option value="2.0">2.0</option>
-                  <option value="1.0">1.0</option>
+                % for v in versions:
+                    <option value="{{v.value}}" {{'selected' if v == selected else ''}}>
+                        {{v.value}}
+                    </option>
+                % end
                 </select>
                 <br/>
                 <input type="checkbox" id="accept" name="accept">

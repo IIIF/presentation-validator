@@ -2,10 +2,12 @@ from iiif_prezi.loader import ManifestReader
 from jsonschema.exceptions import ValidationError
 from presentation_validator.model import ValidationResult, ErrorDetail
 from presentation_validator.v3 import schemavalidator
+from presentation_validator.enum import IIIFVersion
 
 import requests
 from urllib.parse import urlparse
 import traceback
+from typing import Any
 
 import json
 
@@ -14,8 +16,16 @@ jsonld.set_document_loader(jsonld.requests_document_loader(timeout=60))
 
 IIIF_HEADER = "application/ld+json;profile=http://iiif.io/api/presentation/{version}/context.json"
 
-def check_manifest(data, version, url=None, warnings=[]):
+def check_manifest(
+                data,
+                version: IIIFVersion,
+                url: str | None = None,
+                warnings: list[str] | None = None,
+            ) -> dict[str, Any]:
     """Check manifest data at version, return JSON."""
+    if warnings is None:
+        warnings = []
+
     if isinstance(data, str):
         try:
             manifest = json.loads(data)
@@ -31,20 +41,10 @@ def check_manifest(data, version, url=None, warnings=[]):
 
     if not version:
         # peak into the json to find the version
-        context = manifest.get('@context', '')
-        if 'http://iiif.io/api/presentation/4/context.json' in context:
-            version = '4.0'
-        elif 'http://iiif.io/api/presentation/3/context.json' in context:
-            version = '3.0'
-        elif 'http://iiif.io/api/presentation/2/context.json' in context:
-            version = '2.1'
-        else:
-            result.passed = False
-            result.error = "Unable to determine IIIF presentation version from @context"
-            return result
-
+        version = IIIFVersion.from_context(manifest.get('@context', ''))
+        
     # Check if 3.0 if so run through schema rather than this version...
-    if version == '3.0':
+    if version == IIIFVersion.V3_0:
         try:
             result = schemavalidator.validate(manifest, version, url)
         

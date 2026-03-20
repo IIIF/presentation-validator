@@ -8,6 +8,7 @@ sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
 from .error_processor import IIIFErrorParser
 from presentation_validator.model import ValidationResult, ErrorDetail
 from pathlib import Path
+from presentation_validator.enum import IIIFVersion
 
 SCHEMA_DIR = Path(__file__).resolve().parent.parent.parent / "schema"
 
@@ -24,7 +25,7 @@ def printPath(pathObj, fields):
     return path    
 
 def validate(data, version, url):
-    if version == '3.0':
+    if version == IIIFVersion.V3_0:
         with open(f'{SCHEMA_DIR}/iiif_3_0.json') as json_file:
             try:
                 schema = json.load(json_file)

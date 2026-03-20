@@ -3,6 +3,7 @@ import sys
 from urllib.parse import urlparse
 from presentation_validator.web import create_app
 from presentation_validator.validator import check_manifest, fetch_manifest
+from presentation_validator.enum import IIIFVersion
 from bottle import run
 from pathlib import Path
 
@@ -40,7 +41,7 @@ def run_validate(args):
         sys.exit(1)
 
     # Pretty print JSON result
-    print(json.dumps(result, indent=2))
+    print(json.dumps(result.json(), indent=2))
 
     # Optional: exit non-zero if invalid
     if isinstance(result, dict) and result.get("okay") is False:
@@ -132,7 +133,9 @@ def main():
     )
     validate_parser.add_argument(
         "--version",
-        help="IIIF Presentation version (e.g. 2.1, 3.0)",
+        type=IIIFVersion.from_string,
+        choices=list(IIIFVersion),
+        help=f"IIIF Presentation version ({IIIFVersion.values_str()})",
         default=None,
     )
     validate_parser.set_defaults(func=run_validate)
@@ -160,7 +163,9 @@ def main():
 
     dir_parser.add_argument(
         "--version",
-        help="IIIF Presentation version (e.g. 2.1, 3.0)",
+        type=IIIFVersion.from_string,
+        choices=list(IIIFVersion),
+        help=f"IIIF Presentation version ({IIIFVersion.values_str()})",
         default=None,
     )
 
@@ -173,8 +178,9 @@ def main():
     dir_parser.set_defaults(func=run_validate_dir)
 
     args = parser.parse_args()
-    args.func(args)
+    return args.func(args) or 0
+
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

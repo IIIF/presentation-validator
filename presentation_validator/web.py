@@ -1,5 +1,6 @@
 import json
 from presentation_validator.validator import check_manifest, fetch_manifest
+from presentation_validator.enum import IIIFVersion
 
 from bottle import Bottle, request, response, template,static_file
 import traceback
@@ -76,7 +77,7 @@ def create_app():
 
     @app.route('/')
     def index():
-        return template('views/index.html')
+        return template('views/index.html', versions=IIIFVersion, selected=IIIFVersion.default())
 
     @app.route('/css/<filepath:path>')
     def css(filepath):
