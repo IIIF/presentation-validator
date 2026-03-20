@@ -137,7 +137,7 @@
                 "label": {"$ref": "#/types/lngString" },
                 "type": {
                     "type": "string",
-                    "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^AnnotationCollection$|^Canvas$|^Range$"
+                    "pattern": "^Manifest$|^AnnotationPage$|^Collection$|^Canvas$|^Range$"
                 },
                 "thumbnail": {
                     "type": "array",
@@ -710,28 +710,6 @@
                 }
             ]
         }, 
-        "annotationCollectionRef": {
-            "oneOf": [
-                {
-                    "type": "string"
-                },
-                {
-                    "title":"AnnotationCollectionRefExtended",
-                    "allOf": [
-                        { "$ref": "#/types/reference" },
-                        {
-                            "type": "object",
-                            "properties": {
-                                "type": {
-                                    "type": "string",
-                                    "pattern": "^AnnotationCollection$"
-                                }
-                            }
-                        }
-                    ]    
-                }
-            ]
-        },
         "canvas": {
             "allOf": [
                 { "$ref": "#/types/class" },
@@ -922,13 +900,35 @@
                 {
                     "type": "object",
                     "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
                         "type": {
                             "type": "string",
                             "pattern": "^AnnotationCollection$",
                             "default": "AnnotationCollection"
                         },
+                        "label": {"$ref": "#/types/lngString" },
+                        "metadata": { "$ref": "#/classes/metadata" },
+                        "summary": { "$ref": "#/types/lngString" },
+                        "requiredStatement": { "$ref": "#/types/keyValueString" },
                         "rendering": { "$ref": "#/types/external" },
+                        "rights": { "$ref": "#/classes/rights" },
                         "partOf": { "$ref": "#/classes/partOf" },
+                        "provider": { "$ref": "#/classes/provider" },
                         "next": { "$ref": "#/classes/annotationPageRef" },
                         "first": { "$ref": "#/classes/annotationPageRef" },
                         "last": { "$ref": "#/classes/annotationPageRef" },
@@ -940,15 +940,9 @@
                         "thumbnail": {
                             "type": "array",
                             "items": { "$ref": "#/classes/resource" }
-                        },
-                        "items": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/classes/annotation"
-                            }
                         }
                     },
-                    "required": ["items"]
+                    "required": ["id","type"]
                 }
             ]
         },
@@ -998,10 +992,7 @@
                         "partOf": {
                             "type": "array",
                             "items": {
-                                "oneOf": [
-                                    { "$ref": "#/classes/annotationCollection" },
-                                    { "$ref": "#/classes/annotationCollectionRef" }
-                                ]
+                                "$ref": "#/classes/annotationCollection"
                             }
                         },
                         "next": { "$ref": "#/classes/annotationPageRef" },
@@ -1466,10 +1457,7 @@
                         },
                         "rendering": { "$ref": "#/types/external" },
                         "supplementary": { 
-                            "oneOf": [
-                                { "$ref": "#/classes/annotationCollection" },
-                                { "$ref": "#/classes/annotationCollectionRef" }
-                            ]
+                            "$ref": "#/classes/annotationCollection"
                         },
                         "service": { "$ref": "#/classes/service" },
                         "placeholderCanvas": { "$ref": "#/classes/placeholderCanvas" },
