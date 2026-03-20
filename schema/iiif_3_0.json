@@ -679,8 +679,12 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Canvas$"
+                        },
+                        "partOf": {
+                            "$ref": "#/classes/partOf"
                         }
-                    }
+                    },
+                    "required": ["id", "type"]
                 }
             ]    
         },  
@@ -1034,6 +1038,11 @@
                                 }
                             ]
                         },
+                        "type": {
+                            "type": "string",
+                            "pattern": "^Annotation$",
+                            "default": "Annotation"
+                        },
                         "created": { "type": "string" },
                         "modified": { "type": "string" },
                         "generated": { "type": "string" },
@@ -1088,11 +1097,6 @@
                             ]
                         },
                         "stylesheet": { "$ref": "#/classes/stylesheet" },
-                        "type": {
-                            "type": "string",
-                            "pattern": "^Annotation$",
-                            "default": "Annotation"
-                        },
                         "service": { "$ref": "#/classes/service" },
                         "rendering": { "$ref": "#/types/external" },
                         "thumbnail": {
@@ -1154,6 +1158,9 @@
                 },
                 {
                     "$ref": "#/classes/specificResource"
+                },
+                {
+                    "$ref": "#/classes/canvasRef"
                 }
             ]
         },
@@ -1505,6 +1512,7 @@
         { "$ref": "#/classes/manifest" },
         { "$ref": "#/classes/collection" },
         { "$ref": "#/classes/annotationCollection" },
-        { "$ref": "#/classes/annotationPage" }
+        { "$ref": "#/classes/annotationPage" },
+        { "$ref": "#/classes/annotation" }
      ]
 }

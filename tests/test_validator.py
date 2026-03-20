@@ -76,7 +76,8 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/accompanyingCanvas.json',
                      'fixtures/3/placeholderCanvas.json',
                      'fixtures/3/point_selector.json',
-                     'fixtures/3/annotation_full.json'
+                     'fixtures/3/annotation_full.json',
+                     'fixtures/3/content_state.json'
                      ]:
             with open(good, 'r') as fh:
                 print ('Testing: {}'.format(good))
