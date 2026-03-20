@@ -26,7 +26,7 @@ def printPath(pathObj, fields):
 
 def validate(data, version, url):
     if version == IIIFVersion.V3_0:
-        with open(f'{SCHEMA_DIR}/iiif_3_02.json') as json_file:
+        with open(f'{SCHEMA_DIR}/iiif_3_0.json') as json_file:
             try:
                 schema = json.load(json_file)
             except ValueError as err:
