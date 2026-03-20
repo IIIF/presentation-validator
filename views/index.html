@@ -145,7 +145,7 @@
         if (data.okay) {
           str += '<div><h2 style="color:green">Validated successfully</h2></div>';
         } else {
-            if (data.errorList) {
+            if (data.errorList && data.errorList.length > 0) {
                 for (var i = 0, len = data.errorList.length; i < len; i++) {
                     var error = data.errorList[i];
                     str+='<div>';
