@@ -47,7 +47,7 @@ build-backend = "setuptools.build_meta"
 packages = ["presentation_validator", "schema", "presentation_validator.v3"]
 
 [tool.setuptools.package-data]
-schema = ["*.json"]
+schema = ["**/*.json"]
 
 [tool.pytest.ini_options]
 filterwarnings = [
