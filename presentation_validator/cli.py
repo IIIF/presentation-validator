@@ -32,7 +32,7 @@ def run_validate(args):
         print(f"❌ Failed to load input: {e}", file=sys.stderr)
         sys.exit(1)
 
-    version = args.version
+    version = IIIFVersion.from_string(args.version)
 
     try:
         result = check_manifest(data, version, args.source, warnings)
@@ -85,7 +85,7 @@ def run_validate_dir(args):
             with path.open("r", encoding="utf-8") as f:
                 data = json.load(f)
 
-            result = check_manifest(data, args.version)
+            result = check_manifest(data, IIIFVersion.from_string(args.version))
 
             # print results
             if result.passed:
@@ -134,7 +134,7 @@ def main():
     validate_parser.add_argument(
         "--version",
         type=IIIFVersion.from_string,
-        choices=list(IIIFVersion),
+        choices=[v.value for v in IIIFVersion],
         help=f"IIIF Presentation version ({IIIFVersion.values_str()})",
         default=None,
     )
@@ -164,7 +164,7 @@ def main():
     dir_parser.add_argument(
         "--version",
         type=IIIFVersion.from_string,
-        choices=list(IIIFVersion),
+        choices=[v.value for v in IIIFVersion],
         help=f"IIIF Presentation version ({IIIFVersion.values_str()})",
         default=None,
     )
