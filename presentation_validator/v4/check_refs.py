@@ -36,7 +36,9 @@ def build_registry_from_dir(schema_dir: str | Path) -> Tuple[Registry, Dict[str,
     registry = Registry()
     by_uri: Dict[str, Dict[str, Any]] = {}
 
+    found=False
     for path in schema_dir.rglob("*.json"):
+        found = True # Found at least one JSON file
         with path.open("r", encoding="utf-8") as f:
             schema = json.load(f)
 
@@ -51,6 +53,9 @@ def build_registry_from_dir(schema_dir: str | Path) -> Tuple[Registry, Dict[str,
             raise Exception(f"Duplicate schema ID {uri} found in {path.name}")
 
         by_uri[uri] = schema
+
+    if not found:
+        raise FileNotFoundError(f"No JSON files found in {schema_dir}")
 
     return registry, by_uri
 
@@ -84,7 +89,7 @@ def find_missing_refs_in_dir(schema_dir: str | Path) -> List[Dict[str, str]]:
 
 
 if __name__ == "__main__":
-    problems = find_missing_refs_in_dir(Path(__file__).resolve().parent)
+    problems = find_missing_refs_in_dir(Path(__file__).resolve().parent.parent.parent / "schema" / "v4")
     if problems:
         print("\nMissing/unresolvable $refs:")
         for p in problems:
