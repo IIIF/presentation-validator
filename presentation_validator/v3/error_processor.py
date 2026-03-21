@@ -1,11 +1,26 @@
 #!/usr/local/bin/python3
 
-from jsonschema import Draft7Validator, RefResolver
+from jsonschema import Draft7Validator
 from jsonschema.exceptions import ValidationError, SchemaError, best_match, relevance
+from referencing import Registry, Resource
+from referencing.jsonschema import DRAFT7
 from jsonpath_rw import jsonpath, parse
 import json
 import sys
 import re
+
+class SchemaResolver:
+    def __init__(self, schema):
+
+        self.registry = Registry().with_resource(
+            uri="",
+            resource=Resource.from_contents(schema),
+        )
+
+    def resolve(self, ref: str):
+        resolver = self.registry.resolver()
+        resolved = resolver.lookup(ref)
+        return resolved.contents 
 
 class IIIFErrorParser(object):
     """
@@ -36,7 +51,7 @@ class IIIFErrorParser(object):
         """
         self.schema = schema
         self.iiif_asset = iiif_asset
-        self.resolver = RefResolver.from_schema(self.schema)
+        self.resolver = SchemaResolver(self.schema)
 
     def isValid(self, error_path, IIIFJsonPath):
         """
@@ -98,7 +113,7 @@ class IIIFErrorParser(object):
             if isinstance(possibility, dict) and "$ref" in possibility:
                 tmpClas = possibility['classes']
                 tmpType = possibility['types']
-                possibility = self.resolver.resolve(possibility['$ref'])[1]
+                possibility = self.resolver.resolve(possibility["$ref"])
                 possibility['classes'] = tmpClas
                 possibility['types'] = tmpType
 
@@ -183,7 +198,7 @@ class IIIFErrorParser(object):
         for pathPart in schemaPath:
             try:
                 if isinstance(schemaEl[pathPart], dict) and "$ref" in schemaEl[pathPart]:
-                    schemaEl = self.resolver.resolve(schemaEl[pathPart]['$ref'])[1]
+                    schemaEl = self.resolver.resolve(schemaEl[pathPart]['$ref'])
                 else:
                     schemaEl = schemaEl[pathPart]
             except KeyError as error:
@@ -229,7 +244,7 @@ class IIIFErrorParser(object):
 
         if isinstance(schemaEl, dict) and "$ref" in schemaEl:
             #print ('Found ref, trying to resolve: {}'.format(schemaEl['$ref']))
-            return self.parse(error_path, self.resolver.resolve(schemaEl['$ref'])[1], iiif_asset, IIIFJsonPath, parent, jsonPath)
+            return self.parse(error_path, self.resolver.resolve(schemaEl['$ref']), iiif_asset, IIIFJsonPath, parent, jsonPath)
 
 
         #print ("Path: {} ".format(error_path))
@@ -284,7 +299,7 @@ class IIIFErrorParser(object):
 
         if isinstance(schemaEl[pathEl], dict) and "$ref" in schemaEl[pathEl]:
             #print ('Found ref, trying to resolve: {}'.format(schemaEl[pathEl]['$ref']))
-            return self.parse(error_path, self.resolver.resolve(schemaEl[pathEl]['$ref'])[1], iiif_asset, IIIFJsonPath, pathEl, jsonPath)
+            return self.parse(error_path, self.resolver.resolve(schemaEl[pathEl]['$ref']), iiif_asset, IIIFJsonPath, pathEl, jsonPath)
         else:    
             return self.parse(error_path, schemaEl[pathEl], iiif_asset, IIIFJsonPath, pathEl, jsonPath)
 

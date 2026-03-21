@@ -343,7 +343,7 @@ wheels = [
 
 [[package]]
 name = "iiif-presentation-validator"
-version = "0.0.3"
+version = "0.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "bottle" },
@@ -351,6 +351,7 @@ dependencies = [
     { name = "jsonpath-rw" },
     { name = "jsonschema" },
     { name = "pillow" },
+    { name = "referencing" },
     { name = "requests" },
 ]
 
@@ -375,6 +376,7 @@ requires-dist = [
     { name = "jsonschema" },
     { name = "pillow", marker = "python_full_version >= '3.6'", specifier = ">=3.2.0" },
     { name = "pytest", marker = "extra == 'dev'" },
+    { name = "referencing", specifier = ">=0.37.0" },
     { name = "requests" },
 ]
 provides-extras = ["dev"]

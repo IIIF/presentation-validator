@@ -1,6 +1,6 @@
 [project]
 name = "iiif-presentation-validator"
-version = "0.0.3"
+version = "0.5.0"
 description = "Validator for the IIIF Presentation API"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -11,6 +11,7 @@ dependencies = [
   "jsonpath_rw",
   "requests",
   "Pillow>=3.2.0; python_version >= '3.6'",
+  "referencing>=0.37.0",
 ]
 classifiers = [
   "Development Status :: 4 - Beta",
