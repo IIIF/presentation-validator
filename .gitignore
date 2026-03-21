@@ -10,3 +10,5 @@ htmlcov
 *.pyc
 *.swp
 .venv
+dist
+_version.py

@@ -1,6 +1,6 @@
 [project]
 name = "iiif-presentation-validator"
-version = "0.5.0"
+dynamic = ["version"]
 description = "Validator for the IIIF Presentation API"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -34,18 +34,13 @@ Homepage = "https://github.com/IIIF/presentation-validator"
 [project.scripts]
 iiif-validator = "presentation_validator.cli:main"
 
-[project.optional-dependencies]
-dev = [
-  "coverage",
-  "pytest",
-]
-
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=68", "wheel", "setuptools-scm>=9.2.2"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = ["presentation_validator", "schema", "presentation_validator.v3"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["presentation_validator*", "schema*"]
 
 [tool.setuptools.package-data]
 schema = ["**/*.json"]
@@ -55,8 +50,13 @@ filterwarnings = [
     "ignore::DeprecationWarning:webob.*"
 ]
 
+[tool.setuptools_scm]
+version_file = "presentation_validator/_version.py"
+
 [dependency-groups]
 dev = [
-    "pytest>=9.0.2",
-    "webtest>=3.0.7",
+  "build",
+  "coverage",
+  "pytest>=9.0.2",
+  "webtest>=3.0.7",
 ]
