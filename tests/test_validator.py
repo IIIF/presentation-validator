@@ -2,6 +2,7 @@
 import unittest
 from unittest.mock import Mock
 import importlib
+from pathlib import Path
 
 from bottle import Response, request, LocalRequest
 
@@ -107,6 +108,40 @@ class TestAll(unittest.TestCase):
                     print("Expected {} to fail validation but it passed....".format(bad_data))
                 
                 self.assertFalse(result.passed)
+
+    def test_good_manifests_v4(self):
+        base = Path("fixtures/4/ok")
+        data = []
+        for path in base.rglob("*.json"):
+            with path.open("r", encoding="utf-8") as f:
+                print ('Testing: {}'.format(path))
+                data = json.load(f)
+        
+                result = check_manifest(data, '4.0')
+                if not result.passed:
+                    if 'errorList' in result.errorList:
+                        self.printValidationerror(path, result.errorList)
+                    else:
+                        print ('Failed to find errors but manifest {} failed validation'.format(path))
+                        print (json.dumps(result.json(), indent=2))
+
+                self.assertTrue(result.passed, 'Expected manifest {} to pass validation but it failed'.format(path))            
+                
+    def test_bad_manifests_v4(self):
+        base = Path("fixtures/4/bad")
+        data = []
+        for path in base.rglob("*.json"):
+            with path.open("r", encoding="utf-8") as f:
+                print ('Testing: {}'.format(path))
+                data = json.load(f)
+
+                result = check_manifest(data, '3.0')
+
+                if result.passed:
+                    print(f"Expected {path} to fail validation but it passed....")
+                
+                self.assertFalse(result.passed)
+    
 
     def printValidationerror(self, filename, errors):
         print('Failed to validate: {}'.format(filename))

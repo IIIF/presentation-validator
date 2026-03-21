@@ -24,6 +24,39 @@ def printPath(pathObj, fields):
     path += '/[{}]'.format(fields)
     return path    
 
+def create_snippet(data):
+    # Take possibly a large JSON document and only show the fields at the current level
+    for key in data:
+        if isinstance(data[key], list): 
+            data[key] = '[ ... ]'
+        elif isinstance(data[key], dict):
+            data[key] = '{ ... }'    
+
+    return data        
+
+def convertValidationError(err, errorCount, total):
+    detail = ''
+    if 'title' in err.schema:
+        detail = err.schema['title']
+    description = ''    
+    if 'description' in err.schema:
+        detail += ' ' + err.schema['description']
+    context = err.instance
+    if isinstance(context, dict):
+        for key in context:
+            if isinstance(context[key], list): 
+                context[key] = '[ ... ]'
+            elif isinstance(context[key], dict):
+                context[key] = '{ ... }'
+
+    return ErrorDetail(
+            f"Error {errorCount} of {total}.\n Message: {err.message}",
+            detail, 
+            description, 
+            printPath(err.path, err.message), 
+            context,
+            err)    
+
 def validate(data, version, url):
     if version == IIIFVersion.V3_0:
         with open(f'{SCHEMA_DIR}/iiif_3_0.json') as json_file:
@@ -90,31 +123,12 @@ def validate(data, version, url):
             if errorPath not in seen_titles:
                 errors.append(errorDup)
                 seen_titles.add(errorPath)
+
         errorCount = 1
         # Now create some useful messsages to pass on
         for err in errors:
-            detail = ''
-            if 'title' in err.schema:
-                detail = err.schema['title']
-            description = ''    
-            if 'description' in err.schema:
-                detail += ' ' + err.schema['description']
-            context = err.instance
-            if isinstance(context, dict):
-                for key in context:
-                    if isinstance(context[key], list): 
-                        context[key] = '[ ... ]'
-                    elif isinstance(context[key], dict):
-                        context[key] = '{ ... }'
-
-            result.errorList.append(ErrorDetail(
-                    'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
-                    detail, 
-                    description, 
-                    printPath(err.path, err.message), 
-                    context,
-                    err))
-            #print (json.dumps(err.instance, indent=4))
+            result.errorList.append(convertValidationError(err, errorCount, len(errors)))
+            
             errorCount += 1
 
         # Return:

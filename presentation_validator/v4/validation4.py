@@ -2,9 +2,12 @@ from ast import main
 from pathlib import Path
 import json
 import sys
-from unique_ids import check
+from presentation_validator.model import ValidationResult
+from presentation_validator.v3.schemavalidator import convertValidationError
+from presentation_validator.v4.unique_ids import check
 
 from jsonschema import Draft202012Validator
+from jsonschema.exceptions import relevance
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
@@ -37,11 +40,30 @@ def validate(instance):
     main = schemas[f"{BASE_URI}/main.json"]
     validator = Draft202012Validator(main, registry=registry)
 
-    validator.validate(instance)
+    result = ValidationResult()
 
-    # check ids
-    check(instance)
-    print ("Validation successful")
+    results = validator.iter_errors(instance)
+    errors = sorted(results, key=relevance)
+
+    if errors:
+        result.passed = False
+        errorCount = 1
+        # Now create some useful messsages to pass on
+        for err in errors:
+            result.errorList.append(convertValidationError(err, errorCount, len(errors)))
+            
+            errorCount += 1
+    else:
+        result.passed = True
+
+    duplicate_ids = check(instance)
+    if duplicate_ids:
+        result.passed = False
+
+        # Add all of the examples of duplicated ids
+        result.errorList.extend(duplicate_ids)
+    
+    return result
 
 def main():
     # Check if command line argument is provided

@@ -1,5 +1,7 @@
 import sys
 import json
+from presentation_validator.model import ErrorDetail
+from presentation_validator.v3.schemavalidator import create_snippet
 
 ignore = ["target", "lookAt", "range","structures","first","last","start","source"]
 # create a method where you pass in a manifest and it checks to see if the id is unique
@@ -8,13 +10,14 @@ def check(manifest):
 
     duplicates = []
     ids = []
-    print ("Looking at manifest")
     checkNode(manifest, ids, duplicates) 
 
     if len(duplicates) > 0:
-        raise ValueError(f"Duplicate ids: {duplicates}")
+        return duplicates
+    else:
+        return None    
 
-def checkNode(node, ids=[], duplicates=[]):
+def checkNode(node, ids=[], duplicates=[], path = ""):
     if type(node) != dict:
         return 
 
@@ -23,7 +26,14 @@ def checkNode(node, ids=[], duplicates=[]):
             if type(value) != str:
                 raise ValueError(f"Id must be a string: {value}")
             if value in ids:
-                duplicates.append(value)
+                duplicates.append(ErrorDetail(
+                    f"Duplicate id found",
+                    "The id field must be unique",
+                    f"Duplicate id: {value}",
+                    path + "/" + key,
+                    create_snippet(node),
+                    None
+                ))
             ids.append(value)
         else:
             # Don't look further in fields that point to other resources
@@ -31,11 +41,13 @@ def checkNode(node, ids=[], duplicates=[]):
                 continue
 
             if type(value) == list:
+                count = 0
                 for item in value:
-                    checkNode(item, ids, duplicates)
+                    checkNode(item, ids, duplicates, path + "/" + key + "[" + str(count) + "]")
+                    count += 1
 
             elif type(value) != str:
-                checkNode(value, ids, duplicates)    
+                checkNode(value, ids, duplicates, path + "/" + key)    
 
 def main():
     # pass in manifest by command line argument
