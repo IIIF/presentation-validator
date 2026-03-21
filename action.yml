@@ -1,0 +1,48 @@
+name: "IIIF Presentation Validator"
+description: "Validate IIIF JSON files in a directory using iiif-validator validate-dir"
+
+inputs:
+  directory:
+    description: "Directory to search recursively for files"
+    required: true
+  version:
+    description: "IIIF Presentation version to validate against, e.g. 2.1 or 3.0. If this isn't supplied then the version will be determined by the @context in the manifest"
+    required: false
+    default: ""
+
+  extension:
+    description: "File extension or glob pattern to match (e.g. .json, .jsonld)"
+    required: false
+    default: ".json"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.12
+
+    - name: Install validator
+      shell: bash
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install "${{ github.action_path }}"
+
+    - name: Validate directory
+      shell: bash
+      run: |
+        set -euo pipefail
+
+        CMD="iiif-validator validate-dir \"${{ inputs.directory }}\""
+
+        if [ -n "${{ inputs.version }}" ]; then
+          CMD="$CMD --version \"${{ inputs.version }}\""
+        fi
+
+        if [ -n "${{ inputs.extension }}" ]; then
+          CMD="$CMD --extension \"${{ inputs.extension }}\""
+        fi
+
+        echo "Running: $CMD"
+        eval $CMD

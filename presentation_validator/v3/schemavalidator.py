@@ -5,7 +5,12 @@ from jsonschema.exceptions import ValidationError, SchemaError, best_match, rele
 import json
 from os import sys, path
 sys.path.append(path.dirname(path.dirname(path.abspath(__file__))))
-from schema.error_processor import IIIFErrorParser
+from .error_processor import IIIFErrorParser
+from presentation_validator.model import ValidationResult, ErrorDetail
+from pathlib import Path
+from presentation_validator.enum import IIIFVersion
+
+SCHEMA_DIR = Path(__file__).resolve().parent.parent.parent / "schema"
 
 def printPath(pathObj, fields):
     path = ''
@@ -20,8 +25,8 @@ def printPath(pathObj, fields):
     return path    
 
 def validate(data, version, url):
-    if version == '3.0':
-        with open('schema/iiif_3_0.json') as json_file:
+    if version == IIIFVersion.V3_0:
+        with open(f'{SCHEMA_DIR}/iiif_3_0.json') as json_file:
             try:
                 schema = json.load(json_file)
             except ValueError as err:
@@ -30,26 +35,27 @@ def validate(data, version, url):
 
     try:
         validator = Draft7Validator(schema)
-        results = validator.iter_errors(json.loads(data))
+        if isinstance(data, str):
+            data = json.loads(data)
+
+        results = validator.iter_errors(data)
     except SchemaError as err:    
         print('Problem with the supplied schema:\n')
         print(err)
         raise
 
-    okay = 0
     #print (best_match(results))
     errors = sorted(results, key=relevance)
     #errors = [best_match(results)]
     error = " "
     errorsJson = []
+    result = ValidationResult()
     if errors:
-        print('Validation Failed')
         if len(errors) == 1 and 'is not valid under any of the given schemas' in errors[0].message:
             errors = errors[0].context
 
-
         # check to see if errors are relveant to IIIF asset
-        errorParser = IIIFErrorParser(schema, json.loads(data))
+        errorParser = IIIFErrorParser(schema, data)
         relevantErrors = []
         i = 0
         # Go through the list of errors and check to see if they are relevant
@@ -100,15 +106,14 @@ def validate(data, version, url):
                         context[key] = '[ ... ]'
                     elif isinstance(context[key], dict):
                         context[key] = '{ ... }'
-            errorsJson.append({
-                'title': 'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
-                'detail': detail,
-                'description': description,
-                'path': printPath(err.path, err.message),
-                'context': context,
-                'error': err
-    
-            })
+
+            result.errorList.append(ErrorDetail(
+                    'Error {} of {}.\n Message: {}'.format(errorCount, len(errors), err.message),
+                    detail, 
+                    description, 
+                    printPath(err.path, err.message), 
+                    context,
+                    err))
             #print (json.dumps(err.instance, indent=4))
             errorCount += 1
 
@@ -120,18 +125,15 @@ def validate(data, version, url):
   #          'url': url
  #        }
 
-        okay = 0
+        result.passed = False
     else:
-        print ('Passed Validation!')
-        okay = 1
-    error = ""
-    return {
-        'okay': okay,
-        'warnings': [],
-        'error': error,
-        'errorList': errorsJson,
-        'url': url
-    }
+        result.passed = True
+
+    result.url = url
+    result.warnings = [] # Schema can't do warnings
+    result.error = "" # Only error list for schema
+  
+    return result
 
 def json_path(absolute_path):
     path = '$'

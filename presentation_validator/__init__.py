@@ -1,0 +1,1 @@
+from .validator import check_manifest

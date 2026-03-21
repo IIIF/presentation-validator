@@ -9,27 +9,26 @@
     <title>Presentation API Validator &mdash; IIIF | International Image Interoperability Framework</title>
     <meta name="description" content="International Image Interoperability Framework: A community driven image framework with well defined APIs for making the world’s image repositories interoperable and accessible">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="//iiif.io/css/normalize.min.css">
+    <link rel="stylesheet" href="/css/normalize.min.css">
     <link href='http://fonts.googleapis.com/css?family=Raleway:100,300,500' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,600,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Inconsolata' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" href="//iiif.io/css/main.css">
+    <link rel="stylesheet" href="/css/main.css">
 
     <style type="text/css">
       #results {
-        background-color: #f5f5f5;
+        background-color: #f5f5f5; 
         padding: 2em;
         margin-left: 10px;
         margin-top: 2em;
       }
     </style>
 
-    <link type="application/atom+xml" rel="alternate" href="//iiif.io/news/atom.xml"/>
-    <script src="//iiif.io/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+    <!--<script src="//iiif.io/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>-->
     <script src="https://code.jquery.com/jquery-2.2.3.min.js" integrity="sha256-a23g1Nt4dtEYOj7bR+vTu7+T8VP13humZFBJNIYoEJo=" crossorigin="anonymous"></script>
-    <script src="//iiif.io/js/vendor/anchor.min.js"></script>
-    <script src="//iiif.io/js/anchor.js"></script>
+    <!--<script src="//iiif.io/js/vendor/anchor.min.js"></script>
+    <script src="//iiif.io/js/anchor.js"></script>-->
   </head>
 
   <body>
@@ -66,10 +65,11 @@
 
                 Select Presentation API Version:
                 <select name="version">
-                  <option value="3.0">3.0</option>
-                  <option value="2.1">2.1</option>
-                  <option value="2.0">2.0</option>
-                  <option value="1.0">1.0</option>
+                % for v in versions:
+                    <option value="{{v.value}}" {{'selected' if v == selected else ''}}>
+                        {{v.value}}
+                    </option>
+                % end
                 </select>
                 <br/>
                 <input type="checkbox" id="accept" name="accept">
@@ -145,7 +145,7 @@
         if (data.okay) {
           str += '<div><h2 style="color:green">Validated successfully</h2></div>';
         } else {
-            if (data.errorList) {
+            if (data.errorList && data.errorList.length > 0) {
                 for (var i = 0, len = data.errorList.length; i < len; i++) {
                     var error = data.errorList[i];
                     str+='<div>';
