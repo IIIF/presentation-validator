@@ -1005,139 +1005,134 @@
             ]
         },
         "annotation": {
-            "allOf": [
-                { "$ref": "#/types/class" },
-                {
-                    "type": "object",
-                    "additionalProperties": true,
-                    "title": "Annotation",
-                    "properties": {
-                        "@context": {
-                            "oneOf": [
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string",
-                                        "format": "uri",
-                                        "pattern": "^http.*$"
-                                    }
-                                },
-                                {
-                                    "type": "string",
-                                    "format": "uri"
-                                }
-                            ]
-                        },
-                        "type": {
-                            "type": "string",
-                            "pattern": "^Annotation$",
-                            "default": "Annotation"
-                        },
-                        "created": { "type": "string" },
-                        "modified": { "type": "string" },
-                        "generated": { "type": "string" },
-                        "creator": {
-                            "oneOf": [
-                                { "type": "string" },
-                                { "$ref": "#/types/agent" },
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "oneOf": [
-                                            { "type": "string" },
-                                            { "$ref": "#/types/agent" }
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        "generator": {
-                            "oneOf": [
-                                { "type": "string" },
-                                { "$ref": "#/types/agent" },
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "oneOf": [
-                                            { "type": "string" },
-                                            { "$ref": "#/types/agent" }
-                                        ]
-                                    }
-                                }
-                            ]
-                        },
-                        "audience": {
-                            "oneOf": [
-                                { "$ref": "#/types/audience" },
-                                {
-                                    "type": "array",
-                                    "items": { "$ref": "#/types/audience" }
-                                }
-                            ]
-                        },
-                        "bodyValue": { "type": "string" },
-                        "canonical": { "type": "string", "format": "uri" },
-                        "via": {
-                            "oneOf": [
-                                { "type": "string", "format": "uri" },
-                                {
-                                    "type": "array",
-                                    "items": { "type": "string", "format": "uri" }
-                                }
-                            ]
-                        },
-                        "stylesheet": { "$ref": "#/classes/stylesheet" },
-                        "service": { "$ref": "#/classes/service" },
-                        "rendering": { "$ref": "#/types/external" },
-                        "thumbnail": {
+            "type": "object",
+            "title": "Annotation",
+            "properties": {
+                "@context": {
+                    "oneOf": [
+                        {
                             "type": "array",
-                            "items": { "$ref": "#/classes/resource" }
+                            "items": {
+                                "type": "string",
+                                "format": "uri",
+                                "pattern": "^http.*$"
+                            }
                         },
-                        "motivation": {
-                            "oneOf": [
-                                { "type": "string" },
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "type": "string"
-                                    }
-                                }
-                            ]    
-                        },
-                        "body": {
-                            "anyOf": [
-                                {
-                                    "type": "object",
-                                    "$ref": "#/classes/resource"
-                                },
-                                {
-                                    "type": "object",
-                                    "$ref": "#/classes/choice" 
-                                },
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/classes/resource"
-                                    }
-                                }
-
-                            ]
-                        },
-                        "target": {
-                            "anyOf": [
-                                { "$ref": "#/classes/annoTarget" },
-                                {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/classes/annoTarget"
-                                    }
-                                }
-                            ]
+                        {
+                            "type": "string",
+                            "format": "uri"
                         }
-                    },
-                    "required": ["id", "target", "type"]
+                    ]
+                },
+                "id": { "$ref": "#/types/id" },
+                "type": {
+                    "type": "string",
+                    "pattern": "^Annotation$",
+                    "default": "Annotation"
+                },
+                "created": { "type": "string" },
+                "modified": { "type": "string" },
+                "generated": { "type": "string" },
+                "creator": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "$ref": "#/types/agent" },
+                        {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "type": "string" },
+                                    { "$ref": "#/types/agent" }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "generator": {
+                    "oneOf": [
+                        { "type": "string" },
+                        { "$ref": "#/types/agent" },
+                        {
+                            "type": "array",
+                            "items": {
+                                "oneOf": [
+                                    { "type": "string" },
+                                    { "$ref": "#/types/agent" }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "audience": {
+                    "oneOf": [
+                        { "$ref": "#/types/audience" },
+                        {
+                            "type": "array",
+                            "items": { "$ref": "#/types/audience" }
+                        }
+                    ]
+                },
+                "bodyValue": { "type": "string" },
+                "canonical": { "type": "string", "format": "uri" },
+                "via": {
+                    "oneOf": [
+                        { "type": "string", "format": "uri" },
+                        {
+                            "type": "array",
+                            "items": { "type": "string", "format": "uri" }
+                        }
+                    ]
+                },
+                "stylesheet": { "$ref": "#/classes/stylesheet" },
+                "service": { "$ref": "#/classes/service" },
+                "rendering": { "$ref": "#/types/external" },
+                "thumbnail": {
+                    "type": "array",
+                    "items": { "$ref": "#/classes/resource" }
+                },
+                "motivation": {
+                    "oneOf": [
+                        { "type": "string" },
+                        {
+                            "type": "array",
+                            "items": {
+                                "type": "string"
+                            }
+                        }
+                    ]    
+                },
+                "body": {
+                    "anyOf": [
+                        {
+                            "type": "object",
+                            "$ref": "#/classes/resource"
+                        },
+                        {
+                            "type": "object",
+                            "$ref": "#/classes/choice" 
+                        },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/resource"
+                            }
+                        }
+
+                    ]
+                },
+                "target": {
+                    "anyOf": [
+                        { "$ref": "#/classes/annoTarget" },
+                        {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/classes/annoTarget"
+                            }
+                        }
+                    ]
                 }
-            ]
+            },
+            "required": ["id", "type"]
         },
         "annoTarget": {
             "oneOf": [

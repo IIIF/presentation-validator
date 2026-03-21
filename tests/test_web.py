@@ -107,7 +107,7 @@ class TestWeb(unittest.TestCase):
         self.assertEqual(data["error"], "")
 
         self.assertIn("errorList", data)
-        self.assertEqual(len(data["errorList"]), 4)
+        self.assertEqual(len(data["errorList"]), 4, f"Expected 4 errors but found {len(data['errorList'])} for file fixtures/3/broken_simple_image.json")
 
         firstError = data["errorList"][0]
         self.assertIn("title", firstError)

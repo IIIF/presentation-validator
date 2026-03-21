@@ -163,7 +163,7 @@ class TestAll(unittest.TestCase):
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in thumbnail needs to be an array.')
 
         # annotationPage
-        path = [u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items',  u'allOf', 1, u'properties',  u'items', u'items', u'allOf', 1, u'properties', u'body', u'anyOf']
+        path = [u'oneOf', 0, u'allOf', 1, u'properties', u'items', u'items', u'allOf', 1, u'properties', u'items', u'items',  u'allOf', 1, u'properties',  u'items', u'items', u'properties', u'body', u'anyOf']
         iiifPath = [u'items', 0, u'items', 0, u'items', 0, u'body']
         self.assertTrue(errorParser.isValid(path, iiifPath), 'Should have caught the service in the canvas needs to be an array')
 

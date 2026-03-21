@@ -48,7 +48,8 @@ def check_manifest(
         try:
             result = schemavalidator.validate(manifest, version, url)
         
-            if url and 'id' in manifest and manifest['id'] != url:
+            # Only test ID match if working with remote URLs
+            if url and url.startswith('http') and 'id' in manifest and manifest['id'] != url:
                 raise ValidationError(f"The manifest id ({manifest['id']}) should be the same as the URL it is published at ({url}).")
         except ValidationError as e:
             if result.errorList:
