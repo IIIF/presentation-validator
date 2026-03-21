@@ -52,7 +52,7 @@ filterwarnings = [
 
 [tool.setuptools_scm]
 version_file = "presentation_validator/_version.py"
-fallback_version = "main"
+fallback_version = "1.0.0"
 
 [dependency-groups]
 dev = [
