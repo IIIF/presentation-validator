@@ -11,7 +11,7 @@ from jsonschema.exceptions import relevance
 from referencing import Registry, Resource
 from referencing.jsonschema import DRAFT202012
 
-SCHEMA_DIR = Path("schema/v4")
+SCHEMA_DIR = Path(__file__).resolve().parent.parent.parent / "schema" / "v4"
 BASE_URI = "https://iiif.io/api/presentation/4.0/schema"
 
 def load_schema(path: Path) -> dict:
