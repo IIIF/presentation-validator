@@ -1,0 +1,112 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/SpecificResource.json",
+    "title": "SpecificResource",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^SpecificResource$",
+            "default": "SpecificResource"
+        },
+        "format": {
+            "$ref": "properties.json#/$defs/format"
+        },
+        "accessibility": {
+            "type": "string"
+        },
+        "source": {
+            "if": {
+                "type": "object"
+            },
+            "then": {
+                "$ref": "Body.json"
+            },
+            "else": {
+                "$ref": "properties.json#/$defs/id"
+            }
+        },
+        "scope": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "selector": {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
+                    "$ref": "Selector.json"
+                }
+            },
+            "else": {
+                "$ref": "Selector.json"
+            }
+        },
+        "transform": {
+            "type": "array",
+            "items": {
+                "$ref": "Transform.json"
+            }
+        },
+        "state": {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
+                    "$ref": "State.json"
+                }
+            },
+            "else": {
+                "$ref": "State.json"
+            }
+        },
+        "styleClass": {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
+                    "type": "string"
+                }
+            },
+            "else": {
+                "type": "string"
+            }
+        },
+        "renderedVia": {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
+                    "$ref": "Agent.json"
+                }
+            },
+            "else": {
+                "$ref": "Agent.json"
+            }
+        },
+        "purpose": {
+            "if": {
+                "type": "array"
+            },
+            "then": {
+                "items": {
+                    "type": "string"
+                }
+            },
+            "else": {
+                "type": "string"
+            }
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "source"
+    ]
+}

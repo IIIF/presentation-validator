@@ -1,0 +1,170 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/properties.json",
+    "$defs": {
+        "context": {
+            "title": "context",
+            "type": "string",
+            "const": "http://iiif.io/api/presentation/4/context.json"
+        },
+        "id": {
+            "title": "id",
+            "description": "Id must be present and must be a URI",
+            "type": "string",
+            "format": "uri",
+            "pattern": "^http.*$"
+        },
+        "lngString": {
+            "title": "LngString",
+            "description": "Language string, must have a language and value must be an array.",
+            "type": "object",
+            "patternProperties": {
+                "^[a-zA-Z-][a-zA-Z-]*$": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "^none$": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "dimension": {
+            "title": "dimension",
+            "type": "integer",
+            "exclusiveMinimum": 0
+        },
+        "keyValueString": {
+            "title": "KeyValueString",
+            "type": "object",
+            "properties": {
+                "label": {
+                    "$ref": "#/$defs/lngString"
+                },
+                "value": {
+                    "$ref": "#/$defs/lngString"
+                }
+            },
+            "required": [
+                "label",
+                "value"
+            ]
+        },
+        "BCP47": {
+            "title": "BCP47",
+            "anyOf": [
+                {
+                    "type": "string",
+                    "pattern": "^[a-zA-Z-][a-zA-Z-]*$"
+                },
+                {
+                    "type": "string",
+                    "pattern": "^none$"
+                }
+            ]
+        },
+        "format": {
+            "title": "format",
+            "type": "string",
+            "pattern": "^[a-z][a-z]*/.*$"
+        },
+        "duration": {
+            "title": "duration",
+            "type": "number",
+            "exclusiveMinimum": 0
+        },
+        "textDirection": {
+            "title": "textDirection",
+            "description": "Text direction for processing from W3C Web Annotation Model",
+            "type": "string",
+            "enum": [
+                "ltr",
+                "rtl",
+                "auto"
+            ]
+        },
+        "viewingDirection": {
+            "title": "viewingDirection",
+            "type": "string",
+            "enum": [
+                "left-to-right",
+                "right-to-left",
+                "top-to-bottom",
+                "bottom-to-top"
+            ]
+        },
+        "behavior": {
+            "title": "behavior",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "auto-advance",
+                    "no-auto-advance",
+                    "repeat",
+                    "no-repeat",
+                    "unordered",
+                    "individuals",
+                    "continuous",
+                    "paged",
+                    "facing-pages",
+                    "non-paged",
+                    "multi-part",
+                    "together",
+                    "sequence",
+                    "thumbnail-nav",
+                    "no-nav",
+                    "hidden"
+                ]
+            }
+        },
+        "rights": {
+            "title": "rights",
+            "description": "Rights URI isn't from either Creative Commons or RightsStatements.org. Both require http links.",
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/licenses/.*"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://creativecommons.org/publicdomain/.*"
+                },
+                {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "http://rightsstatements.org/vocab/.*"
+                }
+            ]
+        },
+        "navDate": {
+            "type": "string",
+            "format": "date-time"
+        },
+        "backgroundColor": {
+            "type": "string",
+            "pattern": "^#[0-9a-fA-F]{6}$",
+            "description": "RGB color expressed as a 6-digit hex string beginning with '#'."
+        },
+        "interactionMode": {
+            "title": "interactionMode",
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "locked",
+                    "orbit",
+                    "hemisphere-orbit",
+                    "free",
+                    "free-direction"
+                ]
+            }
+        }
+    }
+}

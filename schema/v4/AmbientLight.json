@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/AmbientLight.json",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Light.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "AmbientLight"
+                },
+                "color": {
+                    "$ref": "properties.json#/$defs/backgroundColor"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        }
+    ]
+}

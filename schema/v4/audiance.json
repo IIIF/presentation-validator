@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Audiance.json",
+    "title": "Audience",
+    "description": "W3C Web Annotation Audience",
+    "type": "object",
+    "properties": {
+        "id": { "$ref": "properties.json#/$defs/id" },
+        "type": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "type"
+    ]
+}

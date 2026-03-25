@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/CssSelector.json",
+    "title": "CssSelector",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "^CssSelector$",
+            "default": "CssSelector"
+        },
+        "value": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "type",
+        "value"
+    ]
+}

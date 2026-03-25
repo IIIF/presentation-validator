@@ -1,0 +1,37 @@
+name: Check JSON Schema $ref integrity
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    # Optional: only run when schemas or the script change
+    paths:
+      - "schema/**"
+      - ".github/workflows/check-jsonschema.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  check-refs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: 3.12
+
+      - name: Set up uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Sync dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run $ref checker
+        run: |
+          uv run python -m presentation_validator.v4.check_refs

@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/External.json",
+    "title": "LinkedResources",
+    "type": "array",
+    "items": {
+        "title": "linkedResource",
+        "type": "object",
+        "properties": {
+            "id": { "$ref": "properties.json#/$defs/id" },
+            "type": {
+                "type": "string"
+            },
+            "format": {
+                "$ref": "properties.json#/$defs/format"
+            },
+            "language": {
+                "type": "array",
+                "items": {
+                    "$ref": "properties.json#/$defs/BCP47"
+                }
+            },
+            "profile": {
+                "type": "string"
+            }
+        },
+        "required": ["id", "type"]
+    }
+}

@@ -1,0 +1,40 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Scene.json",
+    "title": "Scene",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Container.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "properties.json#/$defs/id"
+                },
+                "type": {
+                    "type": "string",
+                    "pattern": "^Scene$",
+                    "default": "Scene"
+                },
+                "duration": {
+                    "$ref": "properties.json#/$defs/duration"
+                },
+                "spatialScale": {
+                    "$ref": "Quantity.json"
+                },
+                "backgroundColor": {
+                    "$ref": "properties.json#/$defs/backgroundColor"
+                },
+                "interactionMode": {
+                    "$ref": "properties.json#/$defs/interactionMode"
+                }
+            },
+            "required": [
+                "id",
+                "type"
+            ]
+        }
+    ]
+}

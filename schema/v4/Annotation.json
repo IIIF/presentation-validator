@@ -1,0 +1,139 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Annotation.json",
+    "type": "object",
+    "title": "Annotation",
+    "properties": {
+        "@context": {
+            "$ref": "Context.json"
+        },
+        "id": { "$ref": "properties.json#/$defs/id" },
+        "created": {
+            "type": "string"
+        },
+        "modified": {
+            "type": "string"
+        },
+        "generated": {
+            "type": "string"
+        },
+        "creator": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "Agent.json"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "$ref": "Agent.json"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "generator": {
+            "oneOf": [
+                {
+                    "type": "string"
+                },
+                {
+                    "$ref": "Agent.json"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "oneOf": [
+                            {
+                                "type": "string"
+                            },
+                            {
+                                "$ref": "Agent.json"
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
+        "audience": {
+            "oneOf": [
+                {
+                    "$ref": "Audiance.json"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "$ref": "Audiance.json"
+                    }
+                }
+            ]
+        },
+        "bodyValue": {
+            "type": "string"
+        },
+        "canonical": {
+            "type": "string",
+            "format": "uri"
+        },
+        "via": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            ]
+        },
+        "stylesheet": {
+            "$ref": "Stylesheet.json"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^Annotation$",
+            "default": "Annotation"
+        },
+        "service": {
+            "$ref": "Service.json"
+        },
+        "rendering": {
+            "$ref": "External.json"
+        },
+        "thumbnail": {
+            "type": "array",
+            "items": {
+                "$ref": "Resource.json"
+            }
+        },
+        "motivation": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
+        },
+        "body": {
+            "$ref": "Body.json"
+        },
+        "target": {
+            "$ref": "Target.json"
+        }
+    },
+    "required": [
+        "id",
+        "target",
+        "type"
+    ]
+}

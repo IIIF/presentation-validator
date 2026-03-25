@@ -1,0 +1,35 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/State.json",
+    "title": "State",
+    "type": "object",
+    "description": "W3C Web Annotation State (TimeState or HttpRequestState)",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "TimeState"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "TimeState.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "HttpRequestState"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "HttpRequestState.json"
+        }
+    }
+}

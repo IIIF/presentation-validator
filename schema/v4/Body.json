@@ -1,0 +1,190 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Body.json",
+    "title": "Body",
+    "type": "object",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "TextualBody"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "TextualBody.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "SpecificResource"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "SpecificResource.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "Choice"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "$ref": "Choice.json"
+            },
+            "else": {
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "Scene"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                },
+                "then": {
+                     "if": {
+                            "properties": {
+                                "items": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "items"
+                            ]
+                        },
+                        "then": {
+                            "$ref": "Scene.json"
+                        },
+                        "else": {
+                            "$ref": "SceneRef.json"
+                        }
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Canvas"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "if": {
+                            "properties": {
+                                "items": {
+                                    "type": "array"
+                                }
+                            },
+                            "required": [
+                                "items"
+                            ]
+                        },
+                        "then": {
+                            "$ref": "Canvas.json"
+                        },
+                        "else": {
+                            "$ref": "CanvasRef.json"
+                        }
+                    },
+                    "else": {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "Timeline"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        "then": {
+                            "if": {
+                                "properties": {
+                                    "items": {
+                                        "type": "array"
+                                    }
+                                },
+                                "required": [
+                                    "items"
+                                ]
+                            },
+                            "then": {
+                                "$ref": "Timeline.json"
+                            },
+                            "else": {
+                                "$ref": "TimelineRef.json"
+                            }
+                        },
+                        "else": {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "type": "string",
+                                        "pattern": "Camera"
+                                    }
+                                },
+                                "required": [
+                                    "type"
+                                ]
+                            },
+                            "then": {
+                                "$ref": "CameraTypes.json"
+                            },
+                            "else": {
+                                "if": {
+                                    "properties": {
+                                        "type": {
+                                            "type": "string",
+                                            "pattern": "Light"
+                                        }
+                                    },
+                                    "required": [
+                                        "type"
+                                    ]
+                                },
+                                "then": {
+                                    "$ref": "LightTypes.json"
+                                },
+                                "else": {
+                                    "if": {
+                                        "properties": {
+                                            "type": {
+                                                "type": "string",
+                                                "pattern": "Audio"
+                                            }
+                                        },
+                                        "required": [
+                                            "type"
+                                        ]
+                                    },
+                                    "then": {
+                                        "$ref": "AudioTypes.json"
+                                    },
+                                    "else": {
+                                        "$ref": "Resource.json"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

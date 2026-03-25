@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Context.json",
+    "title": "Context",
+    "if": {
+        "type": "array"
+    },
+    "then": {
+        "$comment": "Array form of @context, with at least one entry that is the IIIF context. The IIIF context MUST be the last item but we can't test that with JSON Schema",
+        "type": "array",
+        "items": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^http.*$"
+        },
+        "minItems": 1,
+        "contains": {
+            "$ref": "properties.json#/$defs/context"
+        },
+        "minContains": 1,
+        "maxContains": 1
+    },
+    "else": {
+        "$ref": "properties.json#/$defs/context"
+    }
+}

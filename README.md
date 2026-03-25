@@ -86,3 +86,21 @@ This should start up a local server, running at <localhost:8080>. To test it, tr
 }
 ```
 You may also use `--hostname` to specify a hostname or IP address to which to bind and `--port` for a port to which to bind.
+
+
+## Github action
+
+It is also possible to run the validator against JSON documents which are in a Github repository using a github action. An example is below:
+
+```
+  - name: Run IIIF validator
+    uses: IIIF/presentation-validator@main
+    with:
+      directory: path/to/json
+      version: 3
+      extension: .json
+```          
+
+ * `directory` is required. The validator will start at this directory and then go through any sub-directories looking for json files to validate.
+ * `version` is optional. If supplied any json files will be validated against this version. If its not supplied the validator will look inside the json to see which version is specified in the @context
+ * `extension` is optional and defaults to .json.      - name: Run IIIF validator

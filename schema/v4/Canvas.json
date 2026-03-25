@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Canvas.json",
+    "title": "Canvas",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Container.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "properties.json#/$defs/id"
+                },
+                "type": {
+                    "type": "string",
+                    "pattern": "^Canvas$",
+                    "default": "Canvas"
+                },
+                "height": {
+                    "$ref": "properties.json#/$defs/dimension"
+                },
+                "width": {
+                    "$ref": "properties.json#/$defs/dimension"
+                },
+                "duration": {
+                    "$ref": "properties.json#/$defs/duration"
+                },
+                "spatialScale": {
+                    "$ref": "Quantity.json"
+                },
+                "backgroundColor": {
+                    "$ref": "properties.json#/$defs/backgroundColor"
+                }
+            },
+            "required": [
+                "id",
+                "type",
+                "height",
+                "width"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/PlaceholderCanvas.json",
+    "title": "PlaceholderCanvas",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Canvas.json"
+        },
+        {
+            "type": "object",
+            "not": {
+                "required": [
+                    "placeholderCanvas",
+                    "accompanyingCanvas"
+                ]
+            }
+        }
+    ]
+}

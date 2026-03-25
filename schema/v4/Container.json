@@ -1,0 +1,101 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Container.json",
+    "title": "Container",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "enum": [
+                "Canvas",
+                "Timeline",
+                "Scene"
+            ]
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "metadata": {
+            "$ref": "Metadata.json"
+        },
+        "summary": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "requiredStatement": {
+            "$ref": "properties.json#/$defs/keyValueString"
+        },
+        "rendering": {
+            "$ref": "External.json"
+        },
+        "rights": {
+            "$ref": "properties.json#/$defs/rights"
+        },
+        "navDate": {
+            "$ref": "properties.json#/$defs/navDate"
+        },
+        "navPlace": {
+            "$ref": "NavPlace.json"
+        },
+        "provider": {
+            "$ref": "Provider.json"
+        },
+        "seeAlso": {
+            "$ref": "SeeAlso.json"
+        },
+        "service": {
+            "$ref": "Service.json"
+        },
+        "placeholderCanvas": {
+            "$ref": "PlaceholderCanvas.json"
+        },
+        "accompanyingCanvas": {
+            "$ref": "AccompanyingCanvas.json"
+        },
+        "thumbnail": {
+            "type": "array",
+            "items": {
+                "$ref": "Resource.json"
+            }
+        },
+        "homepage": {
+            "$ref": "Homepage.json"
+        },
+        "behavior": {
+            "$ref": "properties.json#/$defs/behavior"
+        },
+        "partOf": {
+            "$ref": "PartOf.json"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "AnnotationPage.json"
+            }
+        },
+        "annotations": {
+            "type": "array",
+            "items": {
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "$ref": "AnnotationPageRef.json"
+                }
+            }
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "items"
+    ]
+}

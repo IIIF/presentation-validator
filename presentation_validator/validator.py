@@ -2,6 +2,7 @@ from iiif_prezi.loader import ManifestReader
 from jsonschema.exceptions import ValidationError
 from presentation_validator.model import ValidationResult, ErrorDetail
 from presentation_validator.v3 import schemavalidator
+from presentation_validator.v4 import validation4
 from presentation_validator.enum import IIIFVersion
 
 import requests
@@ -67,6 +68,9 @@ def check_manifest(
             traceback.print_exc()
             result.passed = False
             result.error = f'Presentation Validator bug: "{e}". Please create a <a href="https://github.com/IIIF/presentation-validator/issues">Validator Issue</a>, including a link to the manifest.'
+
+    elif version == IIIFVersion.V4_0:
+        result = validation4.validate(manifest)
     else:
         if isinstance(data, dict):
             data = json.dumps(data, indent=3)

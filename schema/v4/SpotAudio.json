@@ -1,0 +1,32 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/SpotAudio.json",
+    "title": "SpotAudio",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Audio.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "pattern": "^SpotAudio$",
+                    "default": "SpotAudio"
+                },
+                "angle": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "exclusiveMaximum": 90
+                },
+                "lookAt": {
+                    "$ref": "LookAt.json"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        }
+    ]
+}

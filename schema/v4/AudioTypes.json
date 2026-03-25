@@ -1,0 +1,48 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/AudioTypes.json",
+    "type": "object",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "AmbientAudio"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "AmbientAudio.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "PointAudio"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "PointAudio.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "SpotAudio"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "$ref": "SpotAudio.json"
+            }
+        }
+    }
+}

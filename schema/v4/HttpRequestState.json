@@ -1,0 +1,21 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/HttpRequestState.json",
+    "title": "HttpRequestState",
+    "description": "W3C Web Annotation HttpRequestState for HTTP header requirements",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "pattern": "^HttpRequestState$",
+            "default": "HttpRequestState"
+        },
+        "value": {
+            "type": "string"
+        }
+    },
+    "required": [
+        "type",
+        "value"
+    ]
+}

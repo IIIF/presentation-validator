@@ -1,0 +1,70 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/main.json",
+    "title": "AbstractIIIFResource",
+    "type": "object",
+    "required": [
+        "type"
+    ],
+    "if": {
+        "properties": {
+            "type": {
+                "const": "Manifest"
+            }
+        }
+    },
+    "then": {
+        "$ref": "Manifest.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "Collection"
+                }
+            }
+        },
+        "then": {
+            "$ref": "Collection.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "AnnotationCollection"
+                    }
+                }
+            },
+            "then": {
+                "$ref": "AnnotationCollection.json"
+            },
+            "else": {
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "AnnotationPage"
+                        }
+                    }
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Annotation"
+                            }
+                        }
+                    },
+                    "then": {
+                        "$ref": "Annotation.json"
+                    },
+                    "else": {
+                        "not": {}
+                    }
+                }
+            }
+        }
+    }
+}

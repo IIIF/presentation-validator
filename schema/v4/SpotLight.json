@@ -1,0 +1,33 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/SpotLight.json",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "const": "SpotLight"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "angle": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 90
+        },
+        "color": {
+            "$ref": "properties.json#/$defs/backgroundColor"
+        },
+        "intensity": {
+            "$ref": "Intensity.json"
+        },
+        "lookAt": {
+            "$ref": "LookAt.json"
+        }
+    },
+    "required": [
+        "type"
+    ]
+}

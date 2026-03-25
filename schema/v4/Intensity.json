@@ -1,0 +1,24 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Intensity.json",
+    "type": "object",
+    "properties": {
+        "id": { "$ref": "properties.json#/$defs/id" },
+        "type": {
+            "const": "Quantity"
+        },
+        "quantityValue": {
+            "type": "number",
+            "minimum": 0.0,
+            "maximum": 1.0
+        },
+        "unit": {
+            "const": "relative"
+        }
+    },
+    "required": [
+        "type",
+        "quantityValue",
+        "unit"
+    ]
+}

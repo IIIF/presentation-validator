@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/ImageBasedLight.json",
+    "title": "ImageBasedLight",
+    "type": "object",
+    "allOf": [
+        {
+            "$ref": "Light.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "const": "ImageBasedLight"
+                },
+                "environmentMap": {
+                    "type": "object",
+                    "properties": {
+                        "id": {
+                            "$ref": "properties.json#/$defs/id"
+                        },
+                        "type": {
+                            "const": "Image"
+                        },
+                        "format": {
+                            "$ref": "properties.json#/$defs/format"
+                        },
+                        "profile": {
+                            "type": "string",
+                            "enum": [
+                                "equirectangular",
+                                "cubic"
+                            ]
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "type",
+                        "profile"
+                    ]
+                }
+            },
+            "required": [
+                "type",
+                "environmentMap"
+            ]
+        }
+    ]
+}

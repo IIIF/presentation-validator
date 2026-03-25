@@ -1,0 +1,25 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/CollectionRef.json",
+    "title": "CollectionRef",
+    "allOf": [
+        {
+            "$ref": "Reference.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "type": {
+                    "type": "string",
+                    "pattern": "^Collection$"
+                },
+                "label": {
+                    "$ref": "properties.json#/$defs/lngString"
+                }
+            },
+            "required": [
+                "label"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Camera.json",
+    "title": "Camera",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "lookAt": {
+            "$ref": "LookAt.json"
+        },
+        "near": {
+            "type": "number"
+        },
+        "far": {
+            "type": "number"
+        }
+    },
+    "required": [
+        "type"
+    ]
+}

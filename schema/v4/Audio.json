@@ -1,0 +1,27 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Audio.json",
+    "title": "Audio",
+    "type": "object",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "source": {
+            "$ref": "Body.json"
+        },
+        "volume": {
+            "$ref": "Quantity.json"
+        }
+    },
+    "required": [
+        "type",
+        "source"
+    ]
+}

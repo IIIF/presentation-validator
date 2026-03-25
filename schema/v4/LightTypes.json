@@ -1,0 +1,63 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/LightTypes.json",
+    "type": "object",
+    "if": {
+        "properties": {
+            "type": {
+                "const": "ImageBasedLight"
+            }
+        },
+        "required": [
+            "type"
+        ]
+    },
+    "then": {
+        "$ref": "ImageBasedLight.json"
+    },
+    "else": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "SpotLight"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "SpotLight.json"
+        },
+        "else": {
+            "if": {
+                "properties": {
+                    "type": {
+                        "const": "AmbientLight"
+                    }
+                },
+                "required": [
+                    "type"
+                ]
+            },
+            "then": {
+                "$ref": "AmbientLight.json"
+            }, 
+            "else": {
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "DirectionalLight"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                },
+                "then": {
+                    "$ref": "DirectionalLight.json"
+                }
+            }
+        }
+    }
+}

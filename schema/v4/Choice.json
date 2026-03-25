@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Choice.json",
+    "title": "Choice",
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "const": "Choice",
+            "default": "Choice"
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "$ref": "Body.json"
+            }
+        }
+    },
+    "required": [
+        "type",
+        "items"
+    ]
+}
