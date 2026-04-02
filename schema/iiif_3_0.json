@@ -146,7 +146,31 @@
             },
             "required": ["id", "type"],
             "not": { "required": [ "items" ] }
-        }
+        },
+        "geoJSONFeature": {
+        "title": "GeoJSONFeature",
+        "description": "A GeoJSON Feature object for geographic annotation bodies.",
+        "type": "object",
+        "properties": {
+            "id": { "$ref": "#/types/id" },
+            "type": {
+                "type": "string",
+                "pattern": "^Feature$"
+            },
+            "properties": {
+                "type": "object"
+            },
+            "geometry": {
+                "type": "object",
+                "properties": {
+                    "type": { "type": "string" },
+                    "coordinates": { "type": "array" }
+                },
+                "required": ["type", "coordinates"]
+            }
+        },
+        "required": ["type", "geometry"]
+      }
     },
 
     "$comment": "IIIF Classes",
@@ -280,7 +304,8 @@
                 },
                 {
                     "$ref": "#/classes/choice" 
-                }
+                },
+                { "$ref": "#/classes/geoJSONFeature" }
             ]
         },
         "imgSvr": {
@@ -358,14 +383,14 @@
             "type": "object",
             "properties": {
                 "id": { "$ref": "#/types/id" },
-                "type": { 
+                "type": {
                     "type": "string",
                     "default": "FeatureCollection"
                 },
-                "features": { 
+                "features": {
                     "type": "array",
                     "items": {
-                        "type": "object"
+                        "$ref": "#/types/geoJSONFeature"
                     }
                 }
             },
