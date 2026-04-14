@@ -672,7 +672,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Collection$"
+                            "pattern": "^Collection$",
+                            "default": "Collection" 
                         },
                         "label": {"$ref": "#/types/lngString" }
                     },
