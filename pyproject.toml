@@ -58,6 +58,6 @@ fallback_version = "1.0.0"
 dev = [
   "build",
   "coverage",
-  "pytest>=9.0.2",
+  "pytest>=9.0.3",
   "webtest>=3.0.7",
 ]
