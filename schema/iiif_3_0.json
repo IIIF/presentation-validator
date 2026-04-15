@@ -305,7 +305,7 @@
                 {
                     "$ref": "#/classes/choice" 
                 },
-                { "$ref": "#/classes/geoJSONFeature" }
+                { "$ref": "#/types/geoJSONFeature" }
             ]
         },
         "imgSvr": {
