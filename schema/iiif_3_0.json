@@ -237,7 +237,7 @@
                         "id": { "$ref": "#/types/id" },
                         "type": {
                             "type": "string",
-                            "not": { "enum": ["TextualBody", "SpecificResource" ]}
+                            "not": { "enum": ["TextualBody", "SpecificResource", "Feature" ]}
                         },
                         "height": { "$ref": "#/types/dimension" },
                         "width": { "$ref": "#/types/dimension" },
