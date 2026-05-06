@@ -237,7 +237,7 @@
                         "id": { "$ref": "#/types/id" },
                         "type": {
                             "type": "string",
-                            "not": { "enum": ["TextualBody", "SpecificResource" ]}
+                            "not": { "enum": ["TextualBody", "SpecificResource", "Feature" ]}
                         },
                         "height": { "$ref": "#/types/dimension" },
                         "width": { "$ref": "#/types/dimension" },
@@ -305,7 +305,7 @@
                 {
                     "$ref": "#/classes/choice" 
                 },
-                { "$ref": "#/classes/geoJSONFeature" }
+                { "$ref": "#/types/geoJSONFeature" }
             ]
         },
         "imgSvr": {
@@ -519,6 +519,22 @@
                 {
                     "type": "object",
                     "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
