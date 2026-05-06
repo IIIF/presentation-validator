@@ -688,7 +688,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Collection$"
+                            "pattern": "^Collection$",
+                            "default": "Collection" 
                         },
                         "label": {"$ref": "#/types/lngString" }
                     },
@@ -704,7 +705,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Range$"
+                            "pattern": "^Range$",
+                            "default": "Range" 
                         }
                     }
                 }
@@ -718,7 +720,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Canvas$"
+                            "pattern": "^Canvas$",
+                            "default": "Canvas" 
                         },
                         "partOf": {
                             "$ref": "#/classes/partOf"
@@ -742,7 +745,8 @@
                             "properties": {
                                 "type": {
                                     "type": "string",
-                                    "pattern": "^AnnotationPage$"
+                                    "pattern": "^AnnotationPage$",
+                                    "default": "AnnotationPage" 
                                 }
                             }
                         }
