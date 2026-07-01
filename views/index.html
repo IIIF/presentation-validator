@@ -18,10 +18,36 @@
 
     <style type="text/css">
       #results {
-        background-color: #f5f5f5; 
+        background-color: #f5f5f5;
         padding: 2em;
         margin-left: 10px;
         margin-top: 2em;
+      }
+      #tabs {
+        margin-left: 10px;
+        margin-top: 20px;
+      }
+      .tab {
+        cursor: pointer;
+        display: inline-block;
+        padding: 6px 12px;
+        border: 1px solid black;
+        border-bottom: none;
+        margin-right: -1px;
+      }
+      .tab.active {
+        font-weight: bold;
+        background-color: #f5f5f5;
+      }
+      .panel {
+        display: none;
+      }
+      .panel.active {
+        display: block;
+      }
+      #input-panel textarea {
+        margin-left: 25px;
+        font-family: Inconsolata, monospace;
       }
     </style>
 
@@ -57,26 +83,54 @@
               recommendations that haven't been followed.
             </div>
 
-            <div style="border: 1px solid black;margin-left: 10px; margin-top: 20px; padding: 10px">
-              <form id='manifest-validation-form' method="GET" action="validate">
+            <div id="tabs">
+              <span class="tab active" data-panel="url-panel">Validate by URL</span><span class="tab" data-panel="input-panel">Validate by Direct Input</span>
+            </div>
 
-                URL of Manifest to Validate:<br/>
-                <input style="margin-left: 25px" type="text" name="url" size="80"><br/>
+            <div style="border: 1px solid black;margin-left: 10px; padding: 10px">
 
-                Select Presentation API Version:
-                <select name="version">
-                % for v in versions:
-                    <option value="{{v.value}}" {{'selected' if v == selected else ''}}>
-                        {{v.value}}
-                    </option>
-                % end
-                </select>
-                <br/>
-                <input type="checkbox" id="accept" name="accept">
-                <label for="accept">Include <code>Accept</code> header in request for specified version</label><br />
+              <div id="url-panel" class="panel active">
+                <form id='manifest-validation-form' method="GET" action="validate">
 
-                <input type="submit" value="Go!" id="submit-url">
-              </form>
+                  URL of Manifest to Validate:<br/>
+                  <input style="margin-left: 25px" type="text" name="url" size="80"><br/>
+
+                  Select Presentation API Version:
+                  <select name="version">
+                  % for v in versions:
+                      <option value="{{v.value}}" {{'selected' if v == selected else ''}}>
+                          {{v.value}}
+                      </option>
+                  % end
+                  </select>
+                  <br/>
+                  <input type="checkbox" id="accept" name="accept">
+                  <label for="accept">Include <code>Accept</code> header in request for specified version</label><br />
+
+                  <input type="submit" value="Go!" id="submit-url">
+                </form>
+              </div>
+
+              <div id="input-panel" class="panel">
+                <form id='manifest-input-form' method="POST" action="validate">
+
+                  Paste the Manifest to Validate:<br/>
+                  <textarea name="manifest" rows="15" cols="80"></textarea><br/>
+
+                  Select Presentation API Version:
+                  <select name="version">
+                  % for v in versions:
+                      <option value="{{v.value}}" {{'selected' if v == selected else ''}}>
+                          {{v.value}}
+                      </option>
+                  % end
+                  </select>
+                  <br/><br/>
+
+                  <input type="submit" value="Go!" id="submit-input">
+                </form>
+              </div>
+
             </div>
 
             <div id='results' style="display: none;" >
@@ -138,10 +192,34 @@
         $.getJSON(url, data, handleValidationResponse);
       }
 
+      // Call out to the validation service with pasted manifest JSON
+      function handleDirectSubmission(e) {
+        e.preventDefault();
+
+        var version = $('#input-panel select[name="version"]').val();
+        var body = $('#input-panel textarea[name="manifest"]').val();
+        $('#results-content').html('Processing ' + version + " validation...");
+        $('#results').show();
+        $.ajax({
+          url: 'validate?version=' + encodeURIComponent(version),
+          method: 'POST',
+          contentType: 'application/json',
+          data: body,
+          dataType: 'json',
+          success: handleValidationResponse,
+          error: function(xhr) {
+            var msg = (xhr.responseJSON && xhr.responseJSON.error) ? xhr.responseJSON.error : 'Invalid JSON';
+            $('#results-content').html('<div style="margin-left: 20px"><h2 style="color:red">Validation Error: ' + msg + '</h2></div>');
+          }
+        });
+      }
+
       // Handle validation service response, render response block
       function handleValidationResponse(data) {
         var str  = '<div style="margin-left: 20px">';
-        str += '<div>URL Tested: '+ data.url + '</div><br/>';
+        if (data.url) {
+          str += '<div>URL Tested: '+ data.url + '</div><br/>';
+        }
         if (data.okay) {
           str += '<div><h2 style="color:green">Validated successfully</h2></div>';
         } else {
@@ -177,8 +255,18 @@
        $('#results').show();
       }
 
-      // Set up event handler.
+      // Tab switching: toggle active tab and matching panel.
+      $('.tab').on("click", function() {
+        var panelId = $(this).data("panel");
+        $('.tab').removeClass("active");
+        $(this).addClass("active");
+        $('.panel').removeClass("active");
+        $('#' + panelId).addClass("active");
+      });
+
+      // Set up event handlers.
       $('#submit-url').on("click", handleSubmission);
+      $('#submit-input').on("click", handleDirectSubmission);
     </script>
     
     <script>

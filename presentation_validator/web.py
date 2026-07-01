@@ -68,9 +68,16 @@ def create_app():
 
         # If still not present → None
         if not version:
-            version = None        
+            version = None
 
-        result = check_manifest(data, version)  
+        try:
+            result = check_manifest(data, version)
+        except Exception as error:
+            traceback.print_exc()
+            return {
+                'okay': 0,
+                'error': f'Validation failed. Got "{error}"',
+            }
 
         response.content_type = 'application/json'
         return result.json()
