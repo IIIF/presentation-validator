@@ -46,7 +46,7 @@ def check(manifest) -> List[ErrorDetail]:
         if depth > MAX_DEPTH:
             raise MaxDepthExceeded(f"Max search depth {MAX_DEPTH} exceeded at {node}")
         for key, value in filter(lambda x: x[0] not in IGNORE, node.items()):
-            if key == "id":
+            if key == "id" or key == "@id":
                 if value in seen_ids:
                     yield ErrorDetail(
                         f"Duplicate id found",
