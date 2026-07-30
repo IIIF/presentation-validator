@@ -15,6 +15,7 @@ IGNORE: Set[str] = {
     "source",
     "body",
     "scope",
+    "thumbnail",
 }
 MAX_DEPTH: int = 1000
 
