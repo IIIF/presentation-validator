@@ -81,6 +81,23 @@
                     }
                 }
             }
+        },
+        "annotations": {
+            "type": "array",
+            "items": {
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "$ref": "AnnotationPageRef.json"
+                }
+            }
         }
     },
     "required": [
