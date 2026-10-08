@@ -1,0 +1,34 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Start.json",
+    "type": "object",
+    "title": "Start",
+    "description": "The value must be a JSON object, which must have the id and type properties.",
+    "properties": {
+        "if": {
+            "properties": {
+                "type": {
+                    "const": "SpecificResource"
+                }
+            },
+            "required": [
+                "type"
+            ]
+        },
+        "then": {
+            "$ref": "SpecificResource.json"
+        },
+        "else": {
+            "properties": {
+                "id": {
+                    "$ref": "properties.json#/$defs/id"
+                },
+                "type": {
+                    "type": "string",
+                    "enum": ["Canvas", "Timeline", "Scene"]
+                }
+            }
+        }
+    },
+    "required": ["id","type"]
+}
