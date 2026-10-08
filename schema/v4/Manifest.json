@@ -36,6 +36,9 @@
         "services": {
             "$ref": "Service.json"
         },
+        "start": {
+            "$ref": "Start.json"
+        },
         "viewingDirection": {
             "$ref": "properties.json#/$defs/viewingDirection"
         },

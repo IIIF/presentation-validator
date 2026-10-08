@@ -56,6 +56,9 @@
         "accompanyingCanvas": {
             "$ref": "AccompanyingCanvas.json"
         },
+        "start": {
+            "$ref": "Start.json"
+        },
         "thumbnail": {
             "type": "array",
             "items": {
