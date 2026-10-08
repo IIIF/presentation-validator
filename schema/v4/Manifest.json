@@ -98,6 +98,23 @@
                     "$ref": "AnnotationPageRef.json"
                 }
             }
+        },
+        "structures": {
+            "type": "array",
+            "items": {
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "Range.json"
+                },
+                "else": {
+                    "$ref": "RangeRef.json"
+                }
+            }
         }
     },
     "required": [

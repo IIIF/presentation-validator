@@ -48,10 +48,10 @@
         "service": {
             "$ref": "Service.json"
         },
-        "placeholderCanvas": {
+        "placeholderContainer": {
             "$ref": "PlaceholderCanvas.json"
         },
-        "accompanyingCanvas": {
+        "accompanyingContainer": {
             "$ref": "AccompanyingCanvas.json"
         },
         "thumbnail": {
