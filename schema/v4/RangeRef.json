@@ -1,0 +1,26 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/RangeRef.json",
+    "title": "RangeRef",
+    "allOf": [
+        {
+            "$ref": "Reference.json"
+        },
+        {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "properties.json#/$defs/id"
+                },
+                "type": {
+                    "type": "string",
+                    "pattern": "^Range$"
+                }
+            },
+            "required": [
+                "id",
+                "type"
+            ]
+        }
+    ]
+}

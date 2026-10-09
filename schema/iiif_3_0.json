@@ -237,7 +237,7 @@
                         "id": { "$ref": "#/types/id" },
                         "type": {
                             "type": "string",
-                            "not": { "enum": ["TextualBody", "SpecificResource" ]}
+                            "not": { "enum": ["TextualBody", "SpecificResource", "Feature" ]}
                         },
                         "height": { "$ref": "#/types/dimension" },
                         "width": { "$ref": "#/types/dimension" },
@@ -519,6 +519,22 @@
                 {
                     "type": "object",
                     "properties": {
+                        "@context": {
+                            "oneOf": [
+                                {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "string",
+                                        "format": "uri",
+                                        "pattern": "^http.*$"
+                                    }
+                                },
+                                {
+                                    "type": "string",
+                                    "const": "http://iiif.io/api/presentation/3/context.json"
+                                }
+                            ]
+                        },
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
@@ -672,7 +688,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Collection$"
+                            "pattern": "^Collection$",
+                            "default": "Collection" 
                         },
                         "label": {"$ref": "#/types/lngString" }
                     },
@@ -688,7 +705,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Range$"
+                            "pattern": "^Range$",
+                            "default": "Range" 
                         }
                     }
                 }
@@ -702,7 +720,8 @@
                     "properties": {
                         "type": {
                             "type": "string",
-                            "pattern": "^Canvas$"
+                            "pattern": "^Canvas$",
+                            "default": "Canvas" 
                         },
                         "partOf": {
                             "$ref": "#/classes/partOf"
@@ -726,7 +745,8 @@
                             "properties": {
                                 "type": {
                                     "type": "string",
-                                    "pattern": "^AnnotationPage$"
+                                    "pattern": "^AnnotationPage$",
+                                    "default": "AnnotationPage" 
                                 }
                             }
                         }

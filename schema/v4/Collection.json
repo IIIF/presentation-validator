@@ -56,6 +56,9 @@
         "accompanyingCanvas": {
             "$ref": "AccompanyingCanvas.json"
         },
+        "start": {
+            "$ref": "Start.json"
+        },
         "thumbnail": {
             "type": "array",
             "items": {
@@ -90,14 +93,18 @@
         "annotations": {
             "type": "array",
             "items": {
-                "oneOf": [
-                    {
-                        "$ref": "AnnotationPage.json"
-                    },
-                    {
-                        "$ref": "AnnotationPageRef.json"
-                    }
-                ]
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "$ref": "AnnotationPageRef.json"
+                }
             }
         }
     },
