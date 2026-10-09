@@ -36,6 +36,9 @@
         "services": {
             "$ref": "Service.json"
         },
+        "start": {
+            "$ref": "Start.json"
+        },
         "viewingDirection": {
             "$ref": "properties.json#/$defs/viewingDirection"
         },
@@ -79,6 +82,40 @@
                             "$ref": "Scene.json"
                         }
                     }
+                }
+            }
+        },
+        "annotations": {
+            "type": "array",
+            "items": {
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "$ref": "AnnotationPageRef.json"
+                }
+            }
+        },
+        "structures": {
+            "type": "array",
+            "items": {
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "Range.json"
+                },
+                "else": {
+                    "$ref": "RangeRef.json"
                 }
             }
         }

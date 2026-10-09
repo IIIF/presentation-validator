@@ -45,7 +45,22 @@
                 "$ref": "TimelineRef.json"
             },
             "else": {
-                "$ref": "SceneRef.json"
+                 "if": {
+                    "required": [
+                        "type"
+                    ],
+                    "properties": {
+                        "type": {
+                            "const": "Annotation"
+                        }
+                    }
+                },
+                "then": {
+                    "$ref": "AnnotationRef.json"
+                },
+                "else": {
+                    "$ref": "SceneRef.json"
+                }
             }
         }
     }

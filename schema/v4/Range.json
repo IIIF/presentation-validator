@@ -1,0 +1,219 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "$id": "https://iiif.io/api/presentation/4.0/schema/Range.json",
+    "type": "object",
+    "title": "Range",
+    "description": "id, type and items required",
+    "properties": {
+        "id": {
+            "$ref": "properties.json#/$defs/id"
+        },
+        "type": {
+            "type": "string",
+            "pattern": "^Range$",
+            "default": "Range"
+        },
+        "label": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "metadata": {
+            "$ref": "Metadata.json"
+        },
+        "summary": {
+            "$ref": "properties.json#/$defs/lngString"
+        },
+        "start": {
+            "$ref": "Start.json"
+        },
+        "supplementary": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "$ref": "properties.json#/$defs/id"
+                },
+                "type": {
+                    "type": "string",
+                    "pattern": "^AnnotationCollection$",
+                    "default": "AnnotationCollection"
+                }
+            },
+            "required": ["id", "type"]
+        },  
+        "thumbnail": {
+            "type": "array",
+            "items": {
+                "$ref": "Resource.json"
+            }
+        },
+        "provider": {
+            "$ref": "Provider.json"
+        },
+        "requiredStatement": {
+            "$ref": "properties.json#/$defs/keyValueString"
+        },
+        "rights": {
+            "$ref": "properties.json#/$defs/rights"
+        },
+        "navDate": {
+            "$ref": "properties.json#/$defs/navDate"
+        },
+        "navPlace": {
+            "$ref": "NavPlace.json"
+        },
+         "placeholderContainer": {
+            "$ref": "PlaceholderCanvas.json"
+        },
+        "accompanyingContainer": {
+            "$ref": "AccompanyingCanvas.json"
+        },
+        "viewingDirection": {
+            "$ref": "properties.json#/$defs/viewingDirection"
+        },
+        "behavior": {
+            "$ref": "properties.json#/$defs/behavior"
+        },
+        "seeAlso": {
+            "$ref": "SeeAlso.json"
+        },
+        "service": {
+            "$ref": "Service.json"
+        },
+        "placeholderCanvas": {
+            "$ref": "PlaceholderCanvas.json"
+        },
+        "homepage": {
+            "$ref": "Homepage.json"
+        },
+        "accompanyingCanvas": {
+            "$ref": "AccompanyingCanvas.json"
+        },
+        "rendering": {
+            "$ref": "External.json"
+        },
+        "partOf": {
+            "$ref": "PartOf.json"
+        },
+        "canonical": {
+            "type": "string",
+            "format": "uri"
+        },
+        "via": {
+            "oneOf": [
+                {
+                    "type": "string",
+                    "format": "uri"
+                },
+                {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "format": "uri"
+                    }
+                }
+            ]
+        },
+        "items": {
+            "type": "array",
+            "items": {
+                "if": {
+                    "properties": {
+                        "type": {
+                            "const": "Range"
+                        }
+                    },
+                    "required": [
+                        "type"
+                    ]
+                },
+                "then": {
+                    "if": {
+                        "properties": {
+                            "items": {
+                                "type": "array"
+                            }
+                        },
+                        "required": [
+                            "items"
+                        ]
+                    },
+                    "then": {
+                        "$ref": "Range.json"
+                    },
+                    "else": {
+                        "$ref": "RangeRef.json"
+                    }
+                },
+                "else": {
+                    "if": {
+                        "properties": {
+                            "type": {
+                                "const": "Canvas"
+                            }
+                        },
+                        "required": [
+                            "type"
+                        ]
+                    },
+                    "then": {
+                        "$ref": "CanvasRef.json"
+                    },
+                    "else": {
+                        "if": {
+                            "properties": {
+                                "type": {
+                                    "const": "Timeline"
+                                }
+                            },
+                            "required": [
+                                "type"
+                            ]
+                        },
+                        "then": {
+                            "$ref": "TimelineRef.json"
+                        },
+                        "else": {
+                            "if": {
+                                "properties": {
+                                    "type": {
+                                        "const": "Scene"
+                                    }
+                                },
+                                "required": [
+                                    "type"
+                                ]
+                            },
+                            "then": {
+                                "$ref": "SceneRef.json"
+                            },
+                            "else": {
+                                "$ref": "SpecificResource.json"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "annotations": {
+            "type": "array",
+            "items": {
+                "if": {
+                    "type": "object",
+                    "required": [
+                        "items"
+                    ]
+                },
+                "then": {
+                    "$ref": "AnnotationPage.json"
+                },
+                "else": {
+                    "$ref": "AnnotationPageRef.json"
+                }
+            }
+        }
+    },
+    "required": [
+        "id",
+        "type",
+        "items"
+    ]
+}
