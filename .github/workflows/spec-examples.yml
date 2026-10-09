@@ -1,0 +1,30 @@
+name: Validate IIIF 4.0 spec examples
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-examples:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout validator
+        uses: actions/checkout@v5
+
+      - name: Checkout IIIF API examples
+        uses: actions/checkout@v5
+        with:
+          repository: IIIF/api
+          ref: main
+          path: iiif-api
+          sparse-checkout: source/presentation/4.0/example
+          sparse-checkout-cone-mode: false
+
+      - name: Validate examples
+        uses: ./
+        with:
+          directory: iiif-api/source/presentation/4.0/example
+          version: "4.0"

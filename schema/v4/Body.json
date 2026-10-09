@@ -177,7 +177,23 @@
                                         "$ref": "AudioTypes.json"
                                     },
                                     "else": {
-                                        "$ref": "Resource.json"
+                                         "if": {
+                                            "properties": {
+                                                "type": {
+                                                    "type": "string",
+                                                    "pattern": "Annotation"
+                                                }
+                                            },
+                                            "required": [
+                                                "type"
+                                            ]
+                                        },
+                                        "then": {
+                                            "$ref": "AnnotationRef.json"
+                                        },
+                                        "else": {
+                                            "$ref": "Resource.json"
+                                        }
                                     }
                                 }
                             }

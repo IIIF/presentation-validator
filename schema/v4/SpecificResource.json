@@ -102,6 +102,13 @@
             "else": {
                 "type": "string"
             }
+        },
+        "action": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": ["enable", "disable", "show", "hide", "reset", "start", "stop", "select"]
+            }
         }
     },
     "required": [
