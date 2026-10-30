@@ -1,0 +1,48 @@
+{
+  "@context": [
+    "https://example.org/ext/context.json",
+    "http://iiif.io/api/presentation/3/context.json"
+  ],
+  "id": "https://example.org/iiif/extension/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Manifest with namespaced extension properties"
+    ]
+  },
+  "ext:project": {
+    "settings": {
+      "showOutlines": true
+    }
+  },
+  "items": [
+    {
+      "id": "https://example.org/iiif/extension/canvas/1",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 750,
+      "items": [
+        {
+          "id": "https://example.org/iiif/extension/canvas/1/page/1",
+          "type": "AnnotationPage",
+          "ext:note": "Page-level data kept by the editing tool",
+          "items": [
+            {
+              "id": "https://example.org/iiif/extension/canvas/1/annotation/image",
+              "type": "Annotation",
+              "motivation": "painting",
+              "body": {
+                "id": "https://example.org/iiif/extension/image.jpg",
+                "type": "Image",
+                "format": "image/jpeg",
+                "width": 1000,
+                "height": 750
+              },
+              "target": "https://example.org/iiif/extension/canvas/1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
