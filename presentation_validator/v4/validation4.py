@@ -4,7 +4,6 @@ import json
 import sys
 from presentation_validator.model import ValidationResult
 from presentation_validator.v3.schemavalidator import convertValidationError
-from presentation_validator.v4.unique_ids import check
 
 from jsonschema import Draft202012Validator
 from jsonschema.exceptions import relevance
@@ -51,18 +50,11 @@ def validate(instance):
         # Now create some useful messsages to pass on
         for err in errors:
             result.errorList.append(convertValidationError(err, errorCount, len(errors)))
-            
+
             errorCount += 1
     else:
         result.passed = True
 
-    duplicate_ids = check(instance)
-    if duplicate_ids:
-        result.passed = False
-
-        # Add all of the examples of duplicated ids
-        result.errorList.extend(duplicate_ids)
-    
     return result
 
 def main():

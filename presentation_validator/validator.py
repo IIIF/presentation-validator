@@ -4,6 +4,7 @@ from presentation_validator.model import ValidationResult, ErrorDetail
 from presentation_validator.v3 import schemavalidator
 from presentation_validator.v4 import validation4
 from presentation_validator.enum import IIIFVersion
+from presentation_validator import unique_ids
 
 import requests
 from urllib.parse import urlparse
@@ -101,6 +102,9 @@ def check_manifest(
         result.warnings = warnings
         result.error = str(err)
         result.url = url
+
+    # Check for duplicate ID's in the manifest
+    result.errorList.extend(unique_ids.check(manifest))
 
     return result
 
