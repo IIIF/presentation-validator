@@ -7,10 +7,10 @@
   "type": "Manifest",
   "label": {
     "en": [
-      "Manifest with namespaced extension properties"
+      "Manifest with extension properties"
     ]
   },
-  "ext:project": {
+  "project": {
     "settings": {
       "showOutlines": true
     }
@@ -25,7 +25,7 @@
         {
           "id": "https://example.org/iiif/extension/canvas/1/page/1",
           "type": "AnnotationPage",
-          "ext:note": "Page-level data kept by the editing tool",
+          "note": "Page-level data kept by the editing tool",
           "items": [
             {
               "id": "https://example.org/iiif/extension/canvas/1/annotation/image",

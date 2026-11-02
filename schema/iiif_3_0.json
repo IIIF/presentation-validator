@@ -592,9 +592,6 @@
                 {
                     "type": "object",
                     "additionalProperties": false,
-                    "patternProperties": {
-                        "^[A-Za-z][A-Za-z0-9_.-]*:[^/].*$": {}
-                    },
                     "properties": {
                         "@context": {
                             "oneOf": [
@@ -1048,10 +1045,7 @@
                         "last": { "$ref": "#/classes/annotationPageRef" }
                     },
                     "required": ["id","type","items"],
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^[A-Za-z][A-Za-z0-9_.-]*:[^/].*$": {}
-                    }
+                    "additionalProperties": false
                 }
             ]
         },

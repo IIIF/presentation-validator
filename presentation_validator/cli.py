@@ -100,8 +100,8 @@ def run_validate_dir(args):
                     for error in result.errorList:
                         print(str(error))
 
-                for w in result.warnings:
-                    print(f"    ⚠ {w}")
+            for w in result.warnings:
+                print(f"    ⚠ {w}")
 
         except Exception as e:
             failed += 1
