@@ -55,7 +55,29 @@ def convertValidationError(err, errorCount, total):
             description, 
             printPath(err.path, err.message), 
             context,
-            err)    
+            err)
+
+def schemaProperties(schema):
+    terms = set()
+
+    if isinstance(schema, dict):
+        terms.update(schema.get('properties', {}))
+
+        for value in schema.values():
+            terms.update(schemaProperties(value))
+    elif isinstance(schema, list):
+        for value in schema:
+            terms.update(schemaProperties(value))
+
+    return terms
+
+def isUnknownProperty(err, terms):
+    if err.validator != 'additionalProperties' or err.instance.get('type') not in ('Manifest', 'AnnotationPage'):
+        return False
+
+    unexpected = set(err.instance) - set(err.schema.get('properties', {}))
+
+    return unexpected.isdisjoint(terms)
 
 def validate(data, version, url):
     if version == IIIFVersion.V3_0:
@@ -82,6 +104,7 @@ def validate(data, version, url):
     #errors = [best_match(results)]
     error = " "
     errorsJson = []
+    warnings = []
     result = ValidationResult()
     if errors:
         if len(errors) == 1 and 'is not valid under any of the given schemas' in errors[0].message:
@@ -89,6 +112,7 @@ def validate(data, version, url):
 
         # check to see if errors are relveant to IIIF asset
         errorParser = IIIFErrorParser(schema, data)
+        terms = schemaProperties(schema)
         relevantErrors = []
         i = 0
         # Go through the list of errors and check to see if they are relevant
@@ -120,7 +144,10 @@ def validate(data, version, url):
         errors = []
         for errorDup in relevantErrors:
             errorPath = errorParser.pathToJsonPath(errorDup.path)
-            if errorPath not in seen_titles:
+
+            if isUnknownProperty(errorDup, terms):
+                warnings.append(f'{errorDup.message} at {errorPath}')
+            elif errorPath not in seen_titles:
                 errors.append(errorDup)
                 seen_titles.add(errorPath)
 
@@ -139,12 +166,12 @@ def validate(data, version, url):
   #          'url': url
  #        }
 
-        result.passed = False
+        result.passed = bool(warnings) and not errors
     else:
         result.passed = True
 
     result.url = url
-    result.warnings = [] # Schema can't do warnings
+    result.warnings = warnings
     result.error = "" # Only error list for schema
   
     return result

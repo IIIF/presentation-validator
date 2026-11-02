@@ -32,6 +32,6 @@ class TestCLI(unittest.TestCase):
         print (text)
 
         self.assertEqual(rc, 1)
-        self.assertIn("Found 32 files with extension '.json'", text)
-        self.assertIn("Passed: 23", text)
-        self.assertIn("Failed: 9", text)
+        self.assertIn("Found 35 files with extension '.json'", text)
+        self.assertIn("Passed: 25", text)
+        self.assertIn("Failed: 10", text)
