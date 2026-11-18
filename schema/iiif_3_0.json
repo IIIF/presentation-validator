@@ -538,9 +538,7 @@
                         "type": {
                             "type": "string",
                             "pattern": "^Collection",
-                            "default": "Collection",
-                            "title": "Collection",
-                            "description":"If you are validating a manifest, you may get this error if there are errors in the manifest. The validator first validates it as a manifest and if that fails it will try and validate it using the other types."
+                            "default": "Collection"
                         },
                         "metadata": { "$ref": "#/classes/metadata" },
                         "summary": { "$ref": "#/types/lngString" },
