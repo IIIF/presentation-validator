@@ -1073,6 +1073,7 @@
                     "pattern": "^Annotation$",
                     "default": "Annotation"
                 },
+                "label": {"$ref": "#/types/lngString" },
                 "created": { "type": "string" },
                 "modified": { "type": "string" },
                 "generated": { "type": "string" },
