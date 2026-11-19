@@ -674,10 +674,11 @@
                             "default": "Manifest" 
                         },
                         "label": {"$ref": "#/types/lngString" }
-                    }
+                    },
+                    "required":["label"]
                 }
-            ]    
-        },    
+            ]
+        },
         "collectionRef": {
             "allOf": [
                 { "$ref": "#/types/reference" },
