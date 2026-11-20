@@ -1,0 +1,24 @@
+{
+  "@context": "http://iiif.io/api/presentation/3/context.json",
+  "id": "https://example.org/iiif/typo/manifest.json",
+  "type": "Manifest",
+  "label": {
+    "en": [
+      "Manifest with a misspelled property"
+    ]
+  },
+  "sumary": {
+    "en": [
+      "This key should read summary"
+    ]
+  },
+  "items": [
+    {
+      "id": "https://example.org/iiif/typo/canvas/1",
+      "type": "Canvas",
+      "width": 1000,
+      "height": 750,
+      "items": []
+    }
+  ]
+}

@@ -69,6 +69,8 @@ class TestAll(unittest.TestCase):
                      'fixtures/3/old_cc_license.json',
                      'fixtures/3/rightsstatement_license.json',
                      'fixtures/3/extension_anno.json',
+                     'fixtures/3/extension_manifest.json',
+                     'fixtures/3/typo_property.json',
                      'fixtures/3/multi_bodies.json',
                      'fixtures/3/publicdomain.json',
                      'fixtures/3/navPlace.json',
@@ -98,6 +100,7 @@ class TestAll(unittest.TestCase):
                          'fixtures/3/broken_choice.json',
                          'fixtures/3/broken_collection.json',
                          'fixtures/3/broken_embedded_annos.json',
+                         'fixtures/3/broken_typo_missing_label.json',
                          'fixtures/3/non_cc_license.json',
                          'fixtures/3/collection_of_canvases.json']:
             with open(bad_data, 'r') as fh:
@@ -108,6 +111,18 @@ class TestAll(unittest.TestCase):
                     print("Expected {} to fail validation but it passed....".format(bad_data))
                 
                 self.assertFalse(result.passed)
+
+    def test_unknown_properties_are_warnings_v3(self):
+        for fixture, keys in [('fixtures/3/extension_manifest.json', ['project', 'note']),
+                              ('fixtures/3/typo_property.json', ['sumary']),
+                              ('fixtures/3/broken_typo_missing_label.json', ['sumary'])]:
+            with open(fixture, 'r') as fh:
+                result = check_manifest(fh.read(), '3.0')
+
+            warnings = ' '.join(result.warnings)
+
+            for key in keys:
+                self.assertIn(f"'{key}'", warnings, f'Expected a warning for {key} in {fixture}')
 
     def test_good_manifests_v4(self):
         base = Path("fixtures/4/ok")
